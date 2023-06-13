@@ -23,16 +23,16 @@ Table of contents
 12. portfolio
 
 --------------------------------------------- */
-/* 
+/*
 ---------------------------------------------
 font & reset css
---------------------------------------------- 
+---------------------------------------------
 */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
-/* 
+/*
 ---------------------------------------------
 reset
---------------------------------------------- 
+---------------------------------------------
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, div
 pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q,
@@ -136,10 +136,10 @@ img {
   overflow: hidden;
 }
 
-/* 
+/*
 ---------------------------------------------
 global styles
---------------------------------------------- 
+---------------------------------------------
 */
 html,
 body {
@@ -226,10 +226,10 @@ body {
   color: #fff;
 }
 
-/* 
+/*
 ---------------------------------------------
 header
---------------------------------------------- 
+---------------------------------------------
 */
 
 .background-header {
@@ -714,10 +714,10 @@ header
 
 
 
-/* 
+/*
 ---------------------------------------------
 Banner Style
---------------------------------------------- 
+---------------------------------------------
 */
 
 .main-banner {
@@ -965,7 +965,7 @@ Popular Categories
 .popular-categories .nacc .thumb .right-image {
   padding: 60px;
   display: inline-flex;
-} 
+}
 
 .popular-categories .nacc .thumb img {
   border-radius: 7px;
@@ -980,7 +980,7 @@ Popular Categories
 
 /*
 ---------------------------------------------
-Recent Listing 
+Recent Listing
 ---------------------------------------------
 */
 
@@ -1198,12 +1198,25 @@ footer .sub-footer {
   border-top: 1px solid #eee;
 }
 
+footer .main-white-button a {
+  background-color: #8d99af;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2a2a2a;
+  text-transform: capitalize;
+  padding: 12px 25px;
+  border-radius: 7px;
+  letter-spacing: 0.25px;
+  transition: all .3s;
+}
 
 
-/* 
+
+/*
 ---------------------------------------------
 contact
---------------------------------------------- 
+---------------------------------------------
 */
 
 .contact-page {
@@ -1333,10 +1346,10 @@ form#contact button:hover {
 }
 
 
-/* 
+/*
 ---------------------------------------------
 Page Heading
---------------------------------------------- 
+---------------------------------------------
 */
 
 .page-heading {
@@ -1572,10 +1585,10 @@ Category Post
 
 
 
-/* 
+/*
 ---------------------------------------------
 Listing Page
---------------------------------------------- 
+---------------------------------------------
 */
 
 
@@ -1803,10 +1816,10 @@ Listing Page
 
 
 
-/* 
+/*
 ---------------------------------------------
 Pre Loader
---------------------------------------------- 
+---------------------------------------------
 */
 
 .js-preloader {
@@ -1904,10 +1917,10 @@ Pre Loader
 }
 
 
-/* 
+/*
 ---------------------------------------------
 responsive
---------------------------------------------- 
+---------------------------------------------
 */
 
 @media (max-width: 1200px) {
@@ -1925,7 +1938,7 @@ responsive
     left: 50%;
     transform: translateX(15px);
   }
-  .category-post .top-content .top-icon h4 { 
+  .category-post .top-content .top-icon h4 {
     left: 86px;
   }
   form#search-form {
