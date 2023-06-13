@@ -252,7 +252,7 @@ header
 }
 
 .background-header .nav li a.active {
-  color: #8d99af!important;
+  color: #d5644c!important;
 }
 
 .header-area {
@@ -313,40 +313,6 @@ header
   padding-right: 30px;
 }
 
-.header-area .main-nav .nav li:last-child {
-  padding-right: 0px;
-  padding-left: 40px;
-}
-
-.header-area .main-nav .nav li:last-child a ,
-.background-header .main-nav .nav li:last-child a {
-  color: #2a2a2a !important;
-  text-transform: capitalize;
-  padding: 0px 20px;
-  font-weight: 400;
-}
-
-.header-area .main-nav .nav li:last-child a i,
-.background-header .main-nav .nav li:last-child a i {
-  font-size: 12px!important;
-  font-weight: 400 !important;
-}
-
-.background-header .main-nav .nav li:last-child .main-white-button a {
-  background-color: #8d99af;
-  color: #fff !important;
-}
-
-.background-header .main-nav .nav li:last-child .main-white-button a i {
-  background-color: #fff;
-  color: #8d99af;
-}
-
-.header-area .main-nav .nav li:last-child a:hover,
-.header-area .main-nav .nav li:last-child a.active {
-  color: #fff !important;
-}
-
 .header-area .main-nav .nav li a {
   display: block;
   font-weight: 500;
@@ -365,18 +331,13 @@ header
 
 .header-area .main-nav .nav li:hover a,
 .header-area .main-nav .nav li a.active {
-  color: #8d99af!important;
+  color: #d5644c!important;
 }
 
 .background-header .main-nav .nav li:hover a,
 .background-header .main-nav .nav li a.active {
-  color: #8d99af!important;
+  color: #d5644c!important;
   opacity: 1;
-}
-
-.header-area .main-nav .nav li:last-child a:hover ,
-.background-header .main-nav .nav li:last-child a:hover {
-  background-color: #8d99af;
 }
 
 .header-area .main-nav .nav li.has-sub {
@@ -577,7 +538,7 @@ header
 }
 
 .header-area.header-sticky .nav li a.active {
-  color: #8d99af;
+  color: #d5644c;
 }
 
 @media (max-width: 1200px) {
@@ -610,7 +571,7 @@ header
   }
   .header-area.header-sticky .nav li a:hover,
   .header-area.header-sticky .nav li a.active {
-    color: #8d99af!important;
+    color: #d5644c!important;
     opacity: 1;
   }
   .header-area.header-sticky .nav li.search-icon a {
