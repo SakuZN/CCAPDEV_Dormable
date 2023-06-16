@@ -1,5 +1,5 @@
 (function ($) {
-	
+
 	"use strict";
 
 	// Header Type = Fixed
@@ -40,7 +40,7 @@
 		loop:true,
 		dots: true,
 		nav: false,
-		autoplay: true,
+		autoplay: false,
 		margin:30,
 		  responsive:{
 			  0:{
@@ -57,11 +57,11 @@
 			  }
 		  }
 	})
-	
+
 
 	// Menu Dropdown Toggle
   if($('.menu-trigger').length){
-    $(".menu-trigger").on('click', function() { 
+    $(".menu-trigger").on('click', function() {
       $(this).toggleClass('active');
       $('.header-area .nav').slideToggle(200);
     });
@@ -75,9 +75,9 @@
 
     });
 
-	
 
-	
+
+
 
 
 
