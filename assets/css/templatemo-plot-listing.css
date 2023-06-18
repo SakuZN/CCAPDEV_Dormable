@@ -1332,6 +1332,11 @@ Page Heading
   margin-top: 15px;
 }
 
+.page-heading .profile-pic{
+ width: 300px;
+ height: 300px;
+}
+
 
 
 /*
