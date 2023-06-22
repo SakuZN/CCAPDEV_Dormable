@@ -1333,8 +1333,31 @@ Page Heading
 }
 
 .page-heading .profile-pic{
- width: 300px;
- height: 300px;
+ display: flex;
+ flex-direction: row;
+}
+
+.page-heading .header-profile{
+  width: 300px;
+  height: 300px;
+}
+
+.page-heading .text-icon{
+  display: flex;
+  flex-direction: column;
+  margin-left: 52%;
+  margin-top: 10%;
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+}
+ .page-heading .list-item{
+  margin-left: 90%;
+  font-size: 40px;
+}
+ .page-heading .text-icon img {
+  max-width: 30px;
+  margin-right: 10px;
 }
 
 
@@ -1351,32 +1374,52 @@ Category Post
   margin-bottom: 120px;
 }
 
-
 .category-post .reviews {
   display: flex;
   flex-direction: column;
 }
 
 .category-post .review-box {
-  background-color: red;
+  background-color: #f5f5f5;
   width: 1000px;
-  height: 100px;
   border-radius:10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 10px;
 }
 
-.category-post .nacc .thumb h4 {
-  color: #2a2a2a;
-  font-size: 20px;
+.category-post .mini-profile-review{
+  width: 75px;
+  height: 75px;
+}
+
+.category-post .review-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.category-post .condo-name-review{
+  font-weight: 900;
+  font-size: 23px;
+  color: #074783;
+}
+
+.category-post .review-username{
   font-weight: 700;
-  line-height: 35px;
-  margin-bottom: 25px;
+  font-size: 20px;
+  margin-left: 10px;
 }
 
-.category-post .top-content {
-  margin-top: 80px;
-  padding-bottom: 60px;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 60px;
+.category-post .review-condo{
+  font-size: 16px;
+  margin-top: 5px;
+  margin-left: 25px;
+}
+
+.category-post .user-review{
+  display: flex;
+  flex-direction: column;
 }
 
 .category-post .description {
@@ -1384,59 +1427,10 @@ Category Post
   padding-top: 50px;
   border-bottom: 1px solid #eee;
   margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
 }
 
-.category-post .general-info p {
-  margin-bottom: 30px;
-}
-
-.category-post .top-content .top-icon {
-  background-color: #2b2d42;
-  width: 250px;
-  height: 132px;
-  border-radius: 7px;
-  position: relative;
-  padding: 30px;
-  display: inline-block;
-}
-
-.category-post .top-content .top-icon h4 {
-  position: absolute;
-  left: 30px;
-  top: 50%;
-  color: #fff;
-  transform: translateY(-50%);
-  font-size: 15px;
-  font-weight: 400;
-  width: 100%;
-  display: inline;
-}
-
-.category-post .top-content .top-icon .icon {
-  display: inline-block;
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 62px;
-  color: #8d99af;
-  background-color: #fff;
-  margin-right: 15px;
-  float: left;
-  left: 0;
-}
-
-.category-post .thumb .text-icon img {
-  max-width: 30px;
-  margin-right: 10px;
-}
-
-.category-post .nacc .thumb span.list-item {
-  font-size: 15px;
-  color: #8d99af;
-  font-weight: 500;
-  line-height: 30px;
-}
 
 
 
