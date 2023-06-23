@@ -132,7 +132,7 @@
                   <div class="listing-item">
                     <div class="fit-image">
                       <a href="#">
-                        <img src="../assets/images/listing_images/listing-GrandTowers.jpg" alt="">
+                        <img src="../assets/images/listing_images/listing-GrandTowers.jpg" alt="" data-alternate-src="../assets/images/listing_images/listing-GrandTowers2.jpeg">
                       </a>
                     </div>
                   </div>
@@ -158,6 +158,46 @@
                         <li><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 5 Bedrooms</li>
                         <li><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</li>
                       </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="item">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="listing-item">
+                    <div class="right-content align-self-center">
+                      <a href="#"><h4>Location</h4></a>
+                      <h6>Know where this dorm is at!</h6>
+                      <br>
+                      <div class="mapouter">
+                        <div class="gmap_canvas">
+                          <iframe class="gmap_iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=800&amp;height=600&amp;hl=en&amp;q=The Grand Towers Manila, Philippines&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                          <a href="https://gachanox.io/">Gacha Nox Download</a>
+                        </div>
+                        <style>
+                          .mapouter {
+                            position: relative;
+                            text-align: right;
+                            width: 1170px; /* Adjust the width here */
+                            height: 800px; /* Adjust the height here */
+                          }
+            
+                          .gmap_canvas {
+                            overflow: hidden;
+                            background: none!important;
+                            width: 1170px!important; /* Adjust the width here */
+                            height: 800px!important; /* Adjust the height here */
+                          }
+            
+                          .gmap_iframe {
+                            width: 1170px!important; /* Adjust the width here */
+                            height: 800px!important; /* Adjust the height here */
+                          }
+                        </style>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -283,7 +323,7 @@
           <div class="sub-footer">
             <p>Copyright © 2021 Plot Listing Co., Ltd. All Rights Reserved.
             <br>
-			Design: <a rel="nofollow" href="https://templatemo.com" title="CSS Templates">TemplateMo</a></p>
+      Design: <a rel="nofollow" href="https://templatemo.com" title="CSS Templates">TemplateMo</a></p>
           </div>
         </div>
       </div>
@@ -300,6 +340,23 @@
   <script src="../assets/js/custom.js"></script>
   <script src="../assets/js/login-register.js"></script>
   <script src="../assets/js/autostar-rating.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.fit-image a').click(function(e) {
+        e.preventDefault();
+        var img = $(this).find('img');
+        var currentSrc = img.attr('src');
+        var alternateSrc = img.data('alternate-src');
+        
+        // Swap the image sources
+        img.attr('src', alternateSrc);
+        img.data('alternate-src', currentSrc);
+      });
+    });
+    </script>
+    
 </body>
 
 </html>
+
