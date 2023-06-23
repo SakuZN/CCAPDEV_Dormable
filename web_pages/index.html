@@ -16,6 +16,8 @@
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="../assets/css/popup.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/main-dormable.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
@@ -48,10 +50,10 @@
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
-            <ul class="nav" id="menu_nav">
-              <li><a href="index.html" class="active">Home</a></li>
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
               <li><a href="listing.html">Explore Listings</a></li>
-              <li><a href="login.html" onclick="login()">Log In | Sign Up</a></li>
+              <li><a href="login.html">Log In | Sign Up</a></li>
             </ul>
             <a class='menu-trigger'>
                 <span>Menu</span>
@@ -186,6 +188,11 @@
     </div>
   </footer>
 
+  <dialog id="dialog">
+    <p>
+    </p>
+    <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+  </dialog>
 
   <!-- Scripts -->
   <script src="../vendor/jquery/jquery.min.js"></script>

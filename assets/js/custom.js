@@ -38,7 +38,6 @@
     if (window.location.href.includes('index.html')) {
       $(generateFeaturedListing(fetchData()));
     }
-
   $('.owl-listing').owlCarousel({
     items:1,
     loop:true,

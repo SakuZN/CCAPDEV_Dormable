@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="../assets/css/fontawesome.css">
   <link rel="stylesheet" href="../assets/css/animated.css">
   <link rel="stylesheet" href="../assets/css/owl.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="../assets/css/popup.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/template-login.css">
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -31,10 +33,10 @@
           </a>
           <!-- ***** Logo End ***** -->
           <!-- ***** Menu Start ***** -->
-          <ul class="nav" id="menu_nav">
+          <ul class="nav">
             <li><a href="index.html">Home</a></li>
             <li><a href="listing.html">Explore Listings</a></li>
-            <li><a href="login.html" class="active">Log In | Sign Up</a></li>
+            <li><a href="login.html">Log In | Sign Up</a></li>
           </ul>
           <a class='menu-trigger'>
             <span>Menu</span>
@@ -50,24 +52,36 @@
 	<div class="main">
 		<input type="checkbox" id="chk" aria-hidden="true">
 			<div class="signup">
-				<form>
+				<form id="signupForm">
 					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="Username" required="">
-					<input type="email" name="email" placeholder="Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Sign up</button>
+					<input type="text" name="txt" placeholder="Username" required="" id="signupUsername">
+					<input type="email" name="email" placeholder="Email" required="" id="signupEmail">
+					<input type="password" name="pswd" placeholder="Password" required="" id="signupPswd">
+          <div class="checkboxes">
+            <input type="radio" id="student" name="userType" value="student" required>
+            <label for="student">Student</label>
+            <input type="radio" id="landowner" name="userType" value="owner" required>
+            <label for="landowner">Owner</label>
+          </div>
+					<button type="submit">Sign up</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
+				<form id="loginForm">
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Username/Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button>
+					<input type="email" name="email" placeholder="Email" required="" id="loginEmail">
+					<input type="password" name="pswd" placeholder="Password" required="" id="loginPswd">
+					<button type="submit">Login</button>
 				</form>
 			</div>
 	</div>
+
+<dialog id="dialog">
+  <p>
+  </p>
+  <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+</dialog>
 
   <!-- Scripts -->
   <script src="../vendor/jquery/jquery.min.js"></script>
