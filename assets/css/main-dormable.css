@@ -29,6 +29,8 @@ font & reset css
 ---------------------------------------------
 */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Tsukimi+Rounded:wght@700&display=swap');
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700');
 /*
 ---------------------------------------------
 reset
@@ -103,7 +105,7 @@ header, nav, section, article, aside, footer, hgroup {
 }
 
 html, body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Roboto Light", sans-serif;
   font-weight: 400;
   background-color: #fff;
   -ms-text-size-adjust: 100%;
@@ -144,7 +146,7 @@ global styles
 html,
 body {
   background: #fff;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 ::selection {
@@ -778,13 +780,24 @@ form#search-form input::placeholder {
 form#search-form button {
   width: 100%;
   height: 100%;
-  background-color: #8d99af;
+  background-color: #d7d0d0;
   border: none;
   padding: 15px;
-  color: #fff;
+  color: #d3644d;
   font-size: 15px;
+  font-weight: bold;
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
+  text-transform: uppercase;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+form#search-form button:hover {
+  background-color: #579142;
+  color: #fff;
 }
 
 form#search-form button i {
@@ -935,9 +948,9 @@ Recent Listing
 */
 
 .recent-listing {
-  margin-top: 120px;
-  padding-top: 120px;
-  margin-bottom: 120px;
+  font-family: "Poppins", sans-serif;
+  padding-top: 100px;
+  margin-bottom: 50px;
   border-top: 1px solid #eee;
 }
 
@@ -960,12 +973,17 @@ Recent Listing
   overflow: hidden;
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
+  width: 500px;
+  height: 550px;
 }
 
 .recent-listing .item .left-image img {
   overflow: hidden;
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .recent-listing .item .right-content {
@@ -1030,11 +1048,14 @@ Recent Listing
   margin-bottom: 30px;
   font-size: 15px;
   color: #8d99af;
+  /*Limit the space the text occupies*/
+  max-width: 500px;
 }
 
 .recent-listing .item .right-content span.details em {
   font-style: normal;
   color: #2a2a2a;
+  flex-shrink: inherit;
 }
 
 .recent-listing .item .right-content ul.info li {
