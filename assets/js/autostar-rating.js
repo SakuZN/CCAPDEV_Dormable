@@ -1,36 +1,3 @@
-// Const value for listings for hardcoding of data
-var listings = [
-  {
-    name: 'The Grand Towers Manila',
-    reviewScore: 4.5,
-    reviews: 18
-  },
-  {
-    name: '2 Torre Lorenzo',
-    reviewScore: 3.5,
-    reviews: 24
-  },
-  {
-    name: 'R Square Residences',
-    reviewScore: 4.0,
-    reviews: 36
-  },
-  {
-    name: 'ONE Archer\'s Place',
-    reviewScore: 5.0,
-    reviews: 24
-  },
-  {
-    name: 'Green Residences',
-    reviewScore: 4.1,
-    reviews: 32
-  },
-  {
-    name: 'Vito Cruz Towers',
-    reviewScore: 3.9,
-    reviews: 40
-  }
-];
 
 function star_rating(score, reviews) {
   var starHtml = '';
@@ -73,9 +40,13 @@ function star_rating(score, reviews) {
 
 // Automatically trigger the generateReviewStars function for all listing items when the page finishes loading
 
+/*
 window.addEventListener('load', function() {
   var listingItems = document.getElementsByClassName('listing-item');
+  let listing = fetchData();
 
+  // Get the listings from the JSON file
+  var listings = fetchData();
   for (var i = 0; i < listingItems.length; i++) {
     var ratingElement = listingItems[i].querySelector('.rate');
     var nameElement = listingItems[i].querySelector('h4');
@@ -84,7 +55,7 @@ window.addEventListener('load', function() {
     var listingName = nameElement.textContent;
 
     // Find the corresponding listing in the array
-    var listing = listings.find(function(item) {
+    listing = listings.find(function(item) {
       return item.name === listingName;
     });
 
@@ -94,3 +65,5 @@ window.addEventListener('load', function() {
     }
   }
 });
+
+ */
