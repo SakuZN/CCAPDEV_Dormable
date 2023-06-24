@@ -1,3 +1,18 @@
+//User Information Default Values
+let userData = {
+  username: 'John Doe',
+  email: 'johndoe@gmail.com',
+  password: '1234',
+  type: 'student',
+  description: 'I am a De La Salle University student. I am looking for a place to stay near the campus.',
+  profilePic: '',
+  joinDate: 'January 2023',
+  noOfReviews: 0,
+}
+
+let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+  'October', 'November', 'December'];
+
 async function login() {
   var email = document.getElementById('loginEmail').value;
   var pass = document.getElementById('loginPswd').value;
@@ -166,21 +181,6 @@ if (localStorage.getItem('userDatabase') === null || localStorage.getItem('userD
   localStorage.setItem('userDatabase', JSON.stringify([userData]));
 }
 
-
-//User Information Default Values
-let userData = {
-  username: 'John Doe',
-  email: 'johndoe@gmail.com',
-  password: '1234',
-  type: 'student',
-  description: 'I am a De La Salle University student. I am looking for a place to stay near the campus.',
-  profilePic: '',
-  joinDate: 'January 2023',
-  noOfReviews: 0,
-}
-
-let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-  'October', 'November', 'December'];
 function pageReload() {
   location.reload();
 }

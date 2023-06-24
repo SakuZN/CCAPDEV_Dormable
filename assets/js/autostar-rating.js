@@ -1,10 +1,20 @@
 
-function star_rating(score, reviews) {
+function star_rating(score, reviews, listingID) {
   var starHtml = '';
-  var fullStar = '<li><i class="fa fa-star"></i><li>';
-  var halfStar = '<li><i class="fa fa-star-half-o"></i><li>';
-  var emptyStar = '<li><i class="fa fa-star-o"></i><li>';
-  var reviewCount = '<li>' + 'Reviews (' + reviews + ')</li>';
+  var fullStar;
+  var halfStar;
+  var emptyStar;
+  var reviewCount;
+  if (listingID === 'featured-listings') {
+  fullStar = '<li class="fa fa-star" style="color: orange"></i><li>';
+  halfStar = '<li><i class="fa fa-star-half-o" style="color: orange"></i><li>';
+  emptyStar = '<li><i class="fa fa-star-o"></i><li>';
+  reviewCount = '<li>' + 'Reviews (' + reviews + ')</li>';
+  } else {
+    fullStar = '<li class="fa fa-star"></li>';
+    halfStar = '<li class="fa fa-star-half-o"></li>';
+    emptyStar = '<li class="fa fa-star-o"></li>';
+  }
 
   // Calculate the number of full stars
   var fullStars = Math.floor(score);
@@ -31,9 +41,10 @@ function star_rating(score, reviews) {
 
 
 
-  // Finally, add the review count
-  starHtml += reviewCount;
-
+  // Finally, add the review count if applicable
+  if (listingID === 'featured-listings') {
+    starHtml += reviewCount;
+  }
   // Return the generated HTML
   return starHtml;
 }

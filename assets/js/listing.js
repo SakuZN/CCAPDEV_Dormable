@@ -9,8 +9,13 @@ let listing = [
     price: '₱6,000 - ₱13,000',
     reviewScore: 3.8,
     reviews: 80,
-    img: ['../assets/images/listing_images/listing-GrandTowers.jpg'],
-    owner: 'Moldex Realty Inc.'
+    img: ['../assets/images/listing_images/listing-GrandTowers.jpg',
+      '../assets/images/listing_images/listing-GrandTowers2.jpg',
+      '../assets/images/listing_images/listing-GrandTowers3.jpg'],
+    owner: 'Moldex Realty Inc.',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6880.748230183621!2d120.99269744210767!3d14.55977174205414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97be774b035%3A0xf28237f16fd9c403!2sThe%20Grand%20Towers%20Manila!5e0!3m2!1sen!2sph!4v1687579119148!5m2!1sen!2sph',
+    phone: '0917 717 8880',
+    website: 'https://www.moldexrealty.ph'
   },
   {
     id: '2-torre-lorenzo',
@@ -21,32 +26,47 @@ let listing = [
     price: '₱18,000 - ₱25,000',
     reviewScore: 4.4,
     reviews: 13,
-    img: ['../assets/images/listing_images/listing-TLorenzo.jpg'],
-    owner: 'Torre Lorenzo Development Corporation'
+    img: ['../assets/images/listing_images/listing-TLorenzo.jpg',
+      '../assets/images/listing_images/listing-TLorenzo2.jpg',
+      '../assets/images/listing_images/listing-TLorenzo3.jpg'],
+    owner: 'Torre Lorenzo Development Corporation',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5848562613396!2d120.99177521483973!3d14.565716889824715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c978cf151c8d%3A0x8bfc15f5a457f675!2s2-Torre%20Lorenzo%2C%20Taft%20Ave%2C%20Malate%2C%20Manila%2C%201004%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1687593470423!5m2!1sen!2sph',
+    phone: '0916 684 7394',
+    website: 'https://www.torrelorenzo.com/residential-developments/2torre-lorenzo'
   },
   {
     id: '3-r-square',
     name: 'R Square Residences',
     description: 'R Square Residences is a world-class high-rise condominium in Malate, Manila. ' +
       'It is developed by Toplite Development Corporation and is located along Vito Cruz in Malate, Manila',
-    location: 'Vito Cruz, Malate, Manila',
+    location: 'Taft Ave, Malate, Manila, 1004 Metro Manila',
     price: '₱5,000,000 - ₱15,000',
     reviewScore: 4.1,
     reviews: 104,
-    img: ['../assets/images/listing_images/listing-RResidences.jpg'],
-    owner: 'Toplite Development Corporation'
+    img: ['../assets/images/listing_images/listing-RResidences.jpg',
+      '../assets/images/listing_images/listing-RResidences2.jpg',
+      '../assets/images/listing_images/listing-RResidences3.jpg'],
+    owner: 'Toplite Development Corporation',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.642853255977!2d120.99534439999995!3d14.562404800000008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97962cf8121%3A0x6d4760b768b6b8c4!2sR%20Square%20Residences!5e0!3m2!1sen!2sph!4v1687593525832!5m2!1sen!2sph',
+    phone: '0927 967 8558',
+    website: 'https://www.facebook.com/RSquareResidencesCondoMall/'
   },
   {
     id: '4-one-archers',
-    name: 'ONE Archer\'s Place',
+    name: 'One Archer\'s Place',
     description: 'One Archers Place is a 31-storey twin tower residential condominium located along Taft Avenue, Manila. ' +
       'It is designed for students and young professionals and offers studio and one-bedroom flats with lifestyle amenities',
     location: 'Taft Avenue, Malate, Manila',
     price: '₱5,000,000 - ₱30,000',
     reviewScore: 3.7,
     reviews: 25,
-    img: ['../assets/images/listing_images/listing-ArcherPlace.jpg'],
-    owner: 'Eton Properties Philippines'
+    img: ['../assets/images/listing_images/listing-ArcherPlace.jpg',
+      '../assets/images/listing_images/listing-ArcherPlace2.jpg',
+      '../assets/images/listing_images/listing-ArcherPlace3.jpg'],
+    owner: 'Eton Properties Philippines',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5681766866683!2d120.99052341483981!3d14.566669289824095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97f4f0cf917%3A0x67ecb17bc2ebf8ca!2sOne%20Archers&#39;%20Place!5e0!3m2!1sen!2sph!4v1687593707917!5m2!1sen!2sph',
+    phone: '0917-886-1868',
+    website: 'http://www.onearchersplace.com/'
   },
   {
     id: '5-green-residences',
@@ -54,12 +74,17 @@ let listing = [
     description: 'Green Residences is a 50-story mixed-use development located beside De La Salle University in Manila. ' +
       'It is designed to bring the vibe of the academe closer to home and offers a great place for college students ' +
       'to live out the best parts of college life',
-    location: 'Taft Avenue, Malate, Manila',
+    location: '2441, 1004 Taft Ave, Malate, Manila, 1004 Metro Manila',
     price: '₱5,100 - ₱5,700',
     reviewScore: 4.0,
     reviews: 213,
-    img: ['../assets/images/listing_images/listing-GResidences.jpg'],
-    owner: 'SMDC'
+    img: ['../assets/images/listing_images/listing-GResidences.jpg',
+      '../assets/images/listing_images/listing-GResidences2.jpg',
+      '../assets/images/listing_images/listing-GResidences3.jpg'],
+    owner: 'SMDC',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.552105384012!2d120.99271330000002!3d14.567586899999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9f293670793%3A0x4d8e08900ca6b815!2sGreen%20Residences!5e0!3m2!1sen!2sph!4v1687593765911!5m2!1sen!2sph',
+    phone: '(02) 8252 4067',
+    website: 'https://smdc.com/properties/green-residences/'
   },
   {
     id: '6-vito-cruz-towers',
@@ -71,8 +96,13 @@ let listing = [
     price: '₱7,000,000 - ₱25,000',
     reviewScore: 4.2,
     reviews: 191,
-    img: ['../assets/images/listing_images/listing-VCTowers.jpg'],
-    owner: 'Cityland Development Corporation'
+    img: ['../assets/images/listing_images/listing-VCTowers.jpg',
+      '../assets/images/listing_images/listing-VCTowers2.jpg',
+      '../assets/images/listing_images/listing-VCTowers3.jpg'],
+    owner: 'Cityland Development Corporation',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.668355426953!2d120.99107991483979!3d14.5609481898278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c979bd7f6a79%3A0xdfe82a6f2d464b5f!2sCityland%20Vito%20Cruz%20Towers!5e0!3m2!1sen!2sph!4v1687593901510!5m2!1sen!2sph',
+    phone: '(02) 8245 1126',
+    website: 'https://www.ehomes.ph/vito-cruz-towers.html'
   }
 ]
 
@@ -87,7 +117,6 @@ function generateFeaturedListing(listings) {
 
   //sort by review score
   listings.sort((a, b) => b.reviewScore - a.reviewScore);
-
   //set initial limit
   var listingLimit = 0;
 
@@ -125,7 +154,7 @@ function generateFeaturedListing(listings) {
              <a href="#"><h4>${listing.name}</h4></a>
               <h6>by: ${listing.owner}</h6>
                <ul class="rate">
-                ${star_rating(listing.reviewScore, listing.reviews)}
+                ${star_rating(listing.reviewScore, listing.reviews, 'featured-listings')}
                </ul>
                <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt="">
                </div> ${listing.price}</span>
@@ -136,21 +165,71 @@ function generateFeaturedListing(listings) {
                <em>${listing.location}</em></span>
 
                <div class="main-white-button">
-               <a href="contact.html"><i class="fa fa-eye"></i> Check Now</a>
+               <a href="new-listing.html?id=${listing.id}"><i class="fa fa-eye"></i> Check Now</a>
          </div>
        </div>
       </div>
     `;
-    /*
-    <ul class="info">
-                        <li><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 5 Bedrooms</li>
-                        <li><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</li>
-               </ul>
-    */
-
     row.appendChild(col);
     listingLimit++;
   });
+}
 
+function populateSwiper(listing, swiper) {
+  swiper.innerHTML = '';
+
+  listing.img.forEach((img) => {
+    swiper.innerHTML += `
+      <div class="swiper-slide">
+        <a href="${img}" class="grid image-link">
+          <img src="${img}" class="img-fluid" alt="#">
+        </a>
+      </div>
+    `;
+  });
 
 }
+
+function populateListingPage(id_page) {
+  //Get the listing data
+  let listing = fetchData().find((listing) => listing.id === id_page);
+  //Get the listing page elements to populate
+  let listingName = document.getElementById('listing-name');
+  let listingSwiper = document.getElementById('listing-swiper');
+  let listingStars = document.getElementById('listing-stars');
+  let listingPrice = document.getElementById('listing-price');
+  let numScore = document.getElementById('numscore');
+  let numReviews = document.getElementById('numreview');
+  let listingDescription = document.getElementById('listing-description');
+  let numReviewBottom = document.getElementById('numreviewBottom');
+  let listingMap = document.getElementById('listing-map');
+  let listingAddress = document.getElementById('listing-address');
+  let listingPhone = document.getElementById('listing-phone');
+  let listingWebsite = document.getElementById('listing-website');
+  let listingOwner = document.getElementById('listing-owner');
+  let ownerName = document.getElementById('owner-name');
+
+  //Replace the content of the listing page elements
+  listingName.innerHTML = listing.name;
+  populateSwiper(listing, listingSwiper);
+  listingStars.innerHTML = star_rating(listing.reviewScore, listing.reviews, 'listing-page');
+  listingPrice.innerHTML = listing.price;
+  numScore.innerHTML = listing.reviewScore;
+  numReviews.innerHTML = listing.reviews + ' reviews';
+  listingDescription.innerHTML = listing.description + '<hr>';
+  numReviewBottom.innerHTML = listing.reviews + ' reviews';
+  listingMap.src = listing.mapUrl;
+  listingAddress.innerHTML = listing.location;
+  listingPhone.innerHTML = listing.phone;
+  listingWebsite.innerHTML = listing.website;
+  ownerName.innerHTML = listing.owner;
+
+}
+
+if (window.location.href.includes('new-listing.html')) {
+  // get the id from the url
+  let url = new URL(window.location.href);
+  let id = url.searchParams.get('id');
+  populateListingPage(id);
+}
+
