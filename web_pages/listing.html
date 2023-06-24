@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,15 +15,11 @@
     <!-- Bootstrap core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
-    <link rel="stylesheet" href="../assets/css/main-dormable.css">
+    <link rel="stylesheet" href="../assets/css/listing-dormable.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
-<!--
-
--->
   </head>
 
 <body>
@@ -53,11 +48,10 @@
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="category.html">Category</a></li>
-              <li><a href="listing.html" class="active">Listing</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
+            <ul class="nav" id="menu_nav">
+              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="category-listing.html">Explore Listings</a></li>
+              <li><a href="#" onclick="login()">Log In | Sign Up</a></li>
             </ul>
             <a class='menu-trigger'>
                 <span>Menu</span>
@@ -70,670 +64,217 @@
   </header>
   <!-- ***** Header Area End ***** -->
 
-  <div class="page-heading">
+
     <div class="container">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="top-text header-text">
-            <h6>Check Out Our Listings</h6>
-            <h2>Item listings of Different Categories</h2>
           </div>
+        </div>
+        <div class="col-lg-12">
+          <form id="search-form" name="gs" method="submit" role="search" action="#">
+            <div class="row">
+              <div class="col-lg-3 align-self-center">
+                  <fieldset>
+                      <select name="area" class="form-select" aria-label="Area" id="chooseCategory" onchange="this.form.click()">
+                          <option selected>All Areas</option>
+                          <option value="New Village">New Village</option>
+                          <option value="Old Town">Old Town</option>
+                          <option value="Modern City">Modern City</option>
+                      </select>
+                  </fieldset>
+              </div>
+              <div class="col-lg-3 align-self-center">
+                  <fieldset>
+                      <input type="address" name="address" class="searchText" placeholder="Enter a location" autocomplete="on" required>
+                  </fieldset>
+              </div>
+              <div class="col-lg-3 align-self-center">
+                  <fieldset>
+                      <select name="price" class="form-select" aria-label="Default select example" id="chooseCategory" onchange="this.form.click()">
+                          <option selected>Price Range</option>
+                          <option value="$100 - $250">$100 - $250</option>
+                          <option value="$250 - $500">$250 - $500</option>
+                          <option value="$500 - $1000">$500 - $1,000</option>
+                          <option value="$1000+">$1,000 or more</option>
+                      </select>
+                  </fieldset>
+              </div>
+              <div class="col-lg-3">
+                  <fieldset>
+                      <button class="main-button"><i class="fa fa-search"></i> Search Now</button>
+                  </fieldset>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="listing-page">
+  <div class="recent-listing" style="margin-top: -70px;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="naccs">
-            <div class="grid">
+          <div class="section-heading" style="margin-top: -30px;">
+            <h2>Name of Dorm</h2>
+          </div>
+        </div>
+        <div class="col-lg-12" style="margin-top: -50px;">
+          <div class="owl-carousel owl-listing">
+            <div class="item">
               <div class="row">
-                <div class="col-lg-9">
-                  <ul class="nacc">
-                  <!-- first category listing of items -->
-                    <li class="active">
-                      <div>
-                        <div class="col-lg-12">
-                          <div class="owl-carousel owl-listing">
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GrandTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Sunshine Paradise Apartment</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $600 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-TLorenzo.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Best one in this category</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $800 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Amazing Dj Party House</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $950 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GrandTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Sunshine Villa Condo</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $450 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-TLorenzo.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Gaming Studio Units</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $550 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Amazing Dj Party House</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $650 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- third page of first category -->
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GrandTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Third Page Apartment</h4></a>
-                                      <h6>by: Real Estate Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $600 to $950 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-TLorenzo.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>New Gaming Townhouse</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $840 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Amazing Party Villa</h4></a>
-                                      <h6>by: Real ESTATE Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $950 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <!-- second category listing of items -->
-                    <li>
-                      <div>
-                        <div class="col-lg-12">
-                          <div class="owl-carousel owl-listing">
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-ArcherPlace.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Food First page</h4></a>
-                                      <h6>by: Food Delivery</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $600 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Food Item 2</h4></a>
-                                      <h6>by: Food Delivery</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $540 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Food Item 3</h4></a>
-                                      <h6>by: Food Delivery</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $720 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- second category second page -->
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>FOOD Second Page</h4></a>
-                                      <h6>by: Food Delivery</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $420 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-ArcherPlace.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Best Food Item 5</h4></a>
-                                      <h6>by: Food Delivery</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $450 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Amazing Food Item 6</h4></a>
-                                      <h6>by: Food Delivery</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $500 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <!-- third category first page -->
-                    <li>
-                      <div>
-                        <div class="col-lg-12">
-                          <div class="owl-carousel owl-listing">
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Third Category First Page</h4></a>
-                                      <h6>by: Sale Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $750 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-ArcherPlace.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Car Item 2</h4></a>
-                                      <h6>by: Sale Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $880 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Car Item 3</h4></a>
-                                      <h6>by: Sale Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $770 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- third category second page -->
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GrandTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Third Category Second Page</h4></a>
-                                      <h6>by: Sale Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $660 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-TLorenzo.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Car Item 5</h4></a>
-                                      <h6>by: Sale Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $550 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-VCTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Car Item 6</h4></a>
-                                      <h6>by: Sale Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $440 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- third category third page -->
-                            <!-- NONE -->
-
-
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <!-- 4th category 1st page -->
-                    <li>
-                      <div>
-                        <div class="col-lg-12">
-                          <div class="owl-carousel owl-listing">
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-VCTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Traveling Item 1</h4></a>
-                                      <h6>by: Travel Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $400 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-ArcherPlace.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Traveling Item 2</h4></a>
-                                      <h6>by: Travel Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $500 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Traveling Item 3</h4></a>
-                                      <h6>by: Travel Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $342 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- 4th category 2nd page -->
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-GResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>4th Category 2nd Page</h4></a>
-                                      <h6>by: Travel Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $268 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-VCTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Traveling Item 5</h4></a>
-                                      <h6>by: Travel Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $145 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-RResidences.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>Traveling Item 6</h4></a>
-                                      <h6>by: Travel Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $240 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- 4th category 3rd page -->
-                            <div class="item">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="listing-item">
-                                    <div class="left-image">
-                                      <a href="#"><img src="../assets/images/listing_images/listing-VCTowers.jpg" alt=""></a>
-                                      <div class="hover-content">
-                                        <div class="main-white-button">
-                                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="right-content align-self-center">
-                                      <a href="#"><h4>4th Category 3rd Page</h4></a>
-                                      <h6>by: Travel Agent</h6>
-                                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $360 / month included tax</span>
-                                      <span class="details">Details: <em>860 sq ft</em></span>
-                                      <span class="info"><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 2 Bedrooms<br><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</span>
-                                    </div>
-                                  </div>
-                                </div>
-
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-
-                  </ul>
-
+                <div class="col-lg-12">
+                  <div class="listing-item">
+                    <div class="fit-image">
+                      <a href="#">
+                        <img src="../assets/images/listing_images/listing-GrandTowers.jpg" alt="" data-alternate-src="../assets/images/listing_images/listing-GrandTowers2.jpeg">
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="listing-item">
+                    <div class="right-content align-self-center">
+                      <a href="#"><h4>Name of Dorm</h4></a>
+                      <h6>by: Sale Agent</h6>
+                      <br>
+                      <h6>Experience the convenience and affordability of dormitory living near De La Salle University in Taft, Metro Manila. Step into a welcoming and modern space, as captured in the captivating images that showcase the dorm's contemporary interiors and inviting common areas. With affordable pricing options to suit various budgets, you can enjoy a comfortable lifestyle without compromise. Located just moments away from the university, this prime location offers easy access to academic buildings and a vibrant surrounding area filled with shops, restaurants, and entertainment venues. The dormitory also provides exceptional amenities, including high-speed internet, 24/7 security, laundry facilities, and inviting communal spaces, fostering a sense of community among residents. Choose this inviting dormitory as your home, and embrace a seamless college experience focused on academic success and memorable moments.</h6>
+                      <ul class="rate">
+                        <!-- Javascript handles the rating system -->
+                      </ul>
+                      <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt=""></div> $3,600 / month with taxes</span>
+                      <span class="details">Details: <em>3660 sq ft</em></span>
+                      <ul class="info">
+                        <li><img src="../assets/images/listing_icon/listing-icon-02.png" alt=""> 5 Bedrooms</li>
+                        <li><img src="../assets/images/listing_icon/listing-icon-03.png" alt=""> 3 Bathrooms</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="listing-item">
+                    <div class="right-content align-self-center">
+                      <a href="#"><h4>Location</h4></a>
+                      <h6>Know where this dorm is at!</h6>
+                      <br>
+                      <div class="mapouter">
+                        <div class="gmap_canvas">
+                          <iframe class="gmap_iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=800&amp;height=600&amp;hl=en&amp;q=The Grand Towers Manila, Philippines&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                          <a href="https://gachanox.io/">Gacha Nox Download</a>
+                        </div>
+                        <style>
+                          .mapouter {
+                            position: relative;
+                            text-align: right;
+                            width: 1170px; /* Adjust the width here */
+                            height: 800px; /* Adjust the height here */
+                          }
+
+                          .gmap_canvas {
+                            overflow: hidden;
+                            background: none!important;
+                            width: 1170px!important; /* Adjust the width here */
+                            height: 800px!important; /* Adjust the height here */
+                          }
+
+                          .gmap_iframe {
+                            width: 1170px!important; /* Adjust the width here */
+                            height: 800px!important; /* Adjust the height here */
+                          }
+                        </style>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+          <br>
+          <br>
+
+
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="item" style="margin-top: -180px;>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="listing-item">
+          <div class="right-content align-self-center">
+            <div class="category-post">
+              <div class="container">
+                  <div class="description">
+                      <div class="reviews">
+                        <h4>Reviews:</h4>
+                        <br>
+                        <div class="review-box">
+                          <span class="condo-name-review">The Grand Towers</span>
+                          <div class="review-container">
+                            <img class="mini-profile-review" src="../blank_profile.png">
+                            <div class="user-review">
+                              <span class="review-username">Juan Dela 123</span>
+                                <span class="review-condo">"This condo sucks ass"</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                    <div class="review-box">
+                      <span class="condo-name-review">2 Torre Lorenzo</span>
+                      <div class="review-container">
+                        <img class="mini-profile-review" src="../blank_profile.png">
+                        <div class="user-review">
+                          <span class="review-username">Juan Dela 123</span>
+                          <span class="review-condo">"Saks lang naman."</span>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+
+                    <div class="comment-box">
+                      <textarea class="form-control" rows="3" placeholder="Type a comment"></textarea>
+                      <br>
+                      <button class="btn btn-primary">Post</button>
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+
+
+
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 
   <footer>
     <div class="container">
@@ -781,13 +322,14 @@
         <div class="col-lg-12">
           <div class="sub-footer">
             <p>Copyright © 2021 Plot Listing Co., Ltd. All Rights Reserved.
-              <br>
-              Design: <a rel="nofollow" href="https://templatemo.com" title="CSS Templates">TemplateMo</a></p>
+            <br>
+      Design: <a rel="nofollow" href="https://templatemo.com" title="CSS Templates">TemplateMo</a></p>
           </div>
         </div>
       </div>
     </div>
   </footer>
+
 
   <!-- Scripts -->
   <script src="../vendor/jquery/jquery.min.js"></script>
@@ -799,7 +341,22 @@
   <script src="../assets/js/autostar-rating.js"></script>
   <script src="../assets/js/login-register.js"></script>
   <script src="../assets/js/custom.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.fit-image a').click(function(e) {
+        e.preventDefault();
+        var img = $(this).find('img');
+        var currentSrc = img.attr('src');
+        var alternateSrc = img.data('alternate-src');
+
+        // Swap the image sources
+        img.attr('src', alternateSrc);
+        img.data('alternate-src', currentSrc);
+      });
+    });
+    </script>
 
 </body>
 
 </html>
+

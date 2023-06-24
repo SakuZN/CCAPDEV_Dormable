@@ -29,16 +29,27 @@ async function login() {
 }
 
 async function register() {
-  var user = document.getElementById('signupUsername').value;
-  var email = document.getElementById('signupEmail').value;
-  var pass = document.getElementById('signupPswd').value;
-  var userType = document.getElementById('userType').value;
+  const user = document.getElementById('signupUsername').value;
+  const email = document.getElementById('signupEmail').value;
+  const pass = document.getElementById('signupPswd').value;
+  const userType = document.getElementById('userType').value;
+
+  //Add current date as date of registration
+  const curDate = new Date();
+  const year = curDate.getFullYear();
+  const month = monthNames[curDate.getMonth()];
+  const registerDate = `${month} ${year}`;
+
 
   var newUserData = {
     username: user,
     email: email,
     password: pass,
-    type: userType
+    type: userType,
+    description: '',
+    profilePic: '',
+    joinDate: registerDate,
+    noOfReviews: 0,
   };
 
   var currentData = localStorage.getItem('userDatabase')
@@ -95,14 +106,14 @@ function updateMenu() {
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
       <li><a href="category.html" class="${currentPage.includes('category.html') ? 'active' : ''}">My Profile</a></li>
-      <li><a href="listing.html" class="${currentPage.includes('listing.html') ? 'active' : ''}">Explore Listings</a></li>
+      <li><a href="listing.html" class="${currentPage.includes('category-listing.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="index.html" id="logoutBtn">Logout</a></li>
     `;
   } else {
     // Display menu for non-logged-in users
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
-      <li><a href="listing.html" class="${currentPage.includes('listing.html') ? 'active' : ''}">Explore Listings</a></li>
+      <li><a href="listing.html" class="${currentPage.includes('category-listing.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="login.html" class="${currentPage.includes('login.html') ? 'active' : ''}">Log In | Sign Up</a></li>
     `;
   }
@@ -126,6 +137,7 @@ function showPopup(message) {
 
 updateMenu();
 
+//Conditional statement to add event listeners to login and register forms in login.html
 if (window.location.href.includes('login.html')) {
   const loginForm = document.getElementById('loginForm');
   const registerForm = document.getElementById('signupForm');
@@ -140,6 +152,7 @@ if (window.location.href.includes('login.html')) {
   });
 }
 
+// Conditional Statement to add logout event listener to logout button in index.html
 if (window.location.href.includes('index.html') && localStorage.getItem('isLoggedIn') === 'true') {
   const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn.addEventListener('click', function (e) {
@@ -147,6 +160,27 @@ if (window.location.href.includes('index.html') && localStorage.getItem('isLogge
     logout();
   });
 }
+
+// Conditional Statement to add default user data to local storage if it does not exist
+if (localStorage.getItem('userDatabase') === null || localStorage.getItem('userDatabase') === undefined) {
+  localStorage.setItem('userDatabase', JSON.stringify([userData]));
+}
+
+
+//User Information Default Values
+let userData = {
+  username: 'John Doe',
+  email: 'johndoe@gmail.com',
+  password: '1234',
+  type: 'student',
+  description: 'I am a De La Salle University student. I am looking for a place to stay near the campus.',
+  profilePic: '',
+  joinDate: 'January 2023',
+  noOfReviews: 0,
+}
+
+let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+  'October', 'November', 'December'];
 function pageReload() {
   location.reload();
 }
