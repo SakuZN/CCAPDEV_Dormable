@@ -64,9 +64,9 @@ dialog h2 {
   padding-bottom: 1rem;
 }
 dialog p {
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.3rem;
-  padding: 0.5rem 0;
+  padding: 1.5rem 0;
 }
 dialog p a:visited {
   color: rgb(var(--vs-primary));

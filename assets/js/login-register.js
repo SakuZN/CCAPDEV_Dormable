@@ -168,7 +168,8 @@ if (window.location.href.includes('login.html')) {
 }
 
 // Conditional Statement to add logout event listener to logout button in index.html
-if (window.location.href.includes('index.html') && localStorage.getItem('isLoggedIn') === 'true') {
+if ((window.location.href.includes('index.html') || (window.location.href.includes('listing.html')))
+  && localStorage.getItem('isLoggedIn') === 'true') {
   const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn.addEventListener('click', function (e) {
     e.preventDefault();

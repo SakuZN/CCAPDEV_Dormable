@@ -191,7 +191,7 @@ body {
 
 .main-white-button a {
   display: inline-block;
-  background-color: #fff;
+  background-color: #d6cfcf;
   font-size: 15px;
   font-weight: 400;
   color: #2a2a2a;
@@ -206,7 +206,7 @@ body {
   margin-right: 10px;
   width: 22px;
   height: 22px;
-  background-color: #8d99af;
+  background-color: #778093;
   color: #fff;
   border-radius: 50%;
   display: inline-block;
@@ -214,9 +214,8 @@ body {
   font-size: 12px;
   line-height: 22px;
 }
-
 .main-white-button a:hover {
-  background-color: #8d99af;
+  background-color: #d2644d;
   color: #fff;
 }
 
