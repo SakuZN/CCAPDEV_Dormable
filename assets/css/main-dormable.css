@@ -1323,6 +1323,7 @@ Page Heading
 ---------------------------------------------
 */
 
+
 .page-heading {
   background-repeat: no-repeat;
   background-position: center center;
@@ -1402,10 +1403,9 @@ Category Post
 
 .category-post .review-box {
   background-color: #f5f5f5;
-  width: 1000px;
-  border-radius:10px;
-  display: flex;
-  flex-direction: column;
+  max-width: 100%;
+  border-radius: 10px;
+  display: block;
   overflow: hidden;
   padding: 10px;
 }
