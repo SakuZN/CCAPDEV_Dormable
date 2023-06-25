@@ -1305,6 +1305,17 @@ form#contact button:hover {
   color: #fff;
 }
 
+.contact-description{
+  margin-top: 25px;
+  text-align: justify-all;
+  text-justify: inter-word;
+}
+.contact-description p{
+  margin-bottom: 25px;
+  margin-left: 10px;
+
+}
+
 
 /*
 ---------------------------------------------
