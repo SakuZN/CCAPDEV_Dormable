@@ -234,17 +234,3 @@ function populateListingPage(id_page) {
 
 }
 
-if (window.location.href.includes('listing.html')) {
-  // get the id from the url
-  let url = new URL(window.location.href);
-  let id = url.searchParams.get('id');
-  let checkValidId = fetchData().find((listing) => listing.id === id);
-  if (id === null || checkValidId === undefined) {
-    window.location.href = '404.html';
-  }
-  else {
-    populateListingPage(id);
-  }
-  document.querySelector('.reviewForm').addClass('hidden');
-}
-

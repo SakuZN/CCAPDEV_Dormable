@@ -1437,6 +1437,10 @@ responsive
   cursor: pointer;
   max-width: 120px;
 }
+.user-image {
+  cursor: pointer;
+  max-width: 120px;
+}
 
 .star-rating {
   display: inline-block;
@@ -1471,7 +1475,7 @@ responsive
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  margin: 0 auto;
+  margin-left: 35px;
 }
 
 .reviewForm .col-25 {
@@ -1511,6 +1515,18 @@ textarea {
   margin-bottom: 0;
   margin-top: 5px;
 }
+.reviewForm .userInfo h2 {
+  margin-left: 35px;
+  text-align: left;
+}
+
+.reviewForm .userInfo h3 {
+  font-size: 17px;
+  margin-left: 40px;
+  color: #8a8e96;
+  margin-top: 2px;
+}
+
 .reviewForm .rate {
   display: flex;
   align-items: center; /* Center items vertically */
@@ -1552,6 +1568,17 @@ textarea {
 
 .reviewForm input[type="submit"]:hover {
   background-color: #45a049;
+}
+
+.reviewForm ul{
+  /* margin: 0; */
+  justify-content: center;
+  display: flex;
+  margin-top: 15px;
+}
+
+.reviewForm input[type='file'] {
+  color: transparent;
 }
 
 

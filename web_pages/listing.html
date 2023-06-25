@@ -268,7 +268,7 @@
                     </p>
                     <p class="customer-text">For students near De La Salle University, this is the best place to stay. but be wary of lackluster rooms, services, and food.
                     </p>
-                    <ul id="userPics">
+                    <ul>
                       <li href="../assets/images/test_image/featured2.jpg" class="review-image">
                         <img src="../assets/images/test_image/featured2.jpg" class="img-fluid" alt="#">
                       </li>
@@ -295,6 +295,10 @@
               <div class="row">
                 <div class="col-75">
                   <img id="profilePic" src="../assets/images/test_image/blank_pp.jpg" alt="Profile Picture">
+                  <div class="userInfo">
+                    <h2 id="userName">John Doe</h2>
+                    <h3 id="userNumOfReview">0 Reviews</h3>
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -318,8 +322,12 @@
                   <label for="reviewImage">Review Image</label>
                 </div>
                 <div class="col-75">
-                  <input type="file" id="reviewImage" name="reviewImage" accept="image/*">
+                  <input type="file" id="reviewImage" name="reviewImage" accept="image/*" multiple>
+                  <button id="clearImages" type="button" class="btn btn-danger">Clear Images</button>
                 </div>
+                <ul class="user-image-list">
+                  <!-- Dynamic added images -->
+                </ul>
               </div>
               <div class="row" style="margin-bottom: 0">
                 <h2>How was your experience?</h2>
@@ -469,7 +477,7 @@
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Magnific popup JS -->
 <script src="../vendor/jquery/jquery.magnific-popup.js"></script>
-<!-- Swipper Slider JS -->
+<!-- Swiper Slider JS -->
 <script src="../vendor/swiper/swiper.min.js"></script>
 
 <!-- Vendor JS -->
@@ -480,6 +488,20 @@
 <script src="../assets/js/listing.js"></script>
 <script src="../assets/js/login-register.js"></script>
 <script src="../assets/js/custom.js"></script>
+
+<!-- Dynamically Add Listing Details -->
+<script>
+  // get the id from the url
+  let url = new URL(window.location.href);
+  let id = url.searchParams.get('id');
+  let checkValidId = fetchData().find((listing) => listing.id === id);
+  if (id === null || checkValidId === undefined) {
+    window.location.href = '404.html';
+  }
+  else {
+    populateListingPage(id);
+  }
+</script>
 <!-- Swiper for Listings -->
 <script>
   var swiper = new Swiper('#listing-image', {
@@ -523,7 +545,7 @@
     $('.image-link2').magnificPopup({
       type: 'image',
       gallery: {
-        enabled: true
+        enabled: false
       }
     });
   }
@@ -532,34 +554,102 @@
     $('.review-image').magnificPopup({
       type: 'image',
       gallery: {
-        enabled: false
+        enabled: true
       }
     });
+
+
+    function initUserPopUp() {
+      $('.user-image').magnificPopup({
+        type: 'image',
+        gallery: {
+          enabled: true
+        }
+      });
+    }
   }
 </script>
 
-<!-- Pseudo Implementation of Logged In User review -->
 <script>
-  if (localStorage.getItem('isLoggedIn') !== 'true') {
-    //review button redirect to login
-    document.getElementById('reviewBtn').addEventListener('click', function () {
-      window.location.href = 'login.html';
+  $(document).ready(function() {
+    <!-- Pseudo Implementation of Logged In User review -->
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      // Review button redirect to login
+      $('#reviewBtn').on('click', function() {
+        window.location.href = 'login.html';
+      });
+    } else {
+      $('#reviewBtn').on('click', function() {
+        $('.reviewForm').removeClass('hidden');
+        $('html, body').animate({
+          scrollTop: $('.reviewForm').offset().top
+        }, 800);
+
+        var currrentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currrentUser.profilePic !== '') {
+          $('#profilePic').attr('src', currrentUser.profilePic);
+        }
+        $('#userName').text(currrentUser.username);
+        $('#userNumOfReview').text(currrentUser.noOfReviews + ' Reviews');
+      });
+
+      $('.reviewForm').on('submit', function(event) {
+        event.preventDefault();
+        showPopup('Review Submitted!');
+        // Hide the review form
+        $('#userForm')[0].reset();
+        $('.reviewForm').addClass('hidden');
+      });
+    }
+    // User Review Form
+    initUserPopUp();
+    $('#reviewImage').on('change', function() {
+      var files = $(this)[0].files;
+      var imageList = $('.user-image-list');
+      var maxFiles = 5;
+
+      //if current image list is not empty check if the new files exceed the max files
+      if (imageList.children().length > 0) {
+        if (files.length + imageList.children().length > maxFiles) {
+          showPopup('Max 5 media allowed!');
+          return;
+        }
+      }
+
+      // Iterate over selected files
+      for (var i = 0; i < files.length && i < maxFiles; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+
+        // Read the file as a data URL
+        reader.onload = function(e) {
+          var imageUrl = e.target.result;
+
+          // Create a new li element with the image
+          var li = $('<li>').addClass('user-image').attr('href', imageUrl);
+          var img = $('<img>').attr('src', imageUrl).addClass('img-fluid').attr('alt', '#');
+          li.append(img);
+
+          // Append the li element to the image list
+          imageList.append(li);
+          //Initialize user image
+          initUserPopUp();
+        };
+
+        // Read the file
+        reader.readAsDataURL(file);
+      }
+      $('#reviewImage').val('');
+
     });
-  } else {
-  document.getElementById('reviewBtn').addEventListener('click', function () {
-    document.querySelector('.reviewForm').classList.remove('hidden');
-    document.querySelector('.reviewForm').scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
-  });
 
-  document.querySelector('.reviewForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    showPopup('Review Submitted!');
-    //hide the review form
-    document.getElementById('userForm').reset();
-    document.querySelector('.reviewForm').addClass('hidden');
+    $('#clearImages').on('click', function() {
+      // Clear the file input and image list
+      $('#reviewImage').val('');
+      $('.user-image-list').empty();
+    });
   });
-
-  }
 </script>
+
 </body>
 </html>

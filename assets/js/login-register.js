@@ -48,14 +48,14 @@ async function register() {
   const user = document.getElementById('signupUsername').value;
   const email = document.getElementById('signupEmail').value;
   const pass = document.getElementById('signupPswd').value;
-  const userType = document.getElementById('userType').value;
+  const userType = document.querySelector('input[name="userType"]:checked').value;
+  const profilePic = document.getElementById('fileUpload').files[0];
 
   //Add current date as date of registration
   const curDate = new Date();
   const year = curDate.getFullYear();
   const month = monthNames[curDate.getMonth()];
   const registerDate = `${month} ${year}`;
-
 
   var newUserData = {
     username: user,
@@ -74,15 +74,19 @@ async function register() {
     currentData = JSON.parse(currentData);
 
     //Check if username or email already exists
-    var isExisting = currentData.some(async (data) => {
+    var isExisting = false;
+
+    for (const data of currentData) {
       if (data.username === user) {
         await showPopup('Username already exists!');
-        return true;
+        isExisting = true;
+        break;
       } else if (data.email === email) {
         await showPopup('Email already exists!');
-        return true;
+        isExisting = true;
+        break;
       }
-    });
+    }
     // If username or email already exists, do not add to database
     if (isExisting) {
       return;
@@ -94,11 +98,27 @@ async function register() {
     currentData = [newUserData];
   }
 
-  localStorage.setItem('userDatabase', JSON.stringify(currentData));
+  // Handle file upload
+  if (profilePic) {
+    const reader = new FileReader();
 
-  alert('Registered successfully!');
+    reader.onload = async function () {
+      newUserData.profilePic = reader.result;
+      localStorage.setItem('userDatabase', JSON.stringify(currentData)); // Update local storage with newUserData
 
-  window.location.href = 'login.html';
+      await showPopup('Registered successfully!');
+
+      window.location.href = 'login.html';
+    };
+
+    reader.readAsDataURL(profilePic);
+  } else {
+    localStorage.setItem('userDatabase', JSON.stringify(currentData)); // Update local storage without profilePic
+
+    await showPopup('Registered successfully!');
+
+    window.location.href = 'login.html';
+  }
 }
 
 async function logout() {

@@ -48,33 +48,3 @@ function star_rating(score, reviews, listingID) {
   // Return the generated HTML
   return starHtml;
 }
-
-// Automatically trigger the generateReviewStars function for all listing items when the page finishes loading
-
-/*
-window.addEventListener('load', function() {
-  var listingItems = document.getElementsByClassName('listing-item');
-  let listing = fetchData();
-
-  // Get the listings from the JSON file
-  var listings = fetchData();
-  for (var i = 0; i < listingItems.length; i++) {
-    var ratingElement = listingItems[i].querySelector('.rate');
-    var nameElement = listingItems[i].querySelector('h4');
-
-    // Get the listing name to match with the review score
-    var listingName = nameElement.textContent;
-
-    // Find the corresponding listing in the array
-    listing = listings.find(function(item) {
-      return item.name === listingName;
-    });
-
-    // If a matching listing is found, generate the review stars HTML
-    if (listing) {
-      ratingElement.innerHTML = star_rating(listing.reviewScore, listing.reviews);
-    }
-  }
-});
-
- */
