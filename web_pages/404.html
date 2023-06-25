@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>Page Not Found</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="../icon.png"/>
   <style>
     * {
       line-height: 1.2;
@@ -14,7 +15,7 @@
     html {
       color: #888;
       display: table;
-      font-family: sans-serif;
+      font-family: 'Poppins', sans-serif;
       height: 100%;
       text-align: center;
       width: 100%;
@@ -22,7 +23,6 @@
 
     body {
       display: table-cell;
-      vertical-align: middle;
       margin: 2em auto;
     }
 
@@ -48,14 +48,70 @@
         font-size: 1.5em;
         margin: 0 0 0.3em;
       }
+    }
 
+    .home-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #337ab7;
+      color: #fff;
+      border-radius: 5px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .home-button:hover {
+      background-color: #23527c;
+    }
+
+    .gif-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
+      margin: auto;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 
 <body>
+<div class="gif-container hidden">
+  <div class="tenor-gif-embed" data-postid="21379187" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+    a href="https://tenor.com/view/sad-spongebob-no-more-fortnite-blocked-sad-spongebob-gif-21379187">Sad Spongebob GIF</a>from
+    <a href="https://tenor.com/search/sad-gifs">Sad GIFs</a>
+  </div>
+</div>
+
+  <h1>404</h1>
   <h1>Page Not Found</h1>
-  <p>Sorry, but the page you were trying to view does not exist.</p>
+  <p>Sorry, we had an <br> <span style="font-weight: bold">*****.sys moment!</span><br> This is on us :(</p>
+  <hr>
+  <a class="home-button" href="index.html">Go back to Home</a>
+  <a class="home-button" id="gif">Press me for Comfort!</a>
+
+  <audio id="404-music">
+    <source src="../assets/sound/404.mp3?cachebuster=<?=time()?" type="audio/mpeg">
+  </audio>
+
+<script type="text/javascript" async src="https://tenor.com/embed.js">
+
+</script>
+<script>
+  var audio = document.getElementById("404-music");
+  let spongebob= document.getElementById("gif");
+  spongebob.addEventListener("click", function() {
+    document.querySelector(".gif-container").classList.remove("hidden");
+    audio.play();
+    spongebob.classList.add("hidden");
+  });
+</script>
 </body>
 
 </html>

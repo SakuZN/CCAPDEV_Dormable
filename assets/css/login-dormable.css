@@ -20,11 +20,22 @@ body{
 }
 .main{
 	width: 350px;
-	height: 600px;
+	height: 717px;
 	background: #a2a2a2;
 	overflow: hidden;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #757575;
+  margin-top: 25px;
+}
+@media (min-width: 1536px) {
+  .main {
+    margin-top: 115px;
+  }
+}
+@media (max-height: 1000px) {
+  .main {
+    margin-top: 110px;
+  }
 }
 #chk{
 	display: none;
@@ -94,7 +105,7 @@ button:hover{
 	background: #343a40;
 }
 .login{
-	height: 550px;
+	height: 700px;
 	background: #eee;
 	border-radius: 60% / 10%;
 	transform: translateY(-220px);
@@ -106,13 +117,64 @@ button:hover{
 }
 
 #chk:checked ~ .login{
-	transform: translateY(-600px);
+	transform: translateY(-740px);
 }
 #chk:checked ~ .login label{
 	transform: scale(1);
 }
 #chk:checked ~ .signup label{
 	transform: scale(.6);
+}
+
+.checkboxes input[type="checkbox"] {
+  width: 20px;
+  display: flex;
+  margin: 15px;
+}
+
+/** profile picture **/
+.registerProfile {
+  display: flex;
+  justify-content: center;
+}
+.profile-pic {
+  width: 200px;
+  max-height: 200px;
+  display: inline-block;
+}
+
+.file-upload {
+  display: none;
+}
+.circle {
+  border-radius: 100% !important;
+  overflow: hidden;
+  width: 128px;
+  height: 128px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+img {
+  max-width: 100%;
+  height: 100%;
+}
+.p-image {
+  position: absolute;
+  top: 151px;
+  right: 146px;
+  color: #666666;
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+  cursor: pointer;
+}
+.p-image:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+.upload-button {
+  font-size: 1.2em;
+}
+
+.upload-button:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+  color: #999;
 }
 
 /*

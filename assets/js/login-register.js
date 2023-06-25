@@ -24,6 +24,7 @@ async function login() {
     userDatabase = JSON.parse(userDatabase);
     isInStorage = userDatabase.some((data) => {
       if (data.email === email && data.password === pass) {
+        localStorage.setItem('currentUser', JSON.stringify(data));
         return true;
       }
     });
@@ -102,6 +103,7 @@ async function register() {
 
 async function logout() {
   localStorage.setItem('isLoggedIn', 'false');
+  localStorage.removeItem('currentUser');
   await showPopup('Logged out successfully!');
   window.location.href = 'index.html';
 }

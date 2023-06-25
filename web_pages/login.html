@@ -53,7 +53,19 @@
 		<input type="checkbox" id="chk" aria-hidden="true">
 			<div class="signup">
 				<form id="signupForm">
-					<label for="chk" aria-hidden="true">Sign up</label>
+					<label for="chk" aria-hidden="true" style="margin-bottom: 25px">Sign up</label>
+          <div class="registerProfile">
+            <div class="small-12 medium-2 large-2 columns">
+              <div class="circle">
+                <img class="profile-pic" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
+
+              </div>
+              <div class="p-image">
+                <i class="fa fa-camera upload-button"></i>
+                <input class="file-upload" type="file" accept="image/*"/>
+              </div>
+            </div>
+          </div>
 					<input type="text" name="txt" placeholder="Username" required="" id="signupUsername">
 					<input type="email" name="email" placeholder="Email" required="" id="signupEmail">
 					<input type="password" name="pswd" placeholder="Password" required="" id="signupPswd">
@@ -72,6 +84,10 @@
 					<label for="chk" aria-hidden="true">Login</label>
 					<input type="email" name="email" placeholder="Email" required="" id="loginEmail">
 					<input type="password" name="pswd" placeholder="Password" required="" id="loginPswd">
+          <div class="checkboxes">
+            <input type="checkbox" id="remember" name="userRemember" value="true" required>
+            <label for="remember">Remember me</label>
+          </div>
 					<button type="submit">Login</button>
 				</form>
 			</div>
@@ -93,5 +109,27 @@
   <script src="../assets/js/autostar-rating.js"></script>
   <script src="../assets/js/login-register.js"></script>
   <script src="../assets/js/custom.js"></script>
+<script>
+  $(document).ready(function() {
+    var readURL = function(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('.profile-pic').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $(".file-upload").on('change', function(){
+      readURL(this);
+    });
+
+    $(".upload-button").on('click', function() {
+      $(".file-upload").click();
+    });
+  });
+</script>
 </body>
 </html>
