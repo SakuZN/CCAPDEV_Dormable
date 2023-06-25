@@ -181,6 +181,61 @@ function generateFeaturedListing(listings) {
   });
 }
 
+// Auto generates the listing based on the query
+function generateQueryListing(listings) {
+  let queryListing = document.getElementById('query-listings');
+  let queryLoadMore = queryListing.lastElementChild;
+
+  //sort by review score
+  listings.sort((a, b) => b.reviewScore - a.reviewScore);
+  //set initial limit
+  var listingLimit = 0;
+
+  //Initialize divs
+  let indivListing;
+  //Loop through the listings
+  listings.forEach((listing) => {
+
+    indivListing = document.createElement('div');
+    indivListing.classList.add('col-lg-4', 'col-md-6', 'item');
+
+    // remove last child, which is the load more button
+
+    indivListing.innerHTML = `
+      <div class="property-item">
+                        <div class="pi-pic set-bg" data-setbg="${listing.img[0]}" style="background-image: url(${listing.img[0]}" >
+                            <div class="label">${listing.reviewScore}</div>
+                        </div>
+                        <div class="pi-text">
+                            <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
+                            <div class="pt-price">${listing.price}<span>/month</span></div>
+                            <h5><a href="listing.html?id=${listing.id}">${listing.name}</a></h5>
+                            <p><span class="icon-location-pin"></span> "${listing.location}"</p>
+                            <ul>
+                                <li><i class="icon-frame"></i> 2, 283</li>
+                                <li><i class="fa fa-bath"></i> 03</li>
+                                <li><i class="fa fa-bed"></i> 05</li>
+                                <li><i class="fa fa-automobile"></i> 01</li>
+                            </ul>
+                            <div class="pi-agent">
+                                <div class="pa-item">
+                                    <div class="pa-info">
+                                        <img src="${listing.ownerImg}" alt="">
+                                        <h6>${listing.owner}</h6>
+                                    </div>
+                                    <div class="pa-text">
+                                        ${listing.phone}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    `;
+    queryListing.appendChild(indivListing);
+  });
+  queryListing.appendChild(queryLoadMore);
+}
+
 function populateSwiper(listing, swiper) {
   swiper.innerHTML = '';
 
