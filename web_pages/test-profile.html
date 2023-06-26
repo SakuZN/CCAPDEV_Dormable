@@ -202,6 +202,110 @@
     </div>
   </div>
 </div>
+<div class="main-content">
+  <div class="booking-checkbox_wrap mt-4">
+    <h5 id="numreviewBottom" style="font-size: 24px">Review History</h5>
+    <hr>
+    <!-- Swiper for Reviews -->
+    <div class="swiper-container" id="Reviews">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide">
+          <!-- Review Section -->
+          <div class="customer-review_wrap">
+            <div class="customer-img" >
+              <img src="../assets/images/test_image/customer-img1.jpg" class="img-fluid" alt="#">
+              <p>Amanda G</p>
+              <span>35 Reviews</span>
+            </div>
+            <div class="customer-content-wrap">
+              <div class="customer-content">
+                <div class="customer-review">
+                  <h6>Great Condo in Taft Avenue</h6>
+                  <ul class="star-rating">
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                  </ul>
+                  <p class="customer-text" style="font-weight: bold">Reviewed 2 days ago</p>
+                </div>
+                <div class="customer-rating">5.0</div>
+              </div>
+
+              <p class="customer-text">I love the place, the people, and the food here. Definitely worth staying here.
+              </p>
+              <p class="customer-text">For students near De La Salle University, this is the best place to stay. It is near the school and the food is great. The place is also clean and the staff are very accommodating.
+              </p>
+              <ul>
+                <li href="../assets/images/test_image/review-img1.jpg" class="review-image">
+                  <img src="../assets/images/test_image/review-img1.jpg" class="img-fluid" alt="#">
+                </li>
+                <li href="../assets/images/test_image/review-img2.jpg" class="review-image">
+                  <img src="../assets/images/test_image/review-img2.jpg" class="img-fluid" alt="#">
+                </li>
+                <li href="../assets/images/test_image/review-img3.jpg" class="review-image">
+                  <img src="../assets/images/test_image/review-img3.jpg" class="img-fluid" alt="#">
+                </li>
+              </ul>
+              <span>28 people marked this review as helpful</span>
+              <a href="#"><span class="icon-like"></span>Helpful</a>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <div class="swiper-slide">
+          <!-- Review Section -->
+          <div class="customer-review_wrap">
+            <div class="customer-img" >
+              <img src="../assets/images/test_image/customer-img2.jpg" class="img-fluid" alt="#">
+              <p>Miles Morana</p>
+              <span>69 Reviews</span>
+            </div>
+            <div class="customer-content-wrap">
+              <div class="customer-content">
+                <div class="customer-review">
+                  <h6>Okay, but could be better</h6>
+                  <ul class="star-rating">
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star-o"></li>
+                    <li class="fa fa-star-o"></li>
+                  </ul>
+                  <p class="customer-text" style="font-weight: bold">Reviewed 2 days ago</p>
+                </div>
+                <div class="customer-rating yellow">3.0</div>
+              </div>
+
+              <p class="customer-text">Place is convenient and near to DLSU. However, the food is not that good and the place is not that clean.
+              </p>
+              <p class="customer-text">For students near De La Salle University, this is the best place to stay. but be wary of lackluster rooms, services, and food.
+              </p>
+              <ul>
+                <li href="../assets/images/test_image/featured2.jpg" class="review-image">
+                  <img src="../assets/images/test_image/featured2.jpg" class="img-fluid" alt="#">
+                </li>
+                <li href="../assets/images/test_image/review-img2.jpg" class="review-image">
+                  <img src="../assets/images/test_image/review-img2.jpg" class="img-fluid" alt="#">
+                </li>
+                <li href="../assets/images/test_image/review-img3.jpg" class="review-image">
+                  <img src="../assets/images/test_image/review-img3.jpg" class="img-fluid" alt="#">
+                </li>
+              </ul>
+              <span>28 people marked this review as helpful</span>
+              <a href="#"><span class="icon-like"></span>Helpful</a>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <!-- Add Pagination -->
+      <div class="swiper-pagination swiper-pagination-black" id="review-pagination" style="position: unset"></div>
+    </div>
+</div>
 
 <footer class="footer">
   <div class="container">
@@ -263,9 +367,16 @@
     </div>
   </div>
 </footer>
-<!-- Scripts -->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery, Bootstrap JS. -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/popper/popper.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Magnific popup JS -->
+    <script src="../vendor/jquery/jquery.magnific-popup.js"></script>
+    <!-- Swiper Slider JS -->
+    <script src="../vendor/swiper/swiper.min.js"></script>
 <script src="../assets/js/owl-carousel.js"></script>
 <script src="../assets/js/animation.js"></script>
 <script src="../assets/js/imagesloaded.js"></script>
@@ -275,6 +386,19 @@
 <script src="../assets/js/custom.js"></script>
 
 <!-- Swiper for Reviews -->
+<script>
+  var swiper = new Swiper("#Reviews", {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    spaceBetween: 10,
+    loop: false,
+    loopFillGroupWithBlank: false,
+    pagination: {
+      el: "#review-pagination",
+      clickable: true,
+    },
+  });
+</script>
 
 <!-- Magnific Popup -->
 <script>
