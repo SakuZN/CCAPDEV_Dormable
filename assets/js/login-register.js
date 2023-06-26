@@ -1,6 +1,8 @@
 //User Information Default Values
 let userData = {
-  username: 'John Doe',
+  username: 'JohnDoe',
+  course: 'BS Computer Science',
+  college: 'College of Computer Studies',
   email: 'johndoe@gmail.com',
   password: '1234',
   type: 'student',
@@ -8,6 +10,7 @@ let userData = {
   profilePic: '',
   joinDate: 'January 2023',
   noOfReviews: 0,
+  followers: 0
 }
 
 let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
@@ -66,6 +69,9 @@ async function register() {
     profilePic: '',
     joinDate: registerDate,
     noOfReviews: 0,
+    followers: 0,
+    college: '',
+    course: ''
   };
 
   var currentData = localStorage.getItem('userDatabase')
@@ -131,6 +137,10 @@ async function logout() {
 function updateMenu() {
   var menu = document.querySelector('.nav')
   var isLoggedIn = localStorage.getItem('isLoggedIn');
+  var userID = '';
+  if (localStorage.getItem('isLoggedIn') !== 'false') {
+    userID= JSON.parse(localStorage.getItem('currentUser'));
+  }
 
   //get the current page
   var currentPage = window.location.href;
@@ -142,7 +152,7 @@ function updateMenu() {
     // Display menu for logged-in users
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
-      <li><a href="category.html" class="${currentPage.includes('category.html') ? 'active' : ''}">My Profile</a></li>
+      <li><a href="test-profile.html?id=${userID.username}" class="${currentPage.includes('test-profile.html') ? 'active' : ''}">My Profile</a></li>
       <li><a href="search-result.html" class="${currentPage.includes('search-result.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="index.html" id="logoutBtn">Logout</a></li>
     `;
@@ -189,9 +199,8 @@ if (window.location.href.includes('login.html')) {
   });
 }
 
-// Conditional Statement to add logout event listener to logout button in index.html
-if ((window.location.href.includes('index.html') || (window.location.href.includes('listing.html')))
-  && localStorage.getItem('isLoggedIn') === 'true') {
+// Conditional Statement to add logout event listener to logout button when user is logged in
+if (localStorage.getItem('isLoggedIn') === 'true') {
   const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn.addEventListener('click', function (e) {
     e.preventDefault();

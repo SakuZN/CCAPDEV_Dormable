@@ -85,6 +85,7 @@
     </div>
   </div>
 </div>
+
 <div class="main-content">
   <!-- Page content -->
   <div class="container-fluid mt--7">
@@ -95,46 +96,47 @@
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
                 <a href="#">
-                  <img src="../assets/images/test_image/customer-img2.jpg" class="rounded-circle">
+                  <img id="userPic" src="../assets/images/test_image/customer-img2.jpg" class="rounded-circle" alt="">
                 </a>
               </div>
             </div>
           </div>
           <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
             <div class="d-flex justify-content-between">
-              <a href="#!" id="editBtn" class="btn btn-info">Edit profile</a>
-              <a href="#" class="btn btn-sm btn-default float-right">Follow</a>
+              <a href="#" id="editBtn" class="btn btn-info">Edit profile</a>
+              <a href="#" id="followBtn" class="btn btn-sm btn-default float-right">Follow</a>
             </div>
           </div>
           <div class="card-body pt-0 pt-md-4">
             <div class="row">
               <div class="col">
                 <div class="text-center">
-                  <h6 style="margin-top: 25px">
+                  <h6 id="profileName" style="margin-top: 25px">
                     Jessica Jones
                   </h6>
+                  <p id="profileDate" style="margin-top: 5px">Member since:</p>
                 </div>
                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                   <div>
-                    <span class="heading">22</span>
+                    <span id="profileFollowerCount" class="heading">22</span>
                     <span class="description">Followers</span>
                   </div>
                   <div>
-                    <span class="heading">10</span>
+                    <span id="profileReviewCount" class="heading">10</span>
                     <span class="description">Reviews</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="text-center">
-              <div class="h5 mt-4">
+              <div id="profileCourse" class="h5 mt-4">
                 <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
               </div>
-              <div style="margin-bottom: 1rem">
+              <div id="profileCollege" style="margin-bottom: 1rem">
                 <i class="ni education_hat mr-2"></i>University of Computer Science
               </div>
               <hr class="my-4">
-              <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+              <p id="profileDescription">Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
             </div>
           </div>
         </div>
@@ -148,27 +150,17 @@
                 <div class="col-8">
                   <h3 class="mb-0">My account</h3>
                 </div>
+                <div class="col-4 text-right">
+                  <button class="file-upload btn btn-sm btn-primary">
+                    Change Profile Picture</button>
+                  <input type='file' id="fileUpload" style="display:none" accept="image/*">
+                </div>
               </div>
             </div>
             <div class="card-body">
-              <form>
+              <form id="editProfile">
                 <h6 class="heading-small text-muted mb-4">User information</h6>
                 <div class="pl-lg-4">
-
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
-                      </div>
-                    </div>
-                  </div>
 
                   <div class="row">
                     <div class="col-lg-6">
@@ -191,11 +183,11 @@
                 <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label>About Me</label>
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
+                    <textarea id="input-description" rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">Your Description</textarea>
                   </div>
                 </div>
                 <div class="col-md-12" style="justify-content: center; display: flex">
-                  <input type="submit" value="Save Settings" class="btn btn-sm btn-primary">
+                  <input type="submit" id="editSubmit" value="Save Settings" class="btn btn-sm btn-primary">
                 </div>
               </form>
             </div>
@@ -309,7 +301,9 @@
       <!-- Add Pagination -->
       <div class="swiper-pagination swiper-pagination-black" id="review-pagination" style="position: unset"></div>
     </div>
+  </div>
 </div>
+
 
 <footer class="footer">
   <div class="container">
@@ -371,6 +365,12 @@
     </div>
   </div>
 </footer>
+<dialog id="dialog">
+  <p>
+  </p>
+  <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+</dialog>
+
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="../vendor/jquery/jquery.min.js"></script>
@@ -388,6 +388,7 @@
 <script src="../assets/js/listing.js"></script>
 <script src="../assets/js/autostar-rating.js"></script>
 <script src="../assets/js/login-register.js"></script>
+  <script src="../assets/js/profile.js"></script>
 <script src="../assets/js/custom.js"></script>
 
 <!-- Swiper for Reviews -->
@@ -414,8 +415,6 @@
         enabled: false
       }
     });
-
-
     function initUserPopUp() {
       $('.user-image').magnificPopup({
         type: 'image',
@@ -426,17 +425,5 @@
     }
   }
 </script>
-
-<script>
-  $(document).ready(function() {
-    $('#editBtn').on('click', function () {
-      $('.edit-profile').removeClass('hidden');
-      $('html, body').animate({
-        scrollTop: $('.edit-profile').offset().top
-      }, 800);
-    });
-  });
-</script>
-
 </body>
 </html>

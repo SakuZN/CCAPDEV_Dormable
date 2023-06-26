@@ -62,13 +62,13 @@
               </div>
               <div class="p-image">
                 <i class="fa fa-camera upload-button"></i>
-                <input class="file-upload" id="fileUpload" type="file" accept="image/*"/>
+                <input class="file-upload" id="fileUpload" type="file" accept="image/*" required/>
               </div>
             </div>
           </div>
-					<input type="text" name="txt" placeholder="Username" required="" id="signupUsername">
+					<input type="text" name="txt" placeholder="Username" required="" id="signupUsername" maxlength="10" minlength="4">
 					<input type="email" name="email" placeholder="Email" required="" id="signupEmail">
-					<input type="password" name="pswd" placeholder="Password" required="" id="signupPswd">
+					<input type="password" name="pswd" placeholder="Password" required="" id="signupPswd" minlength="4">
           <div class="checkboxes">
             <input type="radio" id="student" name="userType" value="student" required>
             <label for="student">Student</label>
@@ -85,7 +85,7 @@
 					<input type="email" name="email" placeholder="Email" required="" id="loginEmail">
 					<input type="password" name="pswd" placeholder="Password" required="" id="loginPswd">
           <div class="checkboxes">
-            <input type="checkbox" id="remember" name="userRemember" value="true" required>
+            <input type="checkbox" id="remember" name="userRemember" value="true">
             <label for="remember">Remember me</label>
           </div>
 					<button type="submit">Login</button>
@@ -128,6 +128,16 @@
 
     $(".upload-button").on('click', function() {
       $(".file-upload").click();
+    });
+
+    $('#signupUsername').on('input', function() {
+      $(this).val($(this).val().replace(/\s/g, ''));
+    });
+    $('#signupEmail').on('input', function() {
+      $(this).val($(this).val().replace(/\s/g, ''));
+    });
+    $('#signupPswd').on('input', function() {
+      $(this).val($(this).val().replace(/\s/g, ''));
     });
   });
 </script>
