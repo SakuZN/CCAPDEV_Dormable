@@ -142,15 +142,15 @@ function updateMenu() {
     // Display menu for logged-in users
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
-      <li><a href="category.html" class="${currentPage.includes('profile.html') ? 'active' : ''}">My Profile</a></li>
-      <li><a href="listing.html" class="${currentPage.includes('category-listing.html') ? 'active' : ''}">Explore Listings</a></li>
+      <li><a href="category.html" class="${currentPage.includes('category.html') ? 'active' : ''}">My Profile</a></li>
+      <li><a href="search-result.html" class="${currentPage.includes('search-result.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="index.html" id="logoutBtn">Logout</a></li>
     `;
   } else {
     // Display menu for non-logged-in users
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
-      <li><a href="listing.html" class="${currentPage.includes('category-listing.html') ? 'active' : ''}">Explore Listings</a></li>
+      <li><a href="search-result.html" class="${currentPage.includes('search-result.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="login.html" class="${currentPage.includes('login.html') ? 'active' : ''}">Log In | Sign Up</a></li>
     `;
   }

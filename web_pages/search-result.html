@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,21 +11,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="../icon.png"/>
-    <title>Dormable!</title>
+    <title>Plotlist - Listing HTML5 Template</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="../assets/css/popup.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/main-dormable.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
+
+    <!-- ThemeWagon Listing Result Template CSS -->
+    <link rel="stylesheet" href="../assets/css/search-result.css">
+    <link rel="stylesheet" href="../assets/css/simple-line-icons.css" type="text/css">
+    <link rel="stylesheet" href="../assets/css/fontawesome2.css">
+
+    <!-- ThemeWagon Listing Result Template Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&amp;display=swap" rel="stylesheet">
+
+<!--
+
+-->
   </head>
 
 <body>
+
   <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -39,11 +52,11 @@
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+  <header class="header-area header-sticky wow slideInDown" style="background-color: whitesmoke" data-wow-duration="0.75s" data-wow-delay="0s">
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <nav class="main-nav">
+          <nav class="main-nav" style="color: black">
             <!-- ***** Logo Start ***** -->
             <a href="index.html" class="logo">
             </a>
@@ -51,8 +64,9 @@
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li><a href="index.html">Home</a></li>
-              <li><a href="category-listing.html">Explore Listings</a></li>
-              <li><a href="login.html">Log In | Sign Up</a></li>
+              <li><a href="category.html">Category</a></li>
+              <li><a href="category-listing.html">Listing</a></li>
+              <li><a href="request-listing.html" class="active">Contact Us</a></li>
             </ul>
             <a class='menu-trigger'>
                 <span>Menu</span>
@@ -65,74 +79,50 @@
   </header>
   <!-- ***** Header Area End ***** -->
 
-  <div class="main-banner">
+  <div class="page-heading">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
           <div class="top-text header-text">
-            <h6>Looking for a place to stay?</h6>
-            <h2>Simplify Your Student Housing Search!</h2>
+            <h6>We found these listings based on your query</h6>
+            <h2>"query" Search Results!</h2> <!-- replace "query" with actual search query-->
           </div>
         </div>
-        <div class="col-lg-12">
-          <form id="search-form" name="gs" method="submit" role="search" action="search-result.html">
-            <div class="row">
-              <div class="col-lg-3 align-self-center">
-                  <fieldset>
-                      <select name="area" class="form-select" aria-label="Area" id="chooseCategory" onchange="this.form.click()">
-                          <option selected>All Areas</option>
-                          <option value="New Village">Taft Avenue</option>
-                          <option value="Old Town">Quirino</option>
-                          <option value="Modern City">Ocampo</option>
-                      </select>
-                  </fieldset>
-              </div>
-              <div class="col-lg-3 align-self-center">
-                  <fieldset>
-                      <input type="address" name="address" class="searchText" placeholder="Enter a location" autocomplete="on" required>
-                  </fieldset>
-              </div>
-              <div class="col-lg-3 align-self-center">
-                  <fieldset>
-                      <select name="price" class="form-select" aria-label="Default select example" id="chooseCategory" onchange="this.form.click()">
-                          <option selected>Price Range</option>
-                          <option value="₱1,000 - ₱2,500">₱1,000 - ₱2,500</option>
-                          <option value="₱2,500 - ₱5,000">₱2,500 - ₱5,000</option>
-                          <option value="₱5,000 - ₱7,500">"₱5,000 - ₱7,500"</option>
-                          <option value="₱10,000+">"₱10,000" or more</option>
-                      </select>
-                  </fieldset>
-              </div>
-              <div class="col-lg-3">
-                  <fieldset>
-                    <button class="main-button"> <i class="fa fa-search"></i> Search Now</button>
-                  </fieldset>
-              </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Listing Results Start -->
+
+    <!-- Page Preloder -->
+    <div id="preloder" style="display: none;">
+        <div class="loader" style="display: none;"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+
+    <!-- Header End -->
+
+    <!-- Breadcrumb Section Begin -->
+
+    <!-- Breadcrumb Section End -->
+
+    <!-- Property Section Begin -->
+
+    <section class="property-section spad">
+        <div class="container">
+            <div class="row" id="query-listings">
+                <div class="col-lg-12" id="loadButton">
+                    <div class="loadmore-btn">
+                        <a href="#">Load more</a>
+                    </div>
+                </div>
             </div>
-          </form>
         </div>
-      </div>
-    </div>
-  </div>
+    </section><!-- Property Section End -->
+  <!-- Listing Results End-->
 
-  <div class="recent-listing">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-heading">
-            <h2>Popular Listing</h2>
-            <h6>Check Them Out</h6>
-          </div>
-        </div>
-        <div class="col-lg-12">
-          <div class="owl-carousel owl-listing" id="featured-listings" >
-             <!--Generate Listing Cards-->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!-- Footer Section Begin -->
   <footer>
     <div class="container">
       <div class="row">
@@ -178,20 +168,15 @@
         </div>
         <div class="col-lg-12">
           <div class="sub-footer">
-            <p>Copyright © 2021 Plot Listing Co., Ltd. All Rights Reserved.
+            <p>Copyright © 2021 Theme Wagon, Ltd. All Rights Reserved.
             <br>
-			Design: <a rel="nofollow" href="https://templatemo.com" title="CSS Templates">TemplateMo</a></p>
+			Design: <a rel="nofollow" href="https://themewagon.com/themes/free-bootstrap-4-html5-directory-listing-website-template-aler/" title="CSS Templates">TemplateMo</a></p>
           </div>
         </div>
       </div>
     </div>
   </footer>
-
-  <dialog id="dialog">
-    <p>
-    </p>
-    <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
-  </dialog>
+  <!-- Footer Section End-->
 
   <!-- Scripts -->
   <script src="../vendor/jquery/jquery.min.js"></script>
@@ -203,6 +188,7 @@
   <script src="../assets/js/autostar-rating.js"></script>
   <script src="../assets/js/login-register.js"></script>
   <script src="../assets/js/custom.js"></script>
+
 </body>
 
 </html>
