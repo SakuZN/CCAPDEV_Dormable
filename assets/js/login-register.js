@@ -142,7 +142,7 @@ function updateMenu() {
     // Display menu for logged-in users
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
-      <li><a href="category.html" class="${currentPage.includes('category.html') ? 'active' : ''}">My Profile</a></li>
+      <li><a href="category.html" class="${currentPage.includes('profile.html') ? 'active' : ''}">My Profile</a></li>
       <li><a href="listing.html" class="${currentPage.includes('category-listing.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="index.html" id="logoutBtn">Logout</a></li>
     `;
