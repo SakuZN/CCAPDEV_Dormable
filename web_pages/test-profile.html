@@ -213,6 +213,79 @@
       <div class="swiper-pagination swiper-pagination-black" id="review-pagination" style="position: unset"></div>
     </div>
   </div>
+  <!-- Edit Review -->
+  <div class="edit-review hidden">
+    <div class="col-xl-8 order-xl-1" >
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Edit Review</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form id="editReviewForm">
+            <h6 class="heading-small text-muted mb-4">Review information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="review-title">Review Title</label>
+                    <input type="text" id="review-title" class="form-control form-control-alternative" placeholder="ReviewTitle" value="Review Title">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label>Review Content</label>
+                    <textarea id="review-content" rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">Your Description</textarea>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <hr class="my-4">
+            <!-- Rating And Media -->
+            <h6 class="heading-small text-muted mb-4">Review Content</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12" style="justify-content: center; display: flex">
+                  <div class="form-group focused">
+                    <label for="reviewImage" class="btn btn-sm btn-primary">Browse</label>
+                      <input type="file" id="reviewImage" name="reviewImage" style="display: none" accept="image/*"  multiple>
+                      <button id="clearImages" type="button" class="btn btn-danger">Clear Images</button>
+                    <ul class="user-image-list" style="display: flex;justify-content: center;margin: 20px;">
+                      <!-- Dynamic added images -->
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-12" style="justify-content: center; display: flex">
+                  <div class="form-group focused">
+                    <label>How was your experience?</label>
+                    <div class="rate">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="justify-content: center; display: flex">
+              <input type="submit" id="editReview" value="Save Edit" class="btn btn-sm btn-primary">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -276,6 +349,7 @@
     </div>
   </div>
 </footer>
+
 <dialog id="dialog">
   <p>
   </p>
@@ -292,6 +366,8 @@
 <script src="../vendor/jquery/jquery.magnific-popup.js"></script>
 <!-- Swiper Slider JS -->
 <script src="../vendor/swiper/swiper.min.js"></script>
+<!--Jquery modal JS-->
+<script src="../vendor/jquery/jquery.confirmModal.min.js"></script>
 
 <script src="../assets/js/owl-carousel.js"></script>
 <script src="../assets/js/animation.js"></script>

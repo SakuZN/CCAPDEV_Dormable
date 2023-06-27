@@ -1536,6 +1536,7 @@ a.text-white:focus {
   position: absolute;
   left: 50%;
   max-width: 180px;
+  max-height: 180px;
   transition: all .15s ease;
   transform: translate(-50%, -30%);
   border-radius: .375rem;
@@ -2011,3 +2012,35 @@ p {
 #navbar .navbar {
   margin-bottom: 20px;
 }
+
+.red-btn:hover {
+  background-color: #f5365c;
+  border-color: #f5365c;
+}
+
+.customer-img {
+  float: left;
+}
+@media (max-width: 992px) {
+  .customer-img {
+    text-align: center;
+    float: none;
+    margin: 0 0 15px; } }
+.customer-img img {
+  border-radius: 50%;
+  max-width: 72px;}
+@media (min-width: 1200px) {
+  .customer-img img {
+    margin-left: 70px;
+  }}
+.customer-img p {
+  color: #3e434b;
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.2; }
+.customer-img span {
+  font-size: 14px;
+  color: #737882;
+  text-align: center; }
+

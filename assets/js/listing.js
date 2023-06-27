@@ -10,7 +10,6 @@ function generateFeaturedListing(listings) {
 
   //sort by review score
   listings.sort((a, b) => b.reviewScore - a.reviewScore);
-  console.log(listings);
   //set initial limit
   var listingLimit = 0;
 
@@ -45,7 +44,7 @@ function generateFeaturedListing(listings) {
         <a href="#"><img src="${listing.img[0]}" alt=""></a>
          </div>
             <div class="right-content align-self-center">
-             <a href="#"><h4>${listing.name}</h4></a>
+             <h4>${listing.name}</h4>
               <h6>by: ${listing.owner}</h6>
                <ul class="rate">
                 ${star_rating(listing.reviewScore, listing.reviews, 'featured-listings')}
@@ -86,13 +85,10 @@ function generateQueryListing(listings) {
 
     indivListing = document.createElement('div');
     indivListing.classList.add('col-lg-4', 'col-md-6', 'item');
-
-    // remove last child, which is the load more button
-
     indivListing.innerHTML = `
       <div class="property-item">
                         <div class="pi-pic set-bg" data-setbg="${listing.img[0]}" style="background-image: url(${listing.img[0]}" >
-                            <div class="label">${listing.reviewScore}</div>
+                            <div class="label">${listing.reviewScore.toFixed(1)}</div>
                         </div>
                         <div class="pi-text">
                             <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
@@ -122,5 +118,14 @@ function generateQueryListing(listings) {
     queryListing.appendChild(indivListing);
   });
   queryListing.appendChild(queryLoadMore);
+}
+
+function initUserPopUp() {
+  $('.user-image').magnificPopup({
+    type: 'image',
+    gallery: {
+      enabled: true
+    }
+  });
 }
 

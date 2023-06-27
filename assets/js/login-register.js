@@ -40,10 +40,7 @@ async function register() {
   const profilePic = document.getElementById('fileUpload').files[0];
 
   //Add current date as date of registration
-  const curDate = new Date();
-  const year = curDate.getFullYear();
-  const month = monthNames[curDate.getMonth()];
-  const registerDate = `${month} ${year}`;
+  const registerDate = new Date().toISOString();
 
   var newUserData = {
     username: user,
@@ -156,12 +153,26 @@ function updateMenu() {
 
 function showPopup(message) {
   return new Promise((resolve) => {
-    var dialog = document.querySelector('#dialog');
-    var DialogueMessage = dialog.querySelector('p');
+    let dialog = document.querySelector('#dialog');
+    let DialogueMessage = dialog.querySelector('p');
     DialogueMessage.textContent = message;
     dialog.showModal();
 
     dialog.addEventListener('close', () => {
+      resolve();
+    });
+  });
+}
+
+function showConfirm(message) {
+  return new Promise((resolve) => {
+    var dialog = document.querySelector('#confirm');
+    console.log(dialog);
+    var DialogueMessage = dialog.querySelector('p');
+    DialogueMessage.textContent = message;
+    dialog.showModal();
+    dialog.addEventListener('close', () => {
+      console.log('close');
       resolve();
     });
   });

@@ -23,6 +23,9 @@ function populateReviewImg(images) {
 function populateListingReviews(reviews, swiper) {
   const userDatabaseString = localStorage.getItem('userDatabase');
   const userDatabase = JSON.parse(userDatabaseString);
+  //sort review by date
+  reviews.sort((a, b) => { return new Date(b.reviewDate) - new Date(a.reviewDate) });
+  console.log(reviews);
   reviews.forEach((review) => {
     let reviewUser = userDatabase.find(user => user.username === review.userID);
     let scoreClass = '';
@@ -49,7 +52,7 @@ function populateListingReviews(reviews, swiper) {
           <ul class="star-rating">
             ${star_rating(review.reviewScore,0, 'listing')}
           </ul>
-          <p class="customer-text" style="font-weight: bold">Reviewed ${review.reviewDate}</p>
+          <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}</p>
         </div>
         <div class="${scoreClass}">${review.reviewScore}.0</div>
       </div>
@@ -83,6 +86,7 @@ function populateListingPage(id_page) {
   let listingStars = document.getElementById('listing-stars');
   let listingPrice = document.getElementById('listing-price');
   let numScore = document.getElementById('numscore');
+  let numScoreBg = document.querySelector('.reserve-rating');
   let numReviews = document.getElementById('numreview');
   let listingDescription = document.getElementById('listing-description');
   let numReviewBottom = document.getElementById('numreviewBottom');
@@ -98,7 +102,11 @@ function populateListingPage(id_page) {
   populateListingImg(listing, listingSwiper);
   listingStars.innerHTML = star_rating(listing.reviewScore, listing.reviews, 'listing-page');
   listingPrice.innerHTML = listing.price;
-  numScore.innerHTML = listing.reviewScore;
+  numScore.innerHTML = listing.reviewScore.toFixed(1);
+  if (listing.reviewScore === 3)
+    numScoreBg.classList.add('yellow');
+  else if (listing.reviewScore < 3)
+    numScoreBg.classList.add('red');
   numReviews.innerHTML = listing.reviews + ' reviews';
   listingDescription.innerHTML = listing.description + '<hr>';
   numReviewBottom.innerHTML = listing.reviews + ' reviews';
@@ -108,7 +116,7 @@ function populateListingPage(id_page) {
     populateListingReviews(getListingReviews(id_page), listingReviews);
   }
   catch (e) {
-    console.log("User has no reviews");
+    console.log(e);
   }
   listingMap.src = listing.mapUrl;
   listingAddress.innerHTML = listing.location;
@@ -132,7 +140,7 @@ $(document).ready(function() {
         scrollTop: $('.reviewForm').offset().top
       }, 800);
 
-      var currrentUser = JSON.parse(localStorage.getItem('currentUser'));
+      let currrentUser = JSON.parse(localStorage.getItem('currentUser'));
       if (currrentUser.profilePic !== '') {
         $('#profilePic').attr('src', currrentUser.profilePic);
       }
@@ -142,18 +150,49 @@ $(document).ready(function() {
 
     $('.reviewForm').on('submit', function(event) {
       event.preventDefault();
-      showPopup('Review Submitted!');
+      //Get the necessary data from the form
+      let reviewTitle = $('#reviewTitle').val();
+      let reviewContent = $('#reviewContent').val();
+      let reviewImgs = $('.user-image-list li').map(function() {
+        return $(this).attr('href');
+      }).get();
+      let starRating = $("input[name='rate']:checked").val();
+      starRating = parseInt(starRating);
+
+      let url = new URL(window.location.href);
+      let id = url.searchParams.get('id');
+      //add as a new review
+      let newReview = {
+        reviewID: generateReviewID(id),
+        userID: JSON.parse(localStorage.getItem('currentUser')).username,
+        listingID: id,
+        reviewTitle: reviewTitle,
+        reviewContent: reviewContent,
+        reviewIMG: reviewImgs,
+        reviewScore: starRating,
+        reviewDate: new Date().toISOString(),
+        reviewMarkedHelpful: 0,
+        wasEdited: false,
+        isDeleted: false
+      }
+      //add the review to the listing
+      addListingReview(newReview);
+      updateUserReviewCount(newReview.userID);
       // Hide the review form
       $('#userForm')[0].reset();
       $('.reviewForm').addClass('hidden');
+      showPopup('Review Submitted!').then(function() {
+        // Refresh the page
+        location.reload();
+      });
     });
   }
   // User Review Form
   initUserPopUp();
   $('#reviewImage').on('change', function() {
-    var files = $(this)[0].files;
-    var imageList = $('.user-image-list');
-    var maxFiles = 5;
+    let files = $(this)[0].files;
+    let imageList = $('.user-image-list');
+    let maxFiles = 5;
 
     //if current image list is not empty check if the new files exceed the max files
     if (imageList.children().length > 0) {
@@ -164,17 +203,17 @@ $(document).ready(function() {
     }
 
     // Iterate over selected files
-    for (var i = 0; i < files.length && i < maxFiles; i++) {
-      var file = files[i];
-      var reader = new FileReader();
+    for (let i = 0; i < files.length && i < maxFiles; i++) {
+      let file = files[i];
+      let reader = new FileReader();
 
       // Read the file as a data URL
       reader.onload = function(e) {
-        var imageUrl = e.target.result;
+        let imageUrl = e.target.result;
 
         // Create a new li element with the image
-        var li = $('<li>').addClass('user-image').attr('href', imageUrl);
-        var img = $('<img>').attr('src', imageUrl).addClass('img-fluid').attr('alt', '#');
+        let li = $('<li>').addClass('user-image').attr('href', imageUrl);
+        let img = $('<img>').attr('src', imageUrl).addClass('img-fluid').attr('alt', '#');
         li.append(img);
 
         // Append the li element to the image list
@@ -199,12 +238,12 @@ $(document).ready(function() {
 
   //Like button
   $('.button').on('click', function() {
-    var $button = $(this);
-    var $review = $button.closest('.mark-helpful');
-    var $likeCount = $review.find('.like-count');
-    var reviewID = $review.data('review-id');
-    var listingID = $review.data('listing-id');
-    var currentCount = parseInt($likeCount.text(), 10);
+    let $button = $(this);
+    let $review = $button.closest('.mark-helpful');
+    let $likeCount = $review.find('.like-count');
+    let reviewID = $review.data('review-id');
+    let listingID = $review.data('listing-id');
+    let currentCount = parseInt($likeCount.text(), 10);
 
     if ($button.hasClass('liked')) {
       // Decrement the like count if already liked

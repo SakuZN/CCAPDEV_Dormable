@@ -1007,7 +1007,7 @@ footer .main-white-button a {
       margin: 0 0 15px; } }
   .customer-img img {
     border-radius: 50%;
-  max-width: 72px}
+  max-width: 72px;}
   .customer-img p {
     color: #3e434b;
     margin: 4px 0 0;
@@ -1020,7 +1020,7 @@ footer .main-white-button a {
     text-align: center; }
 
 .customer-content-wrap {
-  margin: 0 0 0 135px; }
+  margin: 0 0 0 275px; }
   @media (max-width: 992px) {
     .customer-content-wrap {
       margin: 0 0 0 110px; } }
@@ -1525,7 +1525,7 @@ textarea {
   margin-top: 2px;
 }
 
-.reviewForm .rate {
+.rate {
   display: flex;
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
@@ -1533,11 +1533,11 @@ textarea {
   margin: auto;
   position: relative;
 }
-.reviewForm .rate:not(:checked) > input {
+.rate:not(:checked) > input {
   position:absolute;
   clip:rect(0,0,0,0);
 }
-.reviewForm .rate:not(:checked) > label {
+.rate:not(:checked) > label {
   float:right;
   width:1em;
   overflow:hidden;
@@ -1546,21 +1546,21 @@ textarea {
   font-size:30px;
   color:#ccc;
 }
-.reviewForm .rate:not(:checked) > label:before {
+.rate:not(:checked) > label:before {
   content: '★ ';
 }
-.reviewForm .rate > input:checked ~ label {
+.rate > input:checked ~ label {
   color: orange;
 }
-.reviewForm .rate:not(:checked) > label:hover,
-.reviewForm .rate:not(:checked) > label:hover ~ label {
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
   color: orange;
 }
-.reviewForm .rate > input:checked + label:hover,
-.reviewForm .rate > input:checked + label:hover ~ label,
-.reviewForm .rate > input:checked ~ label:hover,
-.reviewForm .rate > input:checked ~ label:hover ~ label,
-.reviewForm .rate > label:hover ~ input:checked ~ label {
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
   color: orange;
 }
 

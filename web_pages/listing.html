@@ -303,10 +303,6 @@
               <h6>326</h6>
               <span>Followers</span>
             </li>
-            <li>
-              <h6>12</h6>
-              <span>Followers</span>
-            </li>
           </ul>
           <a href="#">FOLLOW</a>
         </div>
@@ -415,6 +411,7 @@
     window.location.href = '404.html';
   }
   else {
+    updateListings();
     populateListingPage(id);
   }
 </script>
@@ -475,16 +472,6 @@
         enabled: false
       }
     });
-
-
-    function initUserPopUp() {
-      $('.user-image').magnificPopup({
-        type: 'image',
-        gallery: {
-          enabled: true
-        }
-      });
-    }
   }
 </script>
 </body>

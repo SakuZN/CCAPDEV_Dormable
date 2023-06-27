@@ -142,13 +142,16 @@ function getRandomNumber(max) {
   return Math.floor(Math.random() * (max + 1));
 }
 
-function getRandomMonthYear(minYear, maxYear) {
-  let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-    'October', 'November', 'December'];
-  let month = monthNames[Math.floor(Math.random() * monthNames.length)];
+function getRandomDate(minYear, maxYear) {
   let year = getRandomNumber(maxYear - minYear) + minYear;
-  return month + ' ' + year;
+  let month = getRandomNumber(12);
+  let day = getRandomNumber(new Date(year, month + 1, 0).getDate());
+  let hours = getRandomNumber(24);
+  let minutes = getRandomNumber(60);
+  let seconds = getRandomNumber(60);
+  return new Date(year, month, day, hours, minutes, seconds).toISOString();
 }
+
 
 let users =[
   {
@@ -160,60 +163,60 @@ let users =[
     type: 'student',
     description: getRandomDescription(),
     profilePic:'../assets/images/test_image/customer-img1.jpg',
-    joinDate: getRandomMonthYear(2020, 2023),
-    noOfReviews: getRandomNumber(100),
+    joinDate: getRandomDate(2020, 2023),
+    noOfReviews: 6,
     followers: getRandomNumber(100)
   },
   {
     username: 'Miles_Morana',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'amanda_garcia@gmail.com',
+    email: 'miles_morana@gmail.com',
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic:'../assets/images/test_image/customer-img2.jpg',
-    joinDate: getRandomMonthYear(2020, 2023),
-    noOfReviews: getRandomNumber(100),
+    joinDate: getRandomDate(2020, 2023),
+    noOfReviews: 6,
     followers: getRandomNumber(100)
   },
   {
     username: 'Katrina',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'amanda_garcia@gmail.com',
+    email: 'katrina@gmail.com',
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic:'../assets/images/test_image/customer-img3.jpg',
-    joinDate: getRandomMonthYear(2020, 2023),
-    noOfReviews: getRandomNumber(100),
+    joinDate: getRandomDate(2020, 2023),
+    noOfReviews: 6,
     followers: getRandomNumber(100)
   },
   {
     username: 'John_Vick',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'amanda_garcia@gmail.com',
+    email: 'john_vick@gmail.com',
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic:'../assets/images/test_image/customer-img4.jpg',
-    joinDate: getRandomMonthYear(2020, 2023),
-    noOfReviews: getRandomNumber(100),
+    joinDate: getRandomDate(2020, 2023),
+    noOfReviews: 6,
     followers: getRandomNumber(100)
   },
   {
     username: 'Penguinz0',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'amanda_garcia@gmail.com',
+    email: 'penguinz_0@gmail.com',
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic:'../assets/images/test_image/customer-img5.jpg',
-    joinDate: getRandomMonthYear(2020, 2023),
-    noOfReviews: getRandomNumber(100),
+    joinDate: getRandomDate(2020, 2023),
+    noOfReviews: 6,
     followers: getRandomNumber(100)
   },
 ]
@@ -252,22 +255,6 @@ function getRandomReview(score) {
   return description;
 }
 
-function getRandomReviewDate() {
-  let day = getRandomNumber(1095);
-  if (day < 7){
-    return day + " days ago";
-  }
-  else if (day < 30){
-    return Math.floor(day / 7) + " weeks ago";
-  }
-  else if (day < 365){
-    return Math.floor(day / 30) + " months ago";
-  }
-  else{
-    return Math.floor(day / 365) + " years ago";
-  }
-}
-
 //Populate reviews by using a function to auto generate reviews
 function generateUserReviews() {
   let reviews = [];
@@ -285,7 +272,7 @@ function generateUserReviews() {
           "../assets/images/test_image/featured2.jpg",
           "../assets/images/test_image/featured3.jpg"],
         reviewScore: randomScore,
-        reviewDate: getRandomReviewDate(),
+        reviewDate: getRandomDate(2020, new Date(user.joinDate).getFullYear()),
         reviewMarkedHelpful: getRandomNumber(100),
         wasEdited: false,
         isDeleted: false
