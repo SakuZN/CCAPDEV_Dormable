@@ -999,7 +999,7 @@ footer .main-white-button a {
   width: 100%; }
 
 .customer-img {
-  float: left; }
+  float: left;}
   @media (max-width: 992px) {
     .customer-img {
       text-align: center;

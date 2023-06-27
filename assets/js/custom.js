@@ -33,7 +33,7 @@
           $(".naccs ul").height(listItemHeight + "px");
         }
     });
-
+    /*
     //Run this function only on index.html page
     if (window.location.href.includes('index.html')) {
       $(generateFeaturedListing(fetchData()));
@@ -42,6 +42,7 @@
   if (window.location.href.includes('search-result.html')) {
     $(generateQueryListing(fetchData()));
   }
+     */
   $('.owl-listing').owlCarousel({
     items:1,
     loop:true,

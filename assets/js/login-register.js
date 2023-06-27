@@ -1,18 +1,3 @@
-//User Information Default Values
-let userData = {
-  username: 'JohnDoe',
-  course: 'BS Computer Science',
-  college: 'College of Computer Studies',
-  email: 'johndoe@gmail.com',
-  password: '1234',
-  type: 'student',
-  description: 'I am a De La Salle University student. I am looking for a place to stay near the campus.',
-  profilePic: '',
-  joinDate: 'January 2023',
-  noOfReviews: 0,
-  followers: 0
-}
-
 let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
   'October', 'November', 'December'];
 
@@ -207,13 +192,3 @@ if (localStorage.getItem('isLoggedIn') === 'true') {
     logout();
   });
 }
-
-// Conditional Statement to add default user data to local storage if it does not exist
-if (localStorage.getItem('userDatabase') === null || localStorage.getItem('userDatabase') === undefined) {
-  localStorage.setItem('userDatabase', JSON.stringify([userData]));
-}
-
-function pageReload() {
-  location.reload();
-}
-

@@ -1,3 +1,58 @@
+function populateUserReviewImg(images) {
+  let reviewImgs = '';
+  images.forEach((img) => {
+    reviewImgs+= `<li href="${img}" class="review-image">
+          <img src="${img}" class="img-fluid" alt="#">
+        </li>`;
+  });
+  return reviewImgs;
+}
+function populateUserReviewHistory(reviews, swiper) {
+  const userDatabaseString = localStorage.getItem('userDatabase');
+  const userDatabase = JSON.parse(userDatabaseString);
+  reviews.forEach((review) => {
+    console.log(review);
+    let reviewUser = userDatabase.find(user => user.username === review.userID);
+    let scoreClass = '';
+    if (review.reviewScore >= 4)
+      scoreClass = 'customer-rating';
+    else if (review.reviewScore === 3)
+      scoreClass = 'customer-rating yellow';
+    else
+      scoreClass = 'customer-rating red';
+
+    swiper.innerHTML += ` <div class="swiper-slide">
+  <div class="customer-review_wrap">
+    <div class="customer-img">
+       <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
+       <p>${reviewUser.username}</p>
+       <span>${reviewUser.noOfReviews} reviews</span>
+    </div>
+    <div class="customer-content-wrap">
+      <div class="customer-content">
+        <div class="customer-review">
+          <h6>${review.reviewTitle}</h6>
+          <ul class="star-rating">
+            ${star_rating(review.reviewScore,0, 'listing')}
+          </ul>
+          <p class="customer-text" style="font-weight: bold">Reviewed ${review.reviewDate}</p>
+        </div>
+        <div class="${scoreClass}">${review.reviewScore}.0</div>
+      </div>
+      <p class="customer-text">${review.reviewContent}</p>
+      <ul>
+        ${populateUserReviewImg(review.reviewIMG)}
+      </ul>
+      <div class="mark-helpful">
+        <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
+      </div>
+    </div>
+  </div>
+  <hr>
+</div> `;
+  });
+}
+
 function populateProfile(userID, currentUser) {
   let database = JSON.parse(localStorage.getItem('userDatabase'));
   let userData = database.find(user => user.username === userID);
@@ -16,6 +71,7 @@ function populateProfile(userID, currentUser) {
   let formCourse = document.getElementById('input-course');
   let formCollege = document.getElementById('input-college');
   let formDescription = document.getElementById('input-description');
+  let reviewHistory = document.getElementById('reviewHistory');
 
   //Get user data
   let userPic = userData.profilePic;
@@ -40,6 +96,12 @@ function populateProfile(userID, currentUser) {
   formCourse.value = courseName;
   formCollege.value = collegeName;
   formDescription.value = userDescription;
+  try {
+    populateUserReviewHistory(getUserReviews(name), reviewHistory);
+  }
+  catch (e) {
+    console.log(e);
+  }
 
   //Finally, some conditional logic when viewing your own profile
   if (currentUser) {
@@ -67,6 +129,8 @@ async function updateProfile() {
   userData.description = description;
 
   localStorage.setItem('userDatabase', JSON.stringify(database));
+  //update currentUser
+  localStorage.setItem('currentUser', JSON.stringify(userData));
 
   await showPopup('Profile updated!');
   window.location.href = 'test-profile.html?id=' + currentUser.username;
