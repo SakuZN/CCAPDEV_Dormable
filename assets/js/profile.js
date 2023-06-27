@@ -166,12 +166,12 @@ async function updateProfile() {
   localStorage.setItem('currentUser', JSON.stringify(userData));
 
   await showPopup('Profile updated!');
-  window.location.href = 'test-profile.html?id=' + currentUser.username;
+  window.location.href = 'profile.html?id=' + currentUser.username;
 
 }
 
 //Check in profile.html if the id is valid
-if (window.location.href.includes('test-profile.html')) {
+if (window.location.href.includes('profile.html')) {
   let url = new URL(window.location.href);
   let userID = url.searchParams.get('id');
   let checkValidUser = JSON.parse(localStorage.getItem('userDatabase')).find(user => user.username === userID);

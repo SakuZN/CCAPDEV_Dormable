@@ -41,7 +41,7 @@ function generateFeaturedListing(listings) {
     col.innerHTML = `
       <div class="listing-item">
        <div class="left-image">
-        <a href="#"><img src="${listing.img[0]}" alt=""></a>
+        <a href="listing.html?id=${listing.id}"><img src="${listing.img[0]}" alt=""></a>
          </div>
             <div class="right-content align-self-center">
              <h4>${listing.name}</h4>
@@ -75,8 +75,6 @@ function generateQueryListing(listings) {
 
   //sort by review score
   listings.sort((a, b) => b.reviewScore - a.reviewScore);
-  //set initial limit
-  var listingLimit = 0;
 
   //Initialize divs
   let indivListing;

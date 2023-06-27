@@ -39,7 +39,7 @@ function populateListingReviews(reviews, swiper) {
     swiper.innerHTML += ` <div class="swiper-slide">
   <div class="customer-review_wrap">
     <div class="customer-img">
-        <a href="test-profile.html?id=${reviewUser.username}" style="cursor: pointer">
+        <a href="profile.html?id=${reviewUser.username}" style="cursor: pointer">
             <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
             <p>${reviewUser.username}</p>
         </a>

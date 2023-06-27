@@ -1,243 +1,417 @@
-
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../icon.png"/>
+  <title>Profile - Dormable</title>
 
-  <head>
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Simple line Icon -->
+  <link rel="stylesheet" href="../assets/css/simple-line-icons.css">
+  <!-- Themify Icon -->
+  <link rel="stylesheet" href="../assets/css/themify-icons.css">
+  <!-- Hover Effects -->
+  <link rel="stylesheet" href="../assets/css/set1.css">
+  <!-- Swipper Slider -->
+  <link rel="stylesheet" href="../assets/css/swiper.min.css">
+  <!-- Magnific Popup CSS -->
+  <link rel="stylesheet" href="../assets/css/magnific-popup.css">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="../icon.png"/>
-    <title>Profile - Dormable</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="../assets/css/fontawesome.css">
-    <link rel="stylesheet" href="../assets/css/main-dormable.css">
-    <link rel="stylesheet" href="../assets/css/animated.css">
-    <link rel="stylesheet" href="../assets/css/owl.css">
-<!--
-
--->
-  </head>
+  <link rel="stylesheet" href="../assets/css/test-profile.css">
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="../assets/css/popup.css">
+  <link rel="stylesheet" href="../assets/css/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/main-dormable.css">
+  <link rel="stylesheet" href="../assets/css/listing-dormable.css">
+  <link rel="stylesheet" href="../assets/css/animated.css">
+  <link rel="stylesheet" href="../assets/css/owl.css">
+</head>
 
 <body>
-
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader">
+  <div class="preloader-inner">
+    <span class="dot"></span>
+    <div class="dots">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   </div>
-  <!-- ***** Preloader End ***** -->
+</div>
+<!-- ***** Preloader End ***** -->
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="profile.html" class="active">My Profile</a></li>
-              <li><a href="listing.html">Listing</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-            <a class='menu-trigger'>
-              <span>Menu</span>
-            </a>
-            <!-- ***** Menu End ***** -->
-          </nav>
-        </div>
-      </div>
-    </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
-
-  <div class="page-heading">
-    <div class="container">
-      <div class="top-text header-text">
-        <div class="profile-pic">
-
-          <a href="#" class="image-button">
-            <img src="../blank_profile.png" class="default-image">
-            <img src="../blank_profile_hover.png" class="hover-image">
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="main-nav">
+          <!-- ***** Logo Start ***** -->
+          <a href="index.html" class="logo">
           </a>
-
-        </div>
-
-        <div class="user-info">
-
-          <h2>JUAN DELA 123</h2>
-          <h6>MEMBER SINCE 2021</h6>
-          <a href="#" class="map-button">
-            <img src="../map-pin.png" class="map-pin">
-            <div class="map-location">The Grand Towers</div>
+          <!-- ***** Logo End ***** -->
+          <!-- ***** Menu Start ***** -->
+          <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="request-listing.html">Explore Listings</a></li>
+            <li><a href="login.html">Log In | Sign Up</a></li>
+          </ul>
+          <a class='menu-trigger'>
+            <span>Menu</span>
           </a>
-          <div class="description"> DLSU | 121 | 4.0 GPA</div>
+          <!-- ***** Menu End ***** -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- ***** Header Area End ***** -->
+<div class="main-banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="top-text header-text">
+          <h2>User Profile</h2>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="category-post">
-    <div class="container">
-      <div class="description">
-        <div class="reviews">
-          <h4 class="review-title">Reviews:</h4>
-          <br>
-
-          <div class="customer-review_wrap">
-            <div class="customer-img" >
-              <img src="../blank_profile.png" class="img-fluid" alt="#">
-              <p>Juan D.</p>
-              <span>2 Reviews</span>
-            </div>
-            <div class="customer-content-wrap">
-              <div class="customer-content">
-                <div class="customer-review">
-                  <h6>The Grand Towers</h6>
-                  <ul class="star-rating">
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                  </ul>
-                  <p class="customer-text" style="font-weight: bold">Reviewed 2 days ago</p>
-                </div>
-                <div class="customer-rating">5.0</div>
+<div class="main-content">
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="#">
+                  <img id="userPic" src="../assets/images/test_image/customer-img2.jpg" class="rounded-circle" alt="">
+                </a>
               </div>
-
-              <p class="customer-text">I love the place, the people, and the food here. Definitely worth staying here.
-              </p>
-              <p class="customer-text">For students near De La Salle University, this is the best place to stay. It is near the school and the food is great. The place is also clean and the staff are very accommodating.
-              </p>
-              <span>28 people marked this review as helpful</span>
-              <a href="#"><span class="icon-like"></span>Helpful</a>
             </div>
           </div>
-
-          <br>
-          <hr>
-
-          <div class="customer-review_wrap">
-            <div class="customer-img" >
-              <img src="../blank_profile.png" class="img-fluid" alt="#">
-              <p>Juan D.</p>
-              <span>2 Reviews</span>
-            </div>
-            <div class="customer-content-wrap">
-              <div class="customer-content">
-                <div class="customer-review">
-                  <h6>2 Torre Lorenzo</h6>
-                  <ul class="star-rating">
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                  </ul>
-                  <p class="customer-text" style="font-weight: bold">Reviewed 6 months ago</p>
-                </div>
-                <div class="customer-rating">5.0</div>
-              </div>
-
-              <p class="customer-text">Good Facilities and very accommodating staffs.
-              </p>
-              <span>18 people marked this review as helpful</span>
-              <a href="#"><span class="icon-like"></span>Helpful</a>
+          <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+            <div class="d-flex justify-content-between">
+              <a href="#" id="editBtn" class="btn btn-info">Edit profile</a>
+              <a href="#" id="followBtn" class="btn btn-sm btn-default float-right">Follow</a>
             </div>
           </div>
-
+          <div class="card-body pt-0 pt-md-4">
+            <div class="row">
+              <div class="col">
+                <div class="text-center">
+                  <h6 id="profileName" style="margin-top: 25px">
+                    Jessica Jones
+                  </h6>
+                  <p id="profileDate" style="margin-top: 5px">Member since:</p>
+                </div>
+                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  <div>
+                    <span id="profileFollowerCount" class="heading">22</span>
+                    <span class="description">Followers</span>
+                  </div>
+                  <div>
+                    <span id="profileReviewCount" class="heading">10</span>
+                    <span class="description">Reviews</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <div id="profileCourse" class="h5 mt-4">
+                <i class="ni business_briefcase-24 mr-2"></i>Insert Course
+              </div>
+              <div id="profileCollege" style="margin-bottom: 1rem">
+                <i class="ni education_hat mr-2"></i>Insert College
+              </div>
+              <hr class="my-4">
+              <p id="profileDescription">Insert Description.</p>
+            </div>
+          </div>
         </div>
-
       </div>
-      <br>
+      <!-- Edit Profile -->
+      <div class="edit-profile hidden">
+        <div class="col-xl-8 order-xl-1" >
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">My account</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <button class="file-upload btn btn-sm btn-primary">
+                    Change Profile Picture</button>
+                  <input type='file' id="fileUpload" style="display:none" accept="image/*">
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <form id="editProfile">
+                <h6 class="heading-small text-muted mb-4">User information</h6>
+                <div class="pl-lg-4">
+
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-course">Course</label>
+                        <input type="text" id="input-course" class="form-control form-control-alternative" placeholder="Course" value="Bachelor in Science">
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-college">College</label>
+                        <input type="text" id="input-college" class="form-control form-control-alternative" placeholder="College" value="De La Salle University">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4">
+                <!-- Description -->
+                <h6 class="heading-small text-muted mb-4">About me</h6>
+                <div class="pl-lg-4">
+                  <div class="form-group focused">
+                    <label>About Me</label>
+                    <textarea id="input-description" rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">Your Description</textarea>
+                  </div>
+                </div>
+                <div class="col-md-12" style="justify-content: center; display: flex">
+                  <input type="submit" id="editSubmit" value="Save Settings" class="btn btn-sm btn-primary">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="about">
-            <div class="logo">
-              <img src="../assets/images/banner_logo/request-logo.png" alt="Plot Listing">
-            </div>
-            <p>
-              Can't find a specific listing? Click the button below to send a request form for a specific listing you are looking for!
-            </p>
-            <div class="main-white-button"><a href="request-listing.html"><i class="fa fa-plus"></i> Request a Listing</a></div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="helpful-links">
-            <h4>Helpful Links</h4>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Awards</a></li>
-                  <li><a href="#">Useful Sites</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="contact-us">
-            <h4>Contact Us</h4>
-            <p>27th Street of New Town, Digital Villa</p>
-            <div class="row">
-              <div class="col-lg-6">
-                <a href="#">010-020-0340</a>
-              </div>
-              <div class="col-lg-6">
-                <a href="#">090-080-0760</a>
-              </div>
+</div>
+<!-- End of Profile Section -->
+
+<!-- Review History Section -->
+<div class="main-content">
+  <div class="booking-checkbox_wrap mt-4">
+    <h5 id="numreviewBottom" style="font-size: 24px">Review History</h5>
+    <hr>
+    <!-- Swiper for Reviews -->
+    <div class="swiper-container" id="Reviews">
+      <div class="swiper-wrapper" id="reviewHistory">
+        <!-- JS will append here -->
+      </div>
+      <!-- Add Pagination -->
+      <div class="swiper-pagination swiper-pagination-black" id="review-pagination" style="position: unset"></div>
+    </div>
+  </div>
+  <!-- Edit Review -->
+  <div class="edit-review hidden">
+    <div class="col-xl-8 order-xl-1" >
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Edit Review</h3>
             </div>
           </div>
         </div>
-        <div class="col-lg-12">
-          <div class="sub-footer">
-            <p>Copyright © 2021 Plot Listing Co., Ltd. All Rights Reserved.
-              <br>
-              Design: <a rel="nofollow" href="https://templatemo.com" title="CSS Templates">TemplateMo</a></p>
-          </div>
+        <div class="card-body">
+          <form id="editReviewForm">
+            <h6 class="heading-small text-muted mb-4">Review information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="review-title">Review Title</label>
+                    <input type="text" id="review-title" class="form-control form-control-alternative" placeholder="ReviewTitle" value="Review Title">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label>Review Content</label>
+                    <textarea id="review-content" rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">Your Description</textarea>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <hr class="my-4">
+            <!-- Rating And Media -->
+            <h6 class="heading-small text-muted mb-4">Review Content</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12" style="justify-content: center; display: flex">
+                  <div class="form-group focused">
+                    <label for="reviewImage" class="btn btn-sm btn-primary">Browse</label>
+                      <input type="file" id="reviewImage" name="reviewImage" style="display: none" accept="image/*"  multiple>
+                      <button id="clearImages" type="button" class="btn btn-danger">Clear Images</button>
+                    <ul class="user-image-list" style="display: flex;justify-content: center;margin: 20px;">
+                      <!-- Dynamic added images -->
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-12" style="justify-content: center; display: flex">
+                  <div class="form-group focused">
+                    <label>How was your experience?</label>
+                    <div class="rate">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="justify-content: center; display: flex">
+              <input type="submit" id="editReview" value="Save Edit" class="btn btn-sm btn-primary">
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </footer>
+  </div>
+</div>
 
 
-  <!-- Scripts -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/owl-carousel.js"></script>
-  <script src="../assets/js/animation.js"></script>
-  <script src="../assets/js/imagesloaded.js"></script>
-  <script src="../assets/js/listing.js"></script>
-  <script src="../assets/js/autostar-rating.js"></script>
-  <script src="../assets/js/login-register.js"></script>
-  <script src="../assets/js/custom.js"></script>
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="about">
+          <div class="logo">
+            <img src="../assets/images/banner_logo/request-logo.png" alt="Plot Listing">
+          </div>
+          <p>
+            Can't find a specific listing? Click the button below to send a request form for a specific listing you are looking for!
+          </p>
+          <div class="main-white-button">
+            <a href="request-listing.html" style="margin-top: 25px; margin-bottom: 25px"><i class="fa fa-plus"></i> Request a Listing</a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="col-lg-4">
+        <div class="helpful-links">
+          <h4>Helpful Links</h4>
+          <div class="row">
+            <div class="col-lg-6">
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Awards</a></li>
+                <li><a href="#">Useful Sites</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="contact-us">
+          <h4>Contact Us</h4>
+          <p>Taft Avenue, Malate, Manila</p>
+          <div class="row">
+            <div class="col-lg-6">
+              <a href="#">010-020-0340</a>
+            </div>
+            <div class="col-lg-6">
+              <a href="#">090-080-0760</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="sub-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center justify-content-xl-between">
+    <div class="col-xl-6 m-auto text-center">
+      <div class="copyright">
+        <p>Made with <a href="https://www.creative-tim.com/product/argon-dashboard" target="_blank">Argon Dashboard</a> by Creative Tim</p>
+      </div>
+    </div>
+  </div>
+</footer>
 
+<dialog id="dialog">
+  <p>
+  </p>
+  <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+</dialog>
+
+<!-- jQuery, Bootstrap JS. -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/popper/popper.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Magnific popup JS -->
+<script src="../vendor/jquery/jquery.magnific-popup.js"></script>
+<!-- Swiper Slider JS -->
+<script src="../vendor/swiper/swiper.min.js"></script>
+<!--Jquery modal JS-->
+<script src="../vendor/jquery/jquery.confirmModal.min.js"></script>
+
+<script src="../assets/js/owl-carousel.js"></script>
+<script src="../assets/js/animation.js"></script>
+<script src="../assets/js/imagesloaded.js"></script>
+<script src="../assets/js/listing.js"></script>
+<script src="../assets/js/autostar-rating.js"></script>
+<script src="../assets/js/login-register.js"></script>
+<script src="../assets/js/listing-reviews.js"></script>
+  <script src="../assets/js/profile.js"></script>
+<script src="../assets/js/custom.js"></script>
+
+<!-- Swiper for Reviews -->
+<script>
+  var swiper = new Swiper("#Reviews", {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    spaceBetween: 10,
+    loop: false,
+    loopFillGroupWithBlank: false,
+    pagination: {
+      el: "#review-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+<!-- Magnific Popup -->
+<script>
+  if ($('.review-image').length) {
+    $('.review-image').magnificPopup({
+      type: 'image',
+      gallery: {
+        enabled: false
+      }
+    });
+    function initUserPopUp() {
+      $('.user-image').magnificPopup({
+        type: 'image',
+        gallery: {
+          enabled: false
+        }
+      });
+    }
+  }
+</script>
 </body>
-
 </html>
