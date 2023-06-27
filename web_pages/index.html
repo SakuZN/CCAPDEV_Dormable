@@ -25,7 +25,6 @@
   </head>
 
 <body>
-
   <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -126,7 +125,7 @@
           </div>
         </div>
         <div class="col-lg-12">
-          <div class="owl-carousel owl-listing" id="featured-listings" >
+          <div class="owl-carousel owl-listing" id="featured-listings">
              <!--Generate Listing Cards-->
           </div>
         </div>
@@ -145,7 +144,7 @@
             <p>
               Can't find a specific listing? Click the button below to send a request form for a specific listing you are looking for!
             </p>
-            <div class="main-white-button"><a href="request-listing.html"><i class="fa fa-plus"></i> Request a Listing</a></div>
+            <div class="main-white-button" style="margin-top: 1rem"><a href="request-listing.html"><i class="fa fa-plus"></i> Request a Listing</a></div>
           </div>
         </div>
         <div class="col-lg-4">
@@ -197,13 +196,45 @@
   <!-- Scripts -->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/populateData.js"></script>
   <script src="../assets/js/owl-carousel.js"></script>
   <script src="../assets/js/animation.js"></script>
   <script src="../assets/js/imagesloaded.js"></script>
   <script src="../assets/js/listing.js"></script>
+  <script src="../assets/js/listing-reviews.js"></script>
   <script src="../assets/js/autostar-rating.js"></script>
   <script src="../assets/js/login-register.js"></script>
   <script src="../assets/js/custom.js"></script>
+  <script>
+    $(document).ready(function(){
+      $(updateListings());
+
+      $(generateFeaturedListing(fetchData()));
+
+      $('.owl-listing').owlCarousel({
+        items:1,
+        loop:true,
+        dots: true,
+        nav: false,
+        autoplay: false,
+        margin:30,
+        responsive:{
+          0:{
+            items:1
+          },
+          600:{
+            items:1
+          },
+          1000:{
+            items:1
+          },
+          1600:{
+            items:1
+          }
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

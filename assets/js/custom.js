@@ -34,38 +34,6 @@
         }
     });
 
-    //Run this function only on index.html page
-    if (window.location.href.includes('index.html')) {
-      $(generateFeaturedListing(fetchData()));
-    }
-  //Run this function only on index.html page
-  if (window.location.href.includes('search-result.html')) {
-    $(generateQueryListing(fetchData()));
-  }
-  $('.owl-listing').owlCarousel({
-    items:1,
-    loop:true,
-    dots: true,
-    nav: false,
-    autoplay: false,
-    margin:30,
-    responsive:{
-      0:{
-        items:1
-      },
-      600:{
-        items:1
-      },
-      1000:{
-        items:1
-      },
-      1600:{
-        items:1
-      }
-    }
-  })
-
-
 	// Menu Dropdown Toggle
   if($('.menu-trigger').length){
     $(".menu-trigger").on('click', function() {
