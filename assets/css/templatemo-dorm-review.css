@@ -1951,3 +1951,28 @@ responsive
     transform: translateX(-22px);
   }
 }
+
+.mapouter {
+  position: relative;
+  text-align: right;
+  width: 1170px; /* Adjust the width here */
+  height: 800px; /* Adjust the height here */
+}
+
+/*
+---------------------------------------------
+google maps
+---------------------------------------------
+*/
+
+.gmap_canvas {
+  overflow: hidden;
+  background: none!important;
+  width: 1170px!important; /* Adjust the width here */
+  height: 800px!important; /* Adjust the height here */
+}
+
+.gmap_iframe {
+  width: 1170px!important; /* Adjust the width here */
+  height: 800px!important; /* Adjust the height here */
+}
