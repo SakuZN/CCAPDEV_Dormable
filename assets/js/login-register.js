@@ -164,20 +164,6 @@ function showPopup(message) {
   });
 }
 
-function showConfirm(message) {
-  return new Promise((resolve) => {
-    var dialog = document.querySelector('#confirm');
-    console.log(dialog);
-    var DialogueMessage = dialog.querySelector('p');
-    DialogueMessage.textContent = message;
-    dialog.showModal();
-    dialog.addEventListener('close', () => {
-      console.log('close');
-      resolve();
-    });
-  });
-}
-
 updateMenu();
 
 //Conditional statement to add event listeners to login and register forms in login.html

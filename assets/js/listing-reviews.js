@@ -24,9 +24,7 @@ function deleteListingReview(reviewID, listingID) {
     let userDatabase = JSON.parse(localStorage.getItem('userDatabase'));
     let userToUpdate = userDatabase.find(user => user.username === reviewToDelete.userID);
     if (userToUpdate) {
-      console.log(userToUpdate.noOfReviews);
       userToUpdate.noOfReviews--;
-      console.log(userToUpdate.noOfReviews);
     }
     localStorage.setItem('reviewDatabase', JSON.stringify(reviewDatabase));
     localStorage.setItem('userDatabase', JSON.stringify(userDatabase));

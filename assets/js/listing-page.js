@@ -25,7 +25,6 @@ function populateListingReviews(reviews, swiper) {
   const userDatabase = JSON.parse(userDatabaseString);
   //sort review by date
   reviews.sort((a, b) => { return new Date(b.reviewDate) - new Date(a.reviewDate) });
-  console.log(reviews);
   reviews.forEach((review) => {
     let reviewUser = userDatabase.find(user => user.username === review.userID);
     let scoreClass = '';
