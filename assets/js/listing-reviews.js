@@ -60,12 +60,13 @@ function getListingReviews(listingID) {
 
 function reviewMarkedHelpful(reviewID, listingID, value) {
   let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
-  let reviewFilter = reviewDatabase.filter(review => review.listingID === listingID);
-  let reviewIndex = reviewFilter.findIndex(x => x.reviewID === reviewID);
-  let review = reviewFilter[reviewIndex];
-  review.reviewMarkedHelpful += value;
-  reviewDatabase[reviewIndex] = review;
-  localStorage.setItem('reviewDatabase', JSON.stringify(reviewDatabase));
+ let reviewToMark = reviewDatabase.find(review => review.listingID === listingID && review.reviewID === reviewID);
+ let reviewIndex = reviewDatabase.findIndex(review => review.listingID === listingID && review.reviewID === reviewID);
+ reviewToMark.reviewMarkedHelpful += value;
+ if (reviewIndex !== -1) {
+    reviewDatabase[reviewIndex] = reviewToMark;
+    localStorage.setItem('reviewDatabase', JSON.stringify(reviewDatabase));
+ }
 }
 
 function reviewDate(date) {
