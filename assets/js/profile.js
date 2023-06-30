@@ -1,21 +1,16 @@
-function populateUserReviewImg(images) {
-  let reviewImgs = '';
-  images.forEach((img) => {
-    reviewImgs+= `<li href="${img}" class="review-image">
-          <img src="${img}" class="img-fluid" alt="#">
-        </li>`;
-  });
-  return reviewImgs;
+const getUserData = function (userData) {
+  this.user = userData;
+  this.userReviewHistory = getUserReviews(this.user.username);
+  this.divRH = populateHistoryAsDiv(this.userReviewHistory, this.user);
 }
-function populateUserReviewHistory(reviews, swiper) {
-  const userDatabaseString = localStorage.getItem('userDatabase');
-  const userDatabase = JSON.parse(userDatabaseString);
-  const listingDatabaseString = JSON.parse(localStorage.getItem('listingDatabase'));
-  //sort review by date
-  reviews.sort((a, b) => { return new Date(b.reviewDate) - new Date(a.reviewDate) });
-  console.log(reviews);
-  reviews.forEach((review) => {
-    let reviewUser = userDatabase.find(user => user.username === review.userID);
+// TODO: Create another Object class for divRH for easy access to the divs
+function populateHistoryAsDiv(reviewHistory, reviewUser) {
+  let userReviewHistory = [];
+  let listingDatabaseString = JSON.parse(localStorage.getItem('listingDatabase'));
+  reviewHistory.forEach((review) => {
+
+    let swiperDiv = document.createElement('div');
+    swiperDiv.classList.add('swiper-slide');
     let listingName = listingDatabaseString.find(listing => listing.id === review.listingID).name;
     let scoreClass = '';
     let checkEdit = '';
@@ -28,39 +23,55 @@ function populateUserReviewHistory(reviews, swiper) {
     else
       scoreClass = 'customer-rating red';
 
-    swiper.innerHTML += ` <div class="swiper-slide">
-  <div class="customer-review_wrap">
-    <div class="customer-img">
-       <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
-            <p>${reviewUser.username}</p>
-            <span style="display: flex; justify-content: center">${reviewUser.noOfReviews} reviews</span>
-            <p style="font-weight: bold">[${listingName}]</p>
-    </div>
-    <div class="customer-content-wrap">
-      <div class="customer-content">
-        <div class="customer-review">
-          <h6>${review.reviewTitle}</h6>
-          <ul class="star-rating">
-            ${star_rating(review.reviewScore,0, 'listing')}
-          </ul>
-          <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}<i style="font-style: italic"> ${checkEdit}</i></p>
+    swiperDiv.innerHTML = `
+       <div class="swiper-slide">
+        <div class="customer-review_wrap">
+            <div class="customer-img">
+            <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
+                    <p>${reviewUser.username}</p>
+                    <span style="display: flex; justify-content: center">${reviewUser.noOfReviews} reviews</span>
+                    <p style="font-weight: bold">[${listingName}]</p>
+            </div>
+            <div class="customer-content-wrap">
+            <div class="customer-content">
+                <div class="customer-review">
+                <h6>${review.reviewTitle}</h6>
+                <ul class="star-rating">
+                    ${star_rating(review.reviewScore,0, 'listing')}
+                </ul>
+                <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}<i style="font-style: italic"> ${checkEdit}</i></p>
+                </div>
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
+            </div>
+            <p class="customer-text">${review.reviewContent}</p>
+            <ul>
+                ${populateUserReviewImg(review.reviewIMG)}
+            </ul>
+            <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
+                <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
+                <button class="editReviewBtn btn btn-sm btn-primary">Edit</button>
+                <button class="confirmModal deleteReviewBtn btn btn-sm btn-primary red-btn">Delete</button>
+            </div>
+            </div>
         </div>
-        <div class="${scoreClass}">${review.reviewScore}.0</div>
-      </div>
-      <p class="customer-text">${review.reviewContent}</p>
-      <ul>
-        ${populateUserReviewImg(review.reviewIMG)}
-      </ul>
-      <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
-        <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
-        <button class="editReviewBtn btn btn-sm btn-primary">Edit</button>
-        <button class="confirmModal deleteReviewBtn btn btn-sm btn-primary red-btn">Delete</button>
-      </div>
-    </div>
-  </div>
-  <hr>
-</div> `;
+        <hr>
+       </div> `;
+    userReviewHistory.push(swiperDiv);
   });
+  return userReviewHistory;
+}
+
+function populateUserReviewImg(images) {
+  let reviewImgs = '';
+  images.forEach((img) => {
+    reviewImgs+= `<li href="${img}" class="review-image">
+          <img src="${img}" class="img-fluid" alt="#">
+        </li>`;
+  });
+  return reviewImgs;
+}
+function populateUserReviewHistory(reviewHistory, swiperContainer) {
+  reviewHistory.forEach((review) => { swiperContainer.append(review) });
 }
 
 function parseDate(date) {
@@ -88,7 +99,8 @@ function parseDate(date) {
 
 function populateProfile(userID, currentUser) {
   let database = JSON.parse(localStorage.getItem('userDatabase'));
-  let userData = database.find(user => user.username === userID);
+  let userData = new getUserData(database.find(user => user.username === userID));
+  console.log(userData.divRH);
 
   //Get the needed elements
   let profilePic = document.getElementById('userPic');
@@ -107,14 +119,14 @@ function populateProfile(userID, currentUser) {
   let reviewHistory = document.getElementById('reviewHistory');
 
   //Get user data
-  let userPic = userData.profilePic;
-  let name = userData.username;
-  let followers = userData.followers;
-  let reviews = userData.noOfReviews;
-  let courseName = userData.course;
-  let userDescription = userData.description;
-  let collegeName = userData.college;
-  let dateJoined = parseDate(userData.joinDate);
+  let userPic = userData.user.profilePic;
+  let name = userData.user.username;
+  let followers = userData.user.followers;
+  let reviews = userData.user.noOfReviews;
+  let courseName = userData.user.course;
+  let userDescription = userData.user.description;
+  let collegeName = userData.user.college;
+  let dateJoined = parseDate(userData.user.joinDate);
 
 
   //Set user data
@@ -130,7 +142,7 @@ function populateProfile(userID, currentUser) {
   formCollege.value = collegeName;
   formDescription.value = userDescription;
   try {
-    populateUserReviewHistory(getUserReviews(name), reviewHistory);
+    populateUserReviewHistory(userData.divRH, reviewHistory);
   }
   catch (e) {
     console.log(e);

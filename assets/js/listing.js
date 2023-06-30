@@ -4,12 +4,55 @@ function fetchData() {
   return JSON.parse(localStorage.getItem('listingDatabase'));
 }
 
+function initOwlCarousel() {
+
+  $('.owl-listing').owlCarousel({
+    items: 1,
+    loop: true,
+    dots: true,
+    nav: false,
+    autoplay: false,
+    margin: 30,
+    responsive: {
+      0: {
+        items: 1
+      },
+      600: {
+        items: 1
+      },
+      1000: {
+        items: 1
+      },
+      1600: {
+        items: 1
+      }
+    }
+  });
+}
+
+function destroyOwlCarousel() {
+  $('.owl-listing').owlCarousel('destroy');
+}
+
+function sortListing(listings, sortType) {
+  switch (sortType) {
+    case 'rating-low':
+      console.log('rating-low');
+      listings.sort((a, b) => a.reviewScore - b.reviewScore);
+      break;
+    case 'rating-high':
+      listings.sort((a, b) => b.reviewScore - a.reviewScore);
+      break;
+  }
+  console.log(listings);
+  return listings;
+}
+
 // Auto generates the listing in the carousel HTML based on the data
 function generateFeaturedListing(listings) {
   let featuredListing = document.getElementById('featured-listings');
+  featuredListing.innerHTML = '';
 
-  //sort by review score
-  listings.sort((a, b) => b.reviewScore - a.reviewScore);
   //set initial limit
   var listingLimit = 0;
 
@@ -20,7 +63,7 @@ function generateFeaturedListing(listings) {
   //Loop through the listings
   listings.forEach((listing) => {
 
-    if (listingLimit % 2 === 0) {
+
       item = document.createElement('div');
       item.classList.add('item');
 
@@ -29,7 +72,7 @@ function generateFeaturedListing(listings) {
 
       item.appendChild(row);
       featuredListing.appendChild(item);
-    }
+
 
 
     col = document.createElement('div');
@@ -66,6 +109,14 @@ function generateFeaturedListing(listings) {
     row.appendChild(col);
     listingLimit++;
   });
+
+  //Finally, initialize the owl carousel
+  initOwlCarousel();
+}
+
+function reInitListings(listings) {
+  destroyOwlCarousel();
+  generateFeaturedListing(listings);
 }
 
 // Auto generates the listing based on the query

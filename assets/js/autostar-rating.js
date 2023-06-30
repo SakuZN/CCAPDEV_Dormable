@@ -1,10 +1,10 @@
 
 function star_rating(score, reviews, listingID) {
-  var starHtml = '';
-  var fullStar;
-  var halfStar;
-  var emptyStar;
-  var reviewCount;
+  let starHtml = '';
+  let fullStar;
+  let halfStar;
+  let emptyStar;
+  let reviewCount;
   if (listingID === 'featured-listings') {
   fullStar = '<li class="fa fa-star" style="color: orange"></i><li>';
   halfStar = '<li><i class="fa fa-star-half-o" style="color: orange"></i><li>';
@@ -17,13 +17,13 @@ function star_rating(score, reviews, listingID) {
   }
 
   // Calculate the number of full stars
-  var fullStars = Math.floor(score);
+  let fullStars = Math.floor(score);
 
   // Calculate whether to show a half star
-  var hasHalfStar = score - fullStars >= 0.5;
+  let hasHalfStar = score - fullStars >= 0.5;
 
   // Generate the full stars
-  for (var i = 0; i < fullStars; i++) {
+  for (let i = 0; i < fullStars; i++) {
     starHtml += fullStar;
   }
 
@@ -33,7 +33,7 @@ function star_rating(score, reviews, listingID) {
   }
 
   // Generate the empty stars
-  var remaining = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  let remaining = 5 - fullStars - (hasHalfStar ? 1 : 0);
   while (remaining > 0) {
     starHtml += emptyStar;
     remaining--;

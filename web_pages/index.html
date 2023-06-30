@@ -122,6 +122,7 @@
           <div class="section-heading">
             <h2>Popular Listing</h2>
             <h6>Check Them Out</h6>
+            <button class="btn btn-sm btn-primary" onclick="reInitListings(sortListing(fetchData(),'rating-low'))"> Test Button</button>
           </div>
         </div>
         <div class="col-lg-12">
@@ -209,30 +210,7 @@
     $(document).ready(function(){
       $(updateListings());
 
-      $(generateFeaturedListing(fetchData()));
-
-      $('.owl-listing').owlCarousel({
-        items:1,
-        loop:true,
-        dots: true,
-        nav: false,
-        autoplay: false,
-        margin:30,
-        responsive:{
-          0:{
-            items:1
-          },
-          600:{
-            items:1
-          },
-          1000:{
-            items:1
-          },
-          1600:{
-            items:1
-          }
-        }
-      });
+      $(generateFeaturedListing(sortListing(fetchData(),'rating-high')));
     });
   </script>
 </body>
