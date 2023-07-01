@@ -1733,5 +1733,24 @@ textarea {
   transform: translateX(var(--span-x, 4px)) translateZ(0);
 }
 
+.sortList {
+  width: 10%;
+}
+@media (max-width: 950px) {
+  .sortList {
+    width: 35%;
+  }
+}
+@media (min-width: 951px) {
+  .sortList {
+    width: 17%;
+  }
+}
+@media (min-width: 1500px) {
+  .sortList {
+    width: 10%;
+  }
+}
+
 
 /*# sourceMappingURL=listing-dormable.css.map */

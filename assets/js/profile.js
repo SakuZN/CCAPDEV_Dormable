@@ -4,6 +4,9 @@ let mySwiper;
 //variable for the user profile
 let userProfile;
 
+//Review Limit Variable
+let reviewLimit = 1;
+
 //Object function for user profile
 const getUserData = function (userData, isCurrentUser) {
   this.user = userData;
@@ -100,7 +103,10 @@ function populateUserReviewImg(images) {
 }
 function populateUserReviewHistory(reviewHistory) {
   let swiperContainer = document.getElementById('reviewHistory');
-  reviewHistory.forEach((review) => { swiperContainer.append(review.divRH) });
+
+  for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
+    swiperContainer.append(reviewHistory[i].divRH);
+  }
   initSwiper();
 }
 
@@ -119,13 +125,63 @@ function initSwiper(){
   });
 }
 
-function testSortReviews(){
-  userProfile.userRHData.sort((a,b) => {
-    return new Date(b.reviewHistory.reviewDate) - new Date(a.reviewHistory.reviewDate);
-  });
+function sortReviewHistory(sortType){
+/*
+Sort types:
+  1. Date (Newest to Oldest)
+  2. Date (Oldest to Newest)
+  3. Rating (Highest to Lowest)
+  4. Rating (Lowest to Highest)
+*/
+
+  switch(sortType){
+    case 'date-newest':
+      userProfile.userRHData.sort((a,b) => {
+        return new Date(b.reviewHistory.reviewDate) - new Date(a.reviewHistory.reviewDate);
+      });
+      break;
+    case 'date-oldest':
+      userProfile.userRHData.sort((a,b) => {
+        return new Date(a.reviewHistory.reviewDate) - new Date(b.reviewHistory.reviewDate);
+      });
+      break;
+    case 'rating-high':
+      userProfile.userRHData.sort((a,b) => {
+        return b.reviewHistory.reviewScore - a.reviewHistory.reviewScore;
+      });
+      break;
+    case 'rating-low':
+      userProfile.userRHData.sort((a,b) => {
+        return a.reviewHistory.reviewScore - b.reviewHistory.reviewScore;
+      });
+      break;
+    default:
+      return;
+  }
   destroySwiper();
   clearReviewHistory();
   populateUserReviewHistory(userProfile.userRHData);
+}
+
+function loadMoreReviews(){
+
+  if (reviewLimit >= userProfile.userRHData.length) {
+    reviewLimit = 1;
+    destroySwiper();
+    clearReviewHistory();
+    populateUserReviewHistory(userProfile.userRHData);
+    return;
+  }
+
+  let swiperIndex = mySwiper.activeIndex;
+  destroySwiper();
+  if (reviewLimit < userProfile.userRHData.length)
+    reviewLimit++;
+  populateUserReviewHistory(userProfile.userRHData);
+  // Set the active slide to the last appended element
+  mySwiper.slideTo(reviewLimit - 1);
+  //Reset the sort dropdown if it is not on the default option
+  document.getElementById('sortReview').selectedIndex = 0;
 }
 
 
@@ -532,6 +588,12 @@ $(document).ready(function() {
         }]
       });
     }
+  });
+
+  //Sort by List
+  $('#sortReview').on('change', function() {
+    let sortType = $(this).val();
+    sortReviewHistory(sortType);
   });
 
 });

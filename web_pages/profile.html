@@ -203,6 +203,15 @@
 <div class="main-content">
   <div class="booking-checkbox_wrap mt-4">
     <h5 id="numreviewBottom" style="font-size: 24px">Review History</h5>
+    <div class="sortList">
+      <select id="sortReview" class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <option value="" disabled selected>Sort By</option>
+        <option value="date-newest">Date - Newest</option>
+        <option value="date-oldest">Date - Oldest</option>
+        <option value="rating-high">Rating - High</option>
+        <option value="rating-low">Rating - Low</option>
+      </select>
+    </div>
     <hr>
     <!-- Swiper for Reviews -->
     <div class="swiper-container" id="Reviews">
@@ -212,7 +221,7 @@
       <!-- Add Pagination -->
       <div class="swiper-pagination swiper-pagination-black" id="review-pagination" style="position: unset"></div>
       <div class="col-md-12" style="justify-content: center; display: flex; margin-top: 25px">
-        <button class="btn btn-sm btn-info" onclick="testSortReviews()"> Test Button</button>
+        <button class="btn btn-outline-info btn-sm" onclick="loadMoreReviews()">Load More</button>
       </div>
 
     </div>
