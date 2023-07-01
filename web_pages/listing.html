@@ -189,6 +189,15 @@
 
         <div class="booking-checkbox_wrap mt-4">
           <h5 id="numreviewBottom" style="font-size: 24px">No of Reviews</h5>
+          <div class="sortList">
+            <select id="sortReview" class="form-select form-select-sm" aria-label=".form-select-sm example">
+              <option value="" disabled selected>Sort By</option>
+              <option value="date-newest">Date - Newest</option>
+              <option value="date-oldest">Date - Oldest</option>
+              <option value="rating-high">Rating - High</option>
+              <option value="rating-low">Rating - Low</option>
+            </select>
+          </div>
           <hr>
           <!-- Swiper for Reviews -->
           <div class="swiper-container" id="Reviews">
@@ -197,6 +206,9 @@
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination swiper-pagination-black" id="review-pagination" style="position: unset"></div>
+            <div class="col-md-12" style="justify-content: center; display: flex; margin-top: 25px">
+              <button class="btn btn-outline-info btn-sm" onclick="loadMoreReviews()">Load More</button>
+            </div>
           </div>
 
           <div class="reviewForm hidden">
@@ -385,6 +397,8 @@
 <!-- Swiper Slider JS -->
 <script src="../vendor/swiper/swiper.min.js"></script>
 
+<!--Jquery modal JS-->
+<script src="../vendor/jquery/jquery.confirmModal.min.js"></script>
 <!-- GSAP JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
 
@@ -400,21 +414,6 @@
 
 <!-- JQuery Script for various functionalities -->
 <script src="../assets/js/listing-page.js"></script>
-
-<!-- Dynamically Add Listing Details -->
-<script>
-  // get the id from the url
-  let url = new URL(window.location.href);
-  let id = url.searchParams.get('id');
-  let checkValidId = fetchData().find((listing) => listing.id === id);
-  if (id === null || checkValidId === undefined) {
-    window.location.href = '404.html';
-  }
-  else {
-    updateListings();
-    populateListingPage(id);
-  }
-</script>
 
 <!-- Swiper for Listings -->
 <script>
@@ -442,15 +441,6 @@
   }
   if ($('.image-link2').length) {
     $('.image-link2').magnificPopup({
-      type: 'image',
-      gallery: {
-        enabled: false
-      }
-    });
-  }
-
-  if ($('.review-image').length) {
-    $('.review-image').magnificPopup({
       type: 'image',
       gallery: {
         enabled: false

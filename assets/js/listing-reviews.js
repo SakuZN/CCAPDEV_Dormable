@@ -58,6 +58,15 @@ function getListingReviews(listingID) {
   return reviews.filter(review => review.listingID === listingID && review.isDeleted === false);
 }
 
+function getListingDatabase() {
+  return JSON.parse(localStorage.getItem('listingDatabase'));
+}
+
+function getSpecificListing(listingID) {
+  const listings = JSON.parse(localStorage.getItem('listingDatabase'));
+  return listings.find(listing => listing.id === listingID);
+}
+
 function reviewMarkedHelpful(reviewID, listingID, value) {
   let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
  let reviewToMark = reviewDatabase.find(review => review.listingID === listingID && review.reviewID === reviewID);

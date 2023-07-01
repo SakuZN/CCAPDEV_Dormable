@@ -10,6 +10,9 @@ let userProfile;
 //Review Limit Variable
 let reviewLimit = 3;
 
+//Listing Database
+let listingDatabase = getListingDatabase();
+
 /* ==============================================================
    OBJECT FUNCTIONS
    ============================================================== */
@@ -73,6 +76,7 @@ if (window.location.href.includes('profile.html')) {
     }
   }
 }
+
 
 function populateProfile(userID, currentUser) {
   let database = JSON.parse(localStorage.getItem('userDatabase'));
@@ -152,7 +156,6 @@ function populateProfile(userID, currentUser) {
 //Turns review history into divs and returns an array of review history objects
 function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
   let userReviewHistory = [];
-  let listingDatabaseString = JSON.parse(localStorage.getItem('listingDatabase'));
 
   reviewHistory.forEach((review) => {
 
@@ -161,7 +164,7 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
     swiperDiv.setAttribute('data-review-id', review.reviewID);
     swiperDiv.setAttribute('data-listing-id', review.listingID);
     swiperDiv.setAttribute('data-user-id', review.userID);
-    let listingName = listingDatabaseString.find(listing => listing.id === review.listingID).name;
+    let listingName = getSpecificListing(review.listingID).name;
 
     let scoreClass = '';
     let checkEdit = '';
@@ -201,8 +204,8 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                 <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
                 ${
                 isCurrentUser? `
-                  <button class="editReviewBtn btn btn-sm btn-primary">Edit</button>
-                  <button class="confirmModal deleteReviewBtn btn btn-sm btn-primary red-btn">Delete</button>`
+                  <button class="editReviewBtn btn btn-outline-primary btn-sm">Edit</button>
+                  <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
                   :`
                   <button class="button">
                      <div class="hand">
@@ -233,9 +236,12 @@ function populateUserReviewImg(images) {
 function populateUserReviewHistory(reviewHistory) {
   let swiperContainer = document.getElementById('reviewHistory');
 
-  for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
-    swiperContainer.append(reviewHistory[i].divRH);
-  }
+  if (reviewLimit > swiperContainer.children.length)
+    reviewHistory.forEach((review) => {swiperContainer.append(review.divRH)});
+  else
+    for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
+      swiperContainer.append(reviewHistory[i].divRH);
+    }
   initSwiper();
 }
 
@@ -251,6 +257,8 @@ Sort types:
   3. Rating (Highest to Lowest)
   4. Rating (Lowest to Highest)
 */
+  if (userProfile.userRHData.length <= 1)
+    return;
 
   switch(sortType){
     case 'date-newest':
@@ -549,6 +557,7 @@ $(document).ready(function() {
     });
   });
 
+  //Delete Review
   $('.confirmModal').click(function(e) {
     e.preventDefault();
     $.confirmModal('Delete this review?', {
