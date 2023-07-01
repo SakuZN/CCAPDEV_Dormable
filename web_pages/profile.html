@@ -211,6 +211,10 @@
       </div>
       <!-- Add Pagination -->
       <div class="swiper-pagination swiper-pagination-black" id="review-pagination" style="position: unset"></div>
+      <div class="col-md-12" style="justify-content: center; display: flex; margin-top: 25px">
+        <button class="btn btn-sm btn-info" onclick="testSortReviews()"> Test Button</button>
+      </div>
+
     </div>
   </div>
   <!-- Edit Review -->
@@ -369,6 +373,9 @@
 <!--Jquery modal JS-->
 <script src="../vendor/jquery/jquery.confirmModal.min.js"></script>
 
+<!-- GSAP JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+
 <script src="../assets/js/owl-carousel.js"></script>
 <script src="../assets/js/animation.js"></script>
 <script src="../assets/js/imagesloaded.js"></script>
@@ -379,20 +386,6 @@
   <script src="../assets/js/profile.js"></script>
 <script src="../assets/js/custom.js"></script>
 
-<!-- Swiper for Reviews -->
-<script>
-  var swiper = new Swiper("#Reviews", {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    spaceBetween: 10,
-    loop: false,
-    loopFillGroupWithBlank: false,
-    pagination: {
-      el: "#review-pagination",
-      clickable: true,
-    },
-  });
-</script>
 
 <!-- Magnific Popup -->
 <script>

@@ -1611,7 +1611,7 @@ textarea {
 .button.dark {
   --color: #f6f8ff;
   --color-hover: #f6f8ff;
-  --color-active: #fff;
+  --color-active: #red;
   --icon: #8a91b4;
   --icon-hover: #bbc1e1;
   --icon-active: #fff;
@@ -1641,7 +1641,7 @@ textarea {
   --span-d-o: 1;
   --span-d-x: 0;
   --icon: var(--icon-active);
-  --color: var(--color-active);
+  color: white;
   --border: var(--border-active);
   --background: var(--background-active);
 }
