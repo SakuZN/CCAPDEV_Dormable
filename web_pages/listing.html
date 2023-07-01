@@ -418,7 +418,7 @@
 
 <!-- Swiper for Listings -->
 <script>
-  var swiper = new Swiper('#listing-image', {
+  var imageSwiper = new Swiper('#listing-image', {
 
     slidesPerView: 3,
     slidesPerGroup: 3,
@@ -430,22 +430,6 @@
     },
   });
 </script>
-
-<!-- Swiper for Reviews -->
-<script>
-  var swiper = new Swiper("#Reviews", {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    spaceBetween: 10,
-    loop: false,
-    loopFillGroupWithBlank: false,
-    pagination: {
-      el: "#review-pagination",
-      clickable: true,
-    },
-  });
-</script>
-
 <!-- Magnific Popup -->
 <script>
   if ($('.image-link').length) {

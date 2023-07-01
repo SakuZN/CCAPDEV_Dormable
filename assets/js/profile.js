@@ -1,3 +1,6 @@
+/* ==============================================================
+   GLOBAL VARIABLES
+   ============================================================== */
 //Variable for swiper
 let mySwiper;
 
@@ -5,7 +8,11 @@ let mySwiper;
 let userProfile;
 
 //Review Limit Variable
-let reviewLimit = 1;
+let reviewLimit = 3;
+
+/* ==============================================================
+   OBJECT FUNCTIONS
+   ============================================================== */
 
 //Object function for user profile
 const getUserData = function (userData, isCurrentUser) {
@@ -19,97 +26,9 @@ const reviewHistoryData = function (reviewHistory, divRH) {
   this.reviewHistory = reviewHistory;
   this.divRH = divRH;
 }
-
-//Turns review history into divs and returns an array of review history objects
-function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
-  let userReviewHistory = [];
-  let listingDatabaseString = JSON.parse(localStorage.getItem('listingDatabase'));
-
-  reviewHistory.forEach((review) => {
-
-    let swiperDiv = document.createElement('div');
-    swiperDiv.classList.add('swiper-slide');
-    swiperDiv.setAttribute('data-review-id', review.reviewID);
-    swiperDiv.setAttribute('data-listing-id', review.listingID);
-    swiperDiv.setAttribute('data-user-id', review.userID);
-    let listingName = listingDatabaseString.find(listing => listing.id === review.listingID).name;
-
-    let scoreClass = '';
-    let checkEdit = '';
-    if (review.wasEdited)
-      checkEdit = '(Review Edited)';
-    if (review.reviewScore >= 4)
-      scoreClass = 'customer-rating';
-    else if (review.reviewScore === 3)
-      scoreClass = 'customer-rating yellow';
-    else
-      scoreClass = 'customer-rating red';
-
-    swiperDiv.innerHTML = `
-        <div class="customer-review_wrap">
-            <div class="customer-img">
-            <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
-                    <p>${reviewUser.username}</p>
-                    <span style="display: flex; justify-content: center">${reviewUser.noOfReviews} reviews</span>
-                    <p style="font-weight: bold">[${listingName}]</p>
-            </div>
-            <div class="customer-content-wrap">
-            <div class="customer-content">
-                <div class="customer-review">
-                <h6>${review.reviewTitle}</h6>
-                <ul class="star-rating">
-                    ${star_rating(review.reviewScore,0, 'listing')}
-                </ul>
-                <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}<i style="font-style: italic"> ${checkEdit}</i></p>
-                </div>
-                <div class="${scoreClass}">${review.reviewScore}.0</div>
-            </div>
-            <p class="customer-text">${review.reviewContent}</p>
-            <ul>
-                ${populateUserReviewImg(review.reviewIMG)}
-            </ul>
-            <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
-                <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
-                ${
-                isCurrentUser? `
-                  <button class="editReviewBtn btn btn-sm btn-primary">Edit</button>
-                  <button class="confirmModal deleteReviewBtn btn btn-sm btn-primary red-btn">Delete</button>`
-                  :`
-                  <button class="button">
-                     <div class="hand">
-                        <div class="thumb"></div>
-                     </div>
-                     <span>Like<span>d</span></span>
-                  </button>`
-                  }
-            </div>
-            </div>
-        </div>
-        <hr>`;
-    let rhData = new reviewHistoryData(review, swiperDiv);
-    userReviewHistory.push(rhData);
-  });
-  return userReviewHistory;
-}
-
-function populateUserReviewImg(images) {
-  let reviewImgs = '';
-  images.forEach((img) => {
-    reviewImgs+= `<li href="${img}" class="review-image">
-          <img src="${img}" class="img-fluid" alt="#">
-        </li>`;
-  });
-  return reviewImgs;
-}
-function populateUserReviewHistory(reviewHistory) {
-  let swiperContainer = document.getElementById('reviewHistory');
-
-  for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
-    swiperContainer.append(reviewHistory[i].divRH);
-  }
-  initSwiper();
-}
-
+/* ==============================================================
+   SWIPER FUNCTIONS
+   ============================================================== */
 function initSwiper(){
   mySwiper = new Swiper(".swiper-container", {
     slidesPerView: 1,
@@ -124,96 +43,35 @@ function initSwiper(){
     allowTouchMove: false,
   });
 }
-
-function sortReviewHistory(sortType){
-/*
-Sort types:
-  1. Date (Newest to Oldest)
-  2. Date (Oldest to Newest)
-  3. Rating (Highest to Lowest)
-  4. Rating (Lowest to Highest)
-*/
-
-  switch(sortType){
-    case 'date-newest':
-      userProfile.userRHData.sort((a,b) => {
-        return new Date(b.reviewHistory.reviewDate) - new Date(a.reviewHistory.reviewDate);
-      });
-      break;
-    case 'date-oldest':
-      userProfile.userRHData.sort((a,b) => {
-        return new Date(a.reviewHistory.reviewDate) - new Date(b.reviewHistory.reviewDate);
-      });
-      break;
-    case 'rating-high':
-      userProfile.userRHData.sort((a,b) => {
-        return b.reviewHistory.reviewScore - a.reviewHistory.reviewScore;
-      });
-      break;
-    case 'rating-low':
-      userProfile.userRHData.sort((a,b) => {
-        return a.reviewHistory.reviewScore - b.reviewHistory.reviewScore;
-      });
-      break;
-    default:
-      return;
-  }
-  destroySwiper();
-  clearReviewHistory();
-  populateUserReviewHistory(userProfile.userRHData);
-}
-
-function loadMoreReviews(){
-
-  if (reviewLimit >= userProfile.userRHData.length) {
-    reviewLimit = 1;
-    destroySwiper();
-    clearReviewHistory();
-    populateUserReviewHistory(userProfile.userRHData);
-    return;
-  }
-
-  let swiperIndex = mySwiper.activeIndex;
-  destroySwiper();
-  if (reviewLimit < userProfile.userRHData.length)
-    reviewLimit++;
-  populateUserReviewHistory(userProfile.userRHData);
-  // Set the active slide to the last appended element
-  mySwiper.slideTo(reviewLimit - 1);
-  //Reset the sort dropdown if it is not on the default option
-  document.getElementById('sortReview').selectedIndex = 0;
-}
-
-
-function clearReviewHistory(){
-  let reviewHistory = document.getElementById('reviewHistory');
-  reviewHistory.innerHTML = '';
-}
 function destroySwiper(){
   mySwiper.destroy();
 }
 
-function parseDate(date) {
-  //constant of full month names
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-  let newDate = new Date(date);
-  let month = monthNames[newDate.getMonth()];
-  let year = newDate.getFullYear();
-
-  return month + ' ' + year;
+/* ==============================================================
+   INITIALIZATION LOGIC EVENT LISTENERS AND FUNCTIONS
+   ============================================================== */
+//Check in profile.html if the id is valid
+if (window.location.href.includes('profile.html')) {
+  let url = new URL(window.location.href);
+  let profileID = url.searchParams.get('id');
+  let checkValidUser = JSON.parse(localStorage.getItem('userDatabase')).find(user => user.username === profileID);
+  if (checkValidUser === undefined || checkValidUser === null) {
+    window.location.href = '404.html';
+  }
+  else {
+    let isCurrentUser = false;
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      isCurrentUser = JSON.parse(localStorage.getItem('currentUser')).username === profileID;
+    }
+    populateProfile(profileID, isCurrentUser);
+    if (isCurrentUser){
+      const editForm = document.getElementById('editProfile');
+      editForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        updateProfile();
+      });
+    }
+  }
 }
 
 function populateProfile(userID, currentUser) {
@@ -287,6 +145,198 @@ function populateProfile(userID, currentUser) {
   }
 }
 
+/* ==============================================================
+   POPULATION FUNCTIONS
+   ============================================================== */
+
+//Turns review history into divs and returns an array of review history objects
+function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
+  let userReviewHistory = [];
+  let listingDatabaseString = JSON.parse(localStorage.getItem('listingDatabase'));
+
+  reviewHistory.forEach((review) => {
+
+    let swiperDiv = document.createElement('div');
+    swiperDiv.classList.add('swiper-slide');
+    swiperDiv.setAttribute('data-review-id', review.reviewID);
+    swiperDiv.setAttribute('data-listing-id', review.listingID);
+    swiperDiv.setAttribute('data-user-id', review.userID);
+    let listingName = listingDatabaseString.find(listing => listing.id === review.listingID).name;
+
+    let scoreClass = '';
+    let checkEdit = '';
+    if (review.wasEdited)
+      checkEdit = '(Review Edited)';
+    if (review.reviewScore >= 4)
+      scoreClass = 'customer-rating';
+    else if (review.reviewScore === 3)
+      scoreClass = 'customer-rating yellow';
+    else
+      scoreClass = 'customer-rating red';
+
+    swiperDiv.innerHTML = `
+        <div class="customer-review_wrap">
+            <div class="customer-img">
+            <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
+                    <p>${reviewUser.username}</p>
+                    <span style="display: flex; justify-content: center">${reviewUser.noOfReviews} reviews</span>
+                    <a href="listing.html?id=${review.listingID}" target="_blank"><p style="font-weight: bold">[${listingName}]</p></a>
+            </div>
+            <div class="customer-content-wrap">
+            <div class="customer-content">
+                <div class="customer-review">
+                <h6>${review.reviewTitle}</h6>
+                <ul class="star-rating">
+                    ${star_rating(review.reviewScore,0, 'listing')}
+                </ul>
+                <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}<i style="font-style: italic"> ${checkEdit}</i></p>
+                </div>
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
+            </div>
+            <p class="customer-text">${review.reviewContent}</p>
+            <ul>
+                ${populateUserReviewImg(review.reviewIMG)}
+            </ul>
+            <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
+                <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
+                ${
+                isCurrentUser? `
+                  <button class="editReviewBtn btn btn-sm btn-primary">Edit</button>
+                  <button class="confirmModal deleteReviewBtn btn btn-sm btn-primary red-btn">Delete</button>`
+                  :`
+                  <button class="button">
+                     <div class="hand">
+                        <div class="thumb"></div>
+                     </div>
+                     <span>Like<span>d</span></span>
+                  </button>`
+                  }
+            </div>
+            </div>
+        </div>
+        <hr>`;
+    let rhData = new reviewHistoryData(review, swiperDiv);
+    userReviewHistory.push(rhData);
+  });
+  return userReviewHistory;
+}
+
+function populateUserReviewImg(images) {
+  let reviewImgs = '';
+  images.forEach((img) => {
+    reviewImgs+= `<li href="${img}" class="review-image">
+          <img src="${img}" class="img-fluid" alt="#">
+        </li>`;
+  });
+  return reviewImgs;
+}
+function populateUserReviewHistory(reviewHistory) {
+  let swiperContainer = document.getElementById('reviewHistory');
+
+  for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
+    swiperContainer.append(reviewHistory[i].divRH);
+  }
+  initSwiper();
+}
+
+/* ==============================================================
+   REVIEW HISTORY FEATURES
+   ============================================================== */
+
+function sortReviewHistory(sortType){
+/*
+Sort types:
+  1. Date (Newest to Oldest)
+  2. Date (Oldest to Newest)
+  3. Rating (Highest to Lowest)
+  4. Rating (Lowest to Highest)
+*/
+
+  switch(sortType){
+    case 'date-newest':
+      userProfile.userRHData.sort((a,b) => {
+        return new Date(b.reviewHistory.reviewDate) - new Date(a.reviewHistory.reviewDate);
+      });
+      break;
+    case 'date-oldest':
+      userProfile.userRHData.sort((a,b) => {
+        return new Date(a.reviewHistory.reviewDate) - new Date(b.reviewHistory.reviewDate);
+      });
+      break;
+    case 'rating-high':
+      userProfile.userRHData.sort((a,b) => {
+        return b.reviewHistory.reviewScore - a.reviewHistory.reviewScore;
+      });
+      break;
+    case 'rating-low':
+      userProfile.userRHData.sort((a,b) => {
+        return a.reviewHistory.reviewScore - b.reviewHistory.reviewScore;
+      });
+      break;
+    default:
+      return;
+  }
+  destroySwiper();
+  clearReviewHistory();
+  populateUserReviewHistory(userProfile.userRHData);
+}
+
+function loadMoreReviews(){
+
+  if (reviewLimit >= userProfile.userRHData.length) {
+    /*
+    reviewLimit = 1;
+    destroySwiper();
+    clearReviewHistory();
+    populateUserReviewHistory(userProfile.userRHData);
+     */
+    showPopup('No more reviews to load');
+    return;
+  }
+
+  let swiperIndex = mySwiper.activeIndex;
+  destroySwiper();
+  if (reviewLimit < userProfile.userRHData.length)
+    reviewLimit++;
+  populateUserReviewHistory(userProfile.userRHData);
+  // Set the active slide to the last appended element
+  mySwiper.slideTo(swiperIndex);
+  //Reset the sort dropdown if it is not on the default option
+  document.getElementById('sortReview').selectedIndex = 0;
+}
+
+/* ==============================================================
+   MISC FUNCTIONS
+   ============================================================== */
+
+function clearReviewHistory(){
+  let reviewHistory = document.getElementById('reviewHistory');
+  reviewHistory.innerHTML = '';
+}
+
+function parseDate(date) {
+  //constant of full month names
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  let newDate = new Date(date);
+  let month = monthNames[newDate.getMonth()];
+  let year = newDate.getFullYear();
+
+  return month + ' ' + year;
+}
+
 async function updateProfile() {
   //Get the needed elements
   let profilePic = document.getElementById('userPic').src;
@@ -312,29 +362,9 @@ async function updateProfile() {
 
 }
 
-//Check in profile.html if the id is valid
-if (window.location.href.includes('profile.html')) {
-  let url = new URL(window.location.href);
-  let profileID = url.searchParams.get('id');
-  let checkValidUser = JSON.parse(localStorage.getItem('userDatabase')).find(user => user.username === profileID);
-  if (checkValidUser === undefined || checkValidUser === null) {
-    window.location.href = '404.html';
-  }
-  else {
-    let isCurrentUser = false;
-    if (localStorage.getItem('isLoggedIn') === 'true') {
-      isCurrentUser = JSON.parse(localStorage.getItem('currentUser')).username === profileID;
-    }
-    populateProfile(profileID, isCurrentUser);
-    if (isCurrentUser){
-      const editForm = document.getElementById('editProfile');
-      editForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        updateProfile();
-      });
-    }
-  }
-}
+/* ==============================================================
+   DOM EVENT LISTENERS
+   ============================================================== */
 
 $(document).ready(function() {
   let readURL = function(input) {

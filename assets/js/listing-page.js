@@ -1,3 +1,53 @@
+/* ==============================================================
+   GLOBAL VARIABLES
+   ============================================================== */
+//Variable for swiper
+let mySwiper;
+
+//ArrayList of Users that reviewed
+let userReviewers = [];
+
+//Review Limit Variable
+let reviewLimit = 3;
+
+/* ==============================================================
+   OBJECT FUNCTIONS
+   ============================================================== */
+
+//Object function for user profile
+const getUserData = function (userData, isCurrentUser) {
+  this.user = userData;
+  this.isOwnReview = isCurrentUser;
+  this.userRHData = populateHistoryAsDiv(getUserReviews(this.user.username), this.user, isCurrentUser);
+}
+
+//Object function for review history
+const reviewHistoryData = function (reviewHistory, divRH) {
+  this.reviewHistory = reviewHistory;
+  this.divRH = divRH;
+}
+
+/* ==============================================================
+   SWIPER FUNCTIONS
+   ============================================================== */
+function initSwiper(){
+  mySwiper = new Swiper(".swiper-container", {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    spaceBetween: 10,
+    loop: false,
+    loopFillGroupWithBlank: false,
+    pagination: {
+      el: "#review-pagination",
+      clickable: true,
+    },
+    allowTouchMove: false,
+  });
+}
+function destroySwiper(){
+  mySwiper.destroy();
+}
+
 function populateListingImg(listing, swiper) {
   swiper.innerHTML = '';
 
