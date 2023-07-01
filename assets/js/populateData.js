@@ -156,6 +156,7 @@ function getRandomDate(minYear, maxYear) {
 let users =[
   {
     username: 'Amanda_Garcia',
+    customName: 'Amanda Garcia',
     course: getRandomCourse(),
     college: 'De La Salle University',
     email: 'amanda_garcia@gmail.com',
@@ -169,6 +170,7 @@ let users =[
   },
   {
     username: 'Miles_Morana',
+    customName: 'Miles Morana',
     course: getRandomCourse(),
     college: 'De La Salle University',
     email: 'miles_morana@gmail.com',
@@ -182,6 +184,7 @@ let users =[
   },
   {
     username: 'Katrina',
+    customName: 'Katrina',
     course: getRandomCourse(),
     college: 'De La Salle University',
     email: 'katrina@gmail.com',
@@ -195,6 +198,7 @@ let users =[
   },
   {
     username: 'John_Vick',
+    customName: 'John Vick',
     course: getRandomCourse(),
     college: 'De La Salle University',
     email: 'john_vick@gmail.com',
@@ -208,6 +212,7 @@ let users =[
   },
   {
     username: 'Penguinz0',
+    customName: 'Moist Critikal',
     course: getRandomCourse(),
     college: 'De La Salle University',
     email: 'penguinz_0@gmail.com',
@@ -218,7 +223,7 @@ let users =[
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
     followers: getRandomNumber(100)
-  },
+  }
 ]
 
 // Function to get random review

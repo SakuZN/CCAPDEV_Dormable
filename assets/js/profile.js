@@ -84,7 +84,8 @@ function populateProfile(userID, currentUser) {
 
   //Get the needed elements
   let profilePic = document.getElementById('userPic');
-  let userName = document.getElementById('profileName');
+  let userName = document.getElementById('profileUserName');
+  let customName = document.getElementById('profileCustomName');
   let followCount = document.getElementById('profileFollowerCount');
   let reviewCount = document.getElementById('profileReviewCount');
   let course = document.getElementById('profileCourse');
@@ -103,6 +104,9 @@ function populateProfile(userID, currentUser) {
   //Get user data
   let userPic = userProfile.user.profilePic;
   let name = userProfile.user.username;
+  let userCustomName = userProfile.user.customName;
+  if (userCustomName === '' || userCustomName === null || userCustomName === undefined)
+    userCustomName = name;
   let followers = userProfile.user.followers;
   let reviews = userProfile.user.noOfReviews;
   let courseName = userProfile.user.course;
@@ -113,7 +117,8 @@ function populateProfile(userID, currentUser) {
 
   //Set user data
   profilePic.src = userPic;
-  userName.innerHTML = name;
+  userName.innerHTML = '@'+ name;
+  customName.innerHTML = userCustomName;
   followCount.innerHTML = followers;
   reviewCount.innerHTML = reviews;
   course.innerHTML = courseName;
@@ -165,6 +170,7 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
     swiperDiv.setAttribute('data-listing-id', review.listingID);
     swiperDiv.setAttribute('data-user-id', review.userID);
     let listingName = getSpecificListing(review.listingID).name;
+    let userCustomName = reviewUser.customName;
 
     let scoreClass = '';
     let checkEdit = '';
@@ -180,9 +186,10 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
     swiperDiv.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
-            <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
-                    <p>${reviewUser.username}</p>
-                    <span style="display: flex; justify-content: center">${reviewUser.noOfReviews} reviews</span>
+            <img src="${reviewUser.profilePic}" class="img-fluid profile-review" alt="#">
+                    <p>${userCustomName}</p>
+                    <p style="font-size: 13px; color: gray">@${reviewUser.username}</p>
+                    <span style="display: flex; justify-content: center; margin-top: 5px">${reviewUser.noOfReviews} reviews</span>
                     <a href="listing.html?id=${review.listingID}" target="_blank"><p style="font-weight: bold">[${listingName}]</p></a>
             </div>
             <div class="customer-content-wrap">
@@ -236,7 +243,7 @@ function populateUserReviewImg(images) {
 function populateUserReviewHistory(reviewHistory) {
   let swiperContainer = document.getElementById('reviewHistory');
 
-  if (reviewLimit > swiperContainer.children.length)
+  if (reviewLimit > reviewHistory.length)
     reviewHistory.forEach((review) => {swiperContainer.append(review.divRH)});
   else
     for (let i = swiperContainer.children.length; i < reviewLimit; i++) {

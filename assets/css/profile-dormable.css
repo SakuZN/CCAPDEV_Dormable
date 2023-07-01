@@ -2030,7 +2030,7 @@ p {
   border-radius: 50%;
   max-width: 72px;}
 @media (min-width: 1200px) {
-  .customer-img img {
+  .profile-review {
     margin-left: 70px;
   }}
 .customer-img p {

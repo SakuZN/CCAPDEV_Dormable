@@ -53,6 +53,11 @@ function getSpecificUserReview(listingID, reviewID) {
   const reviews = JSON.parse(localStorage.getItem('reviewDatabase'));
   return reviews.find(review => review.listingID === listingID && review.reviewID === reviewID);
 }
+
+function getSpecificUser(userID) {
+    const users = JSON.parse(localStorage.getItem('userDatabase'));
+    return users.find(user => user.username === userID);
+}
 function getListingReviews(listingID) {
   const reviews = JSON.parse(localStorage.getItem('reviewDatabase'));
   return reviews.filter(review => review.listingID === listingID && review.isDeleted === false);

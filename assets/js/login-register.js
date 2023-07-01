@@ -44,6 +44,7 @@ async function register() {
 
   var newUserData = {
     username: user,
+    customName: user,
     email: email,
     password: pass,
     type: userType,

@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="../assets/css/magnific-popup.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="stylesheet" href="../assets/css/popup.css">
+  <link rel="stylesheet" href="../assets/css/profile-dormable.css">
   <!-- Main CSS -->
   <link rel="stylesheet" href="../assets/css/listing-dormable.css">
 
@@ -210,7 +211,7 @@
               <button class="btn btn-outline-info btn-sm" onclick="loadMoreReviews()">Load More</button>
             </div>
           </div>
-
+          <!-- Review Form -->
           <div class="reviewForm hidden">
             <form id="userForm">
               <div class="row">
@@ -271,14 +272,88 @@
                 <input type="submit" value="Submit">
               </div>
             </form>
-
           </div>
+
+          <!-- Edit Review -->
+          <div class="edit-review" style="display: flex; justify-content: center">
+            <div>
+              <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                  <div class="row align-items-center">
+                    <div class="col-8">
+                      <h3 class="mb-0">Edit Review</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <form id="editReviewForm">
+                    <h6 class="heading-small text-muted mb-4">Review information</h6>
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group focused">
+                            <label class="form-control-label" for="review-title">Review Title</label>
+                            <input type="text" id="review-title" class="form-control form-control-alternative" placeholder="ReviewTitle" value="Review Title">
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group focused">
+                            <label>Review Content</label>
+                            <textarea id="review-content" rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">Your Description</textarea>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <hr class="my-4">
+                    <!-- Rating And Media -->
+                    <h6 class="heading-small text-muted mb-4">Review Content</h6>
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-md-12" style="justify-content: center; display: flex">
+                          <div class="form-group focused">
+                            <label for="reviewImage" class="btn btn-sm btn-primary">Browse</label>
+                            <input type="file" id="reviewEditImage" name="reviewEditImage" style="display: none" accept="image/*"  multiple>
+                            <button id="clearEditImages" type="button" class="btn btn-danger">Clear Images</button>
+                            <ul class="user-image-list" style="display: flex;justify-content: center;margin: 20px;">
+                              <!-- Dynamic added images -->
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="justify-content: center; display: flex">
+                          <div class="form-group focused">
+                            <label>How was your experience?</label>
+                            <div class="rate">
+                              <input type="radio" id="star5Edit" name="rate" value="5" />
+                              <label for="star5Edit" title="text">5 stars</label>
+                              <input type="radio" id="star4Edit" name="rate" value="4" />
+                              <label for="star4Edit" title="text">4 stars</label>
+                              <input type="radio" id="star3Edit" name="rate" value="3" />
+                              <label for="star3Edit" title="text">3 stars</label>
+                              <input type="radio" id="star2Edit" name="rate" value="2" />
+                              <label for="star2Edit" title="text">2 stars</label>
+                              <input type="radio" id="star1Edit" name="rate" value="1" />
+                              <label for="star1Edit" title="text">1 star</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="justify-content: center; display: flex">
+                      <input type="submit" id="editReview" value="Save Edit" class="btn btn-sm btn-primary">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
       <!-- Map Location-->
       <br>
-      <div class="col-md-4 responsive-wrap">
+      <div class="col-md-4 responsive-wrap owner-map">
         <div class="contact-info">
           <iframe id="listing-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6880.748230183621!2d120.99269744210767!3d14.55977174205414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97be774b035%3A0xf28237f16fd9c403!2sThe%20Grand%20Towers%20Manila!5e0!3m2!1sen!2sph!4v1687579119148!5m2!1sen!2sph"
                   class="img-fluid" width="100%">

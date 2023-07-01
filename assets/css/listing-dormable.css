@@ -878,6 +878,9 @@ footer .main-white-button a {
     -webkit-flex: 100%;
     -ms-flex: 100%;
     flex: 100%; } }
+@media (min-width: 768px) {
+  .owner-map {
+    width: 30% } }
 
 /*
    BOOKING PAGE

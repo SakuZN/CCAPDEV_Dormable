@@ -150,7 +150,8 @@ function populateHistoryAsDiv(reviewHistory) {
     else
       isCurrentUser = (review.userID === currentUser.username);
 
-    let reviewUser = userDatabase.find(user => user.username === review.userID);
+    let reviewUser = getSpecificUser(review.userID);
+    let userCustomName = reviewUser.customName;
     let scoreClass = '';
     let checkEdit = '';
 
@@ -168,9 +169,10 @@ function populateHistoryAsDiv(reviewHistory) {
             <div class="customer-img">
                 <a href="profile.html?id=${review.userID}" style="cursor: pointer">
                     <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
-                    <p>${reviewUser.username}</p>
+                    <p>${userCustomName}</p>
+                    <p style="font-size: 13px; color: gray">@${reviewUser.username}</p>
                 </a>
-                <span>${reviewUser.noOfReviews} reviews</span>
+                <span style="display: flex; justify-content: center; margin-top: 5px">${reviewUser.noOfReviews} reviews</span>
             </div>
             <div class="customer-content-wrap">
             <div class="customer-content">
@@ -234,6 +236,9 @@ function populateReviewImg(images) {
 }
 function populateListingReviews(reviews) {
   let swiperContainer = document.getElementById('review-swiper');
+
+  if (reviewLimit > reviews.length)
+    reviewLimit = reviews.length;
 
   for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
     swiperContainer.append(reviews[i].divRH);
