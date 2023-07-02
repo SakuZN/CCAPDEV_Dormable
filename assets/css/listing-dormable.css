@@ -2145,5 +2145,12 @@ textarea {
   justify-content: center;
 }
 
+.comment-border {
+  border: 2px solid #e6e6e6;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
 
 /*# sourceMappingURL=listing-dormable.css.map */

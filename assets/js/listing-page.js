@@ -767,4 +767,10 @@ $(document).ready(function () {
   $(document).on('click', '.button', handleLikeBtnClick);
   $('#sortReview').on('change', handleSortReviewChange);
 
+  //Loading page animation
+  // Page loading animation
+  $(window).on('load', function () {
+    $('#js-preloader').addClass('loaded');
+  });
+
 });
