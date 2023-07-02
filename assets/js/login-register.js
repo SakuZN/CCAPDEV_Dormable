@@ -158,7 +158,6 @@ function showPopup(message) {
     $('#dialog').on('hidden.bs.modal', function () {
       resolve();
     });
-
     $('#dialog').modal('show');
   });
 }
