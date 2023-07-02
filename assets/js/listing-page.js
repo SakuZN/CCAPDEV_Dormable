@@ -45,10 +45,7 @@ function initSwiper() {
     loopFillGroupWithBlank: false,
     pagination: {
       el: "#review-pagination",
-      clickable: true,
-      renderBullet: function (index, className) {
-        return '<span class="' + className + '">' + (index + 1) + "</span>";
-      }
+      clickable: true
     },
     allowTouchMove: false,
     updateOnWindowResize: true
@@ -201,10 +198,9 @@ function populateHistoryAsDiv(reviewHistory) {
             </ul>
             <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
                 <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
-                ${
-      isCurrentUser ? `
+                ${isCurrentUser ? `
                   <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
-        : `
+      : `
                   <button class="button">
                      <div class="hand">
                         <div class="thumb"></div>
@@ -212,8 +208,11 @@ function populateHistoryAsDiv(reviewHistory) {
                      <span>Like<span>d</span></span>
                   </button>`
     }
+                <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Comment
+                </button>
             </div>
-            </div>
+          </div>
         </div>
         <hr>`;
     let rhData = new reviewHistoryData(review, swiperDiv, isCurrentUser);

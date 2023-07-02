@@ -153,13 +153,13 @@ function updateMenu() {
 function showPopup(message) {
   return new Promise((resolve) => {
     let dialog = document.querySelector('#dialog');
-    let DialogueMessage = dialog.querySelector('p');
-    DialogueMessage.textContent = message;
-    dialog.showModal();
+    dialog.querySelector('.modal-body p').textContent = message;
 
-    dialog.addEventListener('close', () => {
+    $('#dialog').on('hidden.bs.modal', function () {
       resolve();
     });
+
+    $('#dialog').modal('show');
   });
 }
 

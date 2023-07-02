@@ -23,12 +23,11 @@
   <link href="../assets/css/themify-icons.css" rel="stylesheet">
   <!-- Hover Effects -->
   <link href="../assets/css/set1.css" rel="stylesheet">
-  <!-- Swipper Slider -->
+  <!-- Swiper Slider -->
   <link href="../assets/css/swiper.min.css" rel="stylesheet">
   <!-- Magnific Popup CSS -->
   <link href="../assets/css/magnific-popup.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet">
-  <link href="../assets/css/popup.css" rel="stylesheet">
+
   <link href="../assets/css/profile-dormable.css" rel="stylesheet">
   <!-- Main CSS -->
   <link href="../assets/css/listing-dormable.css" rel="stylesheet">
@@ -331,15 +330,15 @@
                             <label>How was your experience?</label>
                             <div class="rate">
                               <input id="star5Edit" name="rateEdit" type="radio" value="5"/>
-                              <label for="star5Edit" title="text">5 stars</label>
+                              <label for="star5Edit" title="5 star!">5 stars</label>
                               <input id="star4Edit" name="rateEdit" type="radio" value="4"/>
-                              <label for="star4Edit" title="text">4 stars</label>
+                              <label for="star4Edit" title="4 star!">4 stars</label>
                               <input id="star3Edit" name="rateEdit" type="radio" value="3"/>
-                              <label for="star3Edit" title="text">3 stars</label>
+                              <label for="star3Edit" title="3 star!">3 stars</label>
                               <input id="star2Edit" name="rateEdit" type="radio" value="2"/>
-                              <label for="star2Edit" title="text">2 stars</label>
+                              <label for="star2Edit" title="2 star!">2 stars</label>
                               <input id="star1Edit" name="rateEdit" type="radio" value="1"/>
-                              <label for="star1Edit" title="text">1 star</label>
+                              <label for="star1Edit" title="1 star!">1 star</label>
                             </div>
                           </div>
                         </div>
@@ -465,18 +464,38 @@
   </div>
 </footer>
 
-<dialog id="dialog">
-  <p>
-  </p>
-  <button aria-label="close" class="x" onclick="window.dialog.close();">❌</button>
-</dialog>
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="dialog" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Info!</h4>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        <p style="font-size: 34px"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-danger" data-dismiss="modal" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/popper/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <!-- Magnific popup JS -->
 <script src="../vendor/jquery/jquery.magnific-popup.js"></script>
 <!-- Swiper Slider JS -->

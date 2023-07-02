@@ -25,8 +25,6 @@
 
   <link href="../assets/css/profile-dormable.css" rel="stylesheet">
   <!-- Additional CSS Files -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet">
-  <link href="../assets/css/popup.css" rel="stylesheet">
   <link href="../assets/css/fontawesome.css" rel="stylesheet">
   <link href="../assets/css/main-dormable.css" rel="stylesheet">
   <link href="../assets/css/listing-dormable.css" rel="stylesheet">
@@ -385,16 +383,35 @@
   </div>
 </footer>
 
-<dialog id="dialog">
-  <p>
-  </p>
-  <button aria-label="close" class="x" onclick="window.dialog.close();">❌</button>
-</dialog>
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="dialog" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Info!</h4>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        <p style="font-size: 34px"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-danger" data-dismiss="modal" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/popper/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Magnific popup JS -->
