@@ -1,4 +1,3 @@
-
 // For now, returns the local data of the listings
 function fetchData() {
   return JSON.parse(localStorage.getItem('listingDatabase'));
@@ -64,15 +63,14 @@ function generateFeaturedListing(listings) {
   listings.forEach((listing) => {
 
 
-      item = document.createElement('div');
-      item.classList.add('item');
+    item = document.createElement('div');
+    item.classList.add('item');
 
-      row = document.createElement('div');
-      row.classList.add('row');
+    row = document.createElement('div');
+    row.classList.add('row');
 
-      item.appendChild(row);
-      featuredListing.appendChild(item);
-
+    item.appendChild(row);
+    featuredListing.appendChild(item);
 
 
     col = document.createElement('div');

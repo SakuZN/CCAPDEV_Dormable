@@ -3,11 +3,13 @@ function generateReviewID(listingID) {
   let listingReviews = reviewDatabase.filter(review => review.listingID === listingID);
   return listingReviews.length + 1;
 }
+
 function addListingReview(review) {
   let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
   reviewDatabase.push(review);
   localStorage.setItem('reviewDatabase', JSON.stringify(reviewDatabase));
 }
+
 function updateUserReviewCount(userID) {
   let userDatabase = JSON.parse(localStorage.getItem('userDatabase'));
   let userIndex = userDatabase.findIndex(x => x.username === userID);
@@ -55,9 +57,41 @@ function getSpecificUserReview(listingID, reviewID) {
 }
 
 function getSpecificUser(userID) {
-    const users = JSON.parse(localStorage.getItem('userDatabase'));
-    return users.find(user => user.username === userID);
+  const users = JSON.parse(localStorage.getItem('userDatabase'));
+  return users.find(user => user.username === userID);
 }
+
+function updateUserDatabase(user) {
+  let userDatabase = localStorage.getItem('userDatabase');
+  if (!userDatabase) {
+    new Error('userDatabase not found in localStorage');
+  } else {
+    try {
+      userDatabase = JSON.parse(userDatabase);
+    } catch (error) {
+      console.error('Error parsing userDatabase from localStorage:', error);
+      return;
+    }
+  }
+
+  let userIndex = userDatabase.findIndex(x => x.username === user.username);
+  if (userIndex === -1) {
+    console.error('User not found in database:', user);
+    return;
+  }
+
+  userDatabase[userIndex] = user;
+  localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
+  localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+function getCurrentUser() {
+  if (localStorage.getItem('isLoggedIn') === 'false') {
+    return null;
+  }
+  return JSON.parse(localStorage.getItem('currentUser'));
+}
+
 function getListingReviews(listingID) {
   const reviews = JSON.parse(localStorage.getItem('reviewDatabase'));
   return reviews.filter(review => review.listingID === listingID && review.isDeleted === false);
@@ -74,13 +108,13 @@ function getSpecificListing(listingID) {
 
 function reviewMarkedHelpful(reviewID, listingID, value) {
   let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
- let reviewToMark = reviewDatabase.find(review => review.listingID === listingID && review.reviewID === reviewID);
- let reviewIndex = reviewDatabase.findIndex(review => review.listingID === listingID && review.reviewID === reviewID);
- reviewToMark.reviewMarkedHelpful += value;
- if (reviewIndex !== -1) {
+  let reviewToMark = reviewDatabase.find(review => review.listingID === listingID && review.reviewID === reviewID);
+  let reviewIndex = reviewDatabase.findIndex(review => review.listingID === listingID && review.reviewID === reviewID);
+  reviewToMark.reviewMarkedHelpful += value;
+  if (reviewIndex !== -1) {
     reviewDatabase[reviewIndex] = reviewToMark;
     localStorage.setItem('reviewDatabase', JSON.stringify(reviewDatabase));
- }
+  }
 }
 
 function reviewDate(date) {
@@ -96,8 +130,7 @@ function reviewDate(date) {
 
   if (minutes < 1) {
     return "Just now";
-  }
-  else if (minutes < 60) {
+  } else if (minutes < 60) {
     return minutes + " minutes ago";
   } else if (hours < 24) {
     return hours + " hours ago";

@@ -127,6 +127,7 @@ function getRandomCourse() {
   const courses = ['BS Computer Science', 'BS Information Technology', 'BS Business Administration', 'BS Biology', 'BS Psychology'];
   return courses[Math.floor(Math.random() * courses.length)];
 }
+
 function getRandomDescription() {
   const descriptions = [
     'I am a De La Salle University student. Animo La Salle!',
@@ -138,22 +139,52 @@ function getRandomDescription() {
   return descriptions[Math.floor(Math.random() * descriptions.length)];
 }
 
-function getRandomNumber(max) {
-  return Math.floor(Math.random() * (max + 1));
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function getRandomDate(minYear, maxYear) {
-  let year = getRandomNumber(maxYear - minYear) + minYear;
-  let month = getRandomNumber(12);
-  let day = getRandomNumber(new Date(year, month + 1, 0).getDate());
-  let hours = getRandomNumber(24);
-  let minutes = getRandomNumber(60);
-  let seconds = getRandomNumber(60);
-  return new Date(year, month, day, hours, minutes, seconds).toISOString();
+  // Get current date
+  let currentDate = new Date();
+
+  // Ensure the max year is not in the future
+  maxYear = Math.min(currentDate.getFullYear(), maxYear);
+
+  let year = getRandomNumber(minYear, maxYear);
+  let month = getRandomNumber(0, 11);  // JavaScript counts months from 0
+  let day, hours, minutes, seconds, randomDate;
+
+  // Adjust the year if it is the current year
+  if (year === currentDate.getFullYear()) {
+    month = Math.min(month, currentDate.getMonth());
+
+    // Adjust the month if it is the current month
+    if (month === currentDate.getMonth()) {
+      day = getRandomNumber(1, currentDate.getDate());
+    } else {
+      day = getRandomNumber(1, (new Date(year, month + 1, 0)).getDate());
+    }
+  } else {
+    day = getRandomNumber(1, (new Date(year, month + 1, 0)).getDate());
+  }
+
+  // Adjust the hours, minutes, and seconds if it is the current day
+  if ((year === currentDate.getFullYear()) && (month === currentDate.getMonth()) && (day === currentDate.getDate())) {
+    hours = getRandomNumber(0, currentDate.getHours());
+    minutes = getRandomNumber(0, currentDate.getMinutes());
+    seconds = getRandomNumber(0, currentDate.getSeconds());
+  } else {
+    hours = getRandomNumber(0, 23);
+    minutes = getRandomNumber(0, 59);
+    seconds = getRandomNumber(0, 59);
+  }
+
+  randomDate = new Date(year, month, day, hours, minutes, seconds);
+  return randomDate.toISOString();
 }
 
 
-let users =[
+let users = [
   {
     username: 'Amanda_Garcia',
     customName: 'Amanda Garcia',
@@ -163,10 +194,10 @@ let users =[
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
-    profilePic:'../assets/images/test_image/customer-img1.jpg',
+    profilePic: '../assets/images/test_image/customer-img1.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(100)
+    followers: getRandomNumber(0, 1000)
   },
   {
     username: 'Miles_Morana',
@@ -177,10 +208,10 @@ let users =[
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
-    profilePic:'../assets/images/test_image/customer-img2.jpg',
+    profilePic: '../assets/images/test_image/customer-img2.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(100)
+    followers: getRandomNumber(0, 1000)
   },
   {
     username: 'Katrina',
@@ -191,10 +222,10 @@ let users =[
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
-    profilePic:'../assets/images/test_image/customer-img3.jpg',
+    profilePic: '../assets/images/test_image/customer-img3.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(100)
+    followers: getRandomNumber(0, 1000)
   },
   {
     username: 'John_Vick',
@@ -205,10 +236,10 @@ let users =[
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
-    profilePic:'../assets/images/test_image/customer-img4.jpg',
+    profilePic: '../assets/images/test_image/customer-img4.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(100)
+    followers: getRandomNumber(0, 1000)
   },
   {
     username: 'Penguinz0',
@@ -219,10 +250,10 @@ let users =[
     password: '1234',
     type: 'student',
     description: getRandomDescription(),
-    profilePic:'../assets/images/test_image/customer-img5.jpg',
+    profilePic: '../assets/images/test_image/customer-img5.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(100)
+    followers: getRandomNumber(0, 1000)
   }
 ]
 
@@ -232,25 +263,25 @@ function getRandomReview(score) {
 
   switch (score) {
     case 0:
-      case 1:
+    case 1:
       description = "This place near De La Salle University is extremely disappointing." +
         " I would not recommend this place to anyone." + " The place is dirty and the staff are rude.";
       break;
     case 2:
       description = "I had a negative experience at this place near De La Salle University."
-      + " I tried to give this place a chance, but I was disappointed.";
+        + " I tried to give this place a chance, but I was disappointed.";
       break;
     case 3:
       description = "This place near De La Salle University provided an average experience."
-      + " The place was clean and the staff were friendly." + " However, I was not impressed by the facilities.";
+        + " The place was clean and the staff were friendly." + " However, I was not impressed by the facilities.";
       break;
     case 4:
       description = "I had a positive experience at this place near De La Salle University."
-      + " The place was clean and the staff were friendly." + " I would recommend this place to others.";
+        + " The place was clean and the staff were friendly." + " I would recommend this place to others.";
       break;
     case 5:
       description = "This place near De La Salle University is outstanding! Highly recommended."
-      + " The place was clean and the staff were friendly." + " I would definitely recommend this place to others.";
+        + " The place was clean and the staff were friendly." + " I would definitely recommend this place to others.";
       break;
     default:
       description = "No description available.";
@@ -266,7 +297,7 @@ function generateUserReviews() {
   let reviewID = 1;
   listing.forEach((listingPlace) => {
     users.forEach((user) => {
-      let randomScore = getRandomNumber(5);
+      let randomScore = getRandomNumber(0, 5);
       reviews.push({
         reviewID: reviewID,
         userID: user.username,
@@ -278,7 +309,7 @@ function generateUserReviews() {
           "../assets/images/test_image/featured3.jpg"],
         reviewScore: randomScore,
         reviewDate: getRandomDate(2020, new Date(user.joinDate).getFullYear()),
-        reviewMarkedHelpful: getRandomNumber(100),
+        reviewMarkedHelpful: getRandomNumber(0, 150),
         wasEdited: false,
         isDeleted: false
       });

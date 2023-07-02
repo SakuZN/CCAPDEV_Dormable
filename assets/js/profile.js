@@ -29,10 +29,11 @@ const reviewHistoryData = function (reviewHistory, divRH) {
   this.reviewHistory = reviewHistory;
   this.divRH = divRH;
 }
+
 /* ==============================================================
    SWIPER FUNCTIONS
    ============================================================== */
-function initSwiper(){
+function initSwiper() {
   mySwiper = new Swiper(".swiper-container", {
     slidesPerView: 1,
     slidesPerGroup: 1,
@@ -46,7 +47,8 @@ function initSwiper(){
     allowTouchMove: false,
   });
 }
-function destroySwiper(){
+
+function destroySwiper() {
   mySwiper.destroy();
 }
 
@@ -60,14 +62,13 @@ if (window.location.href.includes('profile.html')) {
   let checkValidUser = JSON.parse(localStorage.getItem('userDatabase')).find(user => user.username === profileID);
   if (checkValidUser === undefined || checkValidUser === null) {
     window.location.href = '404.html';
-  }
-  else {
+  } else {
     let isCurrentUser = false;
     if (localStorage.getItem('isLoggedIn') === 'true') {
       isCurrentUser = JSON.parse(localStorage.getItem('currentUser')).username === profileID;
     }
     populateProfile(profileID, isCurrentUser);
-    if (isCurrentUser){
+    if (isCurrentUser) {
       const editForm = document.getElementById('editProfile');
       editForm.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -79,9 +80,7 @@ if (window.location.href.includes('profile.html')) {
 
 
 function populateProfile(userID, currentUser) {
-  let database = JSON.parse(localStorage.getItem('userDatabase'));
-  userProfile = new getUserData(database.find(user => user.username === userID), currentUser);
-
+  userProfile = new getUserData(getSpecificUser(userID), currentUser);
   //Get the needed elements
   let profilePic = document.getElementById('userPic');
   let userName = document.getElementById('profileUserName');
@@ -94,6 +93,7 @@ function populateProfile(userID, currentUser) {
   let joinDate = document.getElementById('profileDate');
   let editButton = document.getElementById('editBtn');
   let followButton = document.getElementById('followBtn');
+  let formCustomName = document.getElementById('input-customName');
   let formCourse = document.getElementById('input-course');
   let formCollege = document.getElementById('input-college');
   let formDescription = document.getElementById('input-description');
@@ -114,10 +114,11 @@ function populateProfile(userID, currentUser) {
   let collegeName = userProfile.user.college;
   let dateJoined = parseDate(userProfile.user.joinDate);
 
-
   //Set user data
-  profilePic.src = userPic;
-  userName.innerHTML = '@'+ name;
+  if (userPic) {
+    profilePic.src = userPic;
+  }
+  userName.innerHTML = '@' + name;
   customName.innerHTML = userCustomName;
   followCount.innerHTML = followers;
   reviewCount.innerHTML = reviews;
@@ -125,6 +126,7 @@ function populateProfile(userID, currentUser) {
   description.innerHTML = userDescription;
   college.innerHTML = collegeName;
   joinDate.innerHTML = dateJoined;
+  formCustomName.value = userCustomName;
   formCourse.value = courseName;
   formCollege.value = collegeName;
   formDescription.value = userDescription;
@@ -144,8 +146,7 @@ function populateProfile(userID, currentUser) {
   //Finally, populate the review history
   try {
     populateUserReviewHistory(userProfile.userRHData);
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e);
     reviewPagination.style.display = 'none';
     reviewHistory.style.display = 'flex';
@@ -197,7 +198,7 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                 <div class="customer-review">
                 <h6>${review.reviewTitle}</h6>
                 <ul class="star-rating">
-                    ${star_rating(review.reviewScore,0, 'listing')}
+                    ${star_rating(review.reviewScore, 0, 'listing')}
                 </ul>
                 <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
@@ -210,17 +211,17 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
                 <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
                 ${
-                isCurrentUser? `
+      isCurrentUser ? `
                   <button class="editReviewBtn btn btn-outline-primary btn-sm">Edit</button>
                   <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
-                  :`
+        : `
                   <button class="button">
                      <div class="hand">
                         <div class="thumb"></div>
                      </div>
                      <span>Like<span>d</span></span>
                   </button>`
-                  }
+    }
             </div>
             </div>
         </div>
@@ -234,17 +235,20 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
 function populateUserReviewImg(images) {
   let reviewImgs = '';
   images.forEach((img) => {
-    reviewImgs+= `<li href="${img}" class="review-image">
+    reviewImgs += `<li href="${img}" class="review-image">
           <img src="${img}" class="img-fluid" alt="#">
         </li>`;
   });
   return reviewImgs;
 }
+
 function populateUserReviewHistory(reviewHistory) {
   let swiperContainer = document.getElementById('reviewHistory');
 
   if (reviewLimit > reviewHistory.length)
-    reviewHistory.forEach((review) => {swiperContainer.append(review.divRH)});
+    reviewHistory.forEach((review) => {
+      swiperContainer.append(review.divRH)
+    });
   else
     for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
       swiperContainer.append(reviewHistory[i].divRH);
@@ -256,35 +260,35 @@ function populateUserReviewHistory(reviewHistory) {
    REVIEW HISTORY FEATURES
    ============================================================== */
 
-function sortReviewHistory(sortType){
-/*
-Sort types:
-  1. Date (Newest to Oldest)
-  2. Date (Oldest to Newest)
-  3. Rating (Highest to Lowest)
-  4. Rating (Lowest to Highest)
-*/
+function sortReviewHistory(sortType) {
+  /*
+  Sort types:
+    1. Date (Newest to Oldest)
+    2. Date (Oldest to Newest)
+    3. Rating (Highest to Lowest)
+    4. Rating (Lowest to Highest)
+  */
   if (userProfile.userRHData.length <= 1)
     return;
 
-  switch(sortType){
+  switch (sortType) {
     case 'date-newest':
-      userProfile.userRHData.sort((a,b) => {
+      userProfile.userRHData.sort((a, b) => {
         return new Date(b.reviewHistory.reviewDate) - new Date(a.reviewHistory.reviewDate);
       });
       break;
     case 'date-oldest':
-      userProfile.userRHData.sort((a,b) => {
+      userProfile.userRHData.sort((a, b) => {
         return new Date(a.reviewHistory.reviewDate) - new Date(b.reviewHistory.reviewDate);
       });
       break;
     case 'rating-high':
-      userProfile.userRHData.sort((a,b) => {
+      userProfile.userRHData.sort((a, b) => {
         return b.reviewHistory.reviewScore - a.reviewHistory.reviewScore;
       });
       break;
     case 'rating-low':
-      userProfile.userRHData.sort((a,b) => {
+      userProfile.userRHData.sort((a, b) => {
         return a.reviewHistory.reviewScore - b.reviewHistory.reviewScore;
       });
       break;
@@ -296,7 +300,7 @@ Sort types:
   populateUserReviewHistory(userProfile.userRHData);
 }
 
-function loadMoreReviews(){
+function loadMoreReviews() {
 
   if (reviewLimit >= userProfile.userRHData.length) {
     /*
@@ -324,7 +328,7 @@ function loadMoreReviews(){
    MISC FUNCTIONS
    ============================================================== */
 
-function clearReviewHistory(){
+function clearReviewHistory() {
   let reviewHistory = document.getElementById('reviewHistory');
   reviewHistory.innerHTML = '';
 }
@@ -355,22 +359,20 @@ function parseDate(date) {
 async function updateProfile() {
   //Get the needed elements
   let profilePic = document.getElementById('userPic').src;
+  let customName = document.getElementById('input-customName').value;
   let course = document.getElementById('input-course').value;
   let college = document.getElementById('input-college').value;
   let description = document.getElementById('input-description').value;
 
   //update user data and save to local storage
-  let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  let database = JSON.parse(localStorage.getItem('userDatabase'));
-  let userData = database.find(user => user.username === currentUser.username);
-  userData.profilePic = profilePic;
-  userData.course = course;
-  userData.college = college;
-  userData.description = description;
+  let currentUser = getCurrentUser();
+  currentUser.profilePic = profilePic;
+  currentUser.customName = customName;
+  currentUser.course = course;
+  currentUser.college = college;
+  currentUser.description = description;
 
-  localStorage.setItem('userDatabase', JSON.stringify(database));
-  //update currentUser
-  localStorage.setItem('currentUser', JSON.stringify(userData));
+  updateUserDatabase(currentUser);
 
   await showPopup('Profile updated!');
   window.location.href = 'profile.html?id=' + currentUser.username;
@@ -381,8 +383,8 @@ async function updateProfile() {
    DOM EVENT LISTENERS
    ============================================================== */
 
-$(document).ready(function() {
-  let readURL = function(input) {
+$(document).ready(function () {
+  let readURL = function (input) {
     if (input.files && input.files[0]) {
       let reader = new FileReader();
 
@@ -393,11 +395,11 @@ $(document).ready(function() {
       reader.readAsDataURL(input.files[0]);
     }
   }
-  $(".file-upload").on('change', function(){
+  $(".file-upload").on('change', function () {
     readURL(this);
   });
 
-  $(".upload-button").on('click', function() {
+  $(".upload-button").on('click', function () {
     $(".file-upload").click();
   });
 
@@ -407,15 +409,15 @@ $(document).ready(function() {
       scrollTop: $('.edit-profile').offset().top
     }, 800);
   });
-  $('.file-upload').on('click', function() {
+  $('.file-upload').on('click', function () {
     $('#fileUpload').click();
   });
 
-  $('#fileUpload').on('change', function() {
+  $('#fileUpload').on('change', function () {
     let file = this.files[0];
     let reader = new FileReader();
 
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       $('#userPic').attr('src', e.target.result);
     };
 
@@ -423,7 +425,7 @@ $(document).ready(function() {
   });
 
   //Edit button for user review
-  $('.editReviewBtn').on('click', function() {
+  $('.editReviewBtn').on('click', function () {
     let editBtn = $(this);
     let userReview = editBtn.closest('.mark-helpful');
     let reviewID = userReview.data('review-id');
@@ -456,7 +458,7 @@ $(document).ready(function() {
 
   // User Review Edit Form
   initUserPopUp();
-  $('#reviewImage').on('change', function() {
+  $('#reviewImage').on('change', function () {
     let files = $(this)[0].files;
     let imageList = $('.user-image-list');
     let maxFiles = 5;
@@ -469,9 +471,8 @@ $(document).ready(function() {
       if (files.length + imageList.children().length > maxFiles) {
         showPopup('Max 5 media allowed!');
         return;
-      }
-      else {
-        imageList.children().each(function() {
+      } else {
+        imageList.children().each(function () {
           if ($(this).data('type') === 'video')
             hasVideo = true;
         });
@@ -503,7 +504,7 @@ $(document).ready(function() {
       let reader = new FileReader();
 
       // Read the file as a data URL
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         let imageUrl = e.target.result;
 
         // Create a new li element with the image
@@ -521,11 +522,10 @@ $(document).ready(function() {
       reader.readAsDataURL(file);
     }
     $('#reviewImage').val('');
-
   });
 
   // Clear the image list
-  $('#clearImages').on('click', function() {
+  $('#clearImages').on('click', function () {
     // Clear the file input and image list
     $('#reviewImage').val('');
     $('.user-image-list').empty();
@@ -547,7 +547,6 @@ $(document).ready(function() {
 
     // Update the review
     let reviewToEdit = getSpecificUserReview(listingID, reviewID);
-    console.log(reviewToEdit);
     reviewToEdit.reviewTitle = reviewTitle;
     reviewToEdit.reviewContent = reviewContent;
     reviewToEdit.reviewScore = parseInt(reviewScore);
@@ -565,7 +564,7 @@ $(document).ready(function() {
   });
 
   //Delete Review
-  $('.confirmModal').click(function(e) {
+  $('.confirmModal').click(function (e) {
     e.preventDefault();
     $.confirmModal('Delete this review?', {
       confirmButton: "Yes",
@@ -573,7 +572,7 @@ $(document).ready(function() {
       messageHeader: "Review Deletion",
       modalVerticalCenter: true,
       fadeAnimation: true,
-    },function(el) {
+    }, function (el) {
       let deleteBtn = $(el);
       let userReview = deleteBtn.closest('.mark-helpful');
       let reviewID = userReview.data('review-id');
@@ -582,14 +581,14 @@ $(document).ready(function() {
       showPopup('Review deleted successfully!').then(function () {
         location.reload();
       });
-    }, function() {
+    }, function () {
       // This function will be called when the user clicks the "No" button
       console.log("Cancel clicked");
     });
   });
 
   //Like button
-  $('.button').on('click', function() {
+  $('.button').on('click', function () {
     let $button = $(this);
     let $review = $button.closest('.mark-helpful');
     //get the parent of the button
@@ -637,7 +636,7 @@ $(document).ready(function() {
   });
 
   //Sort by List
-  $('#sortReview').on('change', function() {
+  $('#sortReview').on('change', function () {
     let sortType = $(this).val();
     sortReviewHistory(sortType);
   });

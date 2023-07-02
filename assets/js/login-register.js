@@ -2,12 +2,12 @@ let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July'
   'October', 'November', 'December'];
 
 async function login() {
-  var email = document.getElementById('loginEmail').value;
-  var pass = document.getElementById('loginPswd').value;
+  let email = document.getElementById('loginEmail').value;
+  let pass = document.getElementById('loginPswd').value;
 
   let isInStorage = false;
 
-  var userDatabase = localStorage.getItem('userDatabase');
+  let userDatabase = localStorage.getItem('userDatabase');
   try {
     userDatabase = JSON.parse(userDatabase);
     isInStorage = userDatabase.some((data) => {
@@ -16,24 +16,23 @@ async function login() {
         return true;
       }
     });
-  }
-  catch (e) {
+  } catch (e) {
     await showPopup('No such user exists');
     return;
   }
 
   if (isInStorage) {
     localStorage.setItem('isLoggedIn', 'true');
-    await showPopup('Logged in successfully!');
+    await showPopup('Logged in successfully! Remember to check your profile!');
     window.location.href = 'index.html';
-  }
-  else {
+  } else {
     await showPopup('Invalid email or password!');
   }
 }
 
 async function register() {
   const user = document.getElementById('signupUsername').value;
+  const custom = document.getElementById('signupCustomName').value;
   const email = document.getElementById('signupEmail').value;
   const pass = document.getElementById('signupPswd').value;
   const userType = document.querySelector('input[name="userType"]:checked').value;
@@ -42,14 +41,14 @@ async function register() {
   //Add current date as date of registration
   const registerDate = new Date().toISOString();
 
-  var newUserData = {
+  const newUserData = {
     username: user,
-    customName: user,
+    customName: custom,
     email: email,
     password: pass,
     type: userType,
     description: '',
-    profilePic: '',
+    profilePic: '../assets/images/test_image/blank_pp.jpg',
     joinDate: registerDate,
     noOfReviews: 0,
     followers: 0,
@@ -57,13 +56,13 @@ async function register() {
     course: ''
   };
 
-  var currentData = localStorage.getItem('userDatabase')
+  let currentData = localStorage.getItem('userDatabase')
 
   if (currentData !== null) {
     currentData = JSON.parse(currentData);
 
     //Check if username or email already exists
-    var isExisting = false;
+    let isExisting = false;
 
     for (const data of currentData) {
       if (data.username === user) {
@@ -82,8 +81,7 @@ async function register() {
     }
 
     currentData.push(newUserData);
-  }
-  else {
+  } else {
     currentData = [newUserData];
   }
 
@@ -95,7 +93,7 @@ async function register() {
       newUserData.profilePic = reader.result;
       localStorage.setItem('userDatabase', JSON.stringify(currentData)); // Update local storage with newUserData
 
-      await showPopup('Registered successfully!');
+      await showPopup('Registered successfully! Please login to continue.');
 
       window.location.href = 'login.html';
     };
@@ -104,7 +102,7 @@ async function register() {
   } else {
     localStorage.setItem('userDatabase', JSON.stringify(currentData)); // Update local storage without profilePic
 
-    await showPopup('Registered successfully!');
+    await showPopup('Registered successfully! Please login to continue.');
 
     window.location.href = 'login.html';
   }
@@ -118,18 +116,18 @@ async function logout() {
 }
 
 function updateMenu() {
-  var menu = document.querySelector('.nav')
-  var isLoggedIn = localStorage.getItem('isLoggedIn');
-  var userID = '';
+  let menu = document.querySelector('.nav')
+  let isLoggedIn = localStorage.getItem('isLoggedIn');
+  let userID = '';
   if (localStorage.getItem('isLoggedIn') !== 'false') {
-    userID= JSON.parse(localStorage.getItem('currentUser'));
+    userID = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   //get the current page
-  var currentPage = window.location.href;
+  let currentPage = window.location.href;
 
   // Build the menu HTML dynamically
-  var menuHTML = '';
+  let menuHTML = '';
 
   if (isLoggedIn === 'true') {
     // Display menu for logged-in users

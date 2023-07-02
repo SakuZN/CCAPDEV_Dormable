@@ -2,34 +2,34 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" type="image/png" href="../icon.png"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <meta content="" name="description">
+  <meta content="" name="author">
+  <link href="../icon.png" rel="icon" type="image/png"/>
   <title>Dormable!</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Additional CSS Files -->
-  <link rel="stylesheet" href="../assets/css/fontawesome.css">
-  <link rel="stylesheet" href="../assets/css/animated.css">
-  <link rel="stylesheet" href="../assets/css/owl.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-  <link rel="stylesheet" href="../assets/css/popup.css">
-	<link rel="stylesheet" type="text/css" href="../assets/css/login-dormable.css">
+  <link href="../assets/css/fontawesome.css" rel="stylesheet">
+  <link href="../assets/css/animated.css" rel="stylesheet">
+  <link href="../assets/css/owl.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+  <link href="../assets/css/popup.css" rel="stylesheet">
+  <link href="../assets/css/login-dormable.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+<header class="header-area header-sticky wow slideInDown" data-wow-delay="0s" data-wow-duration="0.75s">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <nav class="main-nav">
           <!-- ***** Logo Start ***** -->
-          <a href="index.html" class="logo">
+          <a class="logo" href="index.html">
           </a>
           <!-- ***** Logo End ***** -->
           <!-- ***** Menu Start ***** -->
@@ -49,69 +49,73 @@
 </header>
 <!-- ***** Header Area End ***** -->
 
-	<div class="main">
-		<input type="checkbox" id="chk" aria-hidden="true">
-			<div class="signup">
-				<form id="signupForm">
-					<label for="chk" aria-hidden="true" style="margin-bottom: 25px">Sign up</label>
+<div class="main">
+  <input aria-hidden="true" id="chk" type="checkbox">
+  <div class="signup">
+    <form id="signupForm">
+      <label aria-hidden="true" for="chk" style="margin-bottom: 25px">Sign up</label>
 
-          <div class="registerProfile">
-            <div class="small-12 medium-2 large-2 columns">
-              <div class="circle">
-                <img class="profile-pic" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" alt="">
-              </div>
-              <div class="p-image">
-                <i class="fa fa-camera upload-button"></i>
-                <input class="file-upload" id="fileUpload" type="file" accept="image/*" required/>
-              </div>
-            </div>
+      <div class="registerProfile">
+        <div class="small-12 medium-2 large-2 columns">
+          <div class="circle">
+            <img alt=""
+                 class="profile-pic"
+                 src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
           </div>
-					<input type="text" name="txt" placeholder="Username" required="" id="signupUsername" maxlength="16" minlength="4">
-					<input type="email" name="email" placeholder="Email" required="" id="signupEmail">
-					<input type="password" name="pswd" placeholder="Password" required="" id="signupPswd" minlength="4">
-          <div class="checkboxes">
-            <input type="radio" id="student" name="userType" value="student" required>
-            <label for="student">Student</label>
-            <input type="radio" id="landowner" name="userType" value="owner" required>
-            <label for="landowner">Owner</label>
+          <div class="p-image">
+            <i class="fa fa-camera upload-button"></i>
+            <input accept="image/*" class="file-upload" id="fileUpload" type="file"/>
           </div>
-					<button type="submit">Sign up</button>
-				</form>
-			</div>
+        </div>
+      </div>
+      <input id="signupUsername" maxlength="16" minlength="4" name="txt" placeholder="Username" required="" type="text">
+      <input id="signupCustomName" maxlength="16" minlength="4" name="txt" placeholder="Custom Name" required=""
+             type="text">
+      <input id="signupEmail" name="email" placeholder="Email" required="" type="email">
+      <input id="signupPswd" minlength="4" name="pswd" placeholder="Password" required="" type="password">
+      <div class="checkboxes">
+        <input id="student" name="userType" required type="radio" value="student">
+        <label for="student">Student</label>
+        <input id="landowner" name="userType" required type="radio" value="owner">
+        <label for="landowner">Owner</label>
+      </div>
+      <button type="submit">Sign up</button>
+    </form>
+  </div>
 
-			<div class="login">
-				<form id="loginForm">
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="" id="loginEmail">
-					<input type="password" name="pswd" placeholder="Password" required="" id="loginPswd">
-          <div class="checkboxes">
-            <input type="checkbox" id="remember" name="userRemember" value="true">
-            <label for="remember">Remember me</label>
-          </div>
-					<button type="submit">Login</button>
-				</form>
-			</div>
-	</div>
+  <div class="login">
+    <form id="loginForm">
+      <label aria-hidden="true" for="chk">Login</label>
+      <input id="loginEmail" name="email" placeholder="Email" required="" type="email">
+      <input id="loginPswd" name="pswd" placeholder="Password" required="" type="password">
+      <div class="checkboxes">
+        <input id="remember" name="userRemember" type="checkbox" value="true">
+        <label for="remember">Remember me</label>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
 
 <dialog id="dialog">
   <p>
   </p>
-  <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+  <button aria-label="close" class="x" onclick="window.dialog.close();">❌</button>
 </dialog>
 
-  <!-- Scripts -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/owl-carousel.js"></script>
-  <script src="../assets/js/animation.js"></script>
-  <script src="../assets/js/imagesloaded.js"></script>
-  <script src="../assets/js/listing.js"></script>
-  <script src="../assets/js/autostar-rating.js"></script>
-  <script src="../assets/js/login-register.js"></script>
-  <script src="../assets/js/custom.js"></script>
+<!-- Scripts -->
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/owl-carousel.js"></script>
+<script src="../assets/js/animation.js"></script>
+<script src="../assets/js/imagesloaded.js"></script>
+<script src="../assets/js/listing.js"></script>
+<script src="../assets/js/autostar-rating.js"></script>
+<script src="../assets/js/login-register.js"></script>
+<script src="../assets/js/custom.js"></script>
 <script>
-  $(document).ready(function() {
-    var readURL = function(input) {
+  $(document).ready(function () {
+    var readURL = function (input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -122,21 +126,21 @@
         reader.readAsDataURL(input.files[0]);
       }
     }
-    $(".file-upload").on('change', function(){
+    $(".file-upload").on('change', function () {
       readURL(this);
     });
 
-    $(".upload-button").on('click', function() {
+    $(".upload-button").on('click', function () {
       $(".file-upload").click();
     });
 
-    $('#signupUsername').on('input', function() {
+    $('#signupUsername').on('input', function () {
       $(this).val($(this).val().replace(/\s/g, ''));
     });
-    $('#signupEmail').on('input', function() {
+    $('#signupEmail').on('input', function () {
       $(this).val($(this).val().replace(/\s/g, ''));
     });
-    $('#signupPswd').on('input', function() {
+    $('#signupPswd').on('input', function () {
       $(this).val($(this).val().replace(/\s/g, ''));
     });
   });

@@ -19,6 +19,8 @@ let listingDatabase = JSON.parse(localStorage.getItem('listingDatabase'));
 //Current User
 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
+//Logged In Status
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 /* ==============================================================
    OBJECT FUNCTIONS
    ============================================================== */
@@ -34,7 +36,7 @@ const reviewHistoryData = function (reviewHistory, divRH, isCurrentUser) {
 /* ==============================================================
    SWIPER FUNCTIONS
    ============================================================== */
-function initSwiper(){
+function initSwiper() {
   mySwiper = new Swiper("#Reviews", {
     slidesPerView: 1,
     slidesPerGroup: 1,
@@ -44,13 +46,19 @@ function initSwiper(){
     pagination: {
       el: "#review-pagination",
       clickable: true,
+      renderBullet: function (index, className) {
+        return '<span class="' + className + '">' + (index + 1) + "</span>";
+      }
     },
     allowTouchMove: false,
+    updateOnWindowResize: true
   });
 }
-function destroySwiper(){
+
+function destroySwiper() {
   mySwiper.destroy();
 }
+
 /* ==============================================================
    INITIALIZATION LOGIC EVENT LISTENERS AND FUNCTIONS
    ============================================================== */
@@ -60,15 +68,15 @@ let id = url.searchParams.get('id');
 let checkValidId = fetchData().find((listing) => listing.id === id);
 if (id === null || checkValidId === undefined) {
   window.location.href = '404.html';
-}
-else {
+} else {
   updateListings();
   populateListingPage(id);
 }
 
 function populateListingPage(id_page) {
   //Get the listing data
-  let listing = fetchData().find((listing) => listing.id === id_page);
+  let listing = getSpecificListing(id_page)
+
   //Get the listing page elements to populate
   let listingName = document.getElementById('listing-name');
   let listingSwiper = document.getElementById('listing-swiper');
@@ -89,6 +97,7 @@ function populateListingPage(id_page) {
   let noReviews = document.createElement('div');
   let reviewPagination = document.getElementById('review-pagination');
   let writeReviewBtn = document.getElementById('reviewBtn');
+
   //Replace the content of the listing page elements
   listingName.innerHTML = listing.name;
   populateListingImg(listing, listingSwiper);
@@ -107,8 +116,7 @@ function populateListingPage(id_page) {
   try {
     reviewHistory = populateHistoryAsDiv(getListingReviews(id_page));
     populateListingReviews(reviewHistory);
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e);
     noReviews.innerHTML = '<h4>No reviews yet</h4>';
     reviewPagination.style.display = 'none';
@@ -116,6 +124,8 @@ function populateListingPage(id_page) {
     listingReviews.style.justifyContent = 'center';
     listingReviews.append(noReviews);
   }
+
+  document.getElementById('sortReview').selectedIndex = 0;
 
   if (userHasReviewed()) {
     writeReviewBtn.innerHTML = 'Edit Review';
@@ -179,7 +189,7 @@ function populateHistoryAsDiv(reviewHistory) {
                 <div class="customer-review">
                 <h6>${review.reviewTitle}</h6>
                 <ul class="star-rating">
-                    ${star_rating(review.reviewScore,0, 'listing')}
+                    ${star_rating(review.reviewScore, 0, 'listing')}
                 </ul>
                 <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
@@ -192,9 +202,9 @@ function populateHistoryAsDiv(reviewHistory) {
             <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
                 <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
                 ${
-      isCurrentUser? `
+      isCurrentUser ? `
                   <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
-        :`
+        : `
                   <button class="button">
                      <div class="hand">
                         <div class="thumb"></div>
@@ -225,15 +235,17 @@ function populateListingImg(listing, swiper) {
     `;
   });
 }
+
 function populateReviewImg(images) {
   let reviewImgs = '';
   images.forEach((img) => {
-    reviewImgs+= `<li href="${img}" class="review-image">
+    reviewImgs += `<li href="${img}" class="review-image">
           <img src="${img}" class="img-fluid" alt="#">
         </li>`;
   });
   return reviewImgs;
 }
+
 function populateListingReviews(reviews) {
   let swiperContainer = document.getElementById('review-swiper');
 
@@ -251,7 +263,7 @@ function populateListingReviews(reviews) {
    REVIEW HISTORY FEATURES
    ============================================================== */
 
-function sortReviewHistory(sortType){
+function sortReviewHistory(sortType) {
   /*
   Sort types:
     1. Date (Newest to Oldest)
@@ -259,25 +271,24 @@ function sortReviewHistory(sortType){
     3. Rating (Highest to Lowest)
     4. Rating (Lowest to Highest)
   */
-
-  switch(sortType){
+  switch (sortType) {
     case 'date-newest':
-      reviewHistory.sort((a,b) => {
+      reviewHistory.sort((a, b) => {
         return new Date(b.RHData.reviewDate) - new Date(a.RHData.reviewDate);
       });
       break;
     case 'date-oldest':
-      reviewHistory.sort((a,b) => {
+      reviewHistory.sort((a, b) => {
         return new Date(a.RHData.reviewDate) - new Date(b.RHData.reviewDate);
       });
       break;
     case 'rating-high':
-      reviewHistory.sort((a,b) => {
+      reviewHistory.sort((a, b) => {
         return b.RHData.reviewScore - a.RHData.reviewScore;
       });
       break;
     case 'rating-low':
-      reviewHistory.sort((a,b) => {
+      reviewHistory.sort((a, b) => {
         return a.RHData.reviewScore - b.RHData.reviewScore;
       });
       break;
@@ -289,7 +300,7 @@ function sortReviewHistory(sortType){
   populateListingReviews(reviewHistory);
 }
 
-function loadMoreReviews(){
+function loadMoreReviews() {
 
   if (reviewLimit >= reviewHistory.length) {
     /*
@@ -318,12 +329,12 @@ function loadMoreReviews(){
    MISC FUNCTIONS
    ============================================================== */
 
-function clearReviewHistory(){
+function clearReviewHistory() {
   let reviewHistory = document.getElementById('review-swiper');
   reviewHistory.innerHTML = '';
 }
 
-function initReviewPopUp(){
+function initReviewPopUp() {
   if ($('.review-image').length) {
     $('.review-image').magnificPopup({
       type: 'image',
@@ -334,7 +345,7 @@ function initReviewPopUp(){
   }
 }
 
-function userHasReviewed(){
+function userHasReviewed() {
   let userReview = false;
   if (currentUser === null || currentUser === undefined)
     return userReview;
@@ -345,77 +356,142 @@ function userHasReviewed(){
   return userReview;
 }
 
+function showUserReview() {
+
+  let currentUserID = '';
+  if (currentUser !== null || currentUser !== undefined) {
+    currentUserID = currentUser.username;
+  } else
+    return;
+  console.log(currentUserID);
+  reviewHistory.sort((a, b) => {
+    if (a.RHData.userID === currentUserID)
+      return -1
+    else if (b.RHData.userID === currentUserID)
+      return 1;
+    else
+      return 0;
+  });
+
+  console.log(reviewHistory);
+
+  destroySwiper();
+  clearReviewHistory();
+  populateListingReviews(reviewHistory);
+  // Set the active slide to the last appended element
+  document.getElementById('sortReview').selectedIndex = 0;
+  initUserPopUp();
+
+}
+
 /* ==============================================================
    DOM EVENT LISTENERS
    ============================================================== */
 
-$(document).ready(function() {
-  <!-- Pseudo Implementation of Logged In User review -->
-  if (localStorage.getItem('isLoggedIn') !== 'true') {
-    // Review button redirect to login
-    $('#reviewBtn').on('click', function() {
+$(document).ready(function () {
+
+  /* ==============================================================
+   HELPER FUNCTIONS
+   ============================================================== */
+  function handleReviewBtnClick() {
+    if (!isLoggedIn)
       window.location.href = 'login.html';
-    });
-  } else {
-    $('#reviewBtn').on('click', function() {
-      if (userHasReviewed()) {
-        showPopup('You have already reviewed this listing');
-        return;
-      }
+    else if (userHasReviewed()) {
+      $('.edit-review').removeClass('hidden');
+
+      $('html, body').animate({
+        scrollTop: $('.edit-review').offset().top
+      }, 1200);
+
+      showUserReview();
+      populateEditReviewForm();
+
+    } else {
       $('.reviewForm').removeClass('hidden');
+
       $('html, body').animate({
         scrollTop: $('.reviewForm').offset().top
-      }, 800);
+      }, 1200);
 
-      if (currentUser.profilePic !== '') {
+      if (currentUser.profilePic !== '')
         $('#profilePic').attr('src', currentUser.profilePic);
-      }
+
       $('#userName').text(currentUser.username);
       $('#userNumOfReview').text(currentUser.noOfReviews + ' Reviews');
+    }
+  }
+
+  function populateEditReviewForm() {
+    let thisReview = reviewHistory[0].RHData
+    let editForm = $('#editReviewForm');
+    editForm.find('#edit-title').val(thisReview.reviewTitle);
+    editForm.find('#edit-content').val(thisReview.reviewContent);
+    editForm.find('input[name="rateEdit"]').filter('[value="' + thisReview.reviewScore.toString() + '"]').prop('checked', true);
+
+    editForm.find('.edit-image-list').empty();
+
+    thisReview.reviewIMG.forEach((img) => {
+      // Create a new li element with the image
+      let list = $('<li>').addClass('user-image').attr('href', img);
+      let imgContent = $('<img>').attr('src', img).addClass('img-fluid').attr('alt', '#');
+      list.append(imgContent);
+
+      // Append the li element to the image list
+      editForm.find('.edit-image-list').append(list);
+      //Initialize user image
+      initUserPopUp();
     });
 
-    $('.reviewForm').on('submit', function(event) {
-      event.preventDefault();
-      //Get the necessary data from the form
-      let reviewTitle = $('#reviewTitle').val();
-      let reviewContent = $('#reviewContent').val();
-      let reviewImgs = $('.user-image-list li').map(function() {
-        return $(this).attr('href');
-      }).get();
-      let starRating = $("input[name='rate']:checked").val();
-      starRating = parseInt(starRating);
+    //add the reviewID and listingID on submit button
+    editForm.find('#editReview').attr('data-review-id', thisReview.reviewID);
+    editForm.find('#editReview').attr('data-listing-id', thisReview.listingID);
+    editForm.find('#editReview').attr('data-user-id', thisReview.userID);
+  }
 
-      let url = new URL(window.location.href);
-      let id = url.searchParams.get('id');
-      //add as a new review
-      let newReview = {
-        reviewID: generateReviewID(id),
-        userID: currentUser.username,
-        listingID: id,
-        reviewTitle: reviewTitle,
-        reviewContent: reviewContent,
-        reviewIMG: reviewImgs,
-        reviewScore: starRating,
-        reviewDate: new Date().toISOString(),
-        reviewMarkedHelpful: 0,
-        wasEdited: false,
-        isDeleted: false
-      }
-      //add the review to the listing
-      addListingReview(newReview);
-      updateUserReviewCount(newReview.userID);
-      // Hide the review form
-      $('#userForm')[0].reset();
-      $('.reviewForm').addClass('hidden');
-      showPopup('Review Submitted!').then(function() {
-        // Refresh the page
-        location.reload();
-      });
+  /* ==============================================================
+   HELPER FUNCTIONS FOR REVIEW FORM
+   ============================================================== */
+  function handleReviewFormSubmit(event) {
+    event.preventDefault();
+    //Get the necessary data from the form
+    let reviewTitle = $('#reviewTitle').val();
+    let reviewContent = $('#reviewContent').val();
+    let reviewImgs = $('.user-image-list li').map(function () {
+      console.log($(this).attr('href'));
+      return $(this).attr('href');
+    }).get();
+    let starRating = $("input[name='rate']:checked").val();
+    starRating = parseInt(starRating);
+
+    let url = new URL(window.location.href);
+    let id = url.searchParams.get('id');
+    //add as a new review
+    let newReview = {
+      reviewID: generateReviewID(id),
+      userID: currentUser.username,
+      listingID: id,
+      reviewTitle: reviewTitle,
+      reviewContent: reviewContent,
+      reviewIMG: reviewImgs,
+      reviewScore: starRating,
+      reviewDate: new Date().toISOString(),
+      reviewMarkedHelpful: 0,
+      wasEdited: false,
+      isDeleted: false
+    }
+    //add the review to the listing
+    addListingReview(newReview);
+    updateUserReviewCount(newReview.userID);
+    // Hide the review form
+    $('#userForm')[0].reset();
+    $('.reviewForm').addClass('hidden');
+    showPopup('Review Submitted!').then(function () {
+      // Refresh the page
+      location.reload();
     });
   }
-  // User Review Edit Form
-  initUserPopUp();
-  $('#reviewImage').on('change', function() {
+
+  function handleReviewImageChange() {
     let files = $(this)[0].files;
     let imageList = $('.user-image-list');
     let maxFiles = 5;
@@ -428,9 +504,8 @@ $(document).ready(function() {
       if (files.length + imageList.children().length > maxFiles) {
         showPopup('Max 5 media allowed!');
         return;
-      }
-      else {
-        imageList.children().each(function() {
+      } else {
+        imageList.children().each(function () {
           if ($(this).data('type') === 'video')
             hasVideo = true;
         });
@@ -462,7 +537,7 @@ $(document).ready(function() {
       let reader = new FileReader();
 
       // Read the file as a data URL
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         let imageUrl = e.target.result;
 
         // Create a new li element with the image
@@ -475,22 +550,128 @@ $(document).ready(function() {
         //Initialize user image
         initUserPopUp();
       };
-
       // Read the file
       reader.readAsDataURL(file);
     }
     $('#reviewImage').val('');
+  }
 
-  });
-  // Clear the image list
-  $('#clearImages').on('click', function() {
+  function handleReviewClearImagesClick() {
     // Clear the file input and image list
     $('#reviewImage').val('');
     $('.user-image-list').empty();
-  });
+  }
 
-  //Delete review
-  $('.confirmModal').click(function(e) {
+  /* ==============================================================
+   HELPER FUNCTIONS FOR EDIT REVIEW FORM
+   ============================================================== */
+  function submitEditReviewForm(event) {
+    event.preventDefault();
+    let editForm = $('#editReviewForm');
+    let reviewID = editForm.find('#editReview').data('review-id');
+    let listingID = editForm.find('#editReview').data('listing-id');
+    let userID = editForm.find('#editReview').data('user-id');
+    let reviewTitle = editForm.find('#edit-title').val();
+    let reviewContent = editForm.find('#edit-content').val();
+    let reviewImgs = editForm.find('.edit-image-list li').map(function () {
+      return $(this).attr('href');
+    }).get();
+    let starRating = $("input[name='rateEdit']:checked").val();
+
+    //Update the review
+    let reviewToEdit = getSpecificUserReview(listingID, reviewID);
+    reviewToEdit.reviewTitle = reviewTitle;
+    reviewToEdit.reviewContent = reviewContent;
+    reviewToEdit.reviewScore = parseInt(starRating);
+    reviewToEdit.reviewIMG = reviewImgs;
+    reviewToEdit.wasEdited = true;
+    editListingReview(reviewToEdit);
+
+    // Hide the edit form
+    $('.edit-review').addClass('hidden');
+
+    // Reload the page
+    showPopup('Review edited successfully!').then(function () {
+      location.reload();
+    });
+  }
+
+  function handleEditReviewImageChange() {
+    let files = $(this)[0].files;
+    let imageList = $('.edit-image-list');
+    let maxFiles = 5;
+    let hasVideo = false;
+    let maxImageSize = 2 * 1024 * 1024; // 5MB
+    let maxVideoSize = 5 * 1024 * 1024; // 5MB
+
+    //if current image list is not empty check if the new files exceed the max files
+    if (imageList.children().length >= 0) {
+      if (files.length + imageList.children().length > maxFiles) {
+        showPopup('Max 5 media allowed!');
+        return;
+      } else {
+        imageList.children().each(function () {
+          if ($(this).data('type') === 'video')
+            hasVideo = true;
+        });
+      }
+
+    }
+
+    // Iterate over selected files
+    for (let i = 0; i < files.length && i < maxFiles; i++) {
+      let file = files[i];
+      let fileSize = file.size;
+      //Do some conditional pre-check
+
+      //Check if the file is video and if there is already a video
+      if (file.type.includes('video/') && hasVideo) {
+        showPopup('Max 1 video allowed!');
+        return;
+      }
+      //Then, check for file size
+      if (fileSize > maxImageSize && !file.type.includes('video/')) {
+        showPopup('Max 2MB per image!');
+        return;
+      }
+      if (fileSize > maxVideoSize && file.type.includes('video/')) {
+        showPopup('Max 5MB per video!');
+        return;
+      }
+
+      let reader = new FileReader();
+
+      // Read the file as a data URL
+      reader.onload = function (e) {
+        let imageUrl = e.target.result;
+
+        // Create a new li element with the image
+        let li = $('<li>').addClass('user-image').attr('href', imageUrl);
+        let img = $('<img>').attr('src', imageUrl).addClass('img-fluid').attr('alt', '#');
+        li.append(img);
+
+        // Append the li element to the image list
+        imageList.append(li);
+        //Initialize user image
+        initUserPopUp();
+      };
+      // Read the file
+      reader.readAsDataURL(file);
+    }
+    $('#reviewEditImage').val('');
+  }
+
+  function handleEditClearImagesClick() {
+    // Clear the file input and image list
+    $('#editReviewImage').val('');
+    $('.edit-image-list').empty();
+  }
+
+  /* ==============================================================
+  MISC HELPER FUNCTIONS
+  ============================================================== */
+
+  function handleConfirmModalClick(e) {
     e.preventDefault();
     $.confirmModal('Delete this review?', {
       confirmButton: "Yes",
@@ -498,7 +679,7 @@ $(document).ready(function() {
       messageHeader: "Review Deletion",
       modalVerticalCenter: true,
       fadeAnimation: true,
-    },function(el) {
+    }, function (el) {
       let deleteBtn = $(el);
       let userReview = deleteBtn.closest('.mark-helpful');
       let reviewID = userReview.data('review-id');
@@ -507,14 +688,13 @@ $(document).ready(function() {
       showPopup('Review deleted successfully!').then(function () {
         location.reload();
       });
-    }, function() {
+    }, function () {
       // This function will be called when the user clicks the "No" button
       console.log("Cancel clicked");
     });
-  });
+  }
 
-  //Like button
-  $(document).on('click', '.button', function() {
+  function handleLikeBtnClick() {
     console.log('clicked');
     let $button = $(this);
     let $review = $button.closest('.mark-helpful');
@@ -560,13 +740,32 @@ $(document).ready(function() {
         }]
       });
     }
-  });
+  }
 
-  //Sort by List
-  $('#sortReview').on('change', function() {
+  function handleSortReviewChange() {
     let sortType = $(this).val();
     sortReviewHistory(sortType);
     initUserPopUp();
-  });
+  }
+
+  /* ==============================================================
+   EVENT HANDLERS
+   ============================================================== */
+  //Handles either review or edit form submission
+  $('#reviewBtn').on('click', handleReviewBtnClick);
+
+  //Handles Review related events
+  $('.reviewForm').on('submit', handleReviewFormSubmit);
+  $('#reviewImage').on('change', handleReviewImageChange);
+  $('#clearImages').on('click', handleReviewClearImagesClick);
+
+  //Handles Edit related events
+  $('#editReviewForm').on('submit', submitEditReviewForm);
+  $('#editReviewImage').on('change', handleEditReviewImageChange);
+  $('#clearEditImages').on('click', handleEditClearImagesClick);
+
+  $(document).on('click', '.confirmModal', handleConfirmModalClick);
+  $(document).on('click', '.button', handleLikeBtnClick);
+  $('#sortReview').on('change', handleSortReviewChange);
 
 });
