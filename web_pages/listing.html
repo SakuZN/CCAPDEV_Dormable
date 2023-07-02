@@ -495,20 +495,53 @@
     </div>
   </div>
 </div>
-<button class="btn btn-outline-info" data-target="#exampleModal" data-toggle="modal" type="button">
-  Comment
-</button>
+
 <!-- Comment Modal -->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" tabindex="-1">
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="commentModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Comment</h5>
+        <h4 class="modal-title" id="exampleModalLabel">Comment</h4>
         <button aria-label="Close" class="close" data-dismiss="modal" type="button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <div class="booking-checkbox_wrap mt-4">
+          <div class="customer-review_wrap">
+            <div class="customer-img">
+              <img alt="#" class="img-fluid" id="cRU" src="../assets/images/test_image/customer-img1.jpg">
+              <p id="cRUCustomName">Amanda G</p>
+              <p id="cRUName" style="font-size: 13px; color: gray"></p>
+              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">35 Reviews</span>
+            </div>
+            <div class="customer-content-wrap">
+              <div class="customer-content">
+                <div class="customer-review">
+                  <h6 id="cRUTitle">Best noodles in the Newyork city</h6>
+                  <ul class="star-rating">
+                    <!-- js star rating -->
+                  </ul>
+                  <p id="cRUDate">Reviewed 2 days ago</p>
+                </div>
+                <div class="customer-rating" id="cRURating">8.0</div>
+              </div>
+              <p class="customer-text comment-border" id="cRUContent">I love the noodles here but it is so rare that I get to come here. Tasty
+                Hand-Pulled Noodles is the best type of whole in the wall restaurant. The staff are really nice, and you
+                should be seated quickly. I usually get the
+                hand pulled noodles in a soup. House Special #1 is amazing and the lamb noodles are also great. If you
+                want your noodles a little chewier, get the knife cut noodles, which are also amazing. Their dumplings
+                are
+                great
+                dipped in their chili sauce.
+              </p>
+              <ul id="cRUImages">
+              </ul>
+              <span id="cRUMarkHelpful">28 people marked this review as helpful</span>
+            </div>
+          </div>
+          <hr>
+        </div>
         <div class="booking-checkbox_wrap mt-4">
           <div class="customer-review_wrap">
             <div class="customer-img">
@@ -519,77 +552,29 @@
             <div class="customer-content-wrap">
               <div class="customer-content">
                 <div class="customer-review">
-                  <h6>Best noodles in the Newyork city</h6>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span class="round-icon-blank"></span>
-                  <p>Reviewed 2 days ago</p>
+                  <p style="font-weight: 300; margin: 0">Commented 2 days ago</p>
                 </div>
-                <div class="customer-rating">8.0</div>
               </div>
-              <p class="customer-text">I love the noodles here but it is so rare that I get to come here. Tasty
-                Hand-Pulled Noodles is the best type of whole in the wall restaurant. The staff are really nice, and you
-                should be seated quickly. I usually get the
-                hand pulled noodles in a soup. House Special #1 is amazing and the lamb noodles are also great. If you
-                want your noodles a little chewier, get the knife cut noodles, which are also amazing. Their dumplings
-                are
-                great
-                dipped in their chili sauce.
-              </p>
-              <p class="customer-text">I love how you can see into the kitchen and watch them make the noodles and you
+              <p class="customer-text comment-border">I love how you can see into the kitchen and watch them make the noodles and you
                 can
                 definitely tell that this is a family run establishment. The prices are are great with one dish maybe
                 being $9. You just have to remember
                 to bring cash.
               </p>
-              <ul>
-                <li><img alt="#" class="img-fluid" src="images/review-img1.jpg"></li>
-                <li><img alt="#" class="img-fluid" src="images/review-img2.jpg"></li>
-                <li><img alt="#" class="img-fluid" src="images/review-img3.jpg"></li>
-              </ul>
-              <span>28 people marked this review as helpful</span>
-              <a href="#"><span class="icon-like"></span>Helpful</a>
             </div>
           </div>
           <hr>
         </div>
+    </div>
+      <form id="commentForm">
         <div class="modal-body">
-          <div class="booking-checkbox_wrap mt-4">
-            <div class="customer-review_wrap">
-              <div class="customer-img">
-                <img alt="#" class="img-fluid" src="../assets/images/test_image/customer-img1.jpg">
-                <p>Amanda G</p>
-                <span>35 Reviews</span>
-              </div>
-              <div class="customer-content-wrap">
-                <div class="customer-content">
-                  <div class="customer-review">
-                    <p style="font-weight: 300; margin: 0">Commented 2 days ago</p>
-                  </div>
-                </div>
-                <p class="customer-text comment-border">I love how you can see into the kitchen and watch them make the noodles and you
-                  can
-                  definitely tell that this is a family run establishment. The prices are are great with one dish maybe
-                  being $9. You just have to remember
-                  to bring cash.
-                </p>
-              </div>
-            </div>
-            <hr>
-          </div>
-        <form id="commentForm">
-          <div class="modal-body">
-            <textarea class="form-control"></textarea>
-          </div>
-        </form>
-      </div>
+          <textarea class="form-control"></textarea>
+        </div>
+      </form>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
         <button class="btn btn-primary" type="submit">Submit</button>
       </div>
-    </div>
   </div>
 </div>
 

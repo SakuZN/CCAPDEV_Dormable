@@ -196,7 +196,7 @@ function populateHistoryAsDiv(reviewHistory) {
             <ul>
                 ${populateReviewImg(review.reviewIMG)}
             </ul>
-            <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
+            <div class="mark-helpful">
                 <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
                 ${isCurrentUser ? `
                   <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
@@ -208,8 +208,8 @@ function populateHistoryAsDiv(reviewHistory) {
                      <span>Like<span>d</span></span>
                   </button>`
     }
-                <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Comment
+                <button class="commentBtn btn btn-outline-info" data-target="#commentModal" data-toggle="modal" type="button">
+                    View Comments
                 </button>
             </div>
           </div>
@@ -667,6 +667,52 @@ $(document).ready(function () {
   }
 
   /* ==============================================================
+   HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
+   ============================================================== */
+  function populateReviewCommentForm() {
+    let commentBtn = $(this);
+    let reviewContainer = commentBtn.closest('.swiper-slide');
+    let reviewID = reviewContainer.data('review-id');
+    let listingID = reviewContainer.data('listing-id');
+    let userID = reviewContainer.data('user-id');
+    let review = getSpecificUserReview(listingID, reviewID);
+    let userReviewer = getSpecificUser(userID);
+    let commentModal = $('#commentModal');
+
+    //Get commentModal review elements to populate
+    let cRUPic = commentModal.find('#cRU');
+    let cRUName = commentModal.find('#cRUName');
+    let cRUCustomName = commentModal.find('#cRUCustomName');
+    let cRUReview = commentModal.find('#cRUReviews');
+    let cRUTitle = commentModal.find('#cRUTitle');
+    let cRUDate = commentModal.find('#cRUDate');
+    let cRURating = commentModal.find('#cRURating');
+    let cRUContent = commentModal.find('#cRUContent');
+    let cRUImages = commentModal.find('#cRUImages');
+    let cRUMarkHelpful = commentModal.find('#cRUMarkHelpful');
+
+    //Populate commentModal review elements
+    cRUPic.attr('src', userReviewer.profilePic);
+    cRUName.text(userReviewer.username);
+    cRUCustomName.text(userReviewer.customName);
+    cRUReview.text(userReviewer.noOfReviews + ' Reviews');
+    cRUTitle.text(review.reviewTitle);
+    cRUDate.text(reviewDate(review.reviewDate));
+    cRURating.text(review.reviewScore + '.0');
+    cRUContent.text(review.reviewContent);
+    cRUImages.empty();
+    //Populate cRUImages with populateReviewImages
+    review.reviewIMG.forEach(img => {
+      let li = $('<li>').addClass('user-image').attr('href', img);
+      let reviewImg = $('<img>').attr('src', img).addClass('img-fluid').attr('alt', '#');
+      li.append(reviewImg);
+      cRUImages.append(li);
+    });
+    cRUMarkHelpful.text(review.reviewMarkedHelpful + ' people marked this review as helpful');
+  }
+
+
+  /* ==============================================================
   MISC HELPER FUNCTIONS
   ============================================================== */
 
@@ -681,8 +727,9 @@ $(document).ready(function () {
     }, function (el) {
       let deleteBtn = $(el);
       let userReview = deleteBtn.closest('.mark-helpful');
-      let reviewID = userReview.data('review-id');
-      let listingID = userReview.data('listing-id');
+      let reviewContainer = userReview.closest('.swiper-slide');
+      let reviewID = reviewContainer.data('review-id');
+      let listingID = reviewContainer.data('listing-id');
       deleteListingReview(reviewID, listingID);
       showPopup('Review deleted successfully!').then(function () {
         location.reload();
@@ -765,6 +812,7 @@ $(document).ready(function () {
 
   $(document).on('click', '.confirmModal', handleConfirmModalClick);
   $(document).on('click', '.button', handleLikeBtnClick);
+  $(document).on('click', '.commentBtn', populateReviewCommentForm);
   $('#sortReview').on('change', handleSortReviewChange);
 
   //Loading page animation
