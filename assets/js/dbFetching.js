@@ -175,7 +175,7 @@ function updateUserDatabase(user) {
 }
 
 function getCurrentUser() {
-  if (localStorage.getItem('isLoggedIn') === 'false') {
+  if (localStorage.getItem('isLoggedIn') === 'false' || !localStorage.getItem('currentUser')) {
     return false;
   }
   return JSON.parse(localStorage.getItem('currentUser'));
@@ -219,6 +219,12 @@ function getReviewResponse(reviewID, listingID, userID) {
   const ownerResponses = JSON.parse(localStorage.getItem('ownerResponseDatabase'));
   return ownerResponses.find(ownerResponse => ownerResponse.reviewID === reviewID &&
     ownerResponse.listingID === listingID && ownerResponse.userID === userID);
+}
+
+function addNewOwnerResponse(ownerResponse) {
+  let ownerResponseDatabase = JSON.parse(localStorage.getItem('ownerResponseDatabase'));
+  ownerResponseDatabase.push(ownerResponse);
+  localStorage.setItem('ownerResponseDatabase', JSON.stringify(ownerResponseDatabase));
 }
 
 /* ==============================================================

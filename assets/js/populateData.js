@@ -26,7 +26,7 @@ let listing = [
       '../assets/images/listing_images/listing-GrandTowers3.jpg'],
     owner: 'Moldex Realty Inc.',
     ownerID: 'moldex_realty',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6880.748230183621!2d120.99269744210767!3d14.55977174205414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97be774b035%3A0xf28237f16fd9c403!2sThe%20Grand%20Towers%20Manila!5e0!3m2!1sen!2sph!4v1687579119148!5m2!1sen!2sph',
+    mapUrl: 'https://www.google.com/maps/embed/v1/place?q=place_id:ChIJNbB053vJlzMRA8TZb_E3gvI&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc',
     phone: '0917 717 8880',
     website: 'https://www.moldexrealty.ph',
     ownerImg: '../assets/images/listing_images/owner-GrandTowers.jpg'
@@ -47,7 +47,7 @@ let listing = [
       '../assets/images/listing_images/listing-TLorenzo3.jpg'],
     owner: 'Torre Lorenzo Development Corporation',
     ownerID: 'torre_lorenzo',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5848562613396!2d120.99177521483973!3d14.565716889824715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c978cf151c8d%3A0x8bfc15f5a457f675!2s2-Torre%20Lorenzo%2C%20Taft%20Ave%2C%20Malate%2C%20Manila%2C%201004%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1687593470423!5m2!1sen!2sph',
+    mapUrl: 'https://www.google.com/maps/embed/v1/place?q=place_id:ChIJzdSl2njJlzMRO1DkQJJEHcw&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc',
     phone: '0916 684 7394',
     website: 'https://www.torrelorenzo.com/residential-developments/2torre-lorenzo',
     ownerImg: '../assets/images/listing_images/owner-TLorenzo.jpg'
@@ -68,7 +68,7 @@ let listing = [
       '../assets/images/listing_images/listing-RResidences3.jpg'],
     owner: 'Toplite Development Corporation',
     ownerID: 'toplite_dc',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.642853255977!2d120.99534439999995!3d14.562404800000008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97962cf8121%3A0x6d4760b768b6b8c4!2sR%20Square%20Residences!5e0!3m2!1sen!2sph!4v1687593525832!5m2!1sen!2sph',
+    mapUrl: 'https://www.google.com/maps/embed/v1/place?q=place_id:ChIJIYHPYnnJlzMRxLi2aLdgR20&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc',
     phone: '0927 967 8558',
     website: 'https://www.facebook.com/toplitedevelopmentcorporation/',
     ownerImg: '../assets/images/listing_images/owner-RResidences.jpg'
@@ -89,7 +89,7 @@ let listing = [
       '../assets/images/listing_images/listing-ArcherPlace3.jpg'],
     owner: 'Eton Properties Philippines',
     ownerID: 'eton_properties',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5681766866683!2d120.99052341483981!3d14.566669289824095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97f4f0cf917%3A0x67ecb17bc2ebf8ca!2sOne%20Archers&#39;%20Place!5e0!3m2!1sen!2sph!4v1687593707917!5m2!1sen!2sph',
+    mapUrl: 'https://www.google.com/maps/embed/v1/place?q=place_id:ChIJF_kMT3_JlzMRyvjrwnux7Gc&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc',
     phone: '0917-886-1868',
     website: 'http://www.onearchersplace.com/',
     ownerImg: '../assets/images/listing_images/owner-ArcherPlace.jpg'
@@ -111,7 +111,7 @@ let listing = [
       '../assets/images/listing_images/listing-GResidences3.jpg'],
     owner: 'SMDC',
     ownerID: 'smdc',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.552105384012!2d120.99271330000002!3d14.567586899999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9f293670793%3A0x4d8e08900ca6b815!2sGreen%20Residences!5e0!3m2!1sen!2sph!4v1687593765911!5m2!1sen!2sph',
+    mapUrl: 'https://www.google.com/maps/embed/v1/place?q=place_id:ChIJkwdnk_LJlzMRFbimDJAIjk0&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc',
     phone: '(02) 8252 4067',
     website: 'https://smdc.com/properties/green-residences/',
     ownerImg: '../assets/images/listing_images/owner-GResidences.jpg'
@@ -133,7 +133,7 @@ let listing = [
       '../assets/images/listing_images/listing-VCTowers3.jpg'],
     owner: 'Cityland Development Corporation',
     ownerID: 'cityland_dc',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.668355426953!2d120.99107991483979!3d14.5609481898278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c979bd7f6a79%3A0xdfe82a6f2d464b5f!2sCityland%20Vito%20Cruz%20Towers!5e0!3m2!1sen!2sph!4v1687593901510!5m2!1sen!2sph',
+    mapUrl: 'https://www.google.com/maps/embed/v1/place?q=place_id:ChIJeWp_vXnJlzMRX0tGLW8q6N8&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc',
     phone: '(02) 8245 1126',
     website: 'https://www.ehomes.ph/vito-cruz-towers.html',
     ownerImg: '../assets/images/listing_images/owner-VCTowers.jpg'
