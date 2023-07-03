@@ -27,10 +27,15 @@ const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
 
 //Object function for review history
-const reviewHistoryData = function (reviewHistory, divRH, isCurrentUser) {
+const reviewHistoryData = function (reviewHistory, divRH, divcRU, isCurrentUser) {
   this.RHData = reviewHistory;
   this.divRH = divRH;
+  this.divcRU = divcRU;
   this.isCurrentUser = isCurrentUser;
+
+  this.modifyData = function (updateData) {
+    Object.assign(this, updateData);
+  }
 }
 
 /* ==============================================================
@@ -174,7 +179,7 @@ function populateHistoryAsDiv(reviewHistory) {
     swiperDiv.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
-                <a href="profile.html?id=${review.userID}" style="cursor: pointer">
+                <a href="profile.html?id=${review.userID}&type=${reviewUser.type}" style="cursor: pointer">
                     <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
                     <p>${userCustomName}</p>
                     <p style="font-size: 13px; color: gray">@${reviewUser.username}</p>
@@ -197,7 +202,7 @@ function populateHistoryAsDiv(reviewHistory) {
                 ${populateReviewImg(review.reviewIMG)}
             </ul>
             <div class="mark-helpful">
-                <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
+                <span class="like-count">${review.reviewMarkedHelpful} people marked this review as helpful</span>
                 ${isCurrentUser ? `
                   <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
       : `
@@ -215,7 +220,42 @@ function populateHistoryAsDiv(reviewHistory) {
           </div>
         </div>
         <hr>`;
-    let rhData = new reviewHistoryData(review, swiperDiv, isCurrentUser);
+
+    //Div container for comment history
+    let cRUReviewHistory = document.createElement('div');
+    cRUReviewHistory.classList.add('booking-checkbox_wrap');
+    cRUReviewHistory.classList.add('mt-4');
+
+    cRUReviewHistory.innerHTML = `
+          <div class="customer-review_wrap">
+            <div class="customer-img">
+              <img alt="#" class="img-fluid" id="cRU" src="${reviewUser.profilePic}">
+              <p id="cRUCustomName">${userCustomName}</p>
+              <p id="cRUName" style="font-size: 13px; color: gray">@${reviewUser.username}</p>
+              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">${reviewUser.noOfReviews} reviews</span>
+            </div>
+            <div class="customer-content-wrap">
+              <div class="customer-content">
+                <div class="customer-review">
+                  <h6 id="cRUTitle">${review.reviewTitle}</h6>
+                  <ul id="cRUStarRating" class="star-rating">
+                    ${star_rating(review.reviewScore, 0, 'listing')}
+                  </ul>
+                  <p id="cRUDate">Reviewed ${reviewDate(review.reviewDate)}</p>
+                </div>
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
+              </div>
+              <p class="customer-text comment-border" id="cRUContent">${review.reviewContent}</p>
+              <ul id="cRUImages">
+                ${populateReviewImg(review.reviewIMG)}
+              </ul>
+              <span class="like-count">${review.reviewMarkedHelpful} people marked this review as helpful</span>
+            </div>
+          </div>
+          <hr>
+    `;
+
+    let rhData = new reviewHistoryData(review, swiperDiv, cRUReviewHistory, isCurrentUser);
     userReviewHistory.push(rhData);
   });
   return userReviewHistory;
@@ -381,6 +421,15 @@ function showUserReview() {
   document.getElementById('sortReview').selectedIndex = 0;
   initUserPopUp();
 
+}
+
+function findUserReview(reviewID) {
+  let review = null;
+  reviewHistory.forEach((rh) => {
+    if (rh.RHData.reviewID === reviewID)
+      review = rh;
+  });
+  return review;
 }
 
 /* ==============================================================
@@ -675,40 +724,11 @@ $(document).ready(function () {
     let reviewID = reviewContainer.data('review-id');
     let listingID = reviewContainer.data('listing-id');
     let userID = reviewContainer.data('user-id');
-    let review = getSpecificUserReview(listingID, reviewID);
+    let review = findUserReview(reviewID);
     let userReviewer = getSpecificUser(userID);
-    let commentModal = $('#commentModal');
-
-    //Get commentModal review elements to populate
-    let cRUPic = commentModal.find('#cRU');
-    let cRUName = commentModal.find('#cRUName');
-    let cRUCustomName = commentModal.find('#cRUCustomName');
-    let cRUReview = commentModal.find('#cRUReviews');
-    let cRUTitle = commentModal.find('#cRUTitle');
-    let cRUDate = commentModal.find('#cRUDate');
-    let cRURating = commentModal.find('#cRURating');
-    let cRUContent = commentModal.find('#cRUContent');
-    let cRUImages = commentModal.find('#cRUImages');
-    let cRUMarkHelpful = commentModal.find('#cRUMarkHelpful');
-
-    //Populate commentModal review elements
-    cRUPic.attr('src', userReviewer.profilePic);
-    cRUName.text(userReviewer.username);
-    cRUCustomName.text(userReviewer.customName);
-    cRUReview.text(userReviewer.noOfReviews + ' Reviews');
-    cRUTitle.text(review.reviewTitle);
-    cRUDate.text(reviewDate(review.reviewDate));
-    cRURating.text(review.reviewScore + '.0');
-    cRUContent.text(review.reviewContent);
-    cRUImages.empty();
-    //Populate cRUImages with populateReviewImages
-    review.reviewIMG.forEach(img => {
-      let li = $('<li>').addClass('user-image').attr('href', img);
-      let reviewImg = $('<img>').attr('src', img).addClass('img-fluid').attr('alt', '#');
-      li.append(reviewImg);
-      cRUImages.append(li);
-    });
-    cRUMarkHelpful.text(review.reviewMarkedHelpful + ' people marked this review as helpful');
+    let cRUReviewHistory = $('#cRUReviewHistory');
+    cRUReviewHistory.empty();
+    cRUReviewHistory.append(review.divcRU);
   }
 
 

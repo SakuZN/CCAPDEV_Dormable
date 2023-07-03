@@ -375,7 +375,7 @@ async function updateProfile() {
   updateUserDatabase(currentUser);
 
   await showPopup('Profile updated!');
-  window.location.href = 'profile.html?id=' + currentUser.username;
+  window.location.href = 'profile.html?id=' + currentUser.username + '&type=' + currentUser.type;
 
 }
 

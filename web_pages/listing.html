@@ -5,8 +5,9 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="frame-src 'self' https://www.google.com" http-equiv="Content-Security-Policy">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <meta content="Colorlib" name="author">
+  <meta content="Group 5" name="author">
   <meta content="#" name="description">
 
   <link href="../icon.png" rel="icon" type="image/png"/>
@@ -392,13 +393,12 @@
               <p>https://burgerandlobster.com</p>
             </a>
           </div>
-          <a class="btn btn-outline-danger btn-contact" href="#">SEND A MESSAGE</a>
         </div>
         <div class="follow">
           <div class="follow-img">
             <img alt="#" class="img-fluid" id="listing-owner" src="../assets/images/test_image/blank_pp.jpg">
             <h6 id="owner-name">Christine Evans</h6>
-            <span id="owner-location">Philippines</span>
+            <span id="owner-username">Philippines</span>
           </div>
           <ul class="social-counts">
             <li>
@@ -418,6 +418,78 @@
 </section>
 
 <!--//END BOOKING DETAILS -->
+
+<!-- Popup Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="dialog" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Info!</h4>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        <p style="font-size: 34px"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-danger" data-dismiss="modal" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Comment Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="commentModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Comment</h4>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="cRUReviewHistory">
+        <!-- Append data here -->
+      </div>
+      <div class="modal-body" id="cRUComment">
+        <div class="booking-checkbox_wrap mt-4">
+          <div class="customer-review_wrap">
+            <div class="customer-img">
+              <img alt="#" class="img-fluid" src="../assets/images/test_image/customer-img1.jpg">
+              <p>Amanda G</p>
+              <span>35 Reviews</span>
+            </div>
+            <div class="customer-content-wrap">
+              <div class="customer-content">
+                <div class="customer-review">
+                  <p style="font-weight: 300; margin: 0">Commented 2 days ago</p>
+                </div>
+              </div>
+              <p class="customer-text comment-border">I love how you can see into the kitchen and watch them make the
+                noodles and you
+                can
+                definitely tell that this is a family run establishment. The prices are are great with one dish maybe
+                being $9. You just have to remember
+                to bring cash.
+              </p>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <form id="commentForm">
+        <div class="modal-body">
+          <textarea class="form-control"></textarea>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="container">
@@ -475,109 +547,6 @@
     </div>
   </div>
 </footer>
-
-<!-- Modal -->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="dialog" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLongTitle">Info!</h4>
-        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" style="text-align: center">
-        <p style="font-size: 34px"></p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline-danger" data-dismiss="modal" type="button">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Comment Modal -->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="commentModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">Comment</h4>
-        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="booking-checkbox_wrap mt-4">
-          <div class="customer-review_wrap">
-            <div class="customer-img">
-              <img alt="#" class="img-fluid" id="cRU" src="../assets/images/test_image/customer-img1.jpg">
-              <p id="cRUCustomName">Amanda G</p>
-              <p id="cRUName" style="font-size: 13px; color: gray"></p>
-              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">35 Reviews</span>
-            </div>
-            <div class="customer-content-wrap">
-              <div class="customer-content">
-                <div class="customer-review">
-                  <h6 id="cRUTitle">Best noodles in the Newyork city</h6>
-                  <ul class="star-rating">
-                    <!-- js star rating -->
-                  </ul>
-                  <p id="cRUDate">Reviewed 2 days ago</p>
-                </div>
-                <div class="customer-rating" id="cRURating">8.0</div>
-              </div>
-              <p class="customer-text comment-border" id="cRUContent">I love the noodles here but it is so rare that I get to come here. Tasty
-                Hand-Pulled Noodles is the best type of whole in the wall restaurant. The staff are really nice, and you
-                should be seated quickly. I usually get the
-                hand pulled noodles in a soup. House Special #1 is amazing and the lamb noodles are also great. If you
-                want your noodles a little chewier, get the knife cut noodles, which are also amazing. Their dumplings
-                are
-                great
-                dipped in their chili sauce.
-              </p>
-              <ul id="cRUImages">
-              </ul>
-              <span id="cRUMarkHelpful">28 people marked this review as helpful</span>
-            </div>
-          </div>
-          <hr>
-        </div>
-        <div class="booking-checkbox_wrap mt-4">
-          <div class="customer-review_wrap">
-            <div class="customer-img">
-              <img alt="#" class="img-fluid" src="../assets/images/test_image/customer-img1.jpg">
-              <p>Amanda G</p>
-              <span>35 Reviews</span>
-            </div>
-            <div class="customer-content-wrap">
-              <div class="customer-content">
-                <div class="customer-review">
-                  <p style="font-weight: 300; margin: 0">Commented 2 days ago</p>
-                </div>
-              </div>
-              <p class="customer-text comment-border">I love how you can see into the kitchen and watch them make the noodles and you
-                can
-                definitely tell that this is a family run establishment. The prices are are great with one dish maybe
-                being $9. You just have to remember
-                to bring cash.
-              </p>
-            </div>
-          </div>
-          <hr>
-        </div>
-    </div>
-      <form id="commentForm">
-        <div class="modal-body">
-          <textarea class="form-control"></textarea>
-        </div>
-      </form>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-  </div>
-</div>
-
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script crossorigin="anonymous"

@@ -5,29 +5,41 @@ async function login() {
   let email = document.getElementById('loginEmail').value;
   let pass = document.getElementById('loginPswd').value;
 
-  let isInStorage = false;
+  let userExists;
+  let userType;
+  switch (checkIfUserExists(email)) {
+    case 1:
+      userExists = checkUserInfo(email, pass);
+      userType = 'student';
+      break;
+    case 2:
+      userExists = checkOwnerInfo(email, pass)
+      userType = 'owner';
+      break;
+    case 0:
+      await showPopup('No such user exists');
+      return;
+    default:
+      console.error('Invalid return value from checkIfUserExists()');
+      break;
+  }
 
-  let userDatabase = localStorage.getItem('userDatabase');
-  try {
-    userDatabase = JSON.parse(userDatabase);
-    isInStorage = userDatabase.some((data) => {
-      if (data.email === email && data.password === pass) {
-        localStorage.setItem('currentUser', JSON.stringify(data));
-        return true;
-      }
-    });
-  } catch (e) {
-    await showPopup('No such user exists');
+  if (!userExists) {
+    await showPopup('Invalid email or password!');
     return;
   }
 
-  if (isInStorage) {
-    localStorage.setItem('isLoggedIn', 'true');
-    await showPopup('Logged in successfully! Remember to check your profile!');
-    window.location.href = 'index.html';
-  } else {
-    await showPopup('Invalid email or password!');
+  let userLogIn
+  if (userType === 'student') {
+    userLogIn = getUserInfo(email, pass)
+  } else if (userType === 'owner') {
+    userLogIn = getOwnerInfo(email, pass)
   }
+
+  localStorage.setItem('currentUser', JSON.stringify(userLogIn));
+  localStorage.setItem('isLoggedIn', 'true');
+  await showPopup('Logged in successfully! Remember to check your profile!');
+  window.location.href = 'index.html';
 }
 
 async function register() {
@@ -35,7 +47,7 @@ async function register() {
   const custom = document.getElementById('signupCustomName').value;
   const email = document.getElementById('signupEmail').value;
   const pass = document.getElementById('signupPswd').value;
-  const userType = document.querySelector('input[name="userType"]:checked').value;
+  const description = document.getElementById('signupDescription').value;
   const profilePic = document.getElementById('fileUpload').files[0];
 
   //Add current date as date of registration
@@ -44,10 +56,8 @@ async function register() {
   const newUserData = {
     username: user,
     customName: custom,
-    email: email,
-    password: pass,
-    type: userType,
-    description: '',
+    type: 'student',
+    description: description,
     profilePic: '../assets/images/test_image/blank_pp.jpg',
     joinDate: registerDate,
     noOfReviews: 0,
@@ -55,55 +65,38 @@ async function register() {
     college: '',
     course: ''
   };
-
-  let currentData = localStorage.getItem('userDatabase')
-
-  if (currentData !== null) {
-    currentData = JSON.parse(currentData);
-
-    //Check if username or email already exists
-    let isExisting = false;
-
-    for (const data of currentData) {
-      if (data.username === user) {
-        await showPopup('Username already exists!');
-        isExisting = true;
-        break;
-      } else if (data.email === email) {
-        await showPopup('Email already exists!');
-        isExisting = true;
-        break;
-      }
-    }
-    // If username or email already exists, do not add to database
-    if (isExisting) {
-      return;
-    }
-
-    currentData.push(newUserData);
-  } else {
-    currentData = [newUserData];
+  const newUserDataInfo = {
+    username: user,
+    email: email,
+    password: pass,
   }
 
-  // Handle file upload
+  if (checkExistingUserEmail(email)) {
+    await showPopup('Email already exists!');
+    return;
+  }
+  if (checkExistingUsername(user)) {
+    await showPopup('Username already exists!');
+    return;
+  }
+
   if (profilePic) {
     const reader = new FileReader();
 
     reader.onload = async function () {
       newUserData.profilePic = reader.result;
-      localStorage.setItem('userDatabase', JSON.stringify(currentData)); // Update local storage with newUserData
+      //Register user
+      addNewUser(newUserData, newUserDataInfo);
 
       await showPopup('Registered successfully! Please login to continue.');
-
       window.location.href = 'login.html';
     };
-
     reader.readAsDataURL(profilePic);
   } else {
-    localStorage.setItem('userDatabase', JSON.stringify(currentData)); // Update local storage without profilePic
+    //Register user
+    addNewUser(newUserData, newUserDataInfo);
 
     await showPopup('Registered successfully! Please login to continue.');
-
     window.location.href = 'login.html';
   }
 }
@@ -133,7 +126,7 @@ function updateMenu() {
     // Display menu for logged-in users
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
-      <li><a href="profile.html?id=${userID.username}" class="${currentPage.includes('profile.html') ? 'active' : ''}">My Profile</a></li>
+      <li><a href="profile.html?id=${userID.username}&type=${userID.type}" class="${currentPage.includes('profile.html') ? 'active' : ''}">My Profile</a></li>
       <li><a href="search-result.html" class="${currentPage.includes('search-result.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="index.html" id="logoutBtn">Logout</a></li>
     `;

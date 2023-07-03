@@ -46,7 +46,8 @@
   </div>
 </header>
 <!-- ***** Header Area End ***** -->
-
+<div class="main-banner">
+</div>
 <div class="main">
   <input aria-hidden="true" id="chk" type="checkbox">
   <div class="signup">
@@ -62,7 +63,7 @@
           </div>
           <div class="p-image">
             <i class="fa fa-camera upload-button"></i>
-            <input accept="image/*" class="file-upload" id="fileUpload" type="file"/>
+            <input accept="image/*" aria-required="" class="file-upload" id="fileUpload" type="file"/>
           </div>
         </div>
       </div>
@@ -71,12 +72,9 @@
              type="text">
       <input id="signupEmail" name="email" placeholder="Email" required="" type="email">
       <input id="signupPswd" minlength="4" name="pswd" placeholder="Password" required="" type="password">
-      <div class="checkboxes">
-        <input id="student" name="userType" required type="radio" value="student">
-        <label for="student">Student</label>
-        <input id="landowner" name="userType" required type="radio" value="owner">
-        <label for="landowner">Owner</label>
-      </div>
+      <textarea id="signupDescription"
+                placeholder="Short Description"
+                rows="1"></textarea>
       <button type="submit">Sign up</button>
     </form>
   </div>
@@ -129,6 +127,7 @@
 <script src="../assets/js/imagesloaded.js"></script>
 <script src="../assets/js/listing.js"></script>
 <script src="../assets/js/autostar-rating.js"></script>
+<script src="../assets/js/listing-reviews.js"></script>
 <script src="../assets/js/login-register.js"></script>
 <script src="../assets/js/custom.js"></script>
 <script>

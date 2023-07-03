@@ -23,6 +23,7 @@ let listing = [
       '../assets/images/listing_images/listing-GrandTowers2.jpg',
       '../assets/images/listing_images/listing-GrandTowers3.jpg'],
     owner: 'Moldex Realty Inc.',
+    ownerID: 'moldex_realty',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6880.748230183621!2d120.99269744210767!3d14.55977174205414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97be774b035%3A0xf28237f16fd9c403!2sThe%20Grand%20Towers%20Manila!5e0!3m2!1sen!2sph!4v1687579119148!5m2!1sen!2sph',
     phone: '0917 717 8880',
     website: 'https://www.moldexrealty.ph',
@@ -41,6 +42,7 @@ let listing = [
       '../assets/images/listing_images/listing-TLorenzo2.jpg',
       '../assets/images/listing_images/listing-TLorenzo3.jpg'],
     owner: 'Torre Lorenzo Development Corporation',
+    ownerID: 'torre_lorenzo',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5848562613396!2d120.99177521483973!3d14.565716889824715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c978cf151c8d%3A0x8bfc15f5a457f675!2s2-Torre%20Lorenzo%2C%20Taft%20Ave%2C%20Malate%2C%20Manila%2C%201004%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1687593470423!5m2!1sen!2sph',
     phone: '0916 684 7394',
     website: 'https://www.torrelorenzo.com/residential-developments/2torre-lorenzo',
@@ -59,9 +61,10 @@ let listing = [
       '../assets/images/listing_images/listing-RResidences2.jpg',
       '../assets/images/listing_images/listing-RResidences3.jpg'],
     owner: 'Toplite Development Corporation',
+    ownerID: 'toplite_dc',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.642853255977!2d120.99534439999995!3d14.562404800000008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97962cf8121%3A0x6d4760b768b6b8c4!2sR%20Square%20Residences!5e0!3m2!1sen!2sph!4v1687593525832!5m2!1sen!2sph',
     phone: '0927 967 8558',
-    website: 'https://www.facebook.com/RSquareResidencesCondoMall/',
+    website: 'https://www.facebook.com/toplitedevelopmentcorporation/',
     ownerImg: '../assets/images/listing_images/owner-RResidences.jpg'
   },
   {
@@ -77,6 +80,7 @@ let listing = [
       '../assets/images/listing_images/listing-ArcherPlace2.jpg',
       '../assets/images/listing_images/listing-ArcherPlace3.jpg'],
     owner: 'Eton Properties Philippines',
+    ownerID: 'eton_properties',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5681766866683!2d120.99052341483981!3d14.566669289824095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c97f4f0cf917%3A0x67ecb17bc2ebf8ca!2sOne%20Archers&#39;%20Place!5e0!3m2!1sen!2sph!4v1687593707917!5m2!1sen!2sph',
     phone: '0917-886-1868',
     website: 'http://www.onearchersplace.com/',
@@ -96,6 +100,7 @@ let listing = [
       '../assets/images/listing_images/listing-GResidences2.jpg',
       '../assets/images/listing_images/listing-GResidences3.jpg'],
     owner: 'SMDC',
+    ownerID: 'smdc',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.552105384012!2d120.99271330000002!3d14.567586899999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9f293670793%3A0x4d8e08900ca6b815!2sGreen%20Residences!5e0!3m2!1sen!2sph!4v1687593765911!5m2!1sen!2sph',
     phone: '(02) 8252 4067',
     website: 'https://smdc.com/properties/green-residences/',
@@ -115,6 +120,7 @@ let listing = [
       '../assets/images/listing_images/listing-VCTowers2.jpg',
       '../assets/images/listing_images/listing-VCTowers3.jpg'],
     owner: 'Cityland Development Corporation',
+    ownerID: 'cityland_dc',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.668355426953!2d120.99107991483979!3d14.5609481898278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c979bd7f6a79%3A0xdfe82a6f2d464b5f!2sCityland%20Vito%20Cruz%20Towers!5e0!3m2!1sen!2sph!4v1687593901510!5m2!1sen!2sph',
     phone: '(02) 8245 1126',
     website: 'https://www.ehomes.ph/vito-cruz-towers.html',
@@ -190,8 +196,6 @@ let users = [
     customName: 'Amanda Garcia',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'amanda_garcia@gmail.com',
-    password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic: '../assets/images/test_image/customer-img1.jpg',
@@ -204,8 +208,6 @@ let users = [
     customName: 'Miles Morana',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'miles_morana@gmail.com',
-    password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic: '../assets/images/test_image/customer-img2.jpg',
@@ -218,8 +220,6 @@ let users = [
     customName: 'Katrina',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'katrina@gmail.com',
-    password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic: '../assets/images/test_image/customer-img3.jpg',
@@ -232,8 +232,6 @@ let users = [
     customName: 'John Vick',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'john_vick@gmail.com',
-    password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic: '../assets/images/test_image/customer-img4.jpg',
@@ -246,8 +244,6 @@ let users = [
     customName: 'Moist Critikal',
     course: getRandomCourse(),
     college: 'De La Salle University',
-    email: 'penguinz_0@gmail.com',
-    password: '1234',
     type: 'student',
     description: getRandomDescription(),
     profilePic: '../assets/images/test_image/customer-img5.jpg',
@@ -256,6 +252,162 @@ let users = [
     followers: getRandomNumber(0, 1000)
   }
 ]
+
+let userInfo = [
+  {
+    username: 'Amanda_Garcia',
+    email: 'amanda_garcia@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'Miles_Morana',
+    email: 'miles_morana@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'Katrina',
+    email: 'katrina@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'John_Vick',
+    email: 'john_vick@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'Penguinz0',
+    email: 'penguinz_0@gmail.com',
+    password: '1234',
+  }
+]
+
+let listingOwners = [
+  {
+    username: 'moldex_realty',
+    customName: 'Moldex Realty Inc.',
+    type: 'listingOwner',
+    profilePic: '../assets/images/listing_images/owner-GrandTowers.jpg',
+    description: 'With over 30 years of real estate excellence, ' +
+      'Moldex Realty has been providing quality homes and communities that suit the growing needs of Filipino families. ' +
+      'From mastered-planned subdivisions that showcase the beauty of natural spaces, perfect for growing families, ' +
+      'to contemporary condominiums with complete amenities.',
+    joinDate: getRandomDate(2020, 2023),
+    listings: ['1-gt-manila'],
+    noOfListings: 1,
+    followers: getRandomNumber(0, 1000),
+    country: 'Philippines',
+    website: 'https://www.moldexrealty.ph'
+  },
+  {
+    username: 'torre_lorenzo',
+    customName: 'Torre Lorenzo<br>Development Corporation',
+    type: 'listingOwner',
+    profilePic: '../assets/images/listing_images/owner-TLorenzo.jpg',
+    description: 'As the pioneer in premium university residences, Torre Lorenzo continues to build secure, accessible, and dynamic spaces that elevate living experiences.\n' +
+      '\n' +
+      'Each Torre Lorenzo property is distinctive for its innovation and uncompromising quality, and we continue to build and design for the future with this tradition of excellence.',
+    joinDate: getRandomDate(2020, 2023),
+    listings: ['2-torre-lorenzo'],
+    noOfListings: 1,
+    followers: getRandomNumber(0, 1000),
+    country: 'Philippines',
+    website: 'https://www.torrelorenzo.com/'
+  },
+  {
+    username: 'toplite_dc',
+    customName: 'Toplite Development Corporation',
+    type: 'listingOwner',
+    profilePic: '../assets/images/listing_images/owner-RResidences.jpg',
+    description: 'Toplite Development Corporation is a young and fast-growing real estate development company directed by its CEO Mr. Johnny Chua\n' +
+      'who founded Toplite Lumber Corporation, the group’s mother company.\n' +
+      'Toplite Lumber Corporation started in October 1986 from a home grown family business of processing lumber from local sawmills.\n' +
+      'Throughout the years, it has imported lumber from different countries and has done logging and saw-milling in the Philippines (1994)\n' +
+      'and has done logging and saw milling local forestry in Aurora and Davao provinces (2002-2011).',
+    joinDate: getRandomDate(2020, 2023),
+    listings: ['3-r-square'],
+    noOfListings: 1,
+    followers: getRandomNumber(0, 1000),
+    country: 'Philippines',
+    website: 'https://www.facebook.com/toplitedevelopmentcorporation/'
+  },
+  {
+    username: 'eton_properties',
+    customName: 'Eton Properties<br>Philippines Inc.',
+    type: 'listingOwner',
+    profilePic: '../assets/images/listing_images/owner-ArcherPlace.jpg',
+    description: 'We are Eton Properties, the real estate brand of the Lucio Tan Group, one of the biggest business conglomerates in the Philippines, with full-range projects of office, commercial, residential and hotel properties in key cities in Metro Manila, Laguna and Cebu. With an extensive land bank in strategic locations all over the country, we have diversified our business opportunities to include land lease.',
+    joinDate: getRandomDate(2020, 2023),
+    listings: ['4-archer-place'],
+    noOfListings: 1,
+    followers: getRandomNumber(0, 1000),
+    country: 'Philippines',
+    website: 'http://www.onearchersplace.com/'
+  },
+  {
+    username: 'smdc',
+    customName: 'SMDC',
+    type: 'listingOwner',
+    profilePic: '../assets/images/listing_images/owner-GResidences.jpg',
+    description: 'SMDC is the largest and fastest-growing real estate developer in the Philippines. ' +
+      'Championing perfectly integrated commercial and residential environments, ' +
+      'SMDC provides every Filipino and its investors access to a sustainable and attainable cosmopolitan ' +
+      'lifestyle. Through masterfully planned and award-winning complete developments, ' +
+      'SMDC has been providing the dream homes of Filipinos in Metro Manila and other key cities in the Philippines.',
+    joinDate: getRandomDate(2020, 2023),
+    listings: ['5-green-residences'],
+    noOfListings: 1,
+    followers: getRandomNumber(0, 1000),
+    country: 'Philippines',
+    website: 'https://smdc.com/'
+  },
+  {
+    username: 'cityland_dc',
+    customName: 'Cityland Development Corporation',
+    type: 'listingOwner',
+    profilePic: '../assets/images/listing_images/owner-VCTowers.jpg',
+    description: 'We continue to gain the respect and confidence of our investors for having a track record in the delivery of all projects thus, living up to our presidential award as the Leading Condominium Developer in the country. We shall continue to conceptualize and be a major contributor in the promotion of economic development and progress in creating a stable nation through equitable housing for the middle class... ',
+    joinDate: getRandomDate(2020, 2023),
+    listings: ['6-vito-cruz-towers'],
+    noOfListings: 1,
+    followers: getRandomNumber(0, 1000),
+    country: 'Philippines',
+    website: 'https://www.cityland.info/'
+  }
+];
+
+let ownerAdminInfo = [
+  {
+    username: 'moldex_realty',
+    email: 'listingadmin01@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'torre_lorenzo',
+    email: 'listingadmin02@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'toplite_dc',
+    email: 'listingadmin03@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'eton_properties',
+    email: 'listingadmin04@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'smdc',
+    email: 'listingadmin05@gmail.com',
+    password: '1234',
+  },
+  {
+    username: 'cityland_dc',
+    email: 'listingadmin06@gmail.com',
+    password: '1234',
+  }
+]
+
 
 // Function to get random review
 function getRandomReview(score) {
@@ -340,3 +492,20 @@ if (localStorage.getItem('reviewDatabase') === null || localStorage.getItem('rev
   localStorage.getItem('reviewDatabase') === '[]') {
   localStorage.setItem('reviewDatabase', JSON.stringify(generateUserReviews()));
 }
+
+if (localStorage.getItem('listingOwnerDatabase') === null || localStorage.getItem('listingOwnerDatabase') === undefined ||
+  localStorage.getItem('listingOwnerDatabase') === '[]') {
+  localStorage.setItem('listingOwnerDatabase', JSON.stringify(listingOwners));
+}
+
+if (localStorage.getItem('listingAdminDatabase') === null || localStorage.getItem('listingAdminDatabase') === undefined ||
+  localStorage.getItem('listingAdminDatabase') === '[]') {
+  localStorage.setItem('listingAdminDatabase', JSON.stringify(ownerAdminInfo));
+}
+
+if (localStorage.getItem('userLoginDatabase') === null || localStorage.getItem('userLoginDatabase') === undefined ||
+  localStorage.getItem('userLoginDatabase') === '[]') {
+  localStorage.setItem('userLoginDatabase', JSON.stringify(userInfo));
+}
+
+
