@@ -420,6 +420,17 @@ let ownerAdminInfo = [
   }
 ]
 
+let ownerResponse = [
+  {
+    reviewID: 1,
+    listingID: '2-torre-lorenzo',
+    userID: 'Amanda_Garcia',
+    ownerID: 'torre_lorenzo',
+    response: 'Thank you for your review. We will take note of your feedback and will try to improve our services.',
+    commentDate: getRandomDate(2023, 2023)
+  }
+]
+
 
 // Function to get random review
 function getRandomReview(score) {
@@ -518,6 +529,11 @@ if (localStorage.getItem('listingAdminDatabase') === null || localStorage.getIte
 if (localStorage.getItem('userLoginDatabase') === null || localStorage.getItem('userLoginDatabase') === undefined ||
   localStorage.getItem('userLoginDatabase') === '[]') {
   localStorage.setItem('userLoginDatabase', JSON.stringify(userInfo));
+}
+
+if (localStorage.getItem('ownerResponseDatabase') === null || localStorage.getItem('ownerResponseDatabase') === undefined ||
+  localStorage.getItem('ownerResponseDatabase') === '[]') {
+  localStorage.setItem('ownerResponseDatabase', JSON.stringify(ownerResponse));
 }
 
 

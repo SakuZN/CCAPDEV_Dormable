@@ -176,7 +176,7 @@ function updateUserDatabase(user) {
 
 function getCurrentUser() {
   if (localStorage.getItem('isLoggedIn') === 'false') {
-    return null;
+    return false;
   }
   return JSON.parse(localStorage.getItem('currentUser'));
 }
@@ -195,6 +195,30 @@ function getSpecificListingOwner(ownerID) {
 
 function checkIfSameOwnerID(ownerID) {
   return ownerID === JSON.parse(localStorage.getItem('currentUser')).username;
+}
+
+/* ==============================================================
+   OWNER RESPONSE DATABASE FUNCTIONS
+   ============================================================== */
+function getOwnerResponses() {
+  return JSON.parse(localStorage.getItem('ownerResponseDatabase'));
+}
+
+function getSpecificOwnerResponses(ownerID) {
+  const ownerResponses = JSON.parse(localStorage.getItem('ownerResponseDatabase'));
+  return ownerResponses.find(ownerResponse => ownerResponse.ownerID === ownerID);
+}
+
+function checkIfCommented(reviewID, listingID, userID) {
+  const ownerResponses = JSON.parse(localStorage.getItem('ownerResponseDatabase'));
+  return ownerResponses.some(ownerResponse => ownerResponse.reviewID === reviewID &&
+    ownerResponse.listingID === listingID && ownerResponse.userID === userID);
+}
+
+function getReviewResponse(reviewID, listingID, userID) {
+  const ownerResponses = JSON.parse(localStorage.getItem('ownerResponseDatabase'));
+  return ownerResponses.find(ownerResponse => ownerResponse.reviewID === reviewID &&
+    ownerResponse.listingID === listingID && ownerResponse.userID === userID);
 }
 
 /* ==============================================================
@@ -279,5 +303,6 @@ function getOwnerInfo(email, password) {
   const adminDatabase = JSON.parse(localStorage.getItem('listingAdminDatabase'));
   const ownerInfoDatabase = JSON.parse(localStorage.getItem('listingOwnerDatabase'));
   const owner = adminDatabase.find(owner => owner.email === email && owner.password === password);
-  return ownerInfoDatabase.find(x => x.ownerID === owner.username);
+  console.log(owner);
+  return ownerInfoDatabase.find(x => x.username === owner.username);
 }

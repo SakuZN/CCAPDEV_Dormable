@@ -9,10 +9,12 @@ async function login() {
   let userType;
   switch (checkIfUserExists(email)) {
     case 1:
+      console.log('Student');
       userExists = checkUserInfo(email, pass);
       userType = 'student';
       break;
     case 2:
+      console.log('Owner');
       userExists = checkOwnerInfo(email, pass)
       userType = 'owner';
       break;
@@ -36,8 +38,10 @@ async function login() {
     userLogIn = getOwnerInfo(email, pass)
   }
 
+  console.log(userLogIn);
   localStorage.setItem('currentUser', JSON.stringify(userLogIn));
   localStorage.setItem('isLoggedIn', 'true');
+
   await showPopup('Logged in successfully! Remember to check your profile!');
   window.location.href = 'index.html';
 }
