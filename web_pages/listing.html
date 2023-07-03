@@ -268,7 +268,7 @@
                 <h2>How was your experience?</h2>
               </div>
               <div class="row">
-                <div class="rate">
+                <div class="rate-review">
                   <input id="star5" name="rate" type="radio" value="5"/>
                   <label for="star5" title="text">5 stars</label>
                   <input id="star4" name="rate" type="radio" value="4"/>
@@ -341,7 +341,7 @@
                         <div class="col-md-12" style="justify-content: center; display: flex">
                           <div class="form-group focused">
                             <label>How was your experience?</label>
-                            <div class="rate">
+                            <div class="rate-review">
                               <input id="star5Edit" name="rateEdit" type="radio" value="5"/>
                               <label for="star5Edit" title="5 star!">5 stars</label>
                               <input id="star4Edit" name="rateEdit" type="radio" value="4"/>
@@ -397,8 +397,8 @@
         <div class="follow">
           <div class="follow-img">
             <img alt="#" class="img-fluid" id="listing-owner" src="../assets/images/test_image/blank_pp.jpg">
-            <h6 id="owner-name">Christine Evans</h6>
-            <span id="owner-username">Philippines</span>
+            <h6 id="owner-customName">Christine Evans</h6>
+            <span id="owner-userName">Philippines</span>
           </div>
           <ul class="social-counts">
             <li>
@@ -410,7 +410,7 @@
               <span>Followers</span>
             </li>
           </ul>
-          <a href="#">FOLLOW</a>
+          <a class="btn btn-outline-danger" href="#" id="owner-profile">CHECK PROFILE</a>
         </div>
       </div>
     </div>
@@ -576,7 +576,7 @@
 <script src="../assets/js/autostar-rating.js"></script>
 <script src="../assets/js/listing.js"></script>
 <script src="../assets/js/login-register.js"></script>
-<script src="../assets/js/listing-reviews.js"></script>
+<script src="../assets/js/dbFetching.js"></script>
 <script src="../assets/js/custom.js"></script>
 
 <!-- JQuery Script for various functionalities -->

@@ -67,7 +67,7 @@ function destroySwiper() {
 // get the id from the url
 let url = new URL(window.location.href);
 let id = url.searchParams.get('id');
-let checkValidId = fetchData().find((listing) => listing.id === id);
+let checkValidId = checkIfValidListingID(id);
 if (id === null || checkValidId === undefined) {
   window.location.href = '404.html';
 } else {
@@ -78,6 +78,7 @@ if (id === null || checkValidId === undefined) {
 function populateListingPage(id_page) {
   //Get the listing data
   let listing = getSpecificListing(id_page)
+  let owner = getSpecificListingOwner(listing.ownerID);
 
   //Get the listing page elements to populate
   let listingName = document.getElementById('listing-name');
@@ -95,7 +96,9 @@ function populateListingPage(id_page) {
   let listingPhone = document.getElementById('listing-phone');
   let listingWebsite = document.getElementById('listing-website');
   let listingOwner = document.getElementById('listing-owner');
-  let ownerName = document.getElementById('owner-name');
+  let ownerCustomName = document.getElementById('owner-customName');
+  let ownerUserName = document.getElementById('owner-userName');
+  let ownerProfile = document.getElementById('owner-profile');
   let noReviews = document.createElement('div');
   let reviewPagination = document.getElementById('review-pagination');
   let writeReviewBtn = document.getElementById('reviewBtn');
@@ -138,8 +141,10 @@ function populateListingPage(id_page) {
   listingPhone.innerHTML = listing.phone;
   listingWebsite.innerHTML = `<p>${listing.website}</p>`;
   listingWebsite.href = listing.website;
-  ownerName.innerHTML = listing.owner;
+  ownerCustomName.innerHTML = owner.customName;
+  ownerUserName.innerHTML = '@' + owner.username;
   listingOwner.src = listing.ownerImg;
+  ownerProfile.href = `profile.html?id=${owner.username}`;
 }
 
 /* ==============================================================
@@ -179,7 +184,7 @@ function populateHistoryAsDiv(reviewHistory) {
     swiperDiv.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
-                <a href="profile.html?id=${review.userID}&type=${reviewUser.type}" style="cursor: pointer">
+                <a href="profile.html?id=${review.userID}" style="cursor: pointer">
                     <img src="${reviewUser.profilePic}" class="img-fluid" alt="#">
                     <p>${userCustomName}</p>
                     <p style="font-size: 13px; color: gray">@${reviewUser.username}</p>

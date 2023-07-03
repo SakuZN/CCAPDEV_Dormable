@@ -1888,7 +1888,7 @@ textarea {
   margin-top: 2px;
 }
 
-.rate {
+.rate-review {
   display: flex;
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
@@ -1897,12 +1897,12 @@ textarea {
   position: relative;
 }
 
-.rate:not(:checked) > input {
+.rate-review:not(:checked) > input {
   position: absolute;
   clip: rect(0, 0, 0, 0);
 }
 
-.rate:not(:checked) > label {
+.rate-review:not(:checked) > label {
   float: right;
   width: 1em;
   overflow: hidden;
@@ -1912,24 +1912,24 @@ textarea {
   color: #ccc;
 }
 
-.rate:not(:checked) > label:before {
+.rate-review:not(:checked) > label:before {
   content: '★ ';
 }
 
-.rate > input:checked ~ label {
+.rate-review > input:checked ~ label {
   color: orange;
 }
 
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
+.rate-review:not(:checked) > label:hover,
+.rate-review:not(:checked) > label:hover ~ label {
   color: orange;
 }
 
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
+.rate-review > input:checked + label:hover,
+.rate-review > input:checked + label:hover ~ label,
+.rate-review > input:checked ~ label:hover,
+.rate-review > input:checked ~ label:hover ~ label,
+.rate-review > label:hover ~ input:checked ~ label {
   color: orange;
 }
 

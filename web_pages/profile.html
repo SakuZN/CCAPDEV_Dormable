@@ -77,7 +77,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="top-text header-text">
-          <h2>User Profile</h2>
+          <h2 id="profileTitle">User Profile</h2>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@
                   </div>
                   <div>
                     <span class="heading" id="profileReviewCount">10</span>
-                    <span class="description">Reviews</span>
+                    <span class="description" id="followersDescription">Reviews</span>
                   </div>
                 </div>
               </div>
@@ -212,8 +212,31 @@
 </div>
 <!-- End of Profile Section -->
 
+<!-- Listing Section (IF USER IS AN OWNER) -->
+<div class="recent-listing hidden" id="ownerListings">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-heading">
+          <h2>My Listings</h2>
+          <h6>Check Them Out</h6>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="owl-carousel owl-listing" id="featured-listings">
+          <!--Generate Listing Cards-->
+        </div>
+
+        <div class="section-heading" style="margin-bottom: -20px; margin-top: 10px">
+          <button class="btn btn-outline-info btn-sm" onclick="loadMoreFeaturedListing()">Load More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Review History Section -->
-<div class="main-content">
+<div class="main-content hidden" id="RHSection">
   <div class="booking-checkbox_wrap mt-4">
     <h5 id="numreviewBottom" style="font-size: 24px">Review History</h5>
     <div class="sortList">
@@ -293,7 +316,7 @@
                 <div class="col-md-12" style="justify-content: center; display: flex">
                   <div class="form-group focused">
                     <label>How was your experience?</label>
-                    <div class="rate">
+                    <div class="rate-review">
                       <input id="star5" name="rate" type="radio" value="5"/>
                       <label for="star5" title="text">5 stars</label>
                       <input id="star4" name="rate" type="radio" value="4"/>
@@ -431,7 +454,7 @@
 <script src="../assets/js/listing.js"></script>
 <script src="../assets/js/autostar-rating.js"></script>
 <script src="../assets/js/login-register.js"></script>
-<script src="../assets/js/listing-reviews.js"></script>
+<script src="../assets/js/dbFetching.js"></script>
 <script src="../assets/js/profile.js"></script>
 <script src="../assets/js/custom.js"></script>
 

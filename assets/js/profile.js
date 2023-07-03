@@ -59,27 +59,98 @@ function destroySwiper() {
 if (window.location.href.includes('profile.html')) {
   let url = new URL(window.location.href);
   let profileID = url.searchParams.get('id');
-  let checkValidUser = JSON.parse(localStorage.getItem('userDatabase')).find(user => user.username === profileID);
-  if (checkValidUser === undefined || checkValidUser === null) {
+  let profileType = url.searchParams.get('type');
+  let checkValidUser = checkExistingUsername(profileID);
+  console.log(checkValidUser);
+  let checkValidOwner = checkIfOwnerExist(profileID);
+  console.log(checkValidOwner);
+  if (!checkValidUser && !checkValidOwner) {
     window.location.href = '404.html';
   } else {
+    //Initialize the profile page
     let isCurrentUser = false;
-    if (localStorage.getItem('isLoggedIn') === 'true') {
-      isCurrentUser = JSON.parse(localStorage.getItem('currentUser')).username === profileID;
-    }
-    populateProfile(profileID, isCurrentUser);
-    if (isCurrentUser) {
-      const editForm = document.getElementById('editProfile');
-      editForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        updateProfile();
-      });
+    if (checkValidUser) {
+      isCurrentUser = checkIfSameUserID(profileID);
+      populateStudentProfile(profileID, isCurrentUser);
+    } else if (checkValidOwner) {
+      isCurrentUser = checkIfSameOwnerID(profileID);
+      populateOwnerProfile(profileID, isCurrentUser);
     }
   }
 }
 
+function populateOwnerProfile(ownerID, currentUser) {
 
-function populateProfile(userID, currentUser) {
+  let ownerProfile = getSpecificListingOwner(ownerID);
+  //Get the needed elements
+  let profilePic = document.getElementById('userPic');
+  let userName = document.getElementById('profileUserName');
+  let customName = document.getElementById('profileCustomName');
+  let followCount = document.getElementById('profileFollowerCount');
+  let reviewCount = document.getElementById('profileReviewCount');
+  let course = document.getElementById('profileCourse');
+  let description = document.getElementById('profileDescription');
+  let college = document.getElementById('profileCollege');
+  let joinDate = document.getElementById('profileDate');
+  let editButton = document.getElementById('editBtn');
+  let followButton = document.getElementById('followBtn');
+  let formCustomName = document.getElementById('input-customName');
+  let formCourse = document.getElementById('input-course');
+  let formCollege = document.getElementById('input-college');
+  let formDescription = document.getElementById('input-description');
+  let reviewHistory = document.getElementById('reviewHistory');
+  let reviewPagination = document.getElementById('review-pagination');
+  let listingSection = document.getElementById('ownerListings');
+  let noOfListings = document.getElementById('followersDescription');
+  let profileTitle = document.getElementById('profileTitle');
+  //Get user data
+  let userPic = ownerProfile.profilePic;
+  let name = ownerProfile.username
+  let userCustomName = ownerProfile.customName;
+  if (userCustomName === '' || userCustomName === null || userCustomName === undefined)
+    userCustomName = name;
+  let followers = ownerProfile.followers;
+  let listingCount = ownerProfile.noOfListings;
+  let courseName = ownerProfile.country
+  let userDescription = ownerProfile.description;
+  let collegeName = ownerProfile.website;
+  let dateJoined = parseDate(ownerProfile.joinDate);
+
+  //Set user data
+  if (userPic) {
+    profilePic.src = userPic;
+  }
+  userName.innerHTML = '@' + name;
+  customName.innerHTML = userCustomName;
+  followCount.innerHTML = followers;
+  reviewCount.innerHTML = listingCount;
+  noOfListings.innerHTML = 'Listings';
+  course.innerHTML = courseName;
+  description.innerHTML = userDescription;
+  college.innerHTML = collegeName;
+  joinDate.innerHTML = dateJoined;
+  formCustomName.value = userCustomName;
+  formCourse.value = courseName;
+  formCollege.value = `<a href="${collegeName}">${collegeName}</a>`
+  formDescription.value = userDescription;
+  listingSection.classList.remove('hidden');
+  profileTitle.innerHTML = 'Owner Profile';
+
+
+  //Hides follow button if user is viewing their own profile
+  if (currentUser) {
+    followButton.style.display = 'none';
+  }
+  //Hides edit button if user is not viewing their own profile
+  else {
+    editButton.style.display = 'none';
+  }
+
+  //Finally, populate the listing section
+  initOwnerListing(ownerID);
+}
+
+function populateStudentProfile(userID, currentUser) {
   userProfile = new getUserData(getSpecificUser(userID), currentUser);
   //Get the needed elements
   let profilePic = document.getElementById('userPic');
@@ -100,6 +171,7 @@ function populateProfile(userID, currentUser) {
   let reviewHistory = document.getElementById('reviewHistory');
   let reviewPagination = document.getElementById('review-pagination');
   let noReviews = document.createElement('div');
+  let RHSection = document.getElementById('RHSection');
 
   //Get user data
   let userPic = userProfile.user.profilePic;
@@ -130,6 +202,7 @@ function populateProfile(userID, currentUser) {
   formCourse.value = courseName;
   formCollege.value = collegeName;
   formDescription.value = userDescription;
+  RHSection.classList.remove('hidden');
 
 
   //Hides follow button if user is viewing their own profile
@@ -375,7 +448,7 @@ async function updateProfile() {
   updateUserDatabase(currentUser);
 
   await showPopup('Profile updated!');
-  window.location.href = 'profile.html?id=' + currentUser.username + '&type=' + currentUser.type;
+  window.location.href = 'profile.html?id=' + currentUser.username;
 
 }
 
@@ -409,6 +482,12 @@ $(document).ready(function () {
       scrollTop: $('.edit-profile').offset().top
     }, 800);
   });
+  $('#editProfile').on('submit', function (event) {
+    //prevent default form submission
+    event.preventDefault();
+    updateProfile();
+  });
+
   $('.file-upload').on('click', function () {
     $('#fileUpload').click();
   });

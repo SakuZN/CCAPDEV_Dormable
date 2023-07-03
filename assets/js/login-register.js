@@ -126,7 +126,7 @@ function updateMenu() {
     // Display menu for logged-in users
     menuHTML += `
       <li><a href="index.html" class="${currentPage.includes('index.html') ? 'active' : ''}">Home</a></li>
-      <li><a href="profile.html?id=${userID.username}&type=${userID.type}" class="${currentPage.includes('profile.html') ? 'active' : ''}">My Profile</a></li>
+      <li><a href="profile.html?id=${userID.username}" class="${currentPage.includes('profile.html') ? 'active' : ''}">My Profile</a></li>
       <li><a href="search-result.html" class="${currentPage.includes('search-result.html') ? 'active' : ''}">Explore Listings</a></li>
       <li><a href="index.html" id="logoutBtn">Logout</a></li>
     `;

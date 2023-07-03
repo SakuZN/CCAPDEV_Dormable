@@ -1,13 +1,42 @@
-// For now, returns the local data of the listings
-function fetchData() {
-  return JSON.parse(localStorage.getItem('listingDatabase'));
+/* ==============================================================
+   GLOBAL VARIABLES AND OBJECT FUNCTIONS
+   ============================================================== */
+
+let listingList = [];
+
+let listingLimit = 3;
+
+let owlListing = $('.owl-listing');
+
+const featuredListingObject = function (listing, carouselListing) {
+  this.listing = listing;
+  this.carouselListing = carouselListing;
+
+  //Function to modify the listing
+  this.modifyListing = function (updateListing) {
+    Object.assign(this.listing, updateListing);
+  }
 }
+
+const queryListingObject = function (listing, queryListing) {
+  this.listing = listing;
+  this.queryListing = queryListing;
+
+  //Function to modify the listing
+  this.modifyListing = function (updateListing) {
+    Object.assign(this.listing, updateListing);
+  }
+}
+
+/* ==============================================================
+   OWL CAROUSEL FUNCTIONS
+   ============================================================== */
 
 function initOwlCarousel() {
 
-  $('.owl-listing').owlCarousel({
+  owlListing.owlCarousel({
     items: 1,
-    loop: true,
+    loop: false,
     dots: true,
     nav: false,
     autoplay: false,
@@ -30,38 +59,47 @@ function initOwlCarousel() {
 }
 
 function destroyOwlCarousel() {
-  $('.owl-listing').owlCarousel('destroy');
+  owlListing.owlCarousel('destroy');
 }
 
-function sortListing(listings, sortType) {
-  switch (sortType) {
-    case 'rating-low':
-      console.log('rating-low');
-      listings.sort((a, b) => a.reviewScore - b.reviewScore);
-      break;
-    case 'rating-high':
-      listings.sort((a, b) => b.reviewScore - a.reviewScore);
-      break;
-  }
-  console.log(listings);
-  return listings;
+/* ==============================================================
+   FEATURED LISTING INITIALIZATION FUNCTION
+   ============================================================== */
+
+function initFeaturedListing() {
+  generateFeaturedListing();
+  populateFeaturedListing();
+  initOwlCarousel();
 }
 
-// Auto generates the listing in the carousel HTML based on the data
-function generateFeaturedListing(listings) {
-  let featuredListing = document.getElementById('featured-listings');
-  featuredListing.innerHTML = '';
+function initOwnerListing(ownerID) {
+  generateListingOwnerListing(ownerID);
+  populateFeaturedListing();
+  initOwlCarousel();
+}
 
-  //set initial limit
-  var listingLimit = 0;
+/* ==============================================================
+   LISTING GENERATION FUNCTION
+   ============================================================== */
 
+//Function to generate featured listings
+
+function generateFeaturedListing() {
+  //clear the listing list
+  listingList = [];
+
+  let featuredListing = getListingDatabase();
+
+  //Sort Listing by review score and number of reviews
+  featuredListing.sort((a, b) => b.reviewScore - a.reviewScore);
+
+  //Turn listing into div elements
   //Initialize divs
   let item;
   let row;
   let col;
   //Loop through the listings
-  listings.forEach((listing) => {
-
+  featuredListing.forEach((listing) => {
 
     item = document.createElement('div');
     item.classList.add('item');
@@ -70,8 +108,6 @@ function generateFeaturedListing(listings) {
     row.classList.add('row');
 
     item.appendChild(row);
-    featuredListing.appendChild(item);
-
 
     col = document.createElement('div');
     col.classList.add('col-lg-12');
@@ -86,8 +122,8 @@ function generateFeaturedListing(listings) {
          </div>
             <div class="right-content align-self-center">
              <h4>${listing.name}</h4>
-              <h6>by: ${listing.owner}</h6>
-               <ul class="rate">
+              <h6>by: <a href="profile.html?id=${listing.ownerID}">${listing.owner}</a></h6>
+               <ul class="rate" style="margin-top: 0;">
                 ${star_rating(listing.reviewScore, listing.reviews, 'featured-listings')}
                </ul>
                <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt="">
@@ -105,20 +141,138 @@ function generateFeaturedListing(listings) {
       </div>
     `;
     row.appendChild(col);
-    listingLimit++;
+    let newListingDiv = new featuredListingObject(listing, item);
+    listingList.push(newListingDiv);
   });
-
-  //Finally, initialize the owl carousel
-  initOwlCarousel();
 }
 
-function reInitListings(listings) {
+function generateListingOwnerListing(ownerID) {
+  listingList = [];
+
+  let ownerListings = getOwnerSpecificListings(ownerID);
+
+  //Turn listing into div elements
+  //Initialize divs
+  let item;
+  let row;
+  let col;
+  //Loop through the listings
+  ownerListings.forEach((listing) => {
+
+    item = document.createElement('div');
+    item.classList.add('item');
+
+    row = document.createElement('div');
+    row.classList.add('row');
+
+    item.appendChild(row);
+
+    col = document.createElement('div');
+    col.classList.add('col-lg-12');
+
+    // clear the content of the col first
+    col.innerHTML = '';
+
+    col.innerHTML = `
+      <div class="listing-item">
+       <div class="left-image">
+        <a href="listing.html?id=${listing.id}"><img src="${listing.img[0]}" alt=""></a>
+         </div>
+            <div class="right-content align-self-center">
+             <h4>${listing.name}</h4>
+              <h6>by: ${listing.owner}</h6>
+               <ul class="rate" style="margin-top: 0;">
+                ${star_rating(listing.reviewScore, listing.reviews, 'featured-listings')}
+               </ul>
+               <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt="">
+               </div> ${listing.price}</span>
+               <span class="details">Description: <br><br>
+               <em>${listing.description}</em></span>
+
+               <span class="details">Location: <br><br>
+               <em>${listing.location}</em></span>
+
+               <div class="main-white-button">
+               <a href="listing.html?id=${listing.id}"><i class="fa fa-eye"></i> Check Now</a>
+         </div>
+       </div>
+      </div>
+    `;
+    row.appendChild(col);
+    let newListingDiv = new featuredListingObject(listing, item);
+    listingList.push(newListingDiv);
+  });
+
+
+}
+
+function generateQueryListing() {
+  listingList = [];
+
+  let queryListing = getListingDatabase();
+}
+
+
+/* ==============================================================
+   LISTING MISC FUNCTION
+   ============================================================== */
+function loadMoreFeaturedListing() {
+
+  listingLimit++;
+  if (listingLimit > listingList.length || listingLimit > 5) {
+    showPopup('No more listings to show. Search for more in the search bar');
+    listingLimit--;
+    return;
+  }
+
+  //Get last active owl index
+  let currentOwlIndex = owlListing.find('.active').index();
+  //Reinitialize the owl carousel
   destroyOwlCarousel();
-  generateFeaturedListing(listings);
+  populateFeaturedListing();
+  initOwlCarousel();
+
+  //Go to the last active owl index
+  owlListing.trigger('to.owl.carousel', [currentOwlIndex, 250]);
+}
+
+function sortListing(listings, sortType) {
+  switch (sortType) {
+    case 'rating-low':
+      console.log('rating-low');
+      listings.sort((a, b) => a.reviewScore - b.reviewScore);
+      break;
+    case 'rating-high':
+      listings.sort((a, b) => b.reviewScore - a.reviewScore);
+      break;
+  }
+  console.log(listings);
+  return listings;
+}
+
+function clearFeaturedListing() {
+  let featuredListing = document.getElementById('featured-listings');
+  featuredListing.innerHTML = '';
+}
+
+/* ==============================================================
+   LISTING GENERATION FUNCTION
+   ============================================================== */
+function populateFeaturedListing() {
+  let featuredListing = document.getElementById('featured-listings');
+
+  //Loop through the listing list
+  if (listingLimit > listingList.length) {
+    listingLimit = listingList.length;
+  }
+
+  for (let i = featuredListing.children.length; i < listingLimit; i++) {
+    featuredListing.appendChild(listingList[i].carouselListing);
+  }
 }
 
 // Auto generates the listing based on the query
-function generateQueryListing(listings) {
+function populateQueryListing(listings) {
   let queryListing = document.getElementById('query-listings');
   let queryLoadMore = queryListing.lastElementChild;
 

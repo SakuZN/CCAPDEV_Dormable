@@ -10,6 +10,16 @@ function getSpecificListing(listingID) {
   return listings.find(listing => listing.id === listingID);
 }
 
+function checkIfValidListingID(listingID) {
+  const listings = JSON.parse(localStorage.getItem('listingDatabase'));
+  return listings.some(listing => listing.id === listingID);
+}
+
+function getOwnerSpecificListings(ownerID) {
+  const listings = JSON.parse(localStorage.getItem('listingDatabase'));
+  return listings.filter(ownerListings => ownerListings.ownerID === ownerID);
+}
+
 //Used everytime when a review is added, edited or deleted
 function updateListings() {
   let listingDatabase = JSON.parse(localStorage.getItem('listingDatabase'));
@@ -183,9 +193,21 @@ function getSpecificListingOwner(ownerID) {
   return listingOwners.find(listingOwner => listingOwner.username === ownerID);
 }
 
+function checkIfSameOwnerID(ownerID) {
+  return ownerID === JSON.parse(localStorage.getItem('currentUser')).username;
+}
+
 /* ==============================================================
    LOGIN/REGISTER DATABASE FUNCTIONS
    ============================================================== */
+function checkIfLoggedIn() {
+  return localStorage.getItem('isLoggedIn') === 'true';
+}
+
+function checkIfSameUserID(userID) {
+  return userID === JSON.parse(localStorage.getItem('currentUser')).username;
+}
+
 function checkIfUserExists(email) {
   /*
   return 1 if user exist and is type student
@@ -239,6 +261,12 @@ function getUserInfo(email, password) {
   const userInfoDatabase = JSON.parse(localStorage.getItem('userDatabase'));
   const user = userLoginDatabase.find(user => user.email === email && user.password === password);
   return userInfoDatabase.find(x => x.username === user.username);
+}
+
+function checkIfOwnerExist(username) {
+  const adminDatabase = JSON.parse(localStorage.getItem('listingAdminDatabase'));
+  const owner = adminDatabase.find(owner => owner.username === username);
+  return !!owner;
 }
 
 function checkOwnerInfo(email, password) {
