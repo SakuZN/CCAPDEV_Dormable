@@ -151,7 +151,7 @@ function populateHistoryAsDiv(reviewHistory) {
   reviewHistory.forEach((review) => {
 
     let swiperDiv = document.createElement('div');
-    swiperDiv.classList.add('swiper-slide');
+    swiperDiv.classList.add('swiper-slide', 'loaded-element');
     swiperDiv.setAttribute('data-review-id', review.reviewID);
     swiperDiv.setAttribute('data-listing-id', review.listingID);
     swiperDiv.setAttribute('data-user-id', review.userID);
@@ -368,6 +368,23 @@ function sortReviewHistory(sortType) {
     default:
       return;
   }
+  destroySwiper();
+  clearReviewHistory();
+  populateListingReviews(reviewHistory);
+}
+
+function searchReviewHistory(keyword) {
+  reviewHistory.sort(function (a, b) {
+    let aMatch = a.RHData.reviewContent.toLowerCase().includes(keyword.toLowerCase());
+    let bMatch = b.RHData.reviewContent.toLowerCase().includes(keyword.toLowerCase());
+    if (aMatch && !bMatch) {
+      return -1;
+    }
+    if (!aMatch && bMatch) {
+      return 1;
+    }
+    return 0;
+  });
   destroySwiper();
   clearReviewHistory();
   populateListingReviews(reviewHistory);
@@ -949,6 +966,13 @@ $(document).ready(function () {
     initUserPopUp();
   }
 
+  function handleSearchReviewChange() {
+    let keyword = $('#searchInput').val();
+    searchReviewHistory(keyword);
+    initUserPopUp();
+    $('#searchInput').val('');
+  }
+
   /* ==============================================================
    EVENT HANDLERS
    ============================================================== */
@@ -974,6 +998,7 @@ $(document).ready(function () {
   $(document).on('click', '.button', handleLikeBtnClick);
 
   $('#sortReview').on('change', handleSortReviewChange);
+  $('#searchInputBtn').on('click', handleSearchReviewChange);
 
   //Loading page animation
   // Page loading animation

@@ -2257,5 +2257,13 @@ Pre Loader
   box-shadow: 0 0 0 0.2rem rgba(139, 195, 74, .25);
 }
 
+.loaded-element {
+  animation: fadeIn 1s;
+}
+
+.loaded-button {
+  animation: fadeIn 0.3s;
+}
+
 
 /*# sourceMappingURL=listing-dormable.css.map */

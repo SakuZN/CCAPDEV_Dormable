@@ -188,9 +188,10 @@ function updateLikedReviews(userID, reviewID, listingID) {
 
 function isFollowingUser(userID) {
   let currentUser = getCurrentUser();
-  if (!currentUser)
+  if (!currentUser) {
     return false;
-  return currentUser.following.some(following => following.username === userID);
+  }
+  return currentUser.following.some(following => following === userID);
 }
 
 function followUser(userID) {
@@ -199,18 +200,18 @@ function followUser(userID) {
   let toFollow = userDatabase.find(user => user.username === userID);
   let toFollowIndex = userDatabase.findIndex(x => x.username === userID);
   let userIndex = userDatabase.findIndex(x => x.username === currentUser.username);
-  let index = userDatabase[userIndex].following.findIndex(following => following.username === toFollow.username);
+  let index = userDatabase[userIndex].following.findIndex(following => following === toFollow.username);
   if (index !== -1) {
     userDatabase[userIndex].following.splice(index, 1);
     toFollow.followers--;
   } else {
     userDatabase[userIndex].following.push(toFollow.username);
     toFollow.followers++;
-    userDatabase[toFollowIndex] = toFollow;
-    localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
-    localStorage.setItem('currentUser', JSON.stringify(userDatabase[userIndex]));
-
   }
+  console.log(userDatabase[userIndex]);
+  userDatabase[toFollowIndex] = toFollow;
+  localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
+  localStorage.setItem('currentUser', JSON.stringify(userDatabase[userIndex]));
 }
 
 function getSpecificUser(userID) {

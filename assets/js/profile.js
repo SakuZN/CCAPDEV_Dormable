@@ -61,7 +61,6 @@ function destroySwiper() {
 if (window.location.href.includes('profile.html')) {
   let url = new URL(window.location.href);
   let profileID = url.searchParams.get('id');
-  let profileType = url.searchParams.get('type');
   let checkValidUser = checkExistingUsername(profileID);
   console.log(checkValidUser);
   let checkValidOwner = checkIfOwnerExist(profileID);
@@ -206,9 +205,11 @@ function populateStudentProfile(userID, currentUser) {
   formDescription.value = userDescription;
   RHSection.classList.remove('hidden');
 
+  //Checks if user is already following the user
   if (isFollowingUser(userID)) {
+    console.log('is following');
     followButton.innerHTML = 'Following';
-    followButton.classList.add('following');
+    followButton.classList.add('followed');
   }
 
   //Hides follow button if user is viewing their own profile
@@ -759,17 +760,16 @@ $(document).ready(function () {
    ============================================================== */
 
   //Like button
-  // Separate function to handleOnClick.
-  const handleOnClick = function () {
+  function handleLikeBtnClick() {
     if (!getCurrentUser()) {
-      showPopup('Please login to like this review!');
-      return;
+      showPopup('Please login to like a review')
+      return
     }
-
-    const $button = $(this);
-    const $review = $button.closest('.mark-helpful');
-    const $reviewContainer = $review.closest('.swiper-slide');
-    const $likeCount = $review.find('.like-count');
+    let $button = $(this);
+    let $review = $button.closest('.mark-helpful');
+    //get the parent of the button
+    let $reviewContainer = $review.closest('.swiper-slide')
+    let $likeCount = $review.find('.like-count');
     let reviewID = $reviewContainer.data('review-id');
     let listingID = $reviewContainer.data('listing-id');
     let userID = $reviewContainer.data('user-id');
@@ -786,21 +786,10 @@ $(document).ready(function () {
     }
     updateLikedReviews(userID, reviewID, listingID);
 
+    // Toggle the 'liked' class on button
     $button.toggleClass('liked');
 
-    animateButton($button);
-
-    // Disable the button
-    $(this).prop('disabled', true);
-
-    setTimeout(() => {
-      // Enable the button after 5 seconds
-      $(this).prop('disabled', false);
-    }, 2500);
-  };
-
-// Separate function to handle animation.
-  const animateButton = function ($button) {
+    // Animate the button using GSAP
     if ($button.hasClass('liked')) {
       gsap.fromTo($button[0], {
         '--hand-rotate': 8
@@ -822,7 +811,14 @@ $(document).ready(function () {
         }]
       });
     }
-  };
+    // Disable the button
+    $(this).prop('disabled', true);
+
+    setTimeout(() => {
+      // Enable the button after 5 seconds
+      $(this).prop('disabled', false);
+    }, 2500);
+  }
 
   /* ==============================================================
    HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
@@ -928,19 +924,29 @@ $(document).ready(function () {
   }
 
   function handleFollowing(event) {
+    event.preventDefault();
     let followBtn = $(this);
+    console.log(followBtn);
     if (!getCurrentUser()) {
       showPopup('Please login to follow a user');
       return;
     }
     let url = new URL(window.location.href);
     let profileID = url.searchParams.get('id');
-    followBtn.toggle('followed');
+    let followerCountText = $('#profileFollowerCount');
+    let followerCount = parseInt(followerCountText.text(), 10);
+
     if (followBtn.hasClass('followed')) {
-      followBtn.text('Followed');
+      //Remove class
+      followBtn.removeClass('followed');
+      followBtn.text('Follow');
+      followerCountText.text(followerCount - 1);
       followUser(profileID);
     } else {
-      followBtn.text('Follow');
+      //Add class
+      followBtn.addClass('followed');
+      followBtn.text('Following');
+      followerCountText.text(followerCount + 1);
       followUser(profileID);
     }
   }
@@ -949,13 +955,13 @@ $(document).ready(function () {
   $(document).on('click', '.commentBtn', populateReviewCommentForm);
   $('#commentModal').on('hidden.bs.modal', hideCommentForm);
   $('#commentFormSubmit').on('click', handleSubmitCommentForm);
+  $('#followBtn').on('click', handleFollowing);
 
   //Sort by List
   $('#sortReview').on('change', function () {
     let sortType = $(this).val();
     sortReviewHistory(sortType);
   });
-  // Bind the click event to the handler.
-  $('.button').on('click', handleOnClick);
-
+  // Bind the like to the handler via proper event delegation.
+  $(document).on('click', '.button', handleLikeBtnClick);
 });
