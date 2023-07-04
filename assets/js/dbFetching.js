@@ -194,7 +194,12 @@ function getSpecificListingOwner(ownerID) {
 }
 
 function checkIfSameOwnerID(ownerID) {
-  return ownerID === JSON.parse(localStorage.getItem('currentUser')).username;
+
+  let currentUser = getCurrentUser();
+  if (currentUser) {
+    return ownerID === currentUser.username;
+  } else
+    return false;
 }
 
 /* ==============================================================
@@ -235,7 +240,11 @@ function checkIfLoggedIn() {
 }
 
 function checkIfSameUserID(userID) {
-  return userID === JSON.parse(localStorage.getItem('currentUser')).username;
+  let currentUser = getCurrentUser();
+  if (currentUser) {
+    return userID === currentUser.username;
+  }
+  return false;
 }
 
 function checkIfUserExists(email) {

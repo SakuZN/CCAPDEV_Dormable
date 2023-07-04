@@ -86,7 +86,7 @@
     <div class="row">
       <div class="col-lg-8">
         <div class="top-text header-text">
-          <h2>We found these listings based on your query</h2>
+          <h2>Explore Listings Near You!</h2>
         </div>
       </div>
     </div>
@@ -94,23 +94,8 @@
 </div>
 
 <!-- Listing Results Start -->
-
-<!-- Page Preloder -->
-<div id="preloder" style="display: none;">
-  <div class="loader" style="display: none;"></div>
-</div>
-
-<!-- Header Section Begin -->
-
-<!-- Header End -->
-
-<!-- Breadcrumb Section Begin -->
-
-<!-- Breadcrumb Section End -->
-
-<!-- Property Section Begin -->
-
 <section class="property-section spad">
+
   <div class="container">
     <div class="sortList text-center">
       <select aria-label=".form-select-sm example" class="form-select form-select-sm" id="sortListings">
@@ -128,7 +113,7 @@
     <hr style="margin-top: 15px">
     <div class="col-lg-12" id="loadButton">
       <div class="loadmore-btn">
-        <button class="btn btn-outline-primary" id="loadMore" onclick="loadMoreQueryListings()">Load More</button>
+        <button class="btn btn-outline-primary" id="loadMore" onclick="loadMoreListings()">Load More</button>
       </div>
     </div>
   </div>
@@ -237,11 +222,7 @@
 <script src="../assets/js/custom.js"></script>
 <script>
   $(document).ready(function () {
-    if (sessionStorage.getItem("searchFilter") === null) {
-      window.location.href = "index.html";
-    }
-    initQueryListing();
-
+    initAllListing();
     document.getElementById('sortListings').selectedIndex = 0;
 
     function handleSortListingChange() {
@@ -251,6 +232,7 @@
     }
 
     $('#sortListings').on('change', handleSortListingChange);
+
   });
 </script>
 </body>

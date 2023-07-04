@@ -73,45 +73,53 @@
           <h2>Simplify Your Student Housing Search!</h2>
         </div>
       </div>
-      <div class="col-lg-12">
-        <form action="search-result.html" id="search-form" method="submit" name="gs" role="search">
-          <div class="row">
-            <div class="col-lg-3 align-self-center">
-              <fieldset>
-                <select aria-label="Area" class="form-select" id="chooseCategory" name="area"
-                        onchange="this.form.click()">
-                  <option selected>All Areas</option>
-                  <option value="New Village">Taft Avenue</option>
-                  <option value="Old Town">Quirino</option>
-                  <option value="Modern City">Ocampo</option>
+      <!-- Insert Form Here -->
+      <div class="container mt-5">
+        <div class="card">
+          <div class="card-body">
+            <form id="search-form">
+              <div class="form-group">
+                <label for="locationSelect">Location</label>
+                <select class="form-control" id="locationSelect">
+                  <option value="">Any</option>
+                  <option>Manila</option>
+                  <option>Taft Ave</option>
+                  <option>Pablo Ocampo</option>
                 </select>
-              </fieldset>
-            </div>
-            <div class="col-lg-3 align-self-center">
-              <fieldset>
-                <input autocomplete="on" class="searchText" name="address" placeholder="Enter a location" required
-                       type="address">
-              </fieldset>
-            </div>
-            <div class="col-lg-3 align-self-center">
-              <fieldset>
-                <select aria-label="Default select example" class="form-select" id="chooseCategory" name="price"
-                        onchange="this.form.click()">
-                  <option selected>Price Range</option>
-                  <option value="₱1,000 - ₱2,500">₱1,000 - ₱2,500</option>
-                  <option value="₱2,500 - ₱5,000">₱2,500 - ₱5,000</option>
-                  <option value="₱5,000 - ₱7,500">"₱5,000 - ₱7,500"</option>
-                  <option value="₱10,000+">"₱10,000" or more</option>
+              </div>
+              <div class="form-group">
+                <label for="searchInput">Search</label>
+                <input class="form-control" id="searchInput" placeholder="Search Name" type="text">
+              </div>
+              <div class="form-group">
+                <label for="ratingSelect">Rating</label>
+                <select class="form-control" id="ratingSelect">
+                  <option selected value="">Any</option>
+                  <option class="fa fa-star" style="color: orange" value="5">(5) ★★★★★</option>
+                  <option class="fa fa-star" style="color: orange" value="4">(4) ★★★★</option>
+                  <option class="fa fa-star" style="color: orange" value="3">(3) ★★★</option>
+                  <option class="fa fa-star" style="color: orange" value="2">(2) ★★</option>
+                  <option class="fa fa-star" style="color: orange" value="1">(1) ★</option>
                 </select>
-              </fieldset>
-            </div>
-            <div class="col-lg-3">
-              <fieldset>
-                <button class="main-button"><i class="fa fa-search"></i> Search Now</button>
-              </fieldset>
-            </div>
+              </div>
+              <div class="form-group">
+                <label>Price Range</label>
+                <div class="form-row">
+                  <div class="col">
+                    <input class="form-control" id="minPrice" min="0" placeholder="Min" type="number">
+                  </div>
+                  <div class="col">
+                    <input class="form-control" id="maxPrice" min="0" placeholder="Max" type="number">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group text-center">
+                <button class="btn btn-primary" id="search-btn" type="submit">Search Now</button>
+              </div>
+
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -237,6 +245,64 @@
   $(document).ready(function () {
     $(updateListings());
     initFeaturedListing();
+
+    $('input[type="number"]').on('keydown', function (e) {
+      // Prevent '.' and ','
+      if (e.key === '.' || e.key === ',')
+        e.preventDefault();
+      // Prevent '0' as first digit
+      else if (this.value.length === 0 && e.key === '0')
+        e.preventDefault();
+      // Prevent non-numeric characters
+      else if (e.key.length === 1 && !e.key.match(/[0-9]/))
+        e.preventDefault();
+
+    });
+
+    $('#search-form').on('submit', function (e) {
+      e.preventDefault();
+      let searchForm = $('#search-form');
+
+      //Get all the values from the form
+      let location = searchForm.find('#locationSelect').val();
+      let searchType = searchForm.find('#searchInput').val();
+      let rating = searchForm.find('#ratingSelect').val();
+      let minPrice = searchForm.find('#minPrice').val();
+      let maxPrice = searchForm.find('#maxPrice').val();
+
+      if (minPrice > maxPrice && maxPrice.length > 0 && minPrice.length > 0) {
+        showPopup('Minimum price cannot be greater than maximum price!')
+        return;
+      } else if (maxPrice < minPrice && minPrice.length > 0 && maxPrice.length > 0) {
+        showPopup('Maximum price cannot be less than minimum price!')
+        return;
+      }
+
+      //check if the value of minPrice and maxPrice starts with 0 and length is greater than 1
+      if (minPrice.length > 1 && minPrice.startsWith('0')) {
+        showPopup('Minimum price cannot start with 0!')
+        return;
+      } else if (maxPrice.length > 1 && maxPrice.startsWith('0')) {
+        showPopup('Maximum price cannot start with 0!')
+        return;
+      }
+
+      //Create a new object to store the values
+      let searchFilter = {
+        location: location,
+        searchType: searchType,
+        rating: rating,
+        minPrice: minPrice,
+        maxPrice: maxPrice
+      };
+
+      //Store in session storage
+      sessionStorage.setItem('searchFilter', JSON.stringify(searchFilter));
+
+      //Redirect to search page
+      window.location.href = 'search-result.html';
+
+    });
   });
 </script>
 </body>

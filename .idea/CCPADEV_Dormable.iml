@@ -13,5 +13,7 @@
     <orderEntry type="library" name="Swiper" level="application" />
     <orderEntry type="library" name="gsap" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="popper.js" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>
