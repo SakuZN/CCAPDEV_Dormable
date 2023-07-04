@@ -25,9 +25,11 @@ const getUserData = function (userData, isCurrentUser) {
 }
 
 //Object function for review history
-const reviewHistoryData = function (reviewHistory, divRH) {
+const reviewHistoryData = function (reviewHistory, divRH, divcRU, divcRUResponse,) {
   this.reviewHistory = reviewHistory;
   this.divRH = divRH;
+  this.divcRU = divcRU;
+  this.divcRUResponse = divcRUResponse;
 }
 
 /* ==============================================================
@@ -294,12 +296,83 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                      </div>
                      <span>Like<span>d</span></span>
                   </button>`
-    }
+
+                }
+                <button class="commentBtn btn btn-outline-info" data-target="#commentModal" data-toggle="modal" type="button">
+                    View Comment
+                </button>
             </div>
             </div>
         </div>
         <hr>`;
-    let rhData = new reviewHistoryData(review, swiperDiv);
+    //Div container for comment history
+    let cRUReviewHistory = document.createElement('div');
+    cRUReviewHistory.classList.add('booking-checkbox_wrap');
+    cRUReviewHistory.classList.add('mt-4');
+
+    cRUReviewHistory.innerHTML = `
+          <div class="customer-review_wrap">
+            <div class="customer-img">
+              <img alt="#" class="img-fluid" id="cRU" src="${reviewUser.profilePic}">
+              <p id="cRUCustomName">${userCustomName}</p>
+              <p id="cRUName" style="font-size: 13px; color: gray">@${reviewUser.username}</p>
+              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">${reviewUser.noOfReviews} reviews</span>
+            </div>
+            <div class="customer-content-wrap">
+              <div class="customer-content">
+                <div class="customer-review">
+                  <h6 id="cRUTitle">${review.reviewTitle}</h6>
+                  <ul id="cRUStarRating" class="star-rating">
+                    ${star_rating(review.reviewScore, 0, 'listing')}
+                  </ul>
+                  <p id="cRUDate">Reviewed ${reviewDate(review.reviewDate)}</p>
+                </div>
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
+              </div>
+              <p class="customer-text comment-border" id="cRUContent">${review.reviewContent}</p>
+              <ul id="cRUImages">
+                ${populateUserReviewImg(review.reviewIMG)}
+              </ul>
+              <span class="like-count">${review.reviewMarkedHelpful} people marked this review as helpful</span>
+            </div>
+          </div>
+          <hr>
+    `;
+
+    //Div container for review comment response, if it exist
+    let cRUReviewResponse = document.createElement('div');
+    cRUReviewResponse.classList.add('booking-checkbox_wrap');
+    cRUReviewResponse.classList.add('mt-4');
+    cRUReviewResponse.style.textAlign = 'center';
+    cRUReviewResponse.innerHTML = 'Owner has not responded to this review yet.';
+
+    if (checkIfCommented(review.reviewID, review.listingID, review.userID)) {
+      cRUReviewResponse.innerHTML = '';
+      cRUReviewResponse.style.textAlign = '';
+      let commentResponse = getReviewResponse(review.reviewID, review.listingID, review.userID);
+      let owner = getSpecificListingOwner(commentResponse.ownerID);
+      cRUReviewResponse.innerHTML = `
+        <div class="customer-review_wrap">
+            <div class="customer-img">
+              <img alt="#" class="img-fluid" src="${owner.profilePic}">
+              <p>${owner.customName}</p>
+              <p style="font-size: 13px; color: gray">@${owner.username}</p>
+            </div>
+            <div class="customer-content-wrap">
+              <div class="customer-content">
+                <div class="customer-review">
+                  <p style="font-weight: 300; margin: 0">Commented ${reviewDate(commentResponse.commentDate)}</p>
+                </div>
+              </div>
+              <p class="customer-text comment-border">${commentResponse.response}</p>
+            </div>
+          </div>
+          <hr>
+      `;
+    }
+
+    let rhData = new reviewHistoryData(review, swiperDiv, cRUReviewHistory,
+      cRUReviewResponse, isCurrentUser);
     userReviewHistory.push(rhData);
   });
   return userReviewHistory;
@@ -395,6 +468,15 @@ function loadMoreReviews() {
   mySwiper.slideTo(swiperIndex);
   //Reset the sort dropdown if it is not on the default option
   document.getElementById('sortReview').selectedIndex = 0;
+}
+
+function findUserReview(reviewID, listingID) {
+  let review = null;
+  userProfile.userRHData.forEach((rhData) => {
+    if (rhData.reviewHistory.reviewID === reviewID && rhData.reviewHistory.listingID === listingID)
+      review = rhData;
+  });
+  return review;
 }
 
 /* ==============================================================
@@ -713,6 +795,114 @@ $(document).ready(function () {
       });
     }
   });
+
+  /* ==============================================================
+   HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
+   ============================================================== */
+  function populateReviewCommentForm() {
+    let commentBtn = $(this);
+    let reviewContainer = commentBtn.closest('.swiper-slide');
+    let reviewID = reviewContainer.data('review-id');
+    let listingID = reviewContainer.data('listing-id');
+    let userID = reviewContainer.data('user-id');
+    let review = findUserReview(reviewID, listingID);
+    let listing = getSpecificListing(listingID);
+    let cRUReviewHistory = $('#cRUReviewHistory');
+    let cRUCommentResponse = $('#cRUComment');
+    let cRUCommentForm = $('#cRUCommentForm');
+    let cRUCommentFormBtn = $('#commentFormSubmit');
+    cRUReviewHistory.empty();
+    cRUCommentResponse.empty();
+    cRUCommentForm.empty();
+    cRUReviewHistory.append(review.divcRU);
+    cRUCommentResponse.append(review.divcRUResponse);
+
+    let currentUser = getCurrentUser();
+
+    if (currentUser.username === listing.ownerID && !checkIfCommented(reviewID, listingID, userID)) {
+      cRUCommentForm.removeClass('hidden');
+      cRUCommentFormBtn.removeClass('hidden');
+      cRUCommentResponse.addClass('hidden');
+      cRUCommentForm.append(populateCommentForm(currentUser));
+      cRUCommentForm.data('review-id', reviewID);
+      cRUCommentForm.data('listing-id', listingID);
+      cRUCommentForm.data('user-id', userID);
+      cRUCommentForm.data('owner-id', currentUser.username);
+    }
+  }
+
+  function handleSubmitCommentForm(event) {
+    event.preventDefault();
+    let formSubmitBtn = $(this);
+    let commentModal = formSubmitBtn.closest('#commentModal');
+    let commentForm = commentModal.find('#cRUCommentForm');
+    //Get the data
+    let listingID = commentForm.data('listing-id');
+    let reviewID = commentForm.data('review-id');
+    let userID = commentForm.data('user-id');
+    let owner = commentForm.data('owner-id');
+    let commentContent = commentForm.find('#commentContent').val();
+    let commentDate = new Date().toISOString();
+
+
+    //Create the comment
+    let newComment = {
+      reviewID: reviewID,
+      listingID: listingID,
+      userID: userID,
+      ownerID: owner,
+      response: commentContent,
+      commentDate: commentDate
+    }
+    //Add the comment to the database
+    addNewOwnerResponse(newComment);
+
+    $('#commentModal').modal('hide');
+    showPopup('Comment added successfully!').then(function () {
+      location.reload();
+    });
+
+  }
+
+  function populateCommentForm(owner) {
+    //create new comment form
+    let commentFormDiv = $('<div></div>').addClass('booking-checkbox_wrap').addClass('mt-4');
+    let innerDiv = `
+      <div class="customer-review_wrap">
+            <div class="customer-img">
+              <img alt="#" class="img-fluid" src="${owner.profilePic}">
+              <p>${owner.customName}</p>
+              <p style="font-size: 13px; color: gray">@${owner.username}</p>
+            </div>
+            <div class="customer-content-wrap">
+              <form id="commentForm">
+                <div class="form-group green-border-focus" style="font-weight: bolder">
+                  <label for="commentContent">Comment</label>
+                  <textarea class="form-control rounded-0" id="commentContent" rows="10"
+                            style="font-weight: 300; color: #0b0b0b"></textarea>
+                </div>
+              </form>
+            </div>
+       </div>
+       <hr>
+    `;
+    commentFormDiv.html(innerDiv);
+    return commentFormDiv;
+  }
+
+  function hideCommentForm() {
+    let cRUCommentForm = $('#cRUCommentForm');
+    let cRUCommentFormBtn = $('#commentFormSubmit');
+    let cRUCommentResponse = $('#cRUComment');
+    cRUCommentForm.addClass('hidden');
+    cRUCommentFormBtn.addClass('hidden');
+    cRUCommentResponse.removeClass('hidden');
+  }
+
+  //Handles comment related events
+  $(document).on('click', '.commentBtn', populateReviewCommentForm);
+  $('#commentModal').on('hidden.bs.modal', hideCommentForm);
+  $('#commentFormSubmit').on('click', handleSubmitCommentForm);
 
   //Sort by List
   $('#sortReview').on('change', function () {

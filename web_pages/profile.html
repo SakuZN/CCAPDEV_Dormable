@@ -427,6 +427,33 @@
   </div>
 </div>
 
+<!-- Comment Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="commentModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Comment</h4>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="cRUReviewHistory">
+        <!-- Append data here -->
+      </div>
+      <div class="modal-body" id="cRUComment">
+        <!-- Append data here -->
+      </div>
+      <div class="modal-body hidden" id="cRUCommentForm">
+        <!-- Append data here -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+        <button class="btn btn-primary hidden" id="commentFormSubmit" type="submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script crossorigin="anonymous"
