@@ -67,7 +67,9 @@ async function register() {
     noOfReviews: 0,
     followers: 0,
     college: '',
-    course: ''
+    course: '',
+    liked: [],
+    following: []
   };
   const newUserDataInfo = {
     username: user,

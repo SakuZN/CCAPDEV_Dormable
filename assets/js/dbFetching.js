@@ -6,24 +6,24 @@ function getListingDatabase() {
 }
 
 function getSpecificListing(listingID) {
-  const listings = JSON.parse(localStorage.getItem('listingDatabase'));
+  const listings = getListingDatabase();
   return listings.find(listing => listing.id === listingID);
 }
 
 function checkIfValidListingID(listingID) {
-  const listings = JSON.parse(localStorage.getItem('listingDatabase'));
+  const listings = getListingDatabase();
   return listings.some(listing => listing.id === listingID);
 }
 
 function getOwnerSpecificListings(ownerID) {
-  const listings = JSON.parse(localStorage.getItem('listingDatabase'));
+  const listings = getListingDatabase();
   return listings.filter(ownerListings => ownerListings.ownerID === ownerID);
 }
 
 //Used everytime when a review is added, edited or deleted
 function updateListings() {
-  let listingDatabase = JSON.parse(localStorage.getItem('listingDatabase'));
-  let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
+  let listingDatabase = getListingDatabase();
+  let reviewDatabase = getReviewDatabase();
 
   listingDatabase.forEach(listing => {
     let reviews = reviewDatabase.filter(review => review.listingID === listing.id && review.isDeleted === false);
@@ -39,24 +39,28 @@ function updateListings() {
    LISTING REVIEWS DATABASE FUNCTIONS
    ============================================================== */
 
+function getReviewDatabase() {
+  return JSON.parse(localStorage.getItem('reviewDatabase'));
+}
+
 function generateReviewID(listingID) {
-  let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
+  let reviewDatabase = getReviewDatabase();
   let listingReviews = reviewDatabase.filter(review => review.listingID === listingID);
   return listingReviews.length + 1;
 }
 
 function addListingReview(review) {
-  let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
+  let reviewDatabase = getReviewDatabase();
   reviewDatabase.push(review);
   localStorage.setItem('reviewDatabase', JSON.stringify(reviewDatabase));
 }
 
 function deleteListingReview(reviewID, listingID) {
-  let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
+  let reviewDatabase = getReviewDatabase();
   let reviewToDelete = reviewDatabase.find(review => review.listingID === listingID && review.reviewID === reviewID);
   if (reviewToDelete) {
     reviewToDelete.isDeleted = true;
-    let userDatabase = JSON.parse(localStorage.getItem('userDatabase'));
+    let userDatabase = getUserDatabase();
     let userToUpdate = userDatabase.find(user => user.username === reviewToDelete.userID);
     if (userToUpdate) {
       userToUpdate.noOfReviews--;
@@ -69,9 +73,19 @@ function deleteListingReview(reviewID, listingID) {
   }
 }
 
+function checkIfLikedReview(reviewID, listingID, userID) {
+  let currentUser = getCurrentUser();
+  if (!currentUser)
+    return false;
+  return currentUser.liked.some(likedReview =>
+    likedReview.reviewID === reviewID
+    && likedReview.listingID === listingID
+    && likedReview.userID === userID);
+}
+
 
 function editListingReview(reviewToEdit) {
-  let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
+  let reviewDatabase = getReviewDatabase();
   let reviewIndex = reviewDatabase.findIndex(review => review.listingID === reviewToEdit.listingID && review.reviewID === reviewToEdit.reviewID);
   if (reviewIndex !== -1) {
     reviewDatabase[reviewIndex] = reviewToEdit;
@@ -80,22 +94,22 @@ function editListingReview(reviewToEdit) {
 }
 
 function getUserReviews(userID) {
-  const reviews = JSON.parse(localStorage.getItem('reviewDatabase'));
+  const reviews = getReviewDatabase();
   return reviews.filter(review => review.userID === userID && review.isDeleted === false);
 }
 
 function getSpecificUserReview(listingID, reviewID) {
-  const reviews = JSON.parse(localStorage.getItem('reviewDatabase'));
+  const reviews = getReviewDatabase();
   return reviews.find(review => review.listingID === listingID && review.reviewID === reviewID);
 }
 
 function getListingReviews(listingID) {
-  const reviews = JSON.parse(localStorage.getItem('reviewDatabase'));
+  const reviews = getReviewDatabase();
   return reviews.filter(review => review.listingID === listingID && review.isDeleted === false);
 }
 
 function reviewMarkedHelpful(reviewID, listingID, value) {
-  let reviewDatabase = JSON.parse(localStorage.getItem('reviewDatabase'));
+  let reviewDatabase = getReviewDatabase();
   let reviewToMark = reviewDatabase.find(review => review.listingID === listingID && review.reviewID === reviewID);
   let reviewIndex = reviewDatabase.findIndex(review => review.listingID === listingID && review.reviewID === reviewID);
   reviewToMark.reviewMarkedHelpful += value;
@@ -136,17 +150,71 @@ function reviewDate(date) {
 /* ==============================================================
    USER DATABASE FUNCTIONS
    ============================================================== */
+function getUserDatabase() {
+  return JSON.parse(localStorage.getItem('userDatabase'));
+}
 
 function updateUserReviewCount(userID) {
-  let userDatabase = JSON.parse(localStorage.getItem('userDatabase'));
+  let userDatabase = getUserDatabase();
   let userIndex = userDatabase.findIndex(x => x.username === userID);
   userDatabase[userIndex].noOfReviews++;
   localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
   localStorage.setItem('currentUser', JSON.stringify(userDatabase[userIndex]));
 }
 
+function updateLikedReviews(userID, reviewID, listingID) {
+  let currentUser = getCurrentUser();
+  let userDatabase = getUserDatabase();
+  let userIndex = userDatabase.findIndex(x => x.username === currentUser.username);
+  let likedReview = {
+    userID: userID,
+    reviewID: reviewID,
+    listingID: listingID
+  }
+  let index = userDatabase[userIndex].liked.findIndex(liked =>
+    liked.userID === likedReview.userID &&
+    liked.reviewID === likedReview.reviewID &&
+    liked.listingID === likedReview.listingID
+  );
+
+  if (index !== -1) {
+    userDatabase[userIndex].liked.splice(index, 1);
+  } else {
+    userDatabase[userIndex].liked.push(likedReview);
+  }
+  localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
+  localStorage.setItem('currentUser', JSON.stringify(userDatabase[userIndex]));
+}
+
+function isFollowingUser(userID) {
+  let currentUser = getCurrentUser();
+  if (!currentUser)
+    return false;
+  return currentUser.following.some(following => following.username === userID);
+}
+
+function followUser(userID) {
+  let currentUser = getCurrentUser();
+  let userDatabase = getUserDatabase();
+  let toFollow = userDatabase.find(user => user.username === userID);
+  let toFollowIndex = userDatabase.findIndex(x => x.username === userID);
+  let userIndex = userDatabase.findIndex(x => x.username === currentUser.username);
+  let index = userDatabase[userIndex].following.findIndex(following => following.username === toFollow.username);
+  if (index !== -1) {
+    userDatabase[userIndex].following.splice(index, 1);
+    toFollow.followers--;
+  } else {
+    userDatabase[userIndex].following.push(toFollow.username);
+    toFollow.followers++;
+    userDatabase[toFollowIndex] = toFollow;
+    localStorage.setItem('userDatabase', JSON.stringify(userDatabase));
+    localStorage.setItem('currentUser', JSON.stringify(userDatabase[userIndex]));
+
+  }
+}
+
 function getSpecificUser(userID) {
-  const users = JSON.parse(localStorage.getItem('userDatabase'));
+  const users = getUserDatabase();
   return users.find(user => user.username === userID);
 }
 
@@ -288,7 +356,7 @@ function checkExistingUsername(username) {
 
 function addNewUser(user, userData) {
   let userLoginDatabase = JSON.parse(localStorage.getItem('userLoginDatabase'));
-  let userDatabase = JSON.parse(localStorage.getItem('userDatabase'));
+  let userDatabase = getUserDatabase();
   userLoginDatabase.push(userData);
   userDatabase.push(user);
   localStorage.setItem('userLoginDatabase', JSON.stringify(userLoginDatabase));
@@ -297,7 +365,7 @@ function addNewUser(user, userData) {
 
 function getUserInfo(email, password) {
   const userLoginDatabase = JSON.parse(localStorage.getItem('userLoginDatabase'));
-  const userInfoDatabase = JSON.parse(localStorage.getItem('userDatabase'));
+  const userInfoDatabase = getUserDatabase();
   const user = userLoginDatabase.find(user => user.email === email && user.password === password);
   return userInfoDatabase.find(x => x.username === user.username);
 }

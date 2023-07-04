@@ -156,9 +156,7 @@ function populateHistoryAsDiv(reviewHistory) {
     swiperDiv.setAttribute('data-listing-id', review.listingID);
     swiperDiv.setAttribute('data-user-id', review.userID);
 
-    let isCurrentUser = false;
-    if (getCurrentUser())
-      isCurrentUser = checkIfSameUserID(review.userID);
+    let isCurrentUser = checkIfSameUserID(review.userID);
 
 
     let reviewUser = getSpecificUser(review.userID);
@@ -166,6 +164,19 @@ function populateHistoryAsDiv(reviewHistory) {
     let scoreClass = '';
     let checkEdit = '';
 
+    let buttonHTML;
+    let likedOrNot = checkIfLikedReview(review.reviewID, review.listingID, review.userID) ? 'liked' : '';
+
+    if (isCurrentUser) {
+      buttonHTML = '<button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>';
+    } else {
+      buttonHTML = `<button class="button ${likedOrNot}">
+                     <div class="hand">
+                        <div class="thumb"></div>
+                     </div>
+                     <span>Like<span>d</span></span>
+                  </button>`;
+    }
     if (review.wasEdited)
       checkEdit = '(Review Edited)';
     if (review.reviewScore >= 4)
@@ -201,17 +212,8 @@ function populateHistoryAsDiv(reviewHistory) {
                 ${populateReviewImg(review.reviewIMG)}
             </ul>
             <div class="mark-helpful">
-                <span class="like-count">${review.reviewMarkedHelpful} people marked this review as helpful</span>
-                ${isCurrentUser ? `
-                  <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
-      : `
-                  <button class="button">
-                     <div class="hand">
-                        <div class="thumb"></div>
-                     </div>
-                     <span>Like<span>d</span></span>
-                  </button>`
-    }
+                <span class="like-count">${review.reviewMarkedHelpful}</span><span> people marked this review as helpful</span>
+                ${buttonHTML}
                 <button class="commentBtn btn btn-outline-info" data-target="#commentModal" data-toggle="modal" type="button">
                     View Comment
                 </button>
@@ -882,7 +884,10 @@ $(document).ready(function () {
   }
 
   function handleLikeBtnClick() {
-    console.log('clicked');
+    if (!getCurrentUser()) {
+      showPopup('Please login to like a review')
+      return
+    }
     let $button = $(this);
     let $review = $button.closest('.mark-helpful');
     //get the parent of the button
@@ -890,6 +895,7 @@ $(document).ready(function () {
     let $likeCount = $review.find('.like-count');
     let reviewID = $reviewContainer.data('review-id');
     let listingID = $reviewContainer.data('listing-id');
+    let userID = $reviewContainer.data('user-id');
     let currentCount = parseInt($likeCount.text(), 10);
 
     if ($button.hasClass('liked')) {
@@ -901,6 +907,7 @@ $(document).ready(function () {
       $likeCount.text(currentCount + 1);
       reviewMarkedHelpful(reviewID, listingID, 1)
     }
+    updateLikedReviews(userID, reviewID, listingID);
 
     // Toggle the 'liked' class on button
     $button.toggleClass('liked');
@@ -927,6 +934,13 @@ $(document).ready(function () {
         }]
       });
     }
+    // Disable the button
+    $(this).prop('disabled', true);
+
+    setTimeout(() => {
+      // Enable the button after 5 seconds
+      $(this).prop('disabled', false);
+    }, 2500);
   }
 
   function handleSortReviewChange() {

@@ -206,6 +206,10 @@ function populateStudentProfile(userID, currentUser) {
   formDescription.value = userDescription;
   RHSection.classList.remove('hidden');
 
+  if (isFollowingUser(userID)) {
+    followButton.innerHTML = 'Following';
+    followButton.classList.add('following');
+  }
 
   //Hides follow button if user is viewing their own profile
   if (currentUser) {
@@ -259,6 +263,20 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
     else
       scoreClass = 'customer-rating red';
 
+    let buttonHTML;
+    let likedOrNot = checkIfLikedReview(review.reviewID, review.listingID, review.userID) ? 'liked' : '';
+
+    if (isCurrentUser) {
+      buttonHTML = '<button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>';
+    } else {
+      buttonHTML = `<button class="button ${likedOrNot}">
+                     <div class="hand">
+                        <div class="thumb"></div>
+                     </div>
+                     <span>Like<span>d</span></span>
+                  </button>`;
+    }
+
     swiperDiv.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
@@ -285,19 +303,7 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             </ul>
             <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
                 <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
-                ${
-      isCurrentUser ? `
-                  <button class="editReviewBtn btn btn-outline-primary btn-sm">Edit</button>
-                  <button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>`
-        : `
-                  <button class="button">
-                     <div class="hand">
-                        <div class="thumb"></div>
-                     </div>
-                     <span>Like<span>d</span></span>
-                  </button>`
-
-                }
+                ${buttonHTML}
                 <button class="commentBtn btn btn-outline-info" data-target="#commentModal" data-toggle="modal" type="button">
                     View Comment
                 </button>
@@ -748,15 +754,25 @@ $(document).ready(function () {
     });
   });
 
+  /* ==============================================================
+   HELPER FUNCTIONS FOLLOWING AND LIKING
+   ============================================================== */
+
   //Like button
-  $('.button').on('click', function () {
-    let $button = $(this);
-    let $review = $button.closest('.mark-helpful');
-    //get the parent of the button
-    let $reviewContainer = $review.closest('.swiper-slide')
-    let $likeCount = $review.find('.like-count');
+  // Separate function to handleOnClick.
+  const handleOnClick = function () {
+    if (!getCurrentUser()) {
+      showPopup('Please login to like this review!');
+      return;
+    }
+
+    const $button = $(this);
+    const $review = $button.closest('.mark-helpful');
+    const $reviewContainer = $review.closest('.swiper-slide');
+    const $likeCount = $review.find('.like-count');
     let reviewID = $reviewContainer.data('review-id');
     let listingID = $reviewContainer.data('listing-id');
+    let userID = $reviewContainer.data('user-id');
     let currentCount = parseInt($likeCount.text(), 10);
 
     if ($button.hasClass('liked')) {
@@ -768,11 +784,23 @@ $(document).ready(function () {
       $likeCount.text(currentCount + 1);
       reviewMarkedHelpful(reviewID, listingID, 1)
     }
+    updateLikedReviews(userID, reviewID, listingID);
 
-    // Toggle the 'liked' class on button
     $button.toggleClass('liked');
 
-    // Animate the button using GSAP
+    animateButton($button);
+
+    // Disable the button
+    $(this).prop('disabled', true);
+
+    setTimeout(() => {
+      // Enable the button after 5 seconds
+      $(this).prop('disabled', false);
+    }, 2500);
+  };
+
+// Separate function to handle animation.
+  const animateButton = function ($button) {
     if ($button.hasClass('liked')) {
       gsap.fromTo($button[0], {
         '--hand-rotate': 8
@@ -794,7 +822,7 @@ $(document).ready(function () {
         }]
       });
     }
-  });
+  };
 
   /* ==============================================================
    HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
@@ -899,6 +927,24 @@ $(document).ready(function () {
     cRUCommentResponse.removeClass('hidden');
   }
 
+  function handleFollowing(event) {
+    let followBtn = $(this);
+    if (!getCurrentUser()) {
+      showPopup('Please login to follow a user');
+      return;
+    }
+    let url = new URL(window.location.href);
+    let profileID = url.searchParams.get('id');
+    followBtn.toggle('followed');
+    if (followBtn.hasClass('followed')) {
+      followBtn.text('Followed');
+      followUser(profileID);
+    } else {
+      followBtn.text('Follow');
+      followUser(profileID);
+    }
+  }
+
   //Handles comment related events
   $(document).on('click', '.commentBtn', populateReviewCommentForm);
   $('#commentModal').on('hidden.bs.modal', hideCommentForm);
@@ -909,5 +955,7 @@ $(document).ready(function () {
     let sortType = $(this).val();
     sortReviewHistory(sortType);
   });
+  // Bind the click event to the handler.
+  $('.button').on('click', handleOnClick);
 
 });

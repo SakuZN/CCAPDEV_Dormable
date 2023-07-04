@@ -2468,3 +2468,7 @@ responsive
 .loaded-element {
   animation: fadeIn 1s;
 }
+
+.loaded-button {
+  animation: fadeIn 0.3s;
+}

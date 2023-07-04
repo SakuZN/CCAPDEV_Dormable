@@ -213,7 +213,9 @@ let users = [
     profilePic: '../assets/images/test_image/customer-img1.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(0, 1000)
+    followers: getRandomNumber(0, 1000),
+    liked: [],
+    following: []
   },
   {
     username: 'Miles_Morana',
@@ -225,7 +227,9 @@ let users = [
     profilePic: '../assets/images/test_image/customer-img2.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(0, 1000)
+    followers: getRandomNumber(0, 1000),
+    liked: [],
+    following: []
   },
   {
     username: 'Katrina',
@@ -237,7 +241,9 @@ let users = [
     profilePic: '../assets/images/test_image/customer-img3.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(0, 1000)
+    followers: getRandomNumber(0, 1000),
+    liked: [],
+    following: []
   },
   {
     username: 'John_Vick',
@@ -249,7 +255,9 @@ let users = [
     profilePic: '../assets/images/test_image/customer-img4.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(0, 1000)
+    followers: getRandomNumber(0, 1000),
+    liked: [],
+    following: []
   },
   {
     username: 'Penguinz0',
@@ -261,7 +269,9 @@ let users = [
     profilePic: '../assets/images/test_image/customer-img5.jpg',
     joinDate: getRandomDate(2020, 2023),
     noOfReviews: 6,
-    followers: getRandomNumber(0, 1000)
+    followers: getRandomNumber(0, 1000),
+    liked: [],
+    following: []
   }
 ]
 
