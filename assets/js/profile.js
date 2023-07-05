@@ -19,220 +19,233 @@ let listingDatabase = getListingDatabase();
 
 //Object function for user profile
 const getUserData = function (userData, isCurrentUser) {
-  this.user = userData;
-  this.isOwnProfile = isCurrentUser;
-  this.userRHData = populateHistoryAsDiv(getUserReviews(this.user.username), this.user, isCurrentUser);
-}
+    this.user = userData;
+    this.isOwnProfile = isCurrentUser;
+    this.userRHData = populateHistoryAsDiv(
+        getUserReviews(this.user.username),
+        this.user,
+        isCurrentUser
+    );
+};
 
 //Object function for review history
-const reviewHistoryData = function (reviewHistory, divRH, divcRU, divcRUResponse,) {
-  this.reviewHistory = reviewHistory;
-  this.divRH = divRH;
-  this.divcRU = divcRU;
-  this.divcRUResponse = divcRUResponse;
-}
+const reviewHistoryData = function (
+    reviewHistory,
+    divRH,
+    divcRU,
+    divcRUResponse
+) {
+    this.reviewHistory = reviewHistory;
+    this.divRH = divRH;
+    this.divcRU = divcRU;
+    this.divcRUResponse = divcRUResponse;
+};
 
 /* ==============================================================
    SWIPER FUNCTIONS
    ============================================================== */
 function initSwiper() {
-  mySwiper = new Swiper(".swiper-container", {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    spaceBetween: 10,
-    loop: false,
-    loopFillGroupWithBlank: false,
-    pagination: {
-      el: "#review-pagination",
-      clickable: true,
-    },
-    allowTouchMove: false,
-  });
+    mySwiper = new Swiper(".swiper-container", {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 10,
+        loop: false,
+        loopFillGroupWithBlank: false,
+        pagination: {
+            el: "#review-pagination",
+            clickable: true,
+        },
+        allowTouchMove: false,
+    });
 }
 
 function destroySwiper() {
-  mySwiper.destroy();
+    mySwiper.destroy();
 }
 
 /* ==============================================================
    INITIALIZATION LOGIC EVENT LISTENERS AND FUNCTIONS
    ============================================================== */
 //Check in profile.html if the id is valid
-if (window.location.href.includes('profile.html')) {
-  let url = new URL(window.location.href);
-  let profileID = url.searchParams.get('id');
-  let checkValidUser = checkExistingUsername(profileID);
-  console.log(checkValidUser);
-  let checkValidOwner = checkIfOwnerExist(profileID);
-  console.log(checkValidOwner);
-  if (!checkValidUser && !checkValidOwner) {
-    window.location.href = '404.html';
-  } else {
-    //Initialize the profile page
-    let isCurrentUser = false;
-    if (checkValidUser) {
-      isCurrentUser = checkIfSameUserID(profileID);
-      populateStudentProfile(profileID, isCurrentUser);
-    } else if (checkValidOwner) {
-      isCurrentUser = checkIfSameOwnerID(profileID);
-      populateOwnerProfile(profileID, isCurrentUser);
+if (window.location.href.includes("profile.html")) {
+    let url = new URL(window.location.href);
+    let profileID = url.searchParams.get("id");
+
+    let checkValidUser = checkExistingUsername(profileID);
+    let checkValidOwner = checkIfOwnerExist(profileID);
+
+    if (!checkValidUser && !checkValidOwner) {
+        window.location.href = "404.html";
+    } else {
+        //Initialize the profile page
+        let isCurrentUser = false;
+        if (checkValidUser) {
+            isCurrentUser = checkIfSameUserID(profileID);
+            populateStudentProfile(profileID, isCurrentUser);
+        } else if (checkValidOwner) {
+            isCurrentUser = checkIfSameOwnerID(profileID);
+            populateOwnerProfile(profileID, isCurrentUser);
+        }
     }
-  }
 }
 
 function populateOwnerProfile(ownerID, currentUser) {
+    let ownerProfile = getSpecificListingOwner(ownerID);
+    //Get the needed elements
+    let profilePic = document.getElementById("userPic");
+    let userName = document.getElementById("profileUserName");
+    let customName = document.getElementById("profileCustomName");
+    let followCount = document.getElementById("profileFollowerCount");
+    let reviewCount = document.getElementById("profileReviewCount");
+    let course = document.getElementById("profileCourse");
+    let description = document.getElementById("profileDescription");
+    let college = document.getElementById("profileCollege");
+    let joinDate = document.getElementById("profileDate");
+    let editButton = document.getElementById("editBtn");
+    let followButton = document.getElementById("followBtn");
+    let formCustomName = document.getElementById("input-customName");
+    let formCourse = document.getElementById("input-course");
+    let formCollege = document.getElementById("input-college");
+    let formDescription = document.getElementById("input-description");
+    let reviewHistory = document.getElementById("reviewHistory");
+    let reviewPagination = document.getElementById("review-pagination");
+    let listingSection = document.getElementById("ownerListings");
+    let noOfListings = document.getElementById("followersDescription");
+    let profileTitle = document.getElementById("profileTitle");
+    //Get user data
+    let userPic = ownerProfile.profilePic;
+    let name = ownerProfile.username;
+    let userCustomName = ownerProfile.customName;
+    if (
+        userCustomName === "" ||
+        userCustomName === null ||
+        userCustomName === undefined
+    )
+        userCustomName = name;
+    let followers = ownerProfile.followers;
+    let listingCount = ownerProfile.noOfListings;
+    let courseName = ownerProfile.country;
+    let userDescription = ownerProfile.description;
+    let collegeName = ownerProfile.website;
+    let dateJoined = parseDate(ownerProfile.joinDate);
 
-  let ownerProfile = getSpecificListingOwner(ownerID);
-  //Get the needed elements
-  let profilePic = document.getElementById('userPic');
-  let userName = document.getElementById('profileUserName');
-  let customName = document.getElementById('profileCustomName');
-  let followCount = document.getElementById('profileFollowerCount');
-  let reviewCount = document.getElementById('profileReviewCount');
-  let course = document.getElementById('profileCourse');
-  let description = document.getElementById('profileDescription');
-  let college = document.getElementById('profileCollege');
-  let joinDate = document.getElementById('profileDate');
-  let editButton = document.getElementById('editBtn');
-  let followButton = document.getElementById('followBtn');
-  let formCustomName = document.getElementById('input-customName');
-  let formCourse = document.getElementById('input-course');
-  let formCollege = document.getElementById('input-college');
-  let formDescription = document.getElementById('input-description');
-  let reviewHistory = document.getElementById('reviewHistory');
-  let reviewPagination = document.getElementById('review-pagination');
-  let listingSection = document.getElementById('ownerListings');
-  let noOfListings = document.getElementById('followersDescription');
-  let profileTitle = document.getElementById('profileTitle');
-  //Get user data
-  let userPic = ownerProfile.profilePic;
-  let name = ownerProfile.username
-  let userCustomName = ownerProfile.customName;
-  if (userCustomName === '' || userCustomName === null || userCustomName === undefined)
-    userCustomName = name;
-  let followers = ownerProfile.followers;
-  let listingCount = ownerProfile.noOfListings;
-  let courseName = ownerProfile.country
-  let userDescription = ownerProfile.description;
-  let collegeName = ownerProfile.website;
-  let dateJoined = parseDate(ownerProfile.joinDate);
+    //Set user data
+    if (userPic) {
+        profilePic.src = userPic;
+    }
+    userName.innerHTML = "@" + name;
+    customName.innerHTML = userCustomName;
+    followCount.innerHTML = followers;
+    reviewCount.innerHTML = listingCount;
+    noOfListings.innerHTML = "Listings";
+    course.innerHTML = courseName;
+    description.innerHTML = userDescription;
+    college.innerHTML = collegeName;
+    joinDate.innerHTML = dateJoined;
+    formCustomName.value = userCustomName;
+    formCourse.value = courseName;
+    formCollege.value = `<a href="${collegeName}">${collegeName}</a>`;
+    formDescription.value = userDescription;
+    listingSection.classList.remove("hidden");
+    profileTitle.innerHTML = "Owner Profile";
 
-  //Set user data
-  if (userPic) {
-    profilePic.src = userPic;
-  }
-  userName.innerHTML = '@' + name;
-  customName.innerHTML = userCustomName;
-  followCount.innerHTML = followers;
-  reviewCount.innerHTML = listingCount;
-  noOfListings.innerHTML = 'Listings';
-  course.innerHTML = courseName;
-  description.innerHTML = userDescription;
-  college.innerHTML = collegeName;
-  joinDate.innerHTML = dateJoined;
-  formCustomName.value = userCustomName;
-  formCourse.value = courseName;
-  formCollege.value = `<a href="${collegeName}">${collegeName}</a>`
-  formDescription.value = userDescription;
-  listingSection.classList.remove('hidden');
-  profileTitle.innerHTML = 'Owner Profile';
+    //Hides follow button if user is viewing their own profile
+    if (currentUser) {
+        followButton.style.display = "none";
+    }
+    //Hides edit button if user is not viewing their own profile
+    else {
+        editButton.style.display = "none";
+    }
 
-
-  //Hides follow button if user is viewing their own profile
-  if (currentUser) {
-    followButton.style.display = 'none';
-  }
-  //Hides edit button if user is not viewing their own profile
-  else {
-    editButton.style.display = 'none';
-  }
-
-  //Finally, populate the listing section
-  initOwnerListing(ownerID);
+    //Finally, populate the listing section
+    initOwnerListing(ownerID);
 }
 
 function populateStudentProfile(userID, currentUser) {
-  userProfile = new getUserData(getSpecificUser(userID), currentUser);
-  //Get the needed elements
-  let profilePic = document.getElementById('userPic');
-  let userName = document.getElementById('profileUserName');
-  let customName = document.getElementById('profileCustomName');
-  let followCount = document.getElementById('profileFollowerCount');
-  let reviewCount = document.getElementById('profileReviewCount');
-  let course = document.getElementById('profileCourse');
-  let description = document.getElementById('profileDescription');
-  let college = document.getElementById('profileCollege');
-  let joinDate = document.getElementById('profileDate');
-  let editButton = document.getElementById('editBtn');
-  let followButton = document.getElementById('followBtn');
-  let formCustomName = document.getElementById('input-customName');
-  let formCourse = document.getElementById('input-course');
-  let formCollege = document.getElementById('input-college');
-  let formDescription = document.getElementById('input-description');
-  let reviewHistory = document.getElementById('reviewHistory');
-  let reviewPagination = document.getElementById('review-pagination');
-  let noReviews = document.createElement('div');
-  let RHSection = document.getElementById('RHSection');
+    userProfile = new getUserData(getSpecificUser(userID), currentUser);
+    //Get the needed elements
+    let profilePic = document.getElementById("userPic");
+    let userName = document.getElementById("profileUserName");
+    let customName = document.getElementById("profileCustomName");
+    let followCount = document.getElementById("profileFollowerCount");
+    let reviewCount = document.getElementById("profileReviewCount");
+    let course = document.getElementById("profileCourse");
+    let description = document.getElementById("profileDescription");
+    let college = document.getElementById("profileCollege");
+    let joinDate = document.getElementById("profileDate");
+    let editButton = document.getElementById("editBtn");
+    let followButton = document.getElementById("followBtn");
+    let formCustomName = document.getElementById("input-customName");
+    let formCourse = document.getElementById("input-course");
+    let formCollege = document.getElementById("input-college");
+    let formDescription = document.getElementById("input-description");
+    let reviewHistory = document.getElementById("reviewHistory");
+    let reviewPagination = document.getElementById("review-pagination");
+    let noReviews = document.createElement("div");
+    let RHSection = document.getElementById("RHSection");
 
-  //Get user data
-  let userPic = userProfile.user.profilePic;
-  let name = userProfile.user.username;
-  let userCustomName = userProfile.user.customName;
-  if (userCustomName === '' || userCustomName === null || userCustomName === undefined)
-    userCustomName = name;
-  let followers = userProfile.user.followers;
-  let reviews = userProfile.user.noOfReviews;
-  let courseName = userProfile.user.course;
-  let userDescription = userProfile.user.description;
-  let collegeName = userProfile.user.college;
-  let dateJoined = parseDate(userProfile.user.joinDate);
+    //Get user data
+    let userPic = userProfile.user.profilePic;
+    let name = userProfile.user.username;
+    let userCustomName = userProfile.user.customName;
+    if (
+        userCustomName === "" ||
+        userCustomName === null ||
+        userCustomName === undefined
+    )
+        userCustomName = name;
+    let followers = userProfile.user.followers;
+    let reviews = userProfile.user.noOfReviews;
+    let courseName = userProfile.user.course;
+    let userDescription = userProfile.user.description;
+    let collegeName = userProfile.user.college;
+    let dateJoined = parseDate(userProfile.user.joinDate);
 
-  //Set user data
-  if (userPic) {
-    profilePic.src = userPic;
-  }
-  userName.innerHTML = '@' + name;
-  customName.innerHTML = userCustomName;
-  followCount.innerHTML = followers;
-  reviewCount.innerHTML = reviews;
-  course.innerHTML = courseName;
-  description.innerHTML = userDescription;
-  college.innerHTML = collegeName;
-  joinDate.innerHTML = dateJoined;
-  formCustomName.value = userCustomName;
-  formCourse.value = courseName;
-  formCollege.value = collegeName;
-  formDescription.value = userDescription;
-  RHSection.classList.remove('hidden');
+    //Set user data
+    if (userPic) {
+        profilePic.src = userPic;
+    }
+    userName.innerHTML = "@" + name;
+    customName.innerHTML = userCustomName;
+    followCount.innerHTML = followers;
+    reviewCount.innerHTML = reviews;
+    course.innerHTML = courseName;
+    description.innerHTML = userDescription;
+    college.innerHTML = collegeName;
+    joinDate.innerHTML = dateJoined;
+    formCustomName.value = userCustomName;
+    formCourse.value = courseName;
+    formCollege.value = collegeName;
+    formDescription.value = userDescription;
+    RHSection.classList.remove("hidden");
 
-  //Checks if user is already following the user
-  if (isFollowingUser(userID)) {
-    console.log('is following');
-    followButton.innerHTML = 'Following';
-    followButton.classList.add('followed');
-  }
+    //Checks if user is already following the user
+    if (isFollowingUser(userID)) {
+        followButton.innerHTML = "Following";
+        followButton.classList.add("followed");
+    }
 
-  //Hides follow button if user is viewing their own profile
-  if (currentUser) {
-    followButton.style.display = 'none';
-    noReviews.innerHTML = 'You have not written any reviews yet!';
-  }
-  //Hides edit button if user is not viewing their own profile
-  else {
-    editButton.style.display = 'none';
-    noReviews.innerHTML = 'This user has not written any reviews yet!';
-  }
+    //Hides follow button if user is viewing their own profile
+    if (currentUser) {
+        followButton.style.display = "none";
+        noReviews.innerHTML = "You have not written any reviews yet!";
+    }
+    //Hides edit button if user is not viewing their own profile
+    else {
+        editButton.style.display = "none";
+        noReviews.innerHTML = "This user has not written any reviews yet!";
+    }
 
-  //Finally, populate the review history
-  try {
-    populateUserReviewHistory(userProfile.userRHData);
-  } catch (e) {
-    console.log(e);
-    reviewPagination.style.display = 'none';
-    reviewHistory.style.display = 'flex';
-    reviewHistory.style.justifyContent = 'center';
-    reviewHistory.append(noReviews);
-  }
+    //Finally, populate the review history
+    try {
+        populateUserReviewHistory(userProfile.userRHData);
+    } catch (e) {
+        reviewPagination.style.display = "none";
+        reviewHistory.style.display = "flex";
+        reviewHistory.style.justifyContent = "center";
+        reviewHistory.append(noReviews);
+    }
 }
 
 /* ==============================================================
@@ -241,60 +254,73 @@ function populateStudentProfile(userID, currentUser) {
 
 //Turns review history into divs and returns an array of review history objects
 function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
-  let userReviewHistory = [];
+    let userReviewHistory = [];
 
-  reviewHistory.forEach((review) => {
+    reviewHistory.forEach((review) => {
+        let swiperDiv = document.createElement("div");
+        swiperDiv.classList.add("swiper-slide");
+        swiperDiv.setAttribute("data-review-id", review.reviewID);
+        swiperDiv.setAttribute("data-listing-id", review.listingID);
+        swiperDiv.setAttribute("data-user-id", review.userID);
+        let listingName = getSpecificListing(review.listingID).name;
+        let userCustomName = reviewUser.customName;
 
-    let swiperDiv = document.createElement('div');
-    swiperDiv.classList.add('swiper-slide');
-    swiperDiv.setAttribute('data-review-id', review.reviewID);
-    swiperDiv.setAttribute('data-listing-id', review.listingID);
-    swiperDiv.setAttribute('data-user-id', review.userID);
-    let listingName = getSpecificListing(review.listingID).name;
-    let userCustomName = reviewUser.customName;
+        let scoreClass = "";
+        let checkEdit = "";
+        if (review.wasEdited) checkEdit = "(Review Edited)";
+        if (review.reviewScore >= 4) scoreClass = "customer-rating";
+        else if (review.reviewScore === 3)
+            scoreClass = "customer-rating yellow";
+        else scoreClass = "customer-rating red";
 
-    let scoreClass = '';
-    let checkEdit = '';
-    if (review.wasEdited)
-      checkEdit = '(Review Edited)';
-    if (review.reviewScore >= 4)
-      scoreClass = 'customer-rating';
-    else if (review.reviewScore === 3)
-      scoreClass = 'customer-rating yellow';
-    else
-      scoreClass = 'customer-rating red';
+        let buttonHTML;
+        let likedOrNot = checkIfLikedReview(
+            review.reviewID,
+            review.listingID,
+            review.userID
+        )
+            ? "liked"
+            : "";
 
-    let buttonHTML;
-    let likedOrNot = checkIfLikedReview(review.reviewID, review.listingID, review.userID) ? 'liked' : '';
-
-    if (isCurrentUser) {
-      buttonHTML = '<button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>';
-    } else {
-      buttonHTML = `<button class="button ${likedOrNot}">
+        if (isCurrentUser) {
+            buttonHTML =
+                '<button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>';
+        } else {
+            buttonHTML = `<button class="button ${likedOrNot}">
                      <div class="hand">
                         <div class="thumb"></div>
                      </div>
                      <span>Like<span>d</span></span>
                   </button>`;
-    }
+        }
 
-    swiperDiv.innerHTML = `
+        swiperDiv.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
-            <img src="${reviewUser.profilePic}" class="img-fluid profile-review" alt="#">
+            <img src="${
+                reviewUser.profilePic
+            }" class="img-fluid profile-review" alt="#">
                     <p>${userCustomName}</p>
-                    <p style="font-size: 13px; color: gray">@${reviewUser.username}</p>
-                    <span style="display: flex; justify-content: center; margin-top: 5px">${reviewUser.noOfReviews} reviews</span>
-                    <a href="listing.html?id=${review.listingID}" target="_blank"><p style="font-weight: bold">[${listingName}]</p></a>
+                    <p style="font-size: 13px; color: gray">@${
+                        reviewUser.username
+                    }</p>
+                    <span style="display: flex; justify-content: center; margin-top: 5px">${
+                        reviewUser.noOfReviews
+                    } reviews</span>
+                    <a href="listing.html?id=${
+                        review.listingID
+                    }" target="_blank"><p style="font-weight: bold">[${listingName}]</p></a>
             </div>
             <div class="customer-content-wrap">
             <div class="customer-content">
                 <div class="customer-review">
                 <h6>${review.reviewTitle}</h6>
                 <ul class="star-rating">
-                    ${star_rating(review.reviewScore, 0, 'listing')}
+                    ${star_rating(review.reviewScore, 0, "listing")}
                 </ul>
-                <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(review.reviewDate)}<i style="font-style: italic"> ${checkEdit}</i></p>
+                <p class="customer-text" style="font-weight: bold">Reviewed ${reviewDate(
+                    review.reviewDate
+                )}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
                 <div class="${scoreClass}">${review.reviewScore}.0</div>
             </div>
@@ -302,8 +328,12 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             <ul>
                 ${populateUserReviewImg(review.reviewIMG)}
             </ul>
-            <div class="mark-helpful" data-review-id="${review.reviewID}" data-listing-id="${review.listingID}">
-                <span class="like-count">${review.reviewMarkedHelpful}</span> people marked this review as helpful
+            <div class="mark-helpful" data-review-id="${
+                review.reviewID
+            }" data-listing-id="${review.listingID}">
+                <span class="like-count">${
+                    review.reviewMarkedHelpful
+                }</span> people marked this review as helpful
                 ${buttonHTML}
                 <button class="commentBtn btn btn-outline-info" data-target="#commentModal" data-toggle="modal" type="button">
                     View Comment
@@ -312,53 +342,70 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             </div>
         </div>
         <hr>`;
-    //Div container for comment history
-    let cRUReviewHistory = document.createElement('div');
-    cRUReviewHistory.classList.add('booking-checkbox_wrap');
-    cRUReviewHistory.classList.add('mt-4');
+        //Div container for comment history
+        let cRUReviewHistory = document.createElement("div");
+        cRUReviewHistory.classList.add("booking-checkbox_wrap");
+        cRUReviewHistory.classList.add("mt-4");
 
-    cRUReviewHistory.innerHTML = `
+        cRUReviewHistory.innerHTML = `
           <div class="customer-review_wrap">
             <div class="customer-img">
-              <img alt="#" class="img-fluid" id="cRU" src="${reviewUser.profilePic}">
+              <img alt="#" class="img-fluid" id="cRU" src="${
+                  reviewUser.profilePic
+              }">
               <p id="cRUCustomName">${userCustomName}</p>
-              <p id="cRUName" style="font-size: 13px; color: gray">@${reviewUser.username}</p>
-              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">${reviewUser.noOfReviews} reviews</span>
+              <p id="cRUName" style="font-size: 13px; color: gray">@${
+                  reviewUser.username
+              }</p>
+              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">${
+                  reviewUser.noOfReviews
+              } reviews</span>
             </div>
             <div class="customer-content-wrap">
               <div class="customer-content">
                 <div class="customer-review">
                   <h6 id="cRUTitle">${review.reviewTitle}</h6>
                   <ul id="cRUStarRating" class="star-rating">
-                    ${star_rating(review.reviewScore, 0, 'listing')}
+                    ${star_rating(review.reviewScore, 0, "listing")}
                   </ul>
                   <p id="cRUDate">Reviewed ${reviewDate(review.reviewDate)}</p>
                 </div>
                 <div class="${scoreClass}">${review.reviewScore}.0</div>
               </div>
-              <p class="customer-text comment-border" id="cRUContent">${review.reviewContent}</p>
+              <p class="customer-text comment-border" id="cRUContent">${
+                  review.reviewContent
+              }</p>
               <ul id="cRUImages">
                 ${populateUserReviewImg(review.reviewIMG)}
               </ul>
-              <span class="like-count">${review.reviewMarkedHelpful} people marked this review as helpful</span>
+              <span class="like-count">${
+                  review.reviewMarkedHelpful
+              } people marked this review as helpful</span>
             </div>
           </div>
           <hr>
     `;
 
-    //Div container for review comment response, if it exist
-    let cRUReviewResponse = document.createElement('div');
-    cRUReviewResponse.classList.add('booking-checkbox_wrap');
-    cRUReviewResponse.classList.add('mt-4');
-    cRUReviewResponse.style.textAlign = 'center';
-    cRUReviewResponse.innerHTML = 'Owner has not responded to this review yet.';
+        //Div container for review comment response, if it exist
+        let cRUReviewResponse = document.createElement("div");
+        cRUReviewResponse.classList.add("booking-checkbox_wrap");
+        cRUReviewResponse.classList.add("mt-4");
+        cRUReviewResponse.style.textAlign = "center";
+        cRUReviewResponse.innerHTML =
+            "Owner has not responded to this review yet.";
 
-    if (checkIfCommented(review.reviewID, review.listingID, review.userID)) {
-      cRUReviewResponse.innerHTML = '';
-      cRUReviewResponse.style.textAlign = '';
-      let commentResponse = getReviewResponse(review.reviewID, review.listingID, review.userID);
-      let owner = getSpecificListingOwner(commentResponse.ownerID);
-      cRUReviewResponse.innerHTML = `
+        if (
+            checkIfCommented(review.reviewID, review.listingID, review.userID)
+        ) {
+            cRUReviewResponse.innerHTML = "";
+            cRUReviewResponse.style.textAlign = "";
+            let commentResponse = getReviewResponse(
+                review.reviewID,
+                review.listingID,
+                review.userID
+            );
+            let owner = getSpecificListingOwner(commentResponse.ownerID);
+            cRUReviewResponse.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
               <img alt="#" class="img-fluid" src="${owner.profilePic}">
@@ -368,45 +415,54 @@ function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             <div class="customer-content-wrap">
               <div class="customer-content">
                 <div class="customer-review">
-                  <p style="font-weight: 300; margin: 0">Commented ${reviewDate(commentResponse.commentDate)}</p>
+                  <p style="font-weight: 300; margin: 0">Commented ${reviewDate(
+                      commentResponse.commentDate
+                  )}</p>
                 </div>
               </div>
-              <p class="customer-text comment-border">${commentResponse.response}</p>
+              <p class="customer-text comment-border">${
+                  commentResponse.response
+              }</p>
             </div>
           </div>
           <hr>
       `;
-    }
+        }
 
-    let rhData = new reviewHistoryData(review, swiperDiv, cRUReviewHistory,
-      cRUReviewResponse, isCurrentUser);
-    userReviewHistory.push(rhData);
-  });
-  return userReviewHistory;
+        let rhData = new reviewHistoryData(
+            review,
+            swiperDiv,
+            cRUReviewHistory,
+            cRUReviewResponse,
+            isCurrentUser
+        );
+        userReviewHistory.push(rhData);
+    });
+    return userReviewHistory;
 }
 
 function populateUserReviewImg(images) {
-  let reviewImgs = '';
-  images.forEach((img) => {
-    reviewImgs += `<li href="${img}" class="review-image">
-          <img src="${img}" class="img-fluid" alt="#">
+    let reviewImgs = "";
+    images.forEach((img) => {
+        reviewImgs += `<li href="${img}" class="review-image">
+          <img src="${img}" class="img-fluid-review" alt="#">
         </li>`;
-  });
-  return reviewImgs;
+    });
+    return reviewImgs;
 }
 
 function populateUserReviewHistory(reviewHistory) {
-  let swiperContainer = document.getElementById('reviewHistory');
+    let swiperContainer = document.getElementById("reviewHistory");
 
-  if (reviewLimit > reviewHistory.length)
-    reviewHistory.forEach((review) => {
-      swiperContainer.append(review.divRH)
-    });
-  else
-    for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
-      swiperContainer.append(reviewHistory[i].divRH);
-    }
-  initSwiper();
+    if (reviewLimit > reviewHistory.length)
+        reviewHistory.forEach((review) => {
+            swiperContainer.append(review.divRH);
+        });
+    else
+        for (let i = swiperContainer.children.length; i < reviewLimit; i++) {
+            swiperContainer.append(reviewHistory[i].divRH);
+        }
+    initSwiper();
 }
 
 /* ==============================================================
@@ -414,76 +470,86 @@ function populateUserReviewHistory(reviewHistory) {
    ============================================================== */
 
 function sortReviewHistory(sortType) {
-  /*
-  Sort types:
-    1. Date (Newest to Oldest)
-    2. Date (Oldest to Newest)
-    3. Rating (Highest to Lowest)
-    4. Rating (Lowest to Highest)
-  */
-  if (userProfile.userRHData.length <= 1)
-    return;
-
-  switch (sortType) {
-    case 'date-newest':
-      userProfile.userRHData.sort((a, b) => {
-        return new Date(b.reviewHistory.reviewDate) - new Date(a.reviewHistory.reviewDate);
-      });
-      break;
-    case 'date-oldest':
-      userProfile.userRHData.sort((a, b) => {
-        return new Date(a.reviewHistory.reviewDate) - new Date(b.reviewHistory.reviewDate);
-      });
-      break;
-    case 'rating-high':
-      userProfile.userRHData.sort((a, b) => {
-        return b.reviewHistory.reviewScore - a.reviewHistory.reviewScore;
-      });
-      break;
-    case 'rating-low':
-      userProfile.userRHData.sort((a, b) => {
-        return a.reviewHistory.reviewScore - b.reviewHistory.reviewScore;
-      });
-      break;
-    default:
-      return;
-  }
-  destroySwiper();
-  clearReviewHistory();
-  populateUserReviewHistory(userProfile.userRHData);
-}
-
-function loadMoreReviews() {
-
-  if (reviewLimit >= userProfile.userRHData.length) {
     /*
-    reviewLimit = 1;
+    Sort types:
+      1. Date (Newest to Oldest)
+      2. Date (Oldest to Newest)
+      3. Rating (Highest to Lowest)
+      4. Rating (Lowest to Highest)
+    */
+    if (userProfile.userRHData.length <= 1) return;
+
+    switch (sortType) {
+        case "date-newest":
+            userProfile.userRHData.sort((a, b) => {
+                return (
+                    new Date(b.reviewHistory.reviewDate) -
+                    new Date(a.reviewHistory.reviewDate)
+                );
+            });
+            break;
+        case "date-oldest":
+            userProfile.userRHData.sort((a, b) => {
+                return (
+                    new Date(a.reviewHistory.reviewDate) -
+                    new Date(b.reviewHistory.reviewDate)
+                );
+            });
+            break;
+        case "rating-high":
+            userProfile.userRHData.sort((a, b) => {
+                return (
+                    b.reviewHistory.reviewScore - a.reviewHistory.reviewScore
+                );
+            });
+            break;
+        case "rating-low":
+            userProfile.userRHData.sort((a, b) => {
+                return (
+                    a.reviewHistory.reviewScore - b.reviewHistory.reviewScore
+                );
+            });
+            break;
+        default:
+            return;
+    }
     destroySwiper();
     clearReviewHistory();
     populateUserReviewHistory(userProfile.userRHData);
-     */
-    showPopup('No more reviews to load');
-    return;
-  }
+}
 
-  let swiperIndex = mySwiper.activeIndex;
-  destroySwiper();
-  if (reviewLimit < userProfile.userRHData.length)
-    reviewLimit++;
-  populateUserReviewHistory(userProfile.userRHData);
-  // Set the active slide to the last appended element
-  mySwiper.slideTo(swiperIndex);
-  //Reset the sort dropdown if it is not on the default option
-  document.getElementById('sortReview').selectedIndex = 0;
+function loadMoreReviews() {
+    if (reviewLimit >= userProfile.userRHData.length) {
+        /*
+        reviewLimit = 1;
+        destroySwiper();
+        clearReviewHistory();
+        populateUserReviewHistory(userProfile.userRHData);
+         */
+        showPopup("No more reviews to load");
+        return;
+    }
+
+    let swiperIndex = mySwiper.activeIndex;
+    destroySwiper();
+    if (reviewLimit < userProfile.userRHData.length) reviewLimit++;
+    populateUserReviewHistory(userProfile.userRHData);
+    // Set the active slide to the last appended element
+    mySwiper.slideTo(swiperIndex);
+    //Reset the sort dropdown if it is not on the default option
+    document.getElementById("sortReview").selectedIndex = 0;
 }
 
 function findUserReview(reviewID, listingID) {
-  let review = null;
-  userProfile.userRHData.forEach((rhData) => {
-    if (rhData.reviewHistory.reviewID === reviewID && rhData.reviewHistory.listingID === listingID)
-      review = rhData;
-  });
-  return review;
+    let review = null;
+    userProfile.userRHData.forEach((rhData) => {
+        if (
+            rhData.reviewHistory.reviewID === reviewID &&
+            rhData.reviewHistory.listingID === listingID
+        )
+            review = rhData;
+    });
+    return review;
 }
 
 /* ==============================================================
@@ -491,54 +557,53 @@ function findUserReview(reviewID, listingID) {
    ============================================================== */
 
 function clearReviewHistory() {
-  let reviewHistory = document.getElementById('reviewHistory');
-  reviewHistory.innerHTML = '';
+    let reviewHistory = document.getElementById("reviewHistory");
+    reviewHistory.innerHTML = "";
 }
 
 function parseDate(date) {
-  //constant of full month names
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-  let newDate = new Date(date);
-  let month = monthNames[newDate.getMonth()];
-  let year = newDate.getFullYear();
+    //constant of full month names
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+    let newDate = new Date(date);
+    let month = monthNames[newDate.getMonth()];
+    let year = newDate.getFullYear();
 
-  return month + ' ' + year;
+    return month + " " + year;
 }
 
 async function updateProfile() {
-  //Get the needed elements
-  let profilePic = document.getElementById('userPic').src;
-  let customName = document.getElementById('input-customName').value;
-  let course = document.getElementById('input-course').value;
-  let college = document.getElementById('input-college').value;
-  let description = document.getElementById('input-description').value;
+    //Get the needed elements
+    let profilePic = document.getElementById("userPic").src;
+    let customName = document.getElementById("input-customName").value;
+    let course = document.getElementById("input-course").value;
+    let college = document.getElementById("input-college").value;
+    let description = document.getElementById("input-description").value;
 
-  //update user data and save to local storage
-  let currentUser = getCurrentUser();
-  currentUser.profilePic = profilePic;
-  currentUser.customName = customName;
-  currentUser.course = course;
-  currentUser.college = college;
-  currentUser.description = description;
+    //update user data and save to local storage
+    let currentUser = getCurrentUser();
+    currentUser.profilePic = profilePic;
+    currentUser.customName = customName;
+    currentUser.course = course;
+    currentUser.college = college;
+    currentUser.description = description;
 
-  updateUserDatabase(currentUser);
+    updateUserDatabase(currentUser);
 
-  await showPopup('Profile updated!');
-  window.location.href = 'profile.html?id=' + currentUser.username;
-
+    await showPopup("Profile updated!");
+    window.location.href = "profile.html?id=" + currentUser.username;
 }
 
 /* ==============================================================
@@ -546,352 +611,380 @@ async function updateProfile() {
    ============================================================== */
 
 $(document).ready(function () {
-  let readURL = function (input) {
-    if (input.files && input.files[0]) {
-      let reader = new FileReader();
+    let readURL = function (input) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
 
-      reader.onload = function (e) {
-        $('.profile-pic').attr('src', e.target.result);
-      }
+            reader.onload = function (e) {
+                $(".profile-pic").attr("src", e.target.result);
+            };
 
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-  $(".file-upload").on('change', function () {
-    readURL(this);
-  });
-
-  $(".upload-button").on('click', function () {
-    $(".file-upload").click();
-  });
-
-  $('#editBtn').on('click', function () {
-    $('.edit-profile').removeClass('hidden');
-    $('html, body').animate({
-      scrollTop: $('.edit-profile').offset().top
-    }, 800);
-  });
-  $('#editProfile').on('submit', function (event) {
-    //prevent default form submission
-    event.preventDefault();
-    updateProfile();
-  });
-
-  $('.file-upload').on('click', function () {
-    $('#fileUpload').click();
-  });
-
-  $('#fileUpload').on('change', function () {
-    let file = this.files[0];
-    let reader = new FileReader();
-
-    reader.onload = function (e) {
-      $('#userPic').attr('src', e.target.result);
+            reader.readAsDataURL(input.files[0]);
+        }
     };
-
-    reader.readAsDataURL(file);
-  });
-
-  //Edit button for user review
-  $('.editReviewBtn').on('click', function () {
-    let editBtn = $(this);
-    let userReview = editBtn.closest('.mark-helpful');
-    let reviewID = userReview.data('review-id');
-    let listingID = userReview.data('listing-id');
-    let thisReview = getSpecificUserReview(listingID, reviewID);
-    //uncover edit form
-    let editForm = $('.edit-review');
-    editForm.removeClass('hidden');
-    //Match the review data with the form
-    editForm.find('#review-title').val(thisReview.reviewTitle);
-    editForm.find('#review-content').val(thisReview.reviewContent);
-    editForm.find('input[name="rate"]').filter('[value="' + thisReview.reviewScore.toString() + '"]').prop('checked', true);
-    //clear the image list
-    editForm.find('.user-image-list').empty();
-    thisReview.reviewIMG.forEach(img => {
-      // Create a new li element with the image
-      let list = $('<li>').addClass('user-image').attr('href', img);
-      let imgContent = $('<img>').attr('src', img).addClass('img-fluid').attr('alt', '#');
-      list.append(imgContent);
-
-      // Append the li element to the image list
-      editForm.find('.user-image-list').append(list);
-      //Initialize user image
-      initUserPopUp();
+    $(".file-upload").on("change", function () {
+        readURL(this);
     });
-    //add the reviewID and listingID on submit button
-    editForm.find('#editReview').attr('data-review-id', reviewID);
-    editForm.find('#editReview').attr('data-listing-id', listingID);
-  });
 
-  // User Review Edit Form
-  initUserPopUp();
-  $('#reviewImage').on('change', function () {
-    let files = $(this)[0].files;
-    let imageList = $('.user-image-list');
-    let maxFiles = 5;
-    let hasVideo = false;
-    let maxImageSize = 2 * 1024 * 1024; // 5MB
-    let maxVideoSize = 5 * 1024 * 1024; // 5MB
+    $(".upload-button").on("click", function () {
+        $(".file-upload").click();
+    });
 
-    //if current image list is not empty check if the new files exceed the max files
-    if (imageList.children().length > 0) {
-      if (files.length + imageList.children().length > maxFiles) {
-        showPopup('Max 5 media allowed!');
-        return;
-      } else {
-        imageList.children().each(function () {
-          if ($(this).data('type') === 'video')
-            hasVideo = true;
+    $("#editBtn").on("click", function () {
+        $(".edit-profile").removeClass("hidden");
+        $("html, body").animate(
+            {
+                scrollTop: $(".edit-profile").offset().top,
+            },
+            800
+        );
+    });
+    $("#editProfile").on("submit", function (event) {
+        //prevent default form submission
+        event.preventDefault();
+        updateProfile();
+    });
+
+    $(".file-upload").on("click", function () {
+        $("#fileUpload").click();
+    });
+
+    $("#fileUpload").on("change", function () {
+        let file = this.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $("#userPic").attr("src", e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    //Edit button for user review
+    $(".editReviewBtn").on("click", function () {
+        let editBtn = $(this);
+        let userReview = editBtn.closest(".mark-helpful");
+        let reviewID = userReview.data("review-id");
+        let listingID = userReview.data("listing-id");
+        let thisReview = getSpecificUserReview(listingID, reviewID);
+        //uncover edit form
+        let editForm = $(".edit-review");
+        editForm.removeClass("hidden");
+        //Match the review data with the form
+        editForm.find("#review-title").val(thisReview.reviewTitle);
+        editForm.find("#review-content").val(thisReview.reviewContent);
+        editForm
+            .find('input[name="rate"]')
+            .filter('[value="' + thisReview.reviewScore.toString() + '"]')
+            .prop("checked", true);
+        //clear the image list
+        editForm.find(".user-image-list").empty();
+        thisReview.reviewIMG.forEach((img) => {
+            // Create a new li element with the image
+            let list = $("<li>").addClass("user-image").attr("href", img);
+            let imgContent = $("<img>")
+                .attr("src", img)
+                .addClass("img-fluid-review")
+                .attr("alt", "#");
+            list.append(imgContent);
+
+            // Append the li element to the image list
+            editForm.find(".user-image-list").append(list);
+            //Initialize user image
+            initUserPopUp();
         });
-      }
-
-    }
-
-    // Iterate over selected files
-    for (let i = 0; i < files.length && i < maxFiles; i++) {
-      let file = files[i];
-      let fileSize = file.size;
-      //Do some conditional pre-check
-
-      //Check if the file is video and if there is already a video
-      if (file.type.includes('video/') && hasVideo) {
-        showPopup('Max 1 video allowed!');
-        return;
-      }
-      //Then, check for file size
-      if (fileSize > maxImageSize && !file.type.includes('video/')) {
-        showPopup('Max 2MB per image!');
-        return;
-      }
-      if (fileSize > maxVideoSize && file.type.includes('video/')) {
-        showPopup('Max 5MB per video!');
-        return;
-      }
-
-      let reader = new FileReader();
-
-      // Read the file as a data URL
-      reader.onload = function (e) {
-        let imageUrl = e.target.result;
-
-        // Create a new li element with the image
-        let li = $('<li>').addClass('user-image').attr('href', imageUrl);
-        let img = $('<img>').attr('src', imageUrl).addClass('img-fluid').attr('alt', '#');
-        li.append(img);
-
-        // Append the li element to the image list
-        imageList.append(li);
-        //Initialize user image
-        initUserPopUp();
-      };
-
-      // Read the file
-      reader.readAsDataURL(file);
-    }
-    $('#reviewImage').val('');
-  });
-
-  // Clear the image list
-  $('#clearImages').on('click', function () {
-    // Clear the file input and image list
-    $('#reviewImage').val('');
-    $('.user-image-list').empty();
-  });
-
-  //Submit
-  $('#editReviewForm').on('submit', function (e) {
-    e.preventDefault();
-    // Get listing and review id data directly from the form
-    let reviewID = $('#editReview').data('review-id');
-    let listingID = $('#editReview').data('listing-id');
-    let reviewTitle = $('#review-title').val();
-    let reviewContent = $('#review-content').val();
-    let reviewScore = $('input[name="rate"]:checked').val();
-    let reviewIMG = [];
-    $('.user-image-list li').each(function () {
-      reviewIMG.push($(this).attr('href'));
+        //add the reviewID and listingID on submit button
+        editForm.find("#editReview").attr("data-review-id", reviewID);
+        editForm.find("#editReview").attr("data-listing-id", listingID);
     });
 
-    // Update the review
-    let reviewToEdit = getSpecificUserReview(listingID, reviewID);
-    reviewToEdit.reviewTitle = reviewTitle;
-    reviewToEdit.reviewContent = reviewContent;
-    reviewToEdit.reviewScore = parseInt(reviewScore);
-    reviewToEdit.reviewIMG = reviewIMG;
-    reviewToEdit.wasEdited = true;
-    editListingReview(reviewToEdit);
+    // User Review Edit Form
+    initUserPopUp();
+    $("#reviewImage").on("change", function () {
+        let files = $(this)[0].files;
+        let imageList = $(".user-image-list");
+        let maxFiles = 5;
+        let hasVideo = false;
+        let maxImageSize = 2 * 1024 * 1024; // 5MB
+        let maxVideoSize = 5 * 1024 * 1024; // 5MB
 
-    // Hide the edit form
-    $('#editForm').addClass('hidden');
+        //if current image list is not empty check if the new files exceed the max files
+        if (imageList.children().length > 0) {
+            if (files.length + imageList.children().length > maxFiles) {
+                showPopup("Max 5 media allowed!");
+                return;
+            } else {
+                imageList.children().each(function () {
+                    if ($(this).data("type") === "video") hasVideo = true;
+                });
+            }
+        }
 
-    // Reload the page
-    showPopup('Review edited successfully!').then(function () {
-      location.reload();
-    });
-  });
+        // Iterate over selected files
+        for (let i = 0; i < files.length && i < maxFiles; i++) {
+            let file = files[i];
+            let fileSize = file.size;
+            //Do some conditional pre-check
 
-  //Delete Review
-  $('.confirmModal').click(function (e) {
-    e.preventDefault();
-    $.confirmModal('Delete this review?', {
-      confirmButton: "Yes",
-      cancelButton: "No",
-      messageHeader: "Review Deletion",
-      modalVerticalCenter: true,
-      fadeAnimation: true,
-    }, function (el) {
-      let deleteBtn = $(el);
-      let userReview = deleteBtn.closest('.mark-helpful');
-      let reviewID = userReview.data('review-id');
-      let listingID = userReview.data('listing-id');
-      deleteListingReview(reviewID, listingID);
-      showPopup('Review deleted successfully!').then(function () {
-        location.reload();
-      });
-    }, function () {
-      // This function will be called when the user clicks the "No" button
-      console.log("Cancel clicked");
-    });
-  });
+            //Check if the file is video and if there is already a video
+            if (file.type.includes("video/") && hasVideo) {
+                showPopup("Max 1 video allowed!");
+                return;
+            }
+            //Then, check for file size
+            if (fileSize > maxImageSize && !file.type.includes("video/")) {
+                showPopup("Max 2MB per image!");
+                return;
+            }
+            if (fileSize > maxVideoSize && file.type.includes("video/")) {
+                showPopup("Max 5MB per video!");
+                return;
+            }
 
-  /* ==============================================================
-   HELPER FUNCTIONS FOLLOWING AND LIKING
-   ============================================================== */
+            let reader = new FileReader();
 
-  //Like button
-  function handleLikeBtnClick() {
-    if (!getCurrentUser()) {
-      showPopup('Please login to like a review')
-      return
-    }
-    let $button = $(this);
-    let $review = $button.closest('.mark-helpful');
-    //get the parent of the button
-    let $reviewContainer = $review.closest('.swiper-slide')
-    let $likeCount = $review.find('.like-count');
-    let reviewID = $reviewContainer.data('review-id');
-    let listingID = $reviewContainer.data('listing-id');
-    let userID = $reviewContainer.data('user-id');
-    let currentCount = parseInt($likeCount.text(), 10);
+            // Read the file as a data URL
+            reader.onload = function (e) {
+                let imageUrl = e.target.result;
 
-    if ($button.hasClass('liked')) {
-      // Decrement the like count if already liked
-      $likeCount.text(currentCount - 1);
-      reviewMarkedHelpful(reviewID, listingID, -1)
-    } else {
-      // Increment the like count if not liked
-      $likeCount.text(currentCount + 1);
-      reviewMarkedHelpful(reviewID, listingID, 1)
-    }
-    updateLikedReviews(userID, reviewID, listingID);
+                // Create a new li element with the image
+                let li = $("<li>")
+                    .addClass("user-image")
+                    .attr("href", imageUrl);
+                let img = $("<img>")
+                    .attr("src", imageUrl)
+                    .addClass("img-fluid-review")
+                    .attr("alt", "#");
+                li.append(img);
 
-    // Toggle the 'liked' class on button
-    $button.toggleClass('liked');
+                // Append the li element to the image list
+                imageList.append(li);
+                //Initialize user image
+                initUserPopUp();
+            };
 
-    // Animate the button using GSAP
-    if ($button.hasClass('liked')) {
-      gsap.fromTo($button[0], {
-        '--hand-rotate': 8
-      }, {
-        ease: 'none',
-        keyframes: [{
-          '--hand-rotate': -45,
-          duration: 0.16,
-          ease: 'none'
-        }, {
-          '--hand-rotate': 15,
-          duration: 0.12,
-          ease: 'none'
-        }, {
-          '--hand-rotate': 0,
-          duration: 0.2,
-          ease: 'none',
-          clearProps: true
-        }]
-      });
-    }
-    // Disable the button
-    $(this).prop('disabled', true);
-
-    setTimeout(() => {
-      // Enable the button after 5 seconds
-      $(this).prop('disabled', false);
-    }, 2500);
-  }
-
-  /* ==============================================================
-   HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
-   ============================================================== */
-  function populateReviewCommentForm() {
-    let commentBtn = $(this);
-    let reviewContainer = commentBtn.closest('.swiper-slide');
-    let reviewID = reviewContainer.data('review-id');
-    let listingID = reviewContainer.data('listing-id');
-    let userID = reviewContainer.data('user-id');
-    let review = findUserReview(reviewID, listingID);
-    let listing = getSpecificListing(listingID);
-    let cRUReviewHistory = $('#cRUReviewHistory');
-    let cRUCommentResponse = $('#cRUComment');
-    let cRUCommentForm = $('#cRUCommentForm');
-    let cRUCommentFormBtn = $('#commentFormSubmit');
-    cRUReviewHistory.empty();
-    cRUCommentResponse.empty();
-    cRUCommentForm.empty();
-    cRUReviewHistory.append(review.divcRU);
-    cRUCommentResponse.append(review.divcRUResponse);
-
-    let currentUser = getCurrentUser();
-
-    if (currentUser.username === listing.ownerID && !checkIfCommented(reviewID, listingID, userID)) {
-      cRUCommentForm.removeClass('hidden');
-      cRUCommentFormBtn.removeClass('hidden');
-      cRUCommentResponse.addClass('hidden');
-      cRUCommentForm.append(populateCommentForm(currentUser));
-      cRUCommentForm.data('review-id', reviewID);
-      cRUCommentForm.data('listing-id', listingID);
-      cRUCommentForm.data('user-id', userID);
-      cRUCommentForm.data('owner-id', currentUser.username);
-    }
-  }
-
-  function handleSubmitCommentForm(event) {
-    event.preventDefault();
-    let formSubmitBtn = $(this);
-    let commentModal = formSubmitBtn.closest('#commentModal');
-    let commentForm = commentModal.find('#cRUCommentForm');
-    //Get the data
-    let listingID = commentForm.data('listing-id');
-    let reviewID = commentForm.data('review-id');
-    let userID = commentForm.data('user-id');
-    let owner = commentForm.data('owner-id');
-    let commentContent = commentForm.find('#commentContent').val();
-    let commentDate = new Date().toISOString();
-
-
-    //Create the comment
-    let newComment = {
-      reviewID: reviewID,
-      listingID: listingID,
-      userID: userID,
-      ownerID: owner,
-      response: commentContent,
-      commentDate: commentDate
-    }
-    //Add the comment to the database
-    addNewOwnerResponse(newComment);
-
-    $('#commentModal').modal('hide');
-    showPopup('Comment added successfully!').then(function () {
-      location.reload();
+            // Read the file
+            reader.readAsDataURL(file);
+        }
+        $("#reviewImage").val("");
     });
 
-  }
+    // Clear the image list
+    $("#clearImages").on("click", function () {
+        // Clear the file input and image list
+        $("#reviewImage").val("");
+        $(".user-image-list").empty();
+    });
 
-  function populateCommentForm(owner) {
-    //create new comment form
-    let commentFormDiv = $('<div></div>').addClass('booking-checkbox_wrap').addClass('mt-4');
-    let innerDiv = `
+    //Submit
+    $("#editReviewForm").on("submit", function (e) {
+        e.preventDefault();
+        // Get listing and review id data directly from the form
+        let reviewID = $("#editReview").data("review-id");
+        let listingID = $("#editReview").data("listing-id");
+        let reviewTitle = $("#review-title").val();
+        let reviewContent = $("#review-content").val();
+        let reviewScore = $('input[name="rate"]:checked').val();
+        let reviewIMG = [];
+        $(".user-image-list li").each(function () {
+            reviewIMG.push($(this).attr("href"));
+        });
+
+        // Update the review
+        let reviewToEdit = getSpecificUserReview(listingID, reviewID);
+        reviewToEdit.reviewTitle = reviewTitle;
+        reviewToEdit.reviewContent = reviewContent;
+        reviewToEdit.reviewScore = parseInt(reviewScore);
+        reviewToEdit.reviewIMG = reviewIMG;
+        reviewToEdit.wasEdited = true;
+        editListingReview(reviewToEdit);
+
+        // Hide the edit form
+        $("#editForm").addClass("hidden");
+
+        // Reload the page
+        showPopup("Review edited successfully!").then(function () {
+            location.reload();
+        });
+    });
+
+    //Delete Review
+    $(".confirmModal").click(function (e) {
+        e.preventDefault();
+        $.confirmModal(
+            "Delete this review?",
+            {
+                confirmButton: "Yes",
+                cancelButton: "No",
+                messageHeader: "Review Deletion",
+                modalVerticalCenter: true,
+                fadeAnimation: true,
+            },
+            function (el) {
+                let deleteBtn = $(el);
+                let userReview = deleteBtn.closest(".mark-helpful");
+                let reviewID = userReview.data("review-id");
+                let listingID = userReview.data("listing-id");
+                deleteListingReview(reviewID, listingID);
+                showPopup("Review deleted successfully!").then(function () {
+                    location.reload();
+                });
+            },
+            function () {
+                // This function will be called when the user clicks the "No" button
+                console.log("Cancel clicked");
+            }
+        );
+    });
+
+    /* ==============================================================
+     HELPER FUNCTIONS FOLLOWING AND LIKING
+     ============================================================== */
+
+    //Like button
+    function handleLikeBtnClick() {
+        if (!getCurrentUser()) {
+            showPopup("Please login to like a review");
+            return;
+        }
+        let $button = $(this);
+        let $review = $button.closest(".mark-helpful");
+        //get the parent of the button
+        let $reviewContainer = $review.closest(".swiper-slide");
+        let $likeCount = $review.find(".like-count");
+        let reviewID = $reviewContainer.data("review-id");
+        let listingID = $reviewContainer.data("listing-id");
+        let userID = $reviewContainer.data("user-id");
+        let currentCount = parseInt($likeCount.text(), 10);
+
+        if ($button.hasClass("liked")) {
+            // Decrement the like count if already liked
+            $likeCount.text(currentCount - 1);
+            reviewMarkedHelpful(reviewID, listingID, -1);
+        } else {
+            // Increment the like count if not liked
+            $likeCount.text(currentCount + 1);
+            reviewMarkedHelpful(reviewID, listingID, 1);
+        }
+        updateLikedReviews(userID, reviewID, listingID);
+
+        // Toggle the 'liked' class on button
+        $button.toggleClass("liked");
+
+        // Animate the button using GSAP
+        if ($button.hasClass("liked")) {
+            gsap.fromTo(
+                $button[0],
+                {
+                    "--hand-rotate": 8,
+                },
+                {
+                    ease: "none",
+                    keyframes: [
+                        {
+                            "--hand-rotate": -45,
+                            duration: 0.16,
+                            ease: "none",
+                        },
+                        {
+                            "--hand-rotate": 15,
+                            duration: 0.12,
+                            ease: "none",
+                        },
+                        {
+                            "--hand-rotate": 0,
+                            duration: 0.2,
+                            ease: "none",
+                            clearProps: true,
+                        },
+                    ],
+                }
+            );
+        }
+        // Disable the button
+        $(this).prop("disabled", true);
+
+        setTimeout(() => {
+            // Enable the button after 5 seconds
+            $(this).prop("disabled", false);
+        }, 2500);
+    }
+
+    /* ==============================================================
+     HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
+     ============================================================== */
+    function populateReviewCommentForm() {
+        let commentBtn = $(this);
+        let reviewContainer = commentBtn.closest(".swiper-slide");
+        let reviewID = reviewContainer.data("review-id");
+        let listingID = reviewContainer.data("listing-id");
+        let userID = reviewContainer.data("user-id");
+        let review = findUserReview(reviewID, listingID);
+        let listing = getSpecificListing(listingID);
+        let cRUReviewHistory = $("#cRUReviewHistory");
+        let cRUCommentResponse = $("#cRUComment");
+        let cRUCommentForm = $("#cRUCommentForm");
+        let cRUCommentFormBtn = $("#commentFormSubmit");
+        cRUReviewHistory.empty();
+        cRUCommentResponse.empty();
+        cRUCommentForm.empty();
+        cRUReviewHistory.append(review.divcRU);
+        cRUCommentResponse.append(review.divcRUResponse);
+
+        let currentUser = getCurrentUser();
+
+        if (
+            currentUser.username === listing.ownerID &&
+            !checkIfCommented(reviewID, listingID, userID)
+        ) {
+            cRUCommentForm.removeClass("hidden");
+            cRUCommentFormBtn.removeClass("hidden");
+            cRUCommentResponse.addClass("hidden");
+            cRUCommentForm.append(populateCommentForm(currentUser));
+            cRUCommentForm.data("review-id", reviewID);
+            cRUCommentForm.data("listing-id", listingID);
+            cRUCommentForm.data("user-id", userID);
+            cRUCommentForm.data("owner-id", currentUser.username);
+        }
+    }
+
+    function handleSubmitCommentForm(event) {
+        event.preventDefault();
+        let formSubmitBtn = $(this);
+        let commentModal = formSubmitBtn.closest("#commentModal");
+        let commentForm = commentModal.find("#cRUCommentForm");
+        //Get the data
+        let listingID = commentForm.data("listing-id");
+        let reviewID = commentForm.data("review-id");
+        let userID = commentForm.data("user-id");
+        let owner = commentForm.data("owner-id");
+        let commentContent = commentForm.find("#commentContent").val();
+        let commentDate = new Date().toISOString();
+
+        //Create the comment
+        let newComment = {
+            reviewID: reviewID,
+            listingID: listingID,
+            userID: userID,
+            ownerID: owner,
+            response: commentContent,
+            commentDate: commentDate,
+        };
+        //Add the comment to the database
+        addNewOwnerResponse(newComment);
+
+        $("#commentModal").modal("hide");
+        showPopup("Comment added successfully!").then(function () {
+            location.reload();
+        });
+    }
+
+    function populateCommentForm(owner) {
+        //create new comment form
+        let commentFormDiv = $("<div></div>")
+            .addClass("booking-checkbox_wrap")
+            .addClass("mt-4");
+        let innerDiv = `
       <div class="customer-review_wrap">
             <div class="customer-img">
               <img alt="#" class="img-fluid" src="${owner.profilePic}">
@@ -910,58 +1003,65 @@ $(document).ready(function () {
        </div>
        <hr>
     `;
-    commentFormDiv.html(innerDiv);
-    return commentFormDiv;
-  }
-
-  function hideCommentForm() {
-    let cRUCommentForm = $('#cRUCommentForm');
-    let cRUCommentFormBtn = $('#commentFormSubmit');
-    let cRUCommentResponse = $('#cRUComment');
-    cRUCommentForm.addClass('hidden');
-    cRUCommentFormBtn.addClass('hidden');
-    cRUCommentResponse.removeClass('hidden');
-  }
-
-  function handleFollowing(event) {
-    event.preventDefault();
-    let followBtn = $(this);
-    console.log(followBtn);
-    if (!getCurrentUser()) {
-      showPopup('Please login to follow a user');
-      return;
+        commentFormDiv.html(innerDiv);
+        return commentFormDiv;
     }
-    let url = new URL(window.location.href);
-    let profileID = url.searchParams.get('id');
-    let followerCountText = $('#profileFollowerCount');
-    let followerCount = parseInt(followerCountText.text(), 10);
 
-    if (followBtn.hasClass('followed')) {
-      //Remove class
-      followBtn.removeClass('followed');
-      followBtn.text('Follow');
-      followerCountText.text(followerCount - 1);
-      followUser(profileID);
-    } else {
-      //Add class
-      followBtn.addClass('followed');
-      followBtn.text('Following');
-      followerCountText.text(followerCount + 1);
-      followUser(profileID);
+    function hideCommentForm() {
+        let cRUCommentForm = $("#cRUCommentForm");
+        let cRUCommentFormBtn = $("#commentFormSubmit");
+        let cRUCommentResponse = $("#cRUComment");
+        cRUCommentForm.addClass("hidden");
+        cRUCommentFormBtn.addClass("hidden");
+        cRUCommentResponse.removeClass("hidden");
     }
-  }
 
-  //Handles comment related events
-  $(document).on('click', '.commentBtn', populateReviewCommentForm);
-  $('#commentModal').on('hidden.bs.modal', hideCommentForm);
-  $('#commentFormSubmit').on('click', handleSubmitCommentForm);
-  $('#followBtn').on('click', handleFollowing);
+    function handleFollowing(event) {
+        event.preventDefault();
+        let followBtn = $(this);
+        if (!getCurrentUser()) {
+            showPopup("Please login to follow a user");
+            return;
+        }
+        let url = new URL(window.location.href);
+        let profileID = url.searchParams.get("id");
+        let followerCountText = $("#profileFollowerCount");
+        let followerCount = parseInt(followerCountText.text(), 10);
 
-  //Sort by List
-  $('#sortReview').on('change', function () {
-    let sortType = $(this).val();
-    sortReviewHistory(sortType);
-  });
-  // Bind the like to the handler via proper event delegation.
-  $(document).on('click', '.button', handleLikeBtnClick);
+        if (followBtn.hasClass("followed")) {
+            //Remove class
+            followBtn.removeClass("followed");
+            followBtn.text("Follow");
+            followerCountText.text(followerCount - 1);
+            followUser(profileID);
+        } else {
+            //Add class
+            followBtn.addClass("followed");
+            followBtn.text("Following");
+            followerCountText.text(followerCount + 1);
+            followUser(profileID);
+        }
+
+        // Disable the button
+        $(this).prop("disabled", true);
+
+        setTimeout(() => {
+            // Enable the button after 5 seconds
+            $(this).prop("disabled", false);
+        }, 2500);
+    }
+
+    //Handles comment related events
+    $(document).on("click", ".commentBtn", populateReviewCommentForm);
+    $("#commentModal").on("hidden.bs.modal", hideCommentForm);
+    $("#commentFormSubmit").on("click", handleSubmitCommentForm);
+    $("#followBtn").on("click", handleFollowing);
+
+    //Sort by List
+    $("#sortReview").on("change", function () {
+        let sortType = $(this).val();
+        sortReviewHistory(sortType);
+    });
+    // Bind the like to the handler via proper event delegation.
+    $(document).on("click", ".button", handleLikeBtnClick);
 });
