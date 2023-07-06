@@ -1,9 +1,25 @@
 // THIS FILE CONTAINS THE DATABASE TO BE CONVERTED TO MONGODB
 
+//The database is to be called "DormableDB"
+//Then for each, existing database, convert them to a collection
+//Below are the suggested collections
+//Either use mongoDB compass, or mongoose to create the database and collections
+//Make sure to follow it correctly, or else the website will not work
+
+//After creating the collections, add documents to the collections
+//Documents are basically the hardcode data that will be used for the website
+
+//In MySQL, the equivalent terminologies are:
+//Database is still database
+//Collection is equivalent to a table
+//Document is equivalent to a row
+//Although documents are flexible, and can have different fields, unlike rows
+//Please make sure to follow the schema below, or else the website will not work
+
 /*
 Collection: listingDatabase
 
-Schema:
+Document Schema:
 
 {
   "_id" : ObjectId, // This field is auto-generated unless explicitly stated.
@@ -206,7 +222,7 @@ let listing = [
 /*
 Collection: userDatabase
 
-Schema:
+Document Schema:
 
 {
   "_id" : ObjectId, // This field is auto-generated unless explicitly stated.
@@ -332,7 +348,7 @@ let users = [
 /*
 Collection: userLoginInfo
 
-Schema:
+Document Schema:
 
 {
   "_id" : ObjectId, // This field is auto-generated unless explicitly stated.
@@ -391,7 +407,7 @@ let userInfo = [
 /*
 Collection: listingOwners
 
-Schema:
+Document Schema:
 
 {
   "_id" : ObjectId, // This field is auto-generated unless explicitly stated.
@@ -528,7 +544,7 @@ let listingOwners = [
 /*
 Collection: ownerAdminInfo
 
-Schema:
+Document Schema:
 
 {
   "_id" : ObjectId, // This field is auto-generated unless explicitly stated.
@@ -596,7 +612,7 @@ let ownerAdminInfo = [
 /*
 Collection: ownerResponse
 
-Schema:
+Document Schema:
 
 {
   "_id" : ObjectId, // This field is auto-generated unless explicitly stated.

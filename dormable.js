@@ -48,10 +48,18 @@ app.listen(PORT, () => {
     );
 });
 
+//Make index.html the default page
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "web_pages", "index.html"));
+});
+
 //Make 404 request refer to custom 404 page
 app.use(function (req, res, next) {
     res.status(404).sendFile(path.join(__dirname, "/web_pages/404.html"));
 });
+
+//remove .html from the url
+app.use(express.static(__dirname + "/web_pages", { extensions: ["html"] }));
 
 console.log(`Current directory: ${process.cwd()}`);
 console.log(`__dirname: ${__dirname}`);
