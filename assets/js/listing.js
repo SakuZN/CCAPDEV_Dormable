@@ -151,7 +151,7 @@ function generateFeaturedListing() {
                     "featured-listings"
                 )}
                </ul>
-               <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt="">
+               <span class="price"><div class="icon"><img src="/assets/images/listing_icon/listing-icon-01.png" alt="">
                </div> ${listing.price}</span>
                <span class="details">Description: <br><br>
                <em>${listing.description}</em></span>
@@ -217,7 +217,7 @@ function generateListingOwnerListing(ownerID) {
                     "featured-listings"
                 )}
                </ul>
-               <span class="price"><div class="icon"><img src="../assets/images/listing_icon/listing-icon-01.png" alt="">
+               <span class="price"><div class="icon"><img src="/assets/images/listing_icon/listing-icon-01.png" alt="">
                </div> ${listing.price}</span>
                <span class="details">Description: <br><br>
                <em>${listing.description}</em></span>

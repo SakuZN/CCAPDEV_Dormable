@@ -65,16 +65,16 @@ let listing = [
         reviewScore: 3.8,
         reviews: 80,
         img: [
-            "../assets/images/listing_images/listing-GrandTowers.jpg",
-            "../assets/images/listing_images/listing-GrandTowers2.jpg",
-            "../assets/images/listing_images/listing-GrandTowers3.jpg",
+            "/assets/images/listing_images/listing-GrandTowers.jpg",
+            "/assets/images/listing_images/listing-GrandTowers2.jpg",
+            "/assets/images/listing_images/listing-GrandTowers3.jpg",
         ],
         owner: "Moldex Realty Inc.",
         ownerID: "moldex_realty",
         mapUrl: "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJNbB053vJlzMRA8TZb_E3gvI&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
         phone: "0917 717 8880",
         website: "https://www.moldexrealty.ph",
-        ownerImg: "../assets/images/listing_images/owner-GrandTowers.jpg",
+        ownerImg: "/assets/images/listing_images/owner-GrandTowers.jpg",
     },
     {
         listingID: "2-torre-lorenzo",
@@ -90,9 +90,9 @@ let listing = [
         reviewScore: 4.4,
         reviews: 13,
         img: [
-            "../assets/images/listing_images/listing-TLorenzo.jpg",
-            "../assets/images/listing_images/listing-TLorenzo2.jpg",
-            "../assets/images/listing_images/listing-TLorenzo3.jpg",
+            "/assets/images/listing_images/listing-TLorenzo.jpg",
+            "/assets/images/listing_images/listing-TLorenzo2.jpg",
+            "/assets/images/listing_images/listing-TLorenzo3.jpg",
         ],
         owner: "Torre Lorenzo Development Corporation",
         ownerID: "torre_lorenzo",
@@ -100,7 +100,7 @@ let listing = [
         phone: "0916 684 7394",
         website:
             "https://www.torrelorenzo.com/residential-developments/2torre-lorenzo",
-        ownerImg: "../assets/images/listing_images/owner-TLorenzo.jpg",
+        ownerImg: "/assets/images/listing_images/owner-TLorenzo.jpg",
     },
     {
         listingID: "3-r-square",
@@ -115,16 +115,16 @@ let listing = [
         reviewScore: 4.1,
         reviews: 104,
         img: [
-            "../assets/images/listing_images/listing-RResidences.jpg",
-            "../assets/images/listing_images/listing-RResidences2.jpg",
-            "../assets/images/listing_images/listing-RResidences3.jpg",
+            "/assets/images/listing_images/listing-RResidences.jpg",
+            "/assets/images/listing_images/listing-RResidences2.jpg",
+            "/assets/images/listing_images/listing-RResidences3.jpg",
         ],
         owner: "Toplite Development Corporation",
         ownerID: "toplite_dc",
         mapUrl: "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJIYHPYnnJlzMRxLi2aLdgR20&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
         phone: "0927 967 8558",
         website: "https://www.facebook.com/toplitedevelopmentcorporation/",
-        ownerImg: "../assets/images/listing_images/owner-RResidences.jpg",
+        ownerImg: "/assets/images/listing_images/owner-RResidences.jpg",
     },
     {
         listingID: "4-one-archers",
@@ -139,16 +139,16 @@ let listing = [
         reviewScore: 3.7,
         reviews: 25,
         img: [
-            "../assets/images/listing_images/listing-ArcherPlace.jpg",
-            "../assets/images/listing_images/listing-ArcherPlace2.jpg",
-            "../assets/images/listing_images/listing-ArcherPlace3.jpg",
+            "/assets/images/listing_images/listing-ArcherPlace.jpg",
+            "/assets/images/listing_images/listing-ArcherPlace2.jpg",
+            "/assets/images/listing_images/listing-ArcherPlace3.jpg",
         ],
         owner: "Eton Properties Philippines",
         ownerID: "eton_properties",
         mapUrl: "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJF_kMT3_JlzMRyvjrwnux7Gc&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
         phone: "0917-886-1868",
         website: "http://www.onearchersplace.com/",
-        ownerImg: "../assets/images/listing_images/owner-ArcherPlace.jpg",
+        ownerImg: "/assets/images/listing_images/owner-ArcherPlace.jpg",
     },
     {
         listingID: "5-green-residences",
@@ -165,16 +165,16 @@ let listing = [
         reviewScore: 4.0,
         reviews: 213,
         img: [
-            "../assets/images/listing_images/listing-GResidences.jpg",
-            "../assets/images/listing_images/listing-GResidences2.jpg",
-            "../assets/images/listing_images/listing-GResidences3.jpg",
+            "/assets/images/listing_images/listing-GResidences.jpg",
+            "/assets/images/listing_images/listing-GResidences2.jpg",
+            "/assets/images/listing_images/listing-GResidences3.jpg",
         ],
         owner: "SMDC",
         ownerID: "smdc",
         mapUrl: "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJkwdnk_LJlzMRFbimDJAIjk0&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
         phone: "(02) 8252 4067",
         website: "https://smdc.com/properties/green-residences/",
-        ownerImg: "../assets/images/listing_images/owner-GResidences.jpg",
+        ownerImg: "/assets/images/listing_images/owner-GResidences.jpg",
     },
     {
         listingID: "6-vito-cruz-towers",
@@ -190,16 +190,16 @@ let listing = [
         reviewScore: 4.2,
         reviews: 191,
         img: [
-            "../assets/images/listing_images/listing-VCTowers.jpg",
-            "../assets/images/listing_images/listing-VCTowers2.jpg",
-            "../assets/images/listing_images/listing-VCTowers3.jpg",
+            "/assets/images/listing_images/listing-VCTowers.jpg",
+            "/assets/images/listing_images/listing-VCTowers2.jpg",
+            "/assets/images/listing_images/listing-VCTowers3.jpg",
         ],
         owner: "Cityland Development Corporation",
         ownerID: "cityland_dc",
         mapUrl: "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJeWp_vXnJlzMRX0tGLW8q6N8&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
         phone: "(02) 8245 1126",
         website: "https://www.ehomes.ph/vito-cruz-towers.html",
-        ownerImg: "../assets/images/listing_images/owner-VCTowers.jpg",
+        ownerImg: "/assets/images/listing_images/owner-VCTowers.jpg",
     },
 ];
 
@@ -240,7 +240,7 @@ const userSchema = new mongoose.Schema({
   college: { type: String, required: true },
   type: { type: String, required: true },
   description: { type: String, required: false },
-  profilePic: { type: String, default: "../blank_profile.png" },
+  profilePic: { type: String, default: "/blank_profile.png" },
   joinDate: { type: Date, default: Date.now },
   noOfReviews: { type: Number, default: 0 },
   followers: { type: Number, default: 0 },
@@ -264,7 +264,7 @@ let users = [
         college: "De La Salle University",
         type: "student",
         description: getRandomDescription(),
-        profilePic: "../assets/images/test_image/customer-img1.jpg",
+        profilePic: "/assets/images/test_image/customer-img1.jpg",
         joinDate: getRandomDate(2020, 2023),
         noOfReviews: 6,
         followers: getRandomNumber(0, 1000),
@@ -278,7 +278,7 @@ let users = [
         college: "De La Salle University",
         type: "student",
         description: getRandomDescription(),
-        profilePic: "../assets/images/test_image/customer-img2.jpg",
+        profilePic: "/assets/images/test_image/customer-img2.jpg",
         joinDate: getRandomDate(2020, 2023),
         noOfReviews: 6,
         followers: getRandomNumber(0, 1000),
@@ -292,7 +292,7 @@ let users = [
         college: "De La Salle University",
         type: "student",
         description: getRandomDescription(),
-        profilePic: "../assets/images/test_image/customer-img3.jpg",
+        profilePic: "/assets/images/test_image/customer-img3.jpg",
         joinDate: getRandomDate(2020, 2023),
         noOfReviews: 6,
         followers: getRandomNumber(0, 1000),
@@ -306,7 +306,7 @@ let users = [
         college: "De La Salle University",
         type: "student",
         description: getRandomDescription(),
-        profilePic: "../assets/images/test_image/customer-img4.jpg",
+        profilePic: "/assets/images/test_image/customer-img4.jpg",
         joinDate: getRandomDate(2020, 2023),
         noOfReviews: 6,
         followers: getRandomNumber(0, 1000),
@@ -320,7 +320,7 @@ let users = [
         college: "De La Salle University",
         type: "student",
         description: getRandomDescription(),
-        profilePic: "../assets/images/test_image/customer-img5.jpg",
+        profilePic: "/assets/images/test_image/customer-img5.jpg",
         joinDate: getRandomDate(2020, 2023),
         noOfReviews: 6,
         followers: getRandomNumber(0, 1000),
@@ -415,7 +415,7 @@ const listingOwnerSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   customName: { type: String, required: true },
   type: { type: String, required: true },
-  profilePic: { type: String, default: "../assets/images/default_profile_pic.jpg" },
+  profilePic: { type: String, default: "/assets/images/default_profile_pic.jpg" },
   description: { type: String, required: true },
   joinDate: { type: Date, default: Date.now },
   listings: { type: [String], required: true },
@@ -431,7 +431,7 @@ let listingOwners = [
         username: "moldex_realty",
         customName: "Moldex Realty Inc.",
         type: "listingOwner",
-        profilePic: "../assets/images/listing_images/owner-GrandTowers.jpg",
+        profilePic: "/assets/images/listing_images/owner-GrandTowers.jpg",
         description:
             "With over 30 years of real estate excellence, " +
             "Moldex Realty has been providing quality homes and communities that suit the growing needs of Filipino families. " +
@@ -448,7 +448,7 @@ let listingOwners = [
         username: "torre_lorenzo",
         customName: "Torre Lorenzo<br>Development Corporation",
         type: "listingOwner",
-        profilePic: "../assets/images/listing_images/owner-TLorenzo.jpg",
+        profilePic: "/assets/images/listing_images/owner-TLorenzo.jpg",
         description:
             "As the pioneer in premium university residences, Torre Lorenzo continues to build secure, accessible, and dynamic spaces that elevate living experiences.\n" +
             "\n" +
@@ -464,7 +464,7 @@ let listingOwners = [
         username: "toplite_dc",
         customName: "Toplite Development Corporation",
         type: "listingOwner",
-        profilePic: "../assets/images/listing_images/owner-RResidences.jpg",
+        profilePic: "/assets/images/listing_images/owner-RResidences.jpg",
         description:
             "Toplite Development Corporation is a young and fast-growing real estate development company directed by its CEO Mr. Johnny Chua\n" +
             "who founded Toplite Lumber Corporation, the group’s mother company.\n" +
@@ -482,7 +482,7 @@ let listingOwners = [
         username: "eton_properties",
         customName: "Eton Properties<br>Philippines Inc.",
         type: "listingOwner",
-        profilePic: "../assets/images/listing_images/owner-ArcherPlace.jpg",
+        profilePic: "/assets/images/listing_images/owner-ArcherPlace.jpg",
         description:
             "We are Eton Properties, the real estate brand of the Lucio Tan Group, one of the biggest business conglomerates in the Philippines, with full-range projects of office, commercial, residential and hotel properties in key cities in Metro Manila, Laguna and Cebu. With an extensive land bank in strategic locations all over the country, we have diversified our business opportunities to include land lease.",
         joinDate: getRandomDate(2020, 2023),
@@ -496,7 +496,7 @@ let listingOwners = [
         username: "smdc",
         customName: "SMDC",
         type: "listingOwner",
-        profilePic: "../assets/images/listing_images/owner-GResidences.jpg",
+        profilePic: "/assets/images/listing_images/owner-GResidences.jpg",
         description:
             "SMDC is the largest and fastest-growing real estate developer in the Philippines. " +
             "Championing perfectly integrated commercial and residential environments, " +
@@ -514,7 +514,7 @@ let listingOwners = [
         username: "cityland_dc",
         customName: "Cityland Development Corporation",
         type: "listingOwner",
-        profilePic: "../assets/images/listing_images/owner-VCTowers.jpg",
+        profilePic: "/assets/images/listing_images/owner-VCTowers.jpg",
         description:
             "We continue to gain the respect and confidence of our investors for having a track record in the delivery of all projects thus, living up to our presidential award as the Leading Condominium Developer in the country. We shall continue to conceptualize and be a major contributor in the promotion of economic development and progress in creating a stable nation through equitable housing for the middle class... ",
         joinDate: getRandomDate(2020, 2023),
@@ -764,9 +764,9 @@ function generateUserReviews() {
                 reviewTitle: listingPlace.name + " Review",
                 reviewContent: getRandomReview(randomScore),
                 reviewIMG: [
-                    "../assets/images/test_image/featured1.jpg",
-                    "../assets/images/test_image/featured2.jpg",
-                    "../assets/images/test_image/featured3.jpg",
+                    "/assets/images/test_image/featured1.jpg",
+                    "/assets/images/test_image/featured2.jpg",
+                    "/assets/images/test_image/featured3.jpg",
                 ],
                 reviewScore: randomScore,
                 reviewDate: getRandomDate(

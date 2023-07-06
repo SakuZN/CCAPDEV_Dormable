@@ -533,8 +533,10 @@ $(document).ready(function () {
      HELPER FUNCTIONS
      ============================================================== */
     function handleReviewBtnClick() {
-        if (!getCurrentUser()) window.location.href = "login.html";
-        else if (userHasReviewed()) {
+        if (!getCurrentUser()) {
+            showPopup("Please login to leave a review");
+            return;
+        } else if (userHasReviewed()) {
             $(".edit-review").removeClass("hidden");
 
             $("html, body").animate(

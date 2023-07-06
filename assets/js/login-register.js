@@ -71,7 +71,7 @@ async function register() {
         customName: custom,
         type: "student",
         description: description,
-        profilePic: "../assets/images/test_image/blank_pp.jpg",
+        profilePic: "/assets/images/test_image/blank_pp.jpg",
         joinDate: registerDate,
         noOfReviews: 0,
         followers: 0,

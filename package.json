@@ -1,18 +1,22 @@
 {
-  "name": " ",
-  "version": "0.0.1",
-  "description": "",
-  "keywords": "",
-  "license": "",
-  "author": "",
-  "scripts": {
-    "build": "parcel build web_pages/index.html",
-    "dev": "parcel web_pages/index.html --open",
-    "start": "npm run build && npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "parcel-bundler": "^1.12.4",
-    "prettier": "2.8.8"
-  }
+    "name": "dormable",
+    "version": "1.0.0",
+    "description": "Dormable is a web app designed to help students find their perfect dorm room.",
+    "keywords": "",
+    "license": "",
+    "author": "",
+    "scripts": {
+        "build": "parcel build web_pages/index.html",
+        "dev": "parcel web_pages/index.html --open",
+        "start": "node dormable.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "parcel-bundler": "^1.12.4",
+        "prettier": "2.8.8"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "mongoose": "^7.3.1"
+    }
 }
