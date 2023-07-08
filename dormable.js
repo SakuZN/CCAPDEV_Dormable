@@ -1,23 +1,41 @@
+/* ==============================================================
+   IMPORTS AND CONFIGURATION
+   ============================================================== */
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const path = require("path");
 
-//DB connection
-const test = require("dotenv").config();
+//Mongoose
+const { mongoose } = require("mongoose");
 
+//DB connection
+require("dotenv").config();
 const USERNAME = process.env.DB_USER;
 const PASSWORD = process.env.DB_PASSWORD;
-const DB_NAME = process.env.DB_NAME;
+const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@dormabledb.gxbndyi.mongodb.net/DormableDB?retryWrites=true&w=majority`;
+mongoose
+    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB Connected..."))
+    .catch((err) => console.log(err));
 
-console.log(test);
-const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
+//Routers for each collection
+const listingDB_Router = require("./routers/listingDB_Router");
+
 //Middleware for static assets
 app.use("/vendor", express.static(path.join(__dirname, "vendor")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 // app.use("/web_pages", express.static(path.join(__dirname, "web_pages")));
 
-//Routes to individual pages
+/* ==============================================================
+   FETCH/WRITE REQUESTS TO DATABASE
+   ============================================================== */
+//Request for listingDB
+app.use("/api/listingDB", listingDB_Router);
+
+/* ==============================================================
+   ROUTES TO INDIVIDUAL PAGES
+   ============================================================== */
 app.get("/index.html", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "index.html"));
 });
@@ -72,4 +90,3 @@ app.use(express.static(__dirname + "/web_pages", { extensions: ["html"] }));
 
 console.log(`Current directory: ${process.cwd()}`);
 console.log(`__dirname: ${__dirname}`);
-console.log(uri);

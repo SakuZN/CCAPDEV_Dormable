@@ -877,10 +877,21 @@ if (
 }
 
 function debugButton() {
+    //Print JSON Data that can be imported to mongoDB
+    let data = localStorage.getItem("listingDatabase");
+
+    if (data) {
+        let json = JSON.stringify(JSON.parse(data), null, 2); // Convert to JSON string
+        console.log(json);
+    }
+
+    /*
     //CLEAR ALL DATABASES
     showPopup("Local and Session Storage Cleared!").then(() => {
         localStorage.clear();
         sessionStorage.clear();
         location.reload();
     });
+
+     */
 }

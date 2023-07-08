@@ -1,0 +1,134 @@
+[
+  {
+    "listingID": "1-gt-manila",
+    "name": "The Grand Towers Manila",
+    "description": "The Grand Towers Manila is a 47-story twin skyscraper that is both a sustainable family home and a good investment. It rises high on one of Manila’s most strategic locations, along Pablo Ocampo Street corner Vito Cruz, just across Rizal Memorial Stadium",
+    "location": "790 Pablo Ocampo Sr. St.<br>Corner Taft Avenue<br>Manila<br>1004 Metro Manila",
+    "price": "₱6,000 - ₱13,000",
+    "minPrice": 6000,
+    "maxPrice": 13000,
+    "reviewScore": 1.8,
+    "reviews": 5,
+    "img": [
+      "/assets/images/listing_images/listing-GrandTowers.jpg",
+      "/assets/images/listing_images/listing-GrandTowers2.jpg",
+      "/assets/images/listing_images/listing-GrandTowers3.jpg"
+    ],
+    "owner": "Moldex Realty Inc.",
+    "ownerID": "moldex_realty",
+    "mapUrl": "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJNbB053vJlzMRA8TZb_E3gvI&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
+    "phone": "0917 717 8880",
+    "website": "https://www.moldexrealty.ph",
+    "ownerImg": "/assets/images/listing_images/owner-GrandTowers.jpg"
+  },
+  {
+    "listingID": "2-torre-lorenzo",
+    "name": "2 Torre Lorenzo",
+    "description": " located along Taft Avenue, right across De La Salle University and at the gateway to the rest of the metro. It offers the same convenience, accessibility and security that are trademarks of all Torre Lorenzo properties.",
+    "location": "2426-2444 Taft Ave.<br>Brgy 727<br>Zone 079<br>Malate Manila",
+    "price": "₱18,000 - ₱25,000",
+    "minPrice": 18000,
+    "maxPrice": 25000,
+    "reviewScore": 1.2,
+    "reviews": 5,
+    "img": [
+      "/assets/images/listing_images/listing-TLorenzo.jpg",
+      "/assets/images/listing_images/listing-TLorenzo2.jpg",
+      "/assets/images/listing_images/listing-TLorenzo3.jpg"
+    ],
+    "owner": "Torre Lorenzo Development Corporation",
+    "ownerID": "torre_lorenzo",
+    "mapUrl": "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJzdSl2njJlzMRO1DkQJJEHcw&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
+    "phone": "0916 684 7394",
+    "website": "https://www.torrelorenzo.com/residential-developments/2torre-lorenzo",
+    "ownerImg": "/assets/images/listing_images/owner-TLorenzo.jpg"
+  },
+  {
+    "listingID": "3-r-square",
+    "name": "R Square Residences",
+    "description": "R Square Residences is a world-class high-rise condominium in Malate, Manila. It is developed by Toplite Development Corporation and is located along Vito Cruz in Malate, Manila",
+    "location": "Taft Ave<br>Malate<br>Manila<br>1004 Metro Manila",
+    "price": "₱5,000,000 - ₱15,000",
+    "minPrice": 5000,
+    "maxPrice": 15000,
+    "reviewScore": 2.6,
+    "reviews": 5,
+    "img": [
+      "/assets/images/listing_images/listing-RResidences.jpg",
+      "/assets/images/listing_images/listing-RResidences2.jpg",
+      "/assets/images/listing_images/listing-RResidences3.jpg"
+    ],
+    "owner": "Toplite Development Corporation",
+    "ownerID": "toplite_dc",
+    "mapUrl": "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJIYHPYnnJlzMRxLi2aLdgR20&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
+    "phone": "0927 967 8558",
+    "website": "https://www.facebook.com/toplitedevelopmentcorporation/",
+    "ownerImg": "/assets/images/listing_images/owner-RResidences.jpg"
+  },
+  {
+    "listingID": "4-one-archers",
+    "name": "One Archer's Place",
+    "description": "One Archers Place is a 31-storey twin tower residential condominium located along Taft Avenue, Manila. It is designed for students and young professionals and offers studio and one-bedroom flats with lifestyle amenities",
+    "location": "2311 Taft Ave<br>Malate<br>Manila<br>1004 Metro Manila",
+    "price": "₱5,000,000 - ₱30,000",
+    "minPrice": 5000,
+    "maxPrice": 30000,
+    "reviewScore": 1.2,
+    "reviews": 5,
+    "img": [
+      "/assets/images/listing_images/listing-ArcherPlace.jpg",
+      "/assets/images/listing_images/listing-ArcherPlace2.jpg",
+      "/assets/images/listing_images/listing-ArcherPlace3.jpg"
+    ],
+    "owner": "Eton Properties Philippines",
+    "ownerID": "eton_properties",
+    "mapUrl": "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJF_kMT3_JlzMRyvjrwnux7Gc&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
+    "phone": "0917-886-1868",
+    "website": "http://www.onearchersplace.com/",
+    "ownerImg": "/assets/images/listing_images/owner-ArcherPlace.jpg"
+  },
+  {
+    "listingID": "5-green-residences",
+    "name": "Green Residences",
+    "description": "Green Residences is a 50-story mixed-use development located beside De La Salle University in Manila. It is designed to bring the vibe of the academe closer to home and offers a great place for college students to live out the best parts of college life",
+    "location": "2441<br>1004 Taft Ave<br>Malate<br>Manila<br>1004 Metro Manila",
+    "price": "₱5,100 - ₱5,700",
+    "minPrice": 5100,
+    "maxPrice": 5700,
+    "reviewScore": 3.6,
+    "reviews": 5,
+    "img": [
+      "/assets/images/listing_images/listing-GResidences.jpg",
+      "/assets/images/listing_images/listing-GResidences2.jpg",
+      "/assets/images/listing_images/listing-GResidences3.jpg"
+    ],
+    "owner": "SMDC",
+    "ownerID": "smdc",
+    "mapUrl": "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJkwdnk_LJlzMRFbimDJAIjk0&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
+    "phone": "(02) 8252 4067",
+    "website": "https://smdc.com/properties/green-residences/",
+    "ownerImg": "/assets/images/listing_images/owner-GResidences.jpg"
+  },
+  {
+    "listingID": "6-vito-cruz-towers",
+    "name": "Vito Cruz Towers",
+    "description": "Vito Cruz Towers is a condominium development by Cityland Development Corporation in Malate, Manila. It has two towers, each comprising studio to three-bedroom units for sale or rent. Apart from condominiums, this development also has podium parking and various amenities",
+    "location": "720 Pablo Ocampo Sr. Ave.<br>Malate<br>Manila",
+    "price": "₱7,000,000 - ₱25,000",
+    "minPrice": 7000,
+    "maxPrice": 25000,
+    "reviewScore": 1.8,
+    "reviews": 5,
+    "img": [
+      "/assets/images/listing_images/listing-VCTowers.jpg",
+      "/assets/images/listing_images/listing-VCTowers2.jpg",
+      "/assets/images/listing_images/listing-VCTowers3.jpg"
+    ],
+    "owner": "Cityland Development Corporation",
+    "ownerID": "cityland_dc",
+    "mapUrl": "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJeWp_vXnJlzMRX0tGLW8q6N8&key=AIzaSyCXzNoDOd1Wmnopb8Kpi65iV3NDt3qNMwc",
+    "phone": "(02) 8245 1126",
+    "website": "https://www.ehomes.ph/vito-cruz-towers.html",
+    "ownerImg": "/assets/images/listing_images/owner-VCTowers.jpg"
+  }
+]

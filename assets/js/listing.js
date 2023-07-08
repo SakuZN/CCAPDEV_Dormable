@@ -76,9 +76,10 @@ function destroyOwlCarousel() {
    ============================================================== */
 
 function initFeaturedListing() {
-    generateFeaturedListing();
-    populateFeaturedListing();
-    initOwlCarousel();
+    generateFeaturedListing().then((r) => {
+        populateFeaturedListing();
+        initOwlCarousel();
+    });
 }
 
 function initOwnerListing(ownerID) {
@@ -102,11 +103,17 @@ function initAllListing() {
    ============================================================== */
 
 //Function to generate featured listings
-function generateFeaturedListing() {
+async function generateFeaturedListing() {
     //clear the listing list
     listingList = [];
 
-    let featuredListing = getListingDatabase();
+    let featuredListing = [];
+    try {
+        featuredListing = await getListingDatabase();
+    } catch (err) {
+        console.log(err);
+    }
+    console.log(featuredListing);
 
     //Sort Listing by review score and number of reviews
     featuredListing.sort((a, b) => b.reviewScore - a.reviewScore);

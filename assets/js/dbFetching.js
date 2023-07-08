@@ -2,8 +2,10 @@
    BASE CRUD OPERATIONS FOR LISTING DATABASE
    ============================================================== */
 
-function getListingDatabase() {
-    return JSON.parse(localStorage.getItem("listingDatabase"));
+async function getListingDatabase() {
+    const listingDB = await fetch("/api/listingDB");
+    if (listingDB.ok) return await listingDB.json();
+    else console.error("Error fetching listingDB:", listingDB);
 }
 
 function setListingDatabase(listingDatabase) {
