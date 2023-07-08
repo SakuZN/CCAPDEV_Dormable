@@ -19,7 +19,7 @@
     <meta content="Group 5" name="author"/>
     <meta content="#" name="description"/>
 
-    <link href="/icon.png" rel="icon" type="image/png"/>
+    <link href="/assets/images/test_image/icon.png" rel="icon" type="image/png"/>
 
     <title>Dormable!</title>
 
@@ -876,38 +876,5 @@ Your Description</textarea
 
 <!-- JQuery Script for various functionalities -->
 <script src="/assets/js/listing-page.js"></script>
-
-<!-- Swiper for Listings -->
-<script>
-    var imageSwiper = new Swiper("#listing-image", {
-        slidesPerView: 3,
-        slidesPerGroup: 3,
-        loop: false,
-        loopFillGroupWithBlank: false,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-    });
-</script>
-<!-- Magnific Popup -->
-<script>
-    if ($(".image-link").length) {
-        $(".image-link").magnificPopup({
-            type: "image",
-            gallery: {
-                enabled: true,
-            },
-        });
-    }
-    if ($(".image-link2").length) {
-        $(".image-link2").magnificPopup({
-            type: "image",
-            gallery: {
-                enabled: false,
-            },
-        });
-    }
-</script>
 </body>
 </html>

@@ -75,27 +75,55 @@ function destroyOwlCarousel() {
    LISTING INITIALIZATION FUNCTION
    ============================================================== */
 
-function initFeaturedListing() {
-    generateFeaturedListing().then((r) => {
+async function initFeaturedListing() {
+    try {
+        $("#js-preloader").removeClass("loaded"); // start loading animation here if needed
+        await generateFeaturedListing();
         populateFeaturedListing();
         initOwlCarousel();
-    });
+        $("#js-preloader").addClass("loaded"); // stop loading animation
+    } catch (error) {
+        console.log(error);
+        // handle error appropriately, alert user, revert UI changes, etc.
+    }
 }
 
-function initOwnerListing(ownerID) {
-    generateListingOwnerListing(ownerID);
-    populateFeaturedListing();
-    initOwlCarousel();
+async function initOwnerListing(ownerID) {
+    try {
+        $("#js-preloader").removeClass("loaded"); // start loading animation here if needed
+        await generateListingOwnerListing(ownerID);
+        populateFeaturedListing();
+        initOwlCarousel();
+        $("#js-preloader").addClass("loaded"); // stop loading animation
+    } catch (error) {
+        console.log(error);
+        // handle error appropriately, alert user, revert UI changes, etc.
+    }
 }
 
-function initQueryListing() {
-    generateQueryListing();
-    populateQueryListing();
+async function initQueryListing() {
+    try {
+        $("#js-preloader").removeClass("loaded"); // start loading animation here if needed
+        await generateQueryListing();
+        populateQueryListing();
+        $("#js-preloader").addClass("loaded"); // stop loading animation
+    } catch (error) {
+        console.log(error);
+        // handle error appropriately, alert user, revert UI changes, etc.
+    }
 }
 
-function initAllListing() {
-    generateExploreListing();
-    populateQueryListing();
+async function initAllListing() {
+    try {
+        $("#js-preloader").removeClass("loaded"); // start loading animation here if needed
+        await generateExploreListing();
+        populateQueryListing();
+
+        $("#js-preloader").addClass("loaded"); // stop loading animation
+    } catch (error) {
+        console.log(error);
+        // handle error appropriately, alert user, revert UI changes, etc.
+    }
 }
 
 /* ==============================================================
@@ -113,7 +141,6 @@ async function generateFeaturedListing() {
     } catch (err) {
         console.log(err);
     }
-    console.log(featuredListing);
 
     //Sort Listing by review score and number of reviews
     featuredListing.sort((a, b) => b.reviewScore - a.reviewScore);
@@ -181,10 +208,10 @@ async function generateFeaturedListing() {
 }
 
 //Used to show listing on an owner's profile page
-function generateListingOwnerListing(ownerID) {
+async function generateListingOwnerListing(ownerID) {
     listingList = [];
 
-    let ownerListings = getOwnerSpecificListings(ownerID);
+    let ownerListings = await getOwnerSpecificListings(ownerID);
 
     //Turn listing into div elements
     //Initialize divs
@@ -246,10 +273,10 @@ function generateListingOwnerListing(ownerID) {
     });
 }
 
-function generateQueryListing() {
+async function generateQueryListing() {
     listingList = [];
 
-    let queryListing = filterListings();
+    let queryListing = await filterListings();
 
     queryListing.forEach((listing) => {
         let indivListing = document.createElement("div");
@@ -301,10 +328,10 @@ function generateQueryListing() {
     });
 }
 
-function generateExploreListing() {
+async function generateExploreListing() {
     listingList = [];
 
-    let allListings = getListingDatabase();
+    let allListings = await getListingDatabase();
 
     allListings.forEach((listing) => {
         let indivListing = document.createElement("div");
@@ -401,8 +428,8 @@ function loadMoreListings() {
     document.getElementById("sortListings").selectedIndex = 0;
 }
 
-function filterListings() {
-    let listings = getListingDatabase();
+async function filterListings() {
+    let listings = await getListingDatabase();
     let filters = new searchFilterObject(
         JSON.parse(sessionStorage.getItem("searchFilter"))
     );

@@ -253,7 +253,7 @@ function populateStudentProfile(userID, currentUser) {
    ============================================================== */
 
 //Turns review history into divs and returns an array of review history objects
-function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
+async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
     let userReviewHistory = [];
 
     reviewHistory.forEach((review) => {

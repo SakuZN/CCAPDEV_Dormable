@@ -17,31 +17,30 @@ function setListingDatabase(listingDatabase) {
    ============================================================== */
 
 //Function that will return a specific listing from the database based on the listing ID
-function getSpecificListing(listingID) {
-    const listings = getListingDatabase();
-    return listings.find((listing) => listing.listingID === listingID);
+async function getSpecificListing(listingID) {
+    const specificListing = await fetch("/api/listingDB/" + listingID);
+    if (specificListing.ok) return await specificListing.json();
+    else console.error("Error fetching specific listing:", specificListing);
 }
 
 // Function that will check if the listing ID is valid and exists in the database
-function checkIfValidListingID(listingID) {
-    const listings = getListingDatabase();
+async function checkIfValidListingID(listingID) {
+    const listings = await getListingDatabase();
     return listings.some((listing) => listing.listingID === listingID);
 }
 
 // Function that will find the listings of the owner
-function getOwnerSpecificListings(ownerID) {
-    const listings = getListingDatabase();
+async function getOwnerSpecificListings(ownerID) {
+    const listings = await getListingDatabase();
     return listings.filter(
         (ownerListings) => ownerListings.ownerID === ownerID
     );
 }
 
 // Function that will update the review scores of the listings in the database
-function updateListingReviewScore() {
-    let listingDatabase = getListingDatabase();
+async function updateListingReviewScore() {
+    let listingDatabase = await getListingDatabase();
     let reviewDatabase = getListingReviewDatabase();
-    console.log(reviewDatabase);
-    console.log(listingDatabase);
 
     listingDatabase.forEach((listing) => {
         let reviews = reviewDatabase.filter(

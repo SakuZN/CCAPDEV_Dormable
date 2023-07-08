@@ -3,6 +3,7 @@
    ============================================================== */
 //Variable for swiper
 let mySwiper;
+let imageSwiper;
 
 //ArrayList of Users that reviewed
 let reviewHistory = [];
@@ -51,6 +52,19 @@ function initSwiper() {
     });
 }
 
+function initImageSwiper() {
+    imageSwiper = new Swiper("#listing-image", {
+        slidesPerView: 3,
+        slidesPerGroup: 3,
+        loop: false,
+        loopFillGroupWithBlank: false,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+}
+
 function destroySwiper() {
     mySwiper.destroy();
 }
@@ -64,14 +78,20 @@ let id = url.searchParams.get("id");
 let checkValidId = checkIfValidListingID(id);
 if (id === null || checkValidId === undefined) {
     window.location.href = "404.html";
-} else {
-    updateListingReviewScore();
-    populateListingPage(id);
 }
+const updateAndPopulate = async () => {
+    return await updateListingReviewScore()
+        .then(async () => {
+            await populateListingPage(id);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
 
-function populateListingPage(id_page) {
+async function populateListingPage(id_page) {
     //Get the listing data
-    let listing = getSpecificListing(id_page);
+    let listing = await getSpecificListing(id_page);
     let owner = getSpecificListingOwner(listing.ownerID);
 
     //Get the listing page elements to populate
@@ -101,7 +121,10 @@ function populateListingPage(id_page) {
 
     //Replace the content of the listing page elements
     listingName.innerHTML = listing.name;
+    console.log(listing.img);
     populateListingImg(listing, listingSwiper);
+    initImageSwiper();
+    initListingPopUp();
     listingStars.innerHTML = star_rating(
         listing.reviewScore,
         listing.reviews,
@@ -478,6 +501,25 @@ function clearReviewHistory() {
 function initReviewPopUp() {
     if ($(".review-image").length) {
         $(".review-image").magnificPopup({
+            type: "image",
+            gallery: {
+                enabled: false,
+            },
+        });
+    }
+}
+
+function initListingPopUp() {
+    if ($(".image-link").length) {
+        $(".image-link").magnificPopup({
+            type: "image",
+            gallery: {
+                enabled: true,
+            },
+        });
+    }
+    if ($(".image-link2").length) {
+        $(".image-link2").magnificPopup({
             type: "image",
             gallery: {
                 enabled: false,
@@ -1084,8 +1126,11 @@ $(document).ready(function () {
     $("#searchInputBtn").on("click", handleSearchReviewChange);
 
     //Loading page animation
-    // Page loading animation
-    $(window).on("load", function () {
+    // start loading animation here
+    $.when(updateAndPopulate()).done(function () {
+        // when updateAndPopulate() is done, stop the animation
+        initSwiper();
+        initReviewPopUp();
         $("#js-preloader").addClass("loaded");
     });
 });
