@@ -1,0 +1,80 @@
+[
+    {
+        "username": "Amanda_Garcia",
+        "customName": "Amanda Garcia",
+        "course": "BS Psychology",
+        "college": "De La Salle University",
+        "type": "student",
+        "description": "Looking for a good place to stay near De La Salle University. Hopefully with roommates that are also students at DLSU.",
+        "profilePic": "/assets/images/test_image/customer-img1.jpg",
+        "joinDate": "2023-07-04T11:16:54.000Z",
+        "noOfReviews": 6,
+        "followers": 291,
+        "liked": [
+            {
+                "reviewID": 2,
+                "listingID": 1,
+                "userID": "Miles_Morana"
+            }
+        ],
+        "following": [
+            "Miles_Morana"
+        ]
+    },
+    {
+        "username": "Miles_Morana",
+        "customName": "Miles Morana",
+        "course": "BS Business Administration",
+        "college": "De La Salle University",
+        "type": "student",
+        "description": "Looking for a good place to stay near De La Salle University. Hopefully with roommates that are also students at DLSU.",
+        "profilePic": "/assets/images/test_image/customer-img2.jpg",
+        "joinDate": "2021-12-24T21:29:41.000Z",
+        "noOfReviews": 6,
+        "followers": 904,
+        "liked": [],
+        "following": []
+    },
+    {
+        "username": "Katrina",
+        "customName": "Katrina",
+        "course": "BS Biology",
+        "college": "De La Salle University",
+        "type": "student",
+        "description": "Looking for a good place to stay near De La Salle University. Hopefully with roommates that are also students at DLSU.",
+        "profilePic": "/assets/images/test_image/customer-img3.jpg",
+        "joinDate": "2023-05-30T15:19:07.000Z",
+        "noOfReviews": 6,
+        "followers": 944,
+        "liked": [],
+        "following": []
+    },
+    {
+        "username": "John_Vick",
+        "customName": "John Vick",
+        "course": "BS Business Administration",
+        "college": "De La Salle University",
+        "type": "student",
+        "description": "I am a De La Salle University student. Animo La Salle!",
+        "profilePic": "/assets/images/test_image/customer-img4.jpg",
+        "joinDate": "2021-10-25T06:19:10.000Z",
+        "noOfReviews": 6,
+        "followers": 460,
+        "liked": [],
+        "following": []
+    },
+    {
+        "username": "Penguinz0",
+        "customName": "Moist Critikal",
+        "course": "BS Psychology",
+        "college": "De La Salle University",
+        "type": "student",
+        "description": "Proud to be a student at De La Salle University. Passionate about solving complex problems.",
+        "profilePic": "/assets/images/test_image/customer-img5.jpg",
+        "joinDate": "2023-06-06T19:47:15.000Z",
+        "noOfReviews": 6,
+        "followers": 554,
+        "liked": [],
+        "following": []
+    }
+]

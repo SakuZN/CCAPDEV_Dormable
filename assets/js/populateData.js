@@ -878,7 +878,7 @@ if (
 
 function debugButton() {
     //Print JSON Data that can be imported to mongoDB
-    let data = localStorage.getItem("listingAdminDatabase");
+    let data = localStorage.getItem("userLoginDatabase");
 
     if (data) {
         let json = JSON.stringify(JSON.parse(data), null, 2); // Convert to JSON string
