@@ -1,0 +1,92 @@
+[
+    {
+      "username": "moldex_realty",
+      "customName": "Moldex Realty Inc.",
+      "type": "listingOwner",
+      "profilePic": "/assets/images/listing_images/owner-GrandTowers.jpg",
+      "description": "With over 30 years of real estate excellence, Moldex Realty has been providing quality homes and communities that suit the growing needs of Filipino families. From mastered-planned subdivisions that showcase the beauty of natural spaces, perfect for growing families, to contemporary condominiums with complete amenities.",
+      "joinDate": "2021-12-19T17:07:33.000Z",
+      "listings": [
+        "1-gt-manila"
+      ],
+      "noOfListings": 1,
+      "followers": 853,
+      "country": "Philippines",
+      "website": "https://www.moldexrealty.ph"
+    },
+    {
+      "username": "torre_lorenzo",
+      "customName": "Torre Lorenzo<br>Development Corporation",
+      "type": "listingOwner",
+      "profilePic": "/assets/images/listing_images/owner-TLorenzo.jpg",
+      "description": "As the pioneer in premium university residences, Torre Lorenzo continues to build secure, accessible, and dynamic spaces that elevate living experiences.\n\nEach Torre Lorenzo property is distinctive for its innovation and uncompromising quality, and we continue to build and design for the future with this tradition of excellence.",
+      "joinDate": "2023-07-08T20:43:00.000Z",
+      "listings": [
+        "2-torre-lorenzo"
+      ],
+      "noOfListings": 1,
+      "followers": 322,
+      "country": "Philippines",
+      "website": "https://www.torrelorenzo.com/"
+    },
+    {
+      "username": "toplite_dc",
+      "customName": "Toplite Development Corporation",
+      "type": "listingOwner",
+      "profilePic": "/assets/images/listing_images/owner-RResidences.jpg",
+      "description": "Toplite Development Corporation is a young and fast-growing real estate development company directed by its CEO Mr. Johnny Chua\nwho founded Toplite Lumber Corporation, the group’s mother company.\nToplite Lumber Corporation started in October 1986 from a home grown family business of processing lumber from local sawmills.\nThroughout the years, it has imported lumber from different countries and has done logging and saw-milling in the Philippines (1994)\nand has done logging and saw milling local forestry in Aurora and Davao provinces (2002-2011).",
+      "joinDate": "2023-06-30T22:26:14.000Z",
+      "listings": [
+        "3-r-square"
+      ],
+      "noOfListings": 1,
+      "followers": 134,
+      "country": "Philippines",
+      "website": "https://www.facebook.com/toplitedevelopmentcorporation/"
+    },
+    {
+      "username": "eton_properties",
+      "customName": "Eton Properties<br>Philippines Inc.",
+      "type": "listingOwner",
+      "profilePic": "/assets/images/listing_images/owner-ArcherPlace.jpg",
+      "description": "We are Eton Properties, the real estate brand of the Lucio Tan Group, one of the biggest business conglomerates in the Philippines, with full-range projects of office, commercial, residential and hotel properties in key cities in Metro Manila, Laguna and Cebu. With an extensive land bank in strategic locations all over the country, we have diversified our business opportunities to include land lease.",
+      "joinDate": "2020-08-15T14:22:18.000Z",
+      "listings": [
+        "4-archer-place"
+      ],
+      "noOfListings": 1,
+      "followers": 994,
+      "country": "Philippines",
+      "website": "http://www.onearchersplace.com/"
+    },
+    {
+      "username": "smdc",
+      "customName": "SMDC",
+      "type": "listingOwner",
+      "profilePic": "/assets/images/listing_images/owner-GResidences.jpg",
+      "description": "SMDC is the largest and fastest-growing real estate developer in the Philippines. Championing perfectly integrated commercial and residential environments, SMDC provides every Filipino and its investors access to a sustainable and attainable cosmopolitan lifestyle. Through masterfully planned and award-winning complete developments, SMDC has been providing the dream homes of Filipinos in Metro Manila and other key cities in the Philippines.",
+      "joinDate": "2023-07-05T01:10:46.000Z",
+      "listings": [
+        "5-green-residences"
+      ],
+      "noOfListings": 1,
+      "followers": 689,
+      "country": "Philippines",
+      "website": "https://smdc.com/"
+    },
+    {
+      "username": "cityland_dc",
+      "customName": "Cityland Development Corporation",
+      "type": "listingOwner",
+      "profilePic": "/assets/images/listing_images/owner-VCTowers.jpg",
+      "description": "We continue to gain the respect and confidence of our investors for having a track record in the delivery of all projects thus, living up to our presidential award as the Leading Condominium Developer in the country. We shall continue to conceptualize and be a major contributor in the promotion of economic development and progress in creating a stable nation through equitable housing for the middle class... ",
+      "joinDate": "2022-09-21T18:33:35.000Z",
+      "listings": [
+        "6-vito-cruz-towers"
+      ],
+      "noOfListings": 1,
+      "followers": 778,
+      "country": "Philippines",
+      "website": "https://www.cityland.info/"
+    }
+]

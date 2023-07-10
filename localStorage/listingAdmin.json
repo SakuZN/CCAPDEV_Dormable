@@ -1,0 +1,32 @@
+[
+    {
+      "username": "moldex_realty",
+      "email": "listingadmin01@gmail.com",
+      "password": "1234"
+    },
+    {
+      "username": "torre_lorenzo",
+      "email": "listingadmin02@gmail.com",
+      "password": "1234"
+    },
+    {
+      "username": "toplite_dc",
+      "email": "listingadmin03@gmail.com",
+      "password": "1234"
+    },
+    {
+      "username": "eton_properties",
+      "email": "listingadmin04@gmail.com",
+      "password": "1234"
+    },
+    {
+      "username": "smdc",
+      "email": "listingadmin05@gmail.com",
+      "password": "1234"
+    },
+    {
+      "username": "cityland_dc",
+      "email": "listingadmin06@gmail.com",
+      "password": "1234"
+    }
+  ]
