@@ -6,22 +6,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const path = require("path");
 
-//Mongoose
-const { mongoose } = require("mongoose");
+//Mongoose connection to DormableDB
+const mongoDB = require("./modules/mongooseConnect");
 
-//DB connection
-require("dotenv").config();
-const USERNAME = process.env.DB_USER;
-const PASSWORD = process.env.DB_PASSWORD;
-const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@dormabledb.gxbndyi.mongodb.net/DormableDB?retryWrites=true&w=majority`;
-mongoose
-    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB Connected..."))
-    .catch((err) => console.log(err));
+mongoDB().then(() => {
+    console.log("MongoDB Connected...");
+});
 
 //Routers for each collection
 const listingDB_Router = require("./routers/listingDB_Router");
 const listingOwnerDB_Router = require("./routers/listingOwnerDB_Router");
+const listingAdminDB_Router = require("./routers/listingAdminDB_Router");
+const userDB_Router = require("./routers/userDB_Router");
+const userLoginInfoDB_Router = require("./routers/userLoginInfoDB_Router");
 
 //Middleware for static assets
 app.use("/vendor", express.static(path.join(__dirname, "vendor")));
@@ -29,11 +26,13 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 // app.use("/web_pages", express.static(path.join(__dirname, "web_pages")));
 
 /* ==============================================================
-   FETCH/WRITE REQUESTS TO DATABASE
+   FETCH/WRITE REQUESTS TO DATABASE FOR EACH COLLECTION
    ============================================================== */
-//Request for listingDB
 app.use("/api/listingDB", listingDB_Router);
 app.use("/api/listingOwnerDB", listingOwnerDB_Router);
+app.use("/api/listingAdminDB", listingAdminDB_Router);
+app.use("/api/userDB", userDB_Router);
+app.use("/api/userLoginInfoDB", userLoginInfoDB_Router);
 
 /* ==============================================================
    ROUTES TO INDIVIDUAL PAGES
@@ -76,6 +75,10 @@ app.listen(PORT, () => {
         `Server is running on port ${PORT} at http://localhost:${PORT}`
     );
 });
+
+/* ==============================================================
+   MISC CONFIGURATION
+   ============================================================== */
 
 //Make index.html the default page
 app.get("/", (req, res) => {
