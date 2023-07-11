@@ -21,6 +21,7 @@ mongoose
 
 //Routers for each collection
 const listingDB_Router = require("./routers/listingDB_Router");
+const listingOwnerDB_Router = require("./routers/listingOwnerDB_Router");
 
 //Middleware for static assets
 app.use("/vendor", express.static(path.join(__dirname, "vendor")));
@@ -32,6 +33,7 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
    ============================================================== */
 //Request for listingDB
 app.use("/api/listingDB", listingDB_Router);
+app.use("/api/listingOwnerDB", listingOwnerDB_Router);
 
 /* ==============================================================
    ROUTES TO INDIVIDUAL PAGES
