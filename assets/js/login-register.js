@@ -18,40 +18,25 @@ async function login() {
     let pass = document.getElementById("loginPswd").value;
     let rememberMe = document.getElementById("remember").checked;
 
-    let userExists;
-    let userType;
-    switch (checkIfUserExists(email)) {
-        case 1:
-            userExists = checkUserInfo(email, pass);
-            userType = "student";
-            break;
-        case 2:
-            userExists = checkOwnerInfo(email, pass);
-            userType = "owner";
-            break;
-        case 0:
-            await showPopup("No such user exists");
-            return;
-        default:
-            console.error("Invalid return value from checkIfUserExists()");
-            break;
-    }
+    let response = await fetch("/api/loginForm/login", {
+        method: "POST",
+        body: JSON.stringify({
+            email: email,
+            password: pass,
+            rememberMe: rememberMe,
+        }),
+        headers: { "Content-Type": "application/json" },
+    });
 
-    if (!userExists) {
-        await showPopup("Invalid email or password!");
+    //If response is not ok, show error message from response
+    if (!response.ok) {
+        let message = await response.json();
+        await showPopup(message.message);
         return;
     }
 
-    let userLogIn;
-    if (userType === "student") {
-        userLogIn = getUserInfo(email, pass);
-    } else if (userType === "owner") {
-        userLogIn = getOwnerInfo(email, pass);
-    }
-
-    setCurrentUser(userLogIn, true);
-
-    await showPopup("Logged in successfully! Remember to check your profile!");
+    //If response is ok, redirect to home page
+    await showPopup("Login successful! Remember to check your profile!");
     window.location.href = "index.html";
 }
 
@@ -65,13 +50,11 @@ async function register() {
 
     //Add current date as date of registration
     const registerDate = new Date().toISOString();
-
     const newUserData = {
         username: user,
         customName: custom,
         type: "student",
         description: description,
-        profilePic: "/assets/images/test_image/blank_pp.jpg",
         joinDate: registerDate,
         noOfReviews: 0,
         followers: 0,
@@ -86,50 +69,44 @@ async function register() {
         password: pass,
     };
 
-    if (checkExistingUserEmail(email)) {
-        await showPopup("Email already exists!");
-        return;
-    }
-    if (checkExistingUsername(user)) {
-        await showPopup("Username already exists!");
-        return;
-    }
+    let userFormData = new FormData();
+    userFormData.append("profilePic", profilePic);
+    userFormData.append("userData", JSON.stringify(newUserData));
+    userFormData.append("userInfo", JSON.stringify(newUserDataInfo));
 
-    if (profilePic) {
-        const reader = new FileReader();
+    //POST request
+    let fetchResponse = await fetch("/api/loginForm/register", {
+        method: "POST",
+        body: userFormData,
+    });
 
-        reader.onload = async function () {
-            newUserData.profilePic = reader.result;
-            //Register user
-            addNewUser(newUserData, newUserDataInfo);
-
-            await showPopup(
-                "Registered successfully! Please login to continue."
-            );
-            window.location.href = "login.html";
-        };
-        reader.readAsDataURL(profilePic);
+    if (!fetchResponse.ok) {
+        let message = await fetchResponse.json();
+        await showPopup(message.message);
     } else {
-        //Register user
-        addNewUser(newUserData, newUserDataInfo);
-
-        await showPopup("Registered successfully! Please login to continue.");
+        let message = await fetchResponse.json();
+        await showPopup(message.message);
         window.location.href = "login.html";
     }
 }
 
 async function logout() {
-    logoutSession();
-    await showPopup("Logged out successfully!");
-    window.location.href = "index.html";
+    let status = await logoutSession();
+    if (!status) {
+        await showPopup("Error logging out! Please try again later.");
+    } else {
+        await showPopup(status);
+        window.location.href = "index.html";
+    }
 }
 
-function updateMenu() {
+async function updateMenu() {
     let menu = document.querySelector(".nav");
-    let isLoggedIn = getCurrentUser();
+    let isLoggedIn = await getCurrentUser();
+    console.log(isLoggedIn);
     let userID = "";
     if (isLoggedIn) {
-        userID = getCurrentUser();
+        userID = isLoggedIn;
     }
 
     //get the current page
@@ -169,6 +146,16 @@ function updateMenu() {
 
     // Set the updated menu HTML
     menu.innerHTML = menuHTML;
+
+    // Add event listener to logout button
+    if (isLoggedIn) {
+        // Conditional Statement to add logout event listener to logout button when user is logged in
+        const logoutBtn = document.getElementById("logoutBtn");
+        logoutBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            logout();
+        });
+    }
 }
 
 function showPopup(message) {
@@ -197,14 +184,5 @@ if (window.location.href.includes("login.html")) {
     registerForm.addEventListener("submit", function (e) {
         e.preventDefault();
         register();
-    });
-}
-
-// Conditional Statement to add logout event listener to logout button when user is logged in
-if (getCurrentUser()) {
-    const logoutBtn = document.getElementById("logoutBtn");
-    logoutBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        logout();
     });
 }

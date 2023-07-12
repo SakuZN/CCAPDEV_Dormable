@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 //Return one listing based on id parameter
-router.get("/:id", async (req, res) => {
+router.get("/listing/:id", async (req, res) => {
     const listingID = req.params.id;
 
     try {

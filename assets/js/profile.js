@@ -18,15 +18,20 @@ let listingDatabase = getListingDatabase();
    ============================================================== */
 
 //Object function for user profile
-const getUserData = function (userData, isCurrentUser) {
-    this.user = userData;
-    this.isOwnProfile = isCurrentUser;
-    this.userRHData = populateHistoryAsDiv(
-        getUserReviews(this.user.username),
-        this.user,
-        isCurrentUser
-    );
-};
+class UserData {
+    constructor(userData, isCurrentUser) {
+        this.user = userData;
+        this.isOwnProfile = isCurrentUser;
+    }
+
+    async initialize() {
+        this.userRHData = await populateHistoryAsDiv(
+            getUserReviews(this.user.username),
+            this.user,
+            this.isOwnProfile
+        );
+    }
+}
 
 //Object function for review history
 const reviewHistoryData = function (
@@ -67,29 +72,40 @@ function destroySwiper() {
    INITIALIZATION LOGIC EVENT LISTENERS AND FUNCTIONS
    ============================================================== */
 //Check in profile.html if the id is valid
-if (window.location.href.includes("profile.html")) {
-    let url = new URL(window.location.href);
-    let profileID = url.searchParams.get("id");
+(async () => {
+    //Check in profile.html if the id is valid
+    if (window.location.href.includes("profile.html")) {
+        let url = new URL(window.location.href);
+        let profileID = url.searchParams.get("id");
 
-    let checkValidUser = checkExistingUsername(profileID);
-    let checkValidOwner = checkIfOwnerExist(profileID);
+        let checkValidUser = await checkExistingUsername(profileID);
+        let checkValidOwner = await checkIfOwnerExist(profileID);
 
-    if (!checkValidUser && !checkValidOwner) {
-        window.location.href = "404.html";
-    } else {
-        //Initialize the profile page
-        let isCurrentUser = false;
-        if (checkValidUser) {
-            isCurrentUser = checkIfSameUserID(profileID);
-            populateStudentProfile(profileID, isCurrentUser);
-        } else if (checkValidOwner) {
-            isCurrentUser = checkIfSameOwnerID(profileID);
-            populateOwnerProfile(profileID, isCurrentUser);
+        if (!checkValidUser && !checkValidOwner) {
+            window.location.href = "404.html";
+        } else {
+            //Initialize the profile page
+            let isCurrentUser = false;
+            if (checkValidUser) {
+                isCurrentUser = await checkIfSameUserID(profileID);
+                await populateStudentProfile(profileID, isCurrentUser).then(
+                    () => {
+                        $("#js-preloader").addClass("loaded");
+                    }
+                );
+            } else if (checkValidOwner) {
+                isCurrentUser = checkIfSameOwnerID(profileID);
+                await populateOwnerProfile(profileID, isCurrentUser).then(
+                    () => {
+                        $("#js-preloader").addClass("loaded");
+                    }
+                );
+            }
         }
     }
-}
+})();
 
-function populateOwnerProfile(ownerID, currentUser) {
+async function populateOwnerProfile(ownerID, currentUser) {
     let ownerProfile = getSpecificListingOwner(ownerID);
     //Get the needed elements
     let profilePic = document.getElementById("userPic");
@@ -159,11 +175,12 @@ function populateOwnerProfile(ownerID, currentUser) {
     }
 
     //Finally, populate the listing section
-    initOwnerListing(ownerID);
+    await initOwnerListing(ownerID);
 }
 
-function populateStudentProfile(userID, currentUser) {
-    userProfile = new getUserData(getSpecificUser(userID), currentUser);
+async function populateStudentProfile(userID, currentUser) {
+    userProfile = new UserData(await getSpecificUser(userID), currentUser);
+    await userProfile.initialize();
     //Get the needed elements
     let profilePic = document.getElementById("userPic");
     let userName = document.getElementById("profileUserName");
@@ -221,7 +238,7 @@ function populateStudentProfile(userID, currentUser) {
     RHSection.classList.remove("hidden");
 
     //Checks if user is already following the user
-    if (isFollowingUser(userID)) {
+    if (await isFollowingUser(userID)) {
         followButton.innerHTML = "Following";
         followButton.classList.add("followed");
     }
@@ -240,6 +257,12 @@ function populateStudentProfile(userID, currentUser) {
     //Finally, populate the review history
     try {
         populateUserReviewHistory(userProfile.userRHData);
+        if (userProfile.userRHData.length < 1) {
+            reviewPagination.style.display = "none";
+            reviewHistory.style.display = "flex";
+            reviewHistory.style.justifyContent = "center";
+            reviewHistory.append(noReviews);
+        }
     } catch (e) {
         reviewPagination.style.display = "none";
         reviewHistory.style.display = "flex";
@@ -256,13 +279,14 @@ function populateStudentProfile(userID, currentUser) {
 async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
     let userReviewHistory = [];
 
-    reviewHistory.forEach((review) => {
+    for (const review of reviewHistory) {
         let swiperDiv = document.createElement("div");
         swiperDiv.classList.add("swiper-slide");
         swiperDiv.setAttribute("data-review-id", review.reviewID);
         swiperDiv.setAttribute("data-listing-id", review.listingID);
         swiperDiv.setAttribute("data-user-id", review.userID);
-        let listingName = getSpecificListing(review.listingID).name;
+        let listing = await getSpecificListing(review.listingID);
+        let listingName = listing.name;
         let userCustomName = reviewUser.customName;
 
         let scoreClass = "";
@@ -274,11 +298,11 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
         else scoreClass = "customer-rating red";
 
         let buttonHTML;
-        let likedOrNot = checkIfLikedReview(
+        let likedOrNot = (await checkIfLikedReview(
             review.reviewID,
             review.listingID,
             review.userID
-        )
+        ))
             ? "liked"
             : "";
 
@@ -437,7 +461,7 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             isCurrentUser
         );
         userReviewHistory.push(rhData);
-    });
+    }
     return userReviewHistory;
 }
 
@@ -842,8 +866,8 @@ $(document).ready(function () {
      ============================================================== */
 
     //Like button
-    function handleLikeBtnClick() {
-        if (!getCurrentUser()) {
+    async function handleLikeBtnClick() {
+        if (!(await getCurrentUser())) {
             showPopup("Please login to like a review");
             return;
         }
@@ -866,7 +890,7 @@ $(document).ready(function () {
             $likeCount.text(currentCount + 1);
             reviewMarkedHelpful(reviewID, listingID, 1);
         }
-        updateLikedReviews(userID, reviewID, listingID);
+        await updateLikedReviews(userID, reviewID, listingID);
 
         // Toggle the 'liked' class on button
         $button.toggleClass("liked");
@@ -913,7 +937,7 @@ $(document).ready(function () {
     /* ==============================================================
      HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
      ============================================================== */
-    function populateReviewCommentForm() {
+    async function populateReviewCommentForm() {
         let commentBtn = $(this);
         let reviewContainer = commentBtn.closest(".swiper-slide");
         let reviewID = reviewContainer.data("review-id");
@@ -931,7 +955,7 @@ $(document).ready(function () {
         cRUReviewHistory.append(review.divcRU);
         cRUCommentResponse.append(review.divcRUResponse);
 
-        let currentUser = getCurrentUser();
+        let currentUser = await getCurrentUser();
 
         if (
             currentUser.username === listing.ownerID &&
@@ -1016,7 +1040,7 @@ $(document).ready(function () {
         cRUCommentResponse.removeClass("hidden");
     }
 
-    function handleFollowing(event) {
+    async function handleFollowing(event) {
         event.preventDefault();
         let followBtn = $(this);
         if (!getCurrentUser()) {
@@ -1033,13 +1057,13 @@ $(document).ready(function () {
             followBtn.removeClass("followed");
             followBtn.text("Follow");
             followerCountText.text(followerCount - 1);
-            followUser(profileID);
+            await followUser(profileID);
         } else {
             //Add class
             followBtn.addClass("followed");
             followBtn.text("Following");
             followerCountText.text(followerCount + 1);
-            followUser(profileID);
+            await followUser(profileID);
         }
 
         // Disable the button

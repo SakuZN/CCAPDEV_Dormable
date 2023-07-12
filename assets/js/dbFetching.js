@@ -18,7 +18,7 @@ function setListingDatabase(listingDatabase) {
 
 //Function that will return a specific listing from the database based on the listing ID
 async function getSpecificListing(listingID) {
-    const specificListing = await fetch("/api/listingDB/" + listingID);
+    const specificListing = await fetch("/api/listingDB/listing/" + listingID);
     if (specificListing.ok) return await specificListing.json();
     else console.error("Error fetching specific listing:", specificListing);
 }
@@ -101,8 +101,8 @@ function updateUserReviewCount(userID) {
 }
 
 //Updates the given user's liked review in the database
-function updateLikedReviews(userID, reviewID, listingID) {
-    let currentUser = getCurrentUser();
+async function updateLikedReviews(userID, reviewID, listingID) {
+    let currentUser = await getCurrentUser();
     let userDatabase = getUserDatabase();
     let userIndex = userDatabase.findIndex(
         (x) => x.username === currentUser.username
@@ -132,8 +132,8 @@ function updateLikedReviews(userID, reviewID, listingID) {
 }
 
 // Checks if the current User is following the given user
-function isFollowingUser(userID) {
-    let currentUser = getCurrentUser();
+async function isFollowingUser(userID) {
+    let currentUser = await getCurrentUser();
     if (!currentUser) {
         return false;
     }
@@ -141,8 +141,8 @@ function isFollowingUser(userID) {
 }
 
 // Follows the given user
-function followUser(userID) {
-    let currentUser = getCurrentUser();
+async function followUser(userID) {
+    let currentUser = await getCurrentUser();
     let userDatabase = getUserDatabase();
     let toFollow = userDatabase.find((user) => user.username === userID);
     let toFollowIndex = userDatabase.findIndex((x) => x.username === userID);
@@ -171,9 +171,10 @@ function followUser(userID) {
 }
 
 // Gets the specific user from the database
-function getSpecificUser(userID) {
-    const users = getUserDatabase();
-    return users.find((user) => user.username === userID);
+async function getSpecificUser(userID) {
+    const response = await fetch("/api/userDB/users/" + userID);
+    if (response.ok) return await response.json();
+    else console.error("Error fetching specific user:", response);
 }
 
 /* ==============================================================
@@ -230,8 +231,8 @@ function deleteListingReview(reviewID, listingID) {
     }
 }
 
-function checkIfLikedReview(reviewID, listingID, userID) {
-    let currentUser = getCurrentUser();
+async function checkIfLikedReview(reviewID, listingID, userID) {
+    let currentUser = await getCurrentUser();
     if (!currentUser) return false;
     return currentUser.liked.some(
         (likedReview) =>
@@ -319,18 +320,17 @@ function getSpecificListingOwner(ownerID) {
     );
 }
 
-function checkIfSameOwnerID(ownerID) {
-    let currentUser = getCurrentUser();
+async function checkIfSameOwnerID(ownerID) {
+    let currentUser = await getCurrentUser();
     if (currentUser) {
         return ownerID === currentUser.username;
     } else return false;
 }
 
-function checkIfOwnerExist(ownerID) {
-    const listingOwners = getListingOwnerDatabase();
-    return listingOwners.some(
-        (listingOwner) => listingOwner.username === ownerID
-    );
+async function checkIfOwnerExist(ownerID) {
+    const response = await fetch(`/api/listingOwnerDB/owner/${ownerID}`);
+    const data = await response.json();
+    return !!data;
 }
 
 /* ==============================================================
@@ -389,8 +389,8 @@ function addNewOwnerResponse(ownerResponse) {
    REGISTER FUNCTIONS
    ============================================================== */
 
-function checkIfSameUserID(userID) {
-    let currentUser = getCurrentUser();
+async function checkIfSameUserID(userID) {
+    let currentUser = await getCurrentUser();
     if (currentUser) {
         return userID === currentUser.username;
     }
@@ -437,11 +437,9 @@ function checkExistingUserEmail(email) {
     return !!user;
 }
 
-function checkExistingUsername(username) {
-    const userLoginDatabase = JSON.parse(
-        localStorage.getItem("userLoginDatabase")
-    );
-    const user = userLoginDatabase.find((user) => user.username === username);
+async function checkExistingUsername(username) {
+    const response = await fetch(`api/userDB/users/${username}`);
+    const user = await response.json();
     return !!user;
 }
 
@@ -493,7 +491,6 @@ function getOwnerInfo(email, password) {
     const owner = adminDatabase.find(
         (owner) => owner.email === email && owner.password === password
     );
-    console.log(owner);
     return ownerInfoDatabase.find((x) => x.username === owner.username);
 }
 
@@ -513,17 +510,10 @@ function isInSessionStorage() {
     return !!(ss_login === "true" && ss);
 }
 
-function getCurrentUser() {
-    let ls = localStorage.getItem("currentUser");
-    let ls_login = localStorage.getItem("isLoggedIn");
-    let ss = sessionStorage.getItem("currentUser");
-    let ss_login = sessionStorage.getItem("isLoggedIn");
-
-    if (ls_login === "true" && ls) {
-        return JSON.parse(ls);
-    } else if (ss_login === "true" && ss) {
-        return JSON.parse(ss);
-    } else return false;
+async function getCurrentUser() {
+    let response = await fetch("api/userDB/current-user");
+    if (!response.ok) return false;
+    return await response.json();
 }
 
 function setLocalStorage(user) {
@@ -544,11 +534,11 @@ function setCurrentUser(user, remember) {
     }
 }
 
-function logoutSession() {
-    localStorage.removeItem("currentUser");
-    localStorage.setItem("isLoggedIn", "false");
-    sessionStorage.removeItem("currentUser");
-    sessionStorage.setItem("isLoggedIn", "false");
+async function logoutSession() {
+    let response = await fetch("api/userDB/logout");
+    if (!response.ok) return false;
+    let message = await response.json();
+    return message.message;
 }
 
 /* ==============================================================
