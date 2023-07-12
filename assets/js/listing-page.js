@@ -684,7 +684,7 @@ $(document).ready(function () {
         };
         //add the review to the listing
         addListingReview(newReview);
-        updateUserReviewCount(newReview.userID);
+        await updateUserReviewCount(newReview.userID);
         // Hide the review form
         $("#userForm")[0].reset();
         $(".reviewForm").addClass("hidden");

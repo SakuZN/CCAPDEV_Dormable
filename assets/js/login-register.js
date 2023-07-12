@@ -103,7 +103,6 @@ async function logout() {
 async function updateMenu() {
     let menu = document.querySelector(".nav");
     let isLoggedIn = await getCurrentUser();
-    console.log(isLoggedIn);
     let userID = "";
     if (isLoggedIn) {
         userID = isLoggedIn;
