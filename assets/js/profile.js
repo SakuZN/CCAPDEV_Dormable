@@ -610,23 +610,26 @@ function parseDate(date) {
 
 async function updateProfile() {
     //Get the needed elements
-    let profilePic = document.getElementById("userPic").src;
+    let inputProfilePic = document.getElementById("fileUpload");
+    console.log(inputProfilePic);
+    let profilePic =
+        inputProfilePic.files && inputProfilePic.files[0]
+            ? inputProfilePic.files[0]
+            : null;
+    console.log(profilePic);
     let customName = document.getElementById("input-customName").value;
     let course = document.getElementById("input-course").value;
     let college = document.getElementById("input-college").value;
     let description = document.getElementById("input-description").value;
 
     //update user data and save to local storage
-    let currentUser = getCurrentUser();
-    currentUser.profilePic = profilePic;
+    let currentUser = await getCurrentUser();
     currentUser.customName = customName;
     currentUser.course = course;
     currentUser.college = college;
     currentUser.description = description;
 
-    updateUserDatabase(currentUser);
-
-    await showPopup("Profile updated!");
+    await updateUser(currentUser, profilePic);
     window.location.href = "profile.html?id=" + currentUser.username;
 }
 
@@ -663,10 +666,10 @@ $(document).ready(function () {
             800
         );
     });
-    $("#editProfile").on("submit", function (event) {
+    $("#editProfile").on("submit", async function (event) {
         //prevent default form submission
         event.preventDefault();
-        updateProfile();
+        await updateProfile();
     });
 
     $(".file-upload").on("click", function () {
@@ -1043,8 +1046,9 @@ $(document).ready(function () {
     async function handleFollowing(event) {
         event.preventDefault();
         let followBtn = $(this);
-        if (!getCurrentUser()) {
-            showPopup("Please login to follow a user");
+        let currentUser = await getCurrentUser();
+        if (!currentUser) {
+            await showPopup("Please login to follow a user");
             return;
         }
         let url = new URL(window.location.href);

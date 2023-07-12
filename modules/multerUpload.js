@@ -8,6 +8,8 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
         let date = Date.now(); // gets the current timestamp in milliseconds
+        //Remove any spaces from the original file name
+        file.originalname = file.originalname.replace(/\s/g, "");
         let newName = `${date}-${file.originalname}`;
         callback(null, newName);
     },

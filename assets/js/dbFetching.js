@@ -59,8 +59,10 @@ async function updateListingReviewScore() {
 /* ==============================================================
    BASE CRUD OPERATIONS FOR USER DATABASE
    ============================================================== */
-function getUserDatabase() {
-    return JSON.parse(localStorage.getItem("userDatabase"));
+async function getUserDatabase() {
+    let response = await fetch("/api/userDB");
+    if (response.ok) return await response.json();
+    else console.error("Error fetching userDB:", response);
 }
 
 function setUserDatabase(userDatabase) {
@@ -72,32 +74,31 @@ function setUserDatabase(userDatabase) {
    ============================================================== */
 
 //Updates the given user in the database
-function updateUserDatabase(user) {
-    let userDatabase = getUserDatabase();
-
-    let userIndex = userDatabase.findIndex((x) => x.username === user.username);
-
-    if (userIndex === -1) {
-        console.error("User not found in database:", user);
-        return;
+async function updateUser(user, profilePic) {
+    let userData = new FormData();
+    userData.append("profilePic", profilePic);
+    userData.append("userData", JSON.stringify(user));
+    let response = await fetch("/api/userDB/update", {
+        method: "PUT",
+        body: userData,
+    });
+    let message = await response.json();
+    if (!response.ok) {
+        await showPopup(message.message);
+    } else {
+        await showPopup(message.message);
     }
-
-    userDatabase[userIndex] = user;
-    setUserDatabase(userDatabase);
-
-    if (isInLocalStorage()) setLocalStorage(userDatabase[userIndex]);
-    else setSessionStorage(userDatabase[userIndex]);
 }
 
 //Updates the given user's review count in the database
-function updateUserReviewCount(userID) {
-    let userDatabase = getUserDatabase();
-    let userIndex = userDatabase.findIndex((x) => x.username === userID);
-    userDatabase[userIndex].noOfReviews++;
-    setUserDatabase(userDatabase);
-
-    if (isInLocalStorage()) setLocalStorage(userDatabase[userIndex]);
-    else setSessionStorage(userDatabase[userIndex]);
+async function updateUserReviewCount(userID) {
+    let response = await fetch(`api/userDB/users/review/${userID}`);
+    let message = await response.json();
+    if (!response.ok) {
+        console.log(message.message);
+    } else {
+        console.log(message.message);
+    }
 }
 
 //Updates the given user's liked review in the database
@@ -143,7 +144,7 @@ async function isFollowingUser(userID) {
 // Follows the given user
 async function followUser(userID) {
     let currentUser = await getCurrentUser();
-    let userDatabase = getUserDatabase();
+    let userDatabase = await getUserDatabase();
     let toFollow = userDatabase.find((user) => user.username === userID);
     let toFollowIndex = userDatabase.findIndex((x) => x.username === userID);
     let userIndex = userDatabase.findIndex(
@@ -535,7 +536,7 @@ function setCurrentUser(user, remember) {
 }
 
 async function logoutSession() {
-    let response = await fetch("api/userDB/logout");
+    let response = await fetch("api/loginForm/logout");
     if (!response.ok) return false;
     let message = await response.json();
     return message.message;
