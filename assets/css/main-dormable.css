@@ -24,6 +24,7 @@ font & reset css
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Tsukimi+Rounded:wght@700&display=swap');
 @import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 /*
 ---------------------------------------------
 reset
@@ -2150,7 +2151,7 @@ Pre Loader
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #fff;
+    background-color: #ffffff;
     display: -webkit-box;
     display: flex;
     -webkit-box-align: center;
@@ -2160,14 +2161,22 @@ Pre Loader
     opacity: 1;
     visibility: visible;
     z-index: 9999;
-    -webkit-transition: opacity 0.25s ease;
-    transition: opacity 0.25s ease;
+    -webkit-transition: opacity 0.25s ease 0.5s;
+    transition: opacity 0.25s ease 0.5s;
 }
 
 .js-preloader.loaded {
-    opacity: 0;
-    visibility: hidden;
+    animation: fadeOut 1.2s forwards;
     pointer-events: none;
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
 @-webkit-keyframes dot {

@@ -140,7 +140,7 @@ async function populateListingPage(id_page) {
 
     //Try catch in case the listing has no reviews
     try {
-        reviewHistory = populateHistoryAsDiv(getListingReviews(id_page));
+        reviewHistory = await populateHistoryAsDiv(getListingReviews(id_page));
         populateListingReviews(reviewHistory);
     } catch (e) {
         console.log(e);
@@ -173,28 +173,28 @@ async function populateListingPage(id_page) {
    ============================================================== */
 
 //Turns review history into divs and returns an array of review history objects
-function populateHistoryAsDiv(reviewHistory) {
+async function populateHistoryAsDiv(reviewHistory) {
     let userReviewHistory = [];
-    reviewHistory.forEach((review) => {
+    for (const review of reviewHistory) {
         let swiperDiv = document.createElement("div");
         swiperDiv.classList.add("swiper-slide", "loaded-element");
         swiperDiv.setAttribute("data-review-id", review.reviewID);
         swiperDiv.setAttribute("data-listing-id", review.listingID);
         swiperDiv.setAttribute("data-user-id", review.userID);
 
-        let isCurrentUser = checkIfSameUserID(review.userID);
+        let isCurrentUser = await checkIfSameUserID(review.userID);
 
-        let reviewUser = getSpecificUser(review.userID);
+        let reviewUser = await getSpecificUser(review.userID);
         let userCustomName = reviewUser.customName;
         let scoreClass = "";
         let checkEdit = "";
 
         let buttonHTML;
-        let likedOrNot = checkIfLikedReview(
+        let likedOrNot = (await checkIfLikedReview(
             review.reviewID,
             review.listingID,
             review.userID
-        )
+        ))
             ? "liked"
             : "";
 
@@ -358,7 +358,7 @@ function populateHistoryAsDiv(reviewHistory) {
             isCurrentUser
         );
         userReviewHistory.push(rhData);
-    });
+    }
     return userReviewHistory;
 }
 
@@ -528,19 +528,21 @@ function initListingPopUp() {
     }
 }
 
-function userHasReviewed() {
+async function userHasReviewed() {
     let userReview = false;
-    if (!getCurrentUser()) return userReview;
+    let currentUser = await getCurrentUser();
+    if (!currentUser) return userReview;
     reviewHistory.forEach((rh) => {
-        if (rh.RHData.userID === getCurrentUser().username) userReview = true;
+        if (rh.RHData.userID === currentUser.username) userReview = true;
     });
     return userReview;
 }
 
-function showUserReview() {
+async function showUserReview() {
     let currentUserID = "";
-    if (getCurrentUser()) {
-        currentUserID = getCurrentUser().username;
+    let currentUser = await getCurrentUser();
+    if (currentUser) {
+        currentUserID = currentUser.username;
     } else return;
 
     reviewHistory.sort((a, b) => {
@@ -574,11 +576,11 @@ $(document).ready(function () {
     /* ==============================================================
      HELPER FUNCTIONS
      ============================================================== */
-    function handleReviewBtnClick() {
-        if (!getCurrentUser()) {
-            showPopup("Please login to leave a review");
-            return;
-        } else if (userHasReviewed()) {
+    async function handleReviewBtnClick() {
+        let currentUser = await getCurrentUser();
+        if (!currentUser) {
+            await showPopup("Please login to leave a review");
+        } else if (await userHasReviewed()) {
             $(".edit-review").removeClass("hidden");
 
             $("html, body").animate(
@@ -589,7 +591,7 @@ $(document).ready(function () {
             );
 
             //Sorts the swiper to show the user's review first
-            showUserReview();
+            await showUserReview();
             // Gets the data from the reviewHistory array then populates the edit form
             populateEditReviewForm();
         } else {
@@ -602,13 +604,11 @@ $(document).ready(function () {
                 1200
             );
 
-            if (getCurrentUser().profilePic !== "")
-                $("#profilePic").attr("src", getCurrentUser().profilePic);
+            if (currentUser.profilePic !== "")
+                $("#profilePic").attr("src", currentUser.profilePic);
 
-            $("#userName").text(getCurrentUser().username);
-            $("#userNumOfReview").text(
-                getCurrentUser().noOfReviews + " Reviews"
-            );
+            $("#userName").text(currentUser.username);
+            $("#userNumOfReview").text(currentUser.noOfReviews + " Reviews");
         }
     }
 
@@ -652,7 +652,8 @@ $(document).ready(function () {
     /* ==============================================================
      HELPER FUNCTIONS FOR REVIEW FORM
      ============================================================== */
-    function handleReviewFormSubmit(event) {
+    async function handleReviewFormSubmit(event) {
+        let currentUser = await getCurrentUser();
         event.preventDefault();
         //Get the necessary data from the form
         let reviewTitle = $("#reviewTitle").val();
@@ -670,7 +671,7 @@ $(document).ready(function () {
         //add as a new review
         let newReview = {
             reviewID: generateReviewID(id),
-            userID: getCurrentUser().username,
+            userID: currentUser.username,
             listingID: id,
             reviewTitle: reviewTitle,
             reviewContent: reviewContent,
@@ -881,14 +882,14 @@ $(document).ready(function () {
     /* ==============================================================
      HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
      ============================================================== */
-    function populateReviewCommentForm() {
+    async function populateReviewCommentForm() {
         let commentBtn = $(this);
         let reviewContainer = commentBtn.closest(".swiper-slide");
         let reviewID = reviewContainer.data("review-id");
         let listingID = reviewContainer.data("listing-id");
         let userID = reviewContainer.data("user-id");
         let review = findUserReview(reviewID);
-        let listing = getSpecificListing(listingID);
+        let listing = await getSpecificListing(listingID);
         let cRUReviewHistory = $("#cRUReviewHistory");
         let cRUCommentResponse = $("#cRUComment");
         let cRUCommentForm = $("#cRUCommentForm");
@@ -899,7 +900,7 @@ $(document).ready(function () {
         cRUReviewHistory.append(review.divcRU);
         cRUCommentResponse.append(review.divcRUResponse);
 
-        let currentUser = getCurrentUser();
+        let currentUser = await getCurrentUser();
 
         if (
             currentUser.username === listing.ownerID &&
@@ -1017,8 +1018,8 @@ $(document).ready(function () {
         );
     }
 
-    function handleLikeBtnClick() {
-        if (!getCurrentUser()) {
+    async function handleLikeBtnClick() {
+        if (!(await getCurrentUser())) {
             showPopup("Please login to like a review");
             return;
         }
@@ -1041,7 +1042,7 @@ $(document).ready(function () {
             $likeCount.text(currentCount + 1);
             reviewMarkedHelpful(reviewID, listingID, 1);
         }
-        updateLikedReviews(userID, reviewID, listingID);
+        await updateLikedReviews(userID, reviewID, listingID);
 
         // Toggle the 'liked' class on button
         $button.toggleClass("liked");

@@ -2,6 +2,7 @@
    IMPORTS AND CONFIGURATION
    ============================================================== */
 const express = require("express");
+const session = require("./modules/userSession");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const path = require("path");
@@ -11,6 +12,23 @@ const mongoDB = require("./modules/mongooseConnect");
 
 mongoDB().then(() => {
     console.log("MongoDB Connected...");
+});
+
+//Session configuration
+app.use(session);
+// Use middleware to parse request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+//Redirect http to https
+app.use(function (req, res, next) {
+    if (
+        req.get("x-forwarded-proto") !== "https" &&
+        app.get("env") === "production"
+    ) {
+        res.redirect(`https://${req.hostname}${req.url}`);
+    } else {
+        next();
+    }
 });
 
 //Routers for each collection
@@ -32,7 +50,7 @@ app.use("/api/listingDB", listingDB_Router);
 app.use("/api/listingOwnerDB", listingOwnerDB_Router);
 app.use("/api/listingAdminDB", listingAdminDB_Router);
 app.use("/api/userDB", userDB_Router);
-app.use("/api/userLoginInfoDB", userLoginInfoDB_Router);
+app.use("/api/loginForm", userLoginInfoDB_Router);
 
 /* ==============================================================
    ROUTES TO INDIVIDUAL PAGES

@@ -3,18 +3,11 @@ const bcrypt = require("bcrypt");
 
 const listingAdminSchema = new mongoose.Schema(
     {
-        username: String,
-        email: String,
-        password: String,
+        username: { type: String, required: true, unique: true },
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
     },
     { collection: "listingAdminDatabase" }
 );
-
-listingAdminSchema.pre("save", async function (next) {
-    if (this.isModified("password")) {
-        this.password = await bcrypt.hash(this.password, 10);
-    }
-    next();
-});
 
 module.exports = mongoose.model("listingAdminDatabase", listingAdminSchema);
