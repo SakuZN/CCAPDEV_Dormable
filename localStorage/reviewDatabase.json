@@ -1,0 +1,135 @@
+[
+  {
+    "reviewID": 1,
+    "userID": "Amanda_Garcia",
+    "listingID": "1-gt-manila",
+    "reviewTitle": "The Grand Towers Manila Review",
+    "reviewContent": "This place near De La Salle University is outstanding! Highly recommended. The place was clean and the staff were friendly. I would definitely recommend this place to others.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 5,
+    "reviewDate": "2020-09-12T05:29:00.000Z",
+    "reviewMarkedHelpful": 15,
+    "wasEdited": false,
+    "isDeleted": false
+  },
+  {
+    "reviewID": 2,
+    "userID": "Miles_Morana",
+    "listingID": "1-gt-manila",
+    "reviewTitle": "The Grand Towers Manila Review",
+    "reviewContent": "I had a positive experience at this place near De La Salle University. The place was clean and the staff were friendly. I would recommend this place to others.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 4,
+    "reviewDate": "2020-02-14T01:40:57.000Z",
+    "reviewMarkedHelpful": 39,
+    "wasEdited": false,
+    "isDeleted": false
+  },
+  {
+    "reviewID": 3,
+    "userID": "Katrina",
+    "listingID": "1-gt-manila",
+    "reviewTitle": "The Grand Towers Manila Review",
+    "reviewContent": "This place near De La Salle University is extremely disappointing. I would not recommend this place to anyone. The place is dirty and the staff are rude.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 1,
+    "reviewDate": "2020-11-09T22:53:46.000Z",
+    "reviewMarkedHelpful": 118,
+    "wasEdited": false,
+    "isDeleted": false
+  },
+  {
+    "reviewID": 4,
+    "userID": "John_Vick",
+    "listingID": "1-gt-manila",
+    "reviewTitle": "The Grand Towers Manila Review",
+    "reviewContent": "This place near De La Salle University provided an average experience. The place was clean and the staff were friendly. However, I was not impressed by the facilities.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 3,
+    "reviewDate": "2021-09-01T01:23:08.000Z",
+    "reviewMarkedHelpful": 119,
+    "wasEdited": false,
+    "isDeleted": false
+  },
+  {
+    "reviewID": 5,
+    "userID": "Penguinz0",
+    "listingID": "1-gt-manila",
+    "reviewTitle": "The Grand Towers Manila Review",
+    "reviewContent": "I had a negative experience at this place near De La Salle University. I tried to give this place a chance, but I was disappointed.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 2,
+    "reviewDate": "2021-05-04T22:40:34.000Z",
+    "reviewMarkedHelpful": 4,
+    "wasEdited": false,
+    "isDeleted": false
+  },
+  {
+    "reviewID": 1,
+    "userID": "Amanda_Garcia",
+    "listingID": "2-torre-lorenzo",
+    "reviewTitle": "2 Torre Lorenzo Review",
+    "reviewContent": "This place near De La Salle University is extremely disappointing. I would not recommend this place to anyone. The place is dirty and the staff are rude.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 1,
+    "reviewDate": "2023-07-07T06:33:51.000Z",
+    "reviewMarkedHelpful": 2,
+    "wasEdited": false,
+    "isDeleted": false
+  },
+  {
+    "reviewID": 2,
+    "userID": "Miles_Morana",
+    "listingID": "2-torre-lorenzo",
+    "reviewTitle": "2 Torre Lorenzo Review",
+    "reviewContent": "This place near De La Salle University is extremely disappointing. I would not recommend this place to anyone. The place is dirty and the staff are rude.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 0,
+    "reviewDate": "2021-01-16T02:16:32.000Z",
+    "reviewMarkedHelpful": 111,
+    "wasEdited": false,
+    "isDeleted": false
+  },
+  {
+    "reviewID": 3,
+    "userID": "Katrina",
+    "listingID": "2-torre-lorenzo",
+    "reviewTitle": "2 Torre Lorenzo Review",
+    "reviewContent": "I had a negative experience at this place near De La Salle University. I tried to give this place a chance, but I was disappointed.",
+    "reviewIMG": [
+      "/assets/images/test_image/featured1.jpg",
+      "/assets/images/test_image/featured2.jpg",
+      "/assets/images/test_image/featured3.jpg"
+    ],
+    "reviewScore": 2,
+    "reviewDate": "2020-12-22T09:02:13.000Z"
+   }
+]
