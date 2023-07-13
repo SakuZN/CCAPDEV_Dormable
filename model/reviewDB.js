@@ -7,12 +7,12 @@ const reviewSchema = new mongoose.Schema(
         listingID: { type: String, required: true },
         reviewTitle: { type: String, required: true },
         reviewContent: { type: String, required: true },
-        reviewIMG: { type: String, required: true },
+        reviewIMG: [{ type: String, required: false }], // array of images. String is mandatory for each image.
         reviewScore: { type: Number, required: true },
         reviewDate: { type: Date, required: true },
         reviewMarkedHelpful: { type: Number, required: true },
         wasEdited: { type: Boolean, required: false },
-        isDeleted: { type: Boolean, required: false }
+        isDeleted: { type: Boolean, required: false },
     },
     { collection: "review" }
 );

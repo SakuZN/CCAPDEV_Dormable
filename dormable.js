@@ -55,35 +55,35 @@ app.use("/api/loginForm", userLoginInfoDB_Router);
 /* ==============================================================
    ROUTES TO INDIVIDUAL PAGES
    ============================================================== */
-app.get("/index.html", (req, res) => {
+app.get("/index", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "index.html"));
 });
 
-app.get("/404.html", (req, res) => {
+app.get("/404", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "404.html"));
 });
 
-app.get("/explore-listing.html", (req, res) => {
+app.get("/explore-listing", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "explore-listing.html"));
 });
 
-app.get("/listing.html", (req, res) => {
+app.get("/listing", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "listing.html"));
 });
 
-app.get("/login.html", (req, res) => {
+app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "login.html"));
 });
 
-app.get("/profile.html", (req, res) => {
+app.get("/profile", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "profile.html"));
 });
 
-app.get("/request-listing.html", (req, res) => {
+app.get("/request-listing", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "request-listing.html"));
 });
 
-app.get("/search-result.html", (req, res) => {
+app.get("/search-result", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "search-result.html"));
 });
 
@@ -100,7 +100,10 @@ app.listen(PORT, () => {
 
 //Make index.html the default page
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "web_pages", "index.html"));
+    res.redirect("/index");
+});
+app.get("/index.html", (req, res) => {
+    res.redirect("/index");
 });
 
 //Make 404 request refer to custom 404 page

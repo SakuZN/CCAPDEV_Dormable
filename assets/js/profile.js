@@ -74,7 +74,7 @@ function destroySwiper() {
 //Check in profile.html if the id is valid
 (async () => {
     //Check in profile.html if the id is valid
-    if (window.location.href.includes("profile.html")) {
+    if (window.location.href.includes("/profile")) {
         let url = new URL(window.location.href);
         let profileID = url.searchParams.get("id");
 
@@ -82,7 +82,7 @@ function destroySwiper() {
         let checkValidOwner = await checkIfOwnerExist(profileID);
 
         if (!checkValidUser && !checkValidOwner) {
-            window.location.href = "404.html";
+            window.location.href = "/404";
         } else {
             //Initialize the profile page
             let isCurrentUser = false;
@@ -331,7 +331,7 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                     <span style="display: flex; justify-content: center; margin-top: 5px">${
                         reviewUser.noOfReviews
                     } reviews</span>
-                    <a href="listing.html?id=${
+                    <a href="/listing?id=${
                         review.listingID
                     }" target="_blank"><p style="font-weight: bold">[${listingName}]</p></a>
             </div>
@@ -630,7 +630,7 @@ async function updateProfile() {
     currentUser.description = description;
 
     await updateUser(currentUser, profilePic);
-    window.location.href = "profile.html?id=" + currentUser.username;
+    window.location.href = "/profile?id=" + currentUser.username;
 }
 
 /* ==============================================================

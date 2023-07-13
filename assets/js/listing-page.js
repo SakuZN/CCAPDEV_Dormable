@@ -78,7 +78,7 @@ let id = url.searchParams.get("id");
 (async () => {
     let checkValidId = await checkIfValidListingID(id);
     if (id === null || !checkValidId) {
-        window.location.href = "404.html";
+        window.location.href = "/404";
     }
 })();
 const updateAndPopulate = async () => {
@@ -87,7 +87,7 @@ const updateAndPopulate = async () => {
             await populateListingPage(id);
         })
         .catch((err) => {
-            window.location.href = "404.html";
+            window.location.href = "/404";
         });
 };
 
@@ -167,7 +167,7 @@ async function populateListingPage(id_page) {
     ownerCustomName.innerHTML = owner.customName;
     ownerUserName.innerHTML = "@" + owner.username;
     listingOwner.src = listing.ownerImg;
-    ownerProfile.href = `profile.html?id=${owner.username}`;
+    ownerProfile.href = `/profile?id=${owner.username}`;
 }
 
 /* ==============================================================
@@ -220,9 +220,7 @@ async function populateHistoryAsDiv(reviewHistory) {
         swiperDiv.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
-                <a href="profile.html?id=${
-                    review.userID
-                }" style="cursor: pointer">
+                <a href="/profile?id=${review.userID}" style="cursor: pointer">
                     <img src="${
                         reviewUser.profilePic
                     }" class="img-fluid" alt="#">

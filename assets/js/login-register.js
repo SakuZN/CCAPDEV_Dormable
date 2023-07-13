@@ -37,7 +37,7 @@ async function login() {
 
     //If response is ok, redirect to home page
     await showPopup("Login successful! Remember to check your profile!");
-    window.location.href = "index.html";
+    window.location.href = "/index";
 }
 
 async function register() {
@@ -86,7 +86,7 @@ async function register() {
     } else {
         let message = await fetchResponse.json();
         await showPopup(message.message);
-        window.location.href = "login.html";
+        window.location.href = "/login";
     }
 }
 
@@ -96,7 +96,7 @@ async function logout() {
         await showPopup("Error logging out! Please try again later.");
     } else {
         await showPopup(status);
-        window.location.href = "index.html";
+        window.location.href = "/index";
     }
 }
 
@@ -117,28 +117,28 @@ async function updateMenu() {
     if (isLoggedIn) {
         // Display menu for logged-in users
         menuHTML += `
-      <li><a href="index.html" class="${
-          currentPage.includes("index.html") ? "active" : ""
+      <li><a href="/index" class="${
+          currentPage.includes("index") ? "active" : ""
       }">Home</a></li>
-      <li><a href="profile.html?id=${userID.username}" class="${
-            currentPage.includes("profile.html") ? "active" : ""
+      <li><a href="/profile?id=${userID.username}" class="${
+            currentPage.includes("profile") ? "active" : ""
         }">My Profile</a></li>
-      <li><a href="explore-listing.html" class="${
-          currentPage.includes("explore-listing.html") ? "active" : ""
+      <li><a href="/explore-listing" class="${
+          currentPage.includes("explore-listing") ? "active" : ""
       }">Explore Listings</a></li>
-      <li><a href="index.html" id="logoutBtn">Logout</a></li>
+      <li><a href="/index" id="logoutBtn">Logout</a></li>
     `;
     } else {
         // Display menu for non-logged-in users
         menuHTML += `
-      <li><a href="index.html" class="${
-          currentPage.includes("index.html") ? "active" : ""
+      <li><a href="/index" class="${
+          currentPage.includes("index") ? "active" : ""
       }">Home</a></li>
-      <li><a href="explore-listing.html" class="${
-          currentPage.includes("explore-listing.html") ? "active" : ""
+      <li><a href="/explore-listing" class="${
+          currentPage.includes("explore-listing") ? "active" : ""
       }">Explore Listings</a></li>
-      <li><a href="login.html" class="${
-          currentPage.includes("login.html") ? "active" : ""
+      <li><a href="/login" class="${
+          currentPage.includes("login") ? "active" : ""
       }">Log In | Sign Up</a></li>
     `;
     }
@@ -172,7 +172,7 @@ function showPopup(message) {
 updateMenu();
 
 //Conditional statement to add event listeners to login and register forms in login.html
-if (window.location.href.includes("login.html")) {
+if (window.location.href.includes("login")) {
     const loginForm = document.getElementById("loginForm");
     const registerForm = document.getElementById("signupForm");
     loginForm.addEventListener("submit", function (e) {

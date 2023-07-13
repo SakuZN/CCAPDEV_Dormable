@@ -74,7 +74,7 @@
             <div class="col-12">
                 <nav class="main-nav" style="color: black">
                     <!-- ***** Logo Start ***** -->
-                    <a class="logo" href="index.html"> </a>
+                    <a class="logo" href="/index"> </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
@@ -153,7 +153,7 @@
                         request form for a specific listing you are looking for!
                     </p>
                     <div class="main-white-button">
-                        <a href="request-listing.html"
+                        <a href="/request-listing"
                         ><i class="fa fa-plus"></i> Request a Listing</a
                         >
                     </div>
@@ -275,7 +275,7 @@
 <script>
     $(document).ready(function () {
         if (sessionStorage.getItem("searchFilter") === null) {
-            window.location.href = "index.html";
+            window.location.href = "/index";
         }
         initQueryListing();
 
