@@ -8,6 +8,13 @@ cloudinary.config({
     secure: true,
 });
 
-console.log("Cloudinary Connected...");
+//Check if config is valid, otherwise throw error
+cloudinary.api.ping().then((r) => {
+    if (r) {
+        console.log("Cloudinary connected...");
+    } else {
+        console.log("Cloudinary connection failed...");
+    }
+});
 
 module.exports = cloudinary;

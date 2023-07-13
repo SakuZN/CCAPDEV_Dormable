@@ -72,20 +72,22 @@ function destroySwiper() {
 /* ==============================================================
    INITIALIZATION LOGIC EVENT LISTENERS AND FUNCTIONS
    ============================================================== */
-// get the id from the url
 let url = new URL(window.location.href);
 let id = url.searchParams.get("id");
-let checkValidId = checkIfValidListingID(id);
-if (id === null || checkValidId === undefined) {
-    window.location.href = "404.html";
-}
+// get the id from the url
+(async () => {
+    let checkValidId = await checkIfValidListingID(id);
+    if (id === null || !checkValidId) {
+        window.location.href = "404.html";
+    }
+})();
 const updateAndPopulate = async () => {
     return await updateListingReviewScore()
         .then(async () => {
             await populateListingPage(id);
         })
         .catch((err) => {
-            console.log(err);
+            window.location.href = "404.html";
         });
 };
 
