@@ -128,6 +128,8 @@
       "/assets/images/test_image/featured1.jpg",
       "/assets/images/test_image/featured2.jpg",
       "/assets/images/test_image/featured3.jpg"
-    ]
-}
+    ],
+    "reviewScore": 2,
+    "reviewDate": "2020-12-22T09:02:13.000Z"
+   }
 ]
