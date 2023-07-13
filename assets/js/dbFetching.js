@@ -26,6 +26,8 @@ async function getSpecificListing(listingID) {
 // Function that will check if the listing ID is valid and exists in the database
 async function checkIfValidListingID(listingID) {
     const listings = await getListingDatabase();
+    console.log(listings);
+    console.log(listingID);
     return listings.some((listing) => listing.listingID === listingID);
 }
 

@@ -11,14 +11,6 @@ const path = require("path");
 const isValidPassword = (plaintextPassword, hashedPassword) => {
     return argon2.verify(hashedPassword, plaintextPassword);
 };
-router.get("/", async (req, res) => {
-    try {
-        const userLoginInfo = await userLoginInfoDB.find();
-        res.json(userLoginInfo);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
 
 //Handle Login
 router.post("/login", async (req, res) => {
