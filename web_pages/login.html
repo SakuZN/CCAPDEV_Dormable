@@ -52,13 +52,13 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a class="logo" href="index.html"> </a>
+                    <a class="logo" href="/index"> </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="explore-listing.html">Explore Listings</a></li>
-                        <li><a href="login.html">Log In | Sign Up</a></li>
+                        <li><a href="/index">Home</a></li>
+                        <li><a href="/explore-listing">Explore Listings</a></li>
+                        <li><a href="/login">Log In | Sign Up</a></li>
                     </ul>
                     <a class="menu-trigger">
                         <span>Menu</span>
@@ -242,7 +242,7 @@
 
         (async () => {
             if (await getCurrentUser()) {
-                window.location.href = "/index.html";
+                window.location.href = "/index";
             }
         })();
 

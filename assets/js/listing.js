@@ -169,13 +169,13 @@ async function generateFeaturedListing() {
         col.innerHTML = `
       <div class="listing-item">
        <div class="left-image">
-        <a href="listing.html?id=${listing.listingID}"><img src="${
+        <a href="/listing?id=${listing.listingID}"><img src="${
             listing.img[0]
         }" alt=""></a>
          </div>
             <div class="right-content align-self-center">
              <h4>${listing.name}</h4>
-              <h6>by: <a href="profile.html?id=${listing.ownerID}">${
+              <h6>by: <a href="/profile?id=${listing.ownerID}">${
             listing.owner
         }</a></h6>
                <ul class="rate" style="margin-top: 0;">
@@ -194,7 +194,7 @@ async function generateFeaturedListing() {
                <em>${listing.location}</em></span>
 
                <div class="main-white-button">
-               <a href="listing.html?id=${
+               <a href="/listing?id=${
                    listing.listingID
                }"><i class="fa fa-eye"></i> Check Now</a>
          </div>
@@ -237,7 +237,7 @@ async function generateListingOwnerListing(ownerID) {
         col.innerHTML = `
       <div class="listing-item">
        <div class="left-image">
-        <a href="listing.html?id=${listing.listingID}"><img src="${
+        <a href="/listing?id=${listing.listingID}"><img src="${
             listing.img[0]
         }" alt=""></a>
          </div>
@@ -260,7 +260,7 @@ async function generateListingOwnerListing(ownerID) {
                <em>${listing.location}</em></span>
 
                <div class="main-white-button">
-               <a href="listing.html?id=${
+               <a href="/listing?id=${
                    listing.listingID
                }"><i class="fa fa-eye"></i> Check Now</a>
          </div>
@@ -290,15 +290,15 @@ async function generateQueryListing() {
       <div class="property-item">
         <div class="pi-pic set-bg" data-setbg="${
             listing.img[0]
-        }" style="background-image: url(${listing.img[0]})" >
-          <div class="label">${listing.reviewScore.toFixed(1)}</div>
-        </div>
-        <div class="pi-text">
-          <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
-          <div class="pt-price">${listing.price}<span>/month</span></div>
-          <h5><a href="listing.html?id=${listing.listingID}">${
-            listing.name
-        }</a></h5>
+        }" style="background-image: url(${listing.img[0]})">
+    <a href="/listing?id=${
+        listing.listingID
+    }"><div class="label">${listing.reviewScore.toFixed(1)}</div></a>
+</div>
+<div class="pi-text">
+    <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
+    <div class="pt-price">${listing.price}<span>/month</span></div>
+    <h5>${listing.name}</h5>
           <p><span class="icon-location-pin"></span> "${listing.location}"</p>
           <p><span class="icon-phone"></span>"${listing.phone}"</p>
           <hr>
@@ -314,7 +314,7 @@ async function generateQueryListing() {
             <div class="pa-item">
               <div class="pa-info">
                 <img src="${listing.ownerImg}" alt="">
-                <h6><a href="profile.html?id=${listing.ownerID}">${
+                <h6><a href="/profile?id=${listing.ownerID}">${
             listing.owner
         }</a></h6>
               </div>
@@ -343,17 +343,17 @@ async function generateExploreListing() {
         );
         indivListing.innerHTML = `
       <div class="property-item">
+        <a href="/listing?id=${listing.listingID}">
         <div class="pi-pic set-bg" data-setbg="${
             listing.img[0]
         }" style="background-image: url(${listing.img[0]})" >
           <div class="label">${listing.reviewScore.toFixed(1)}</div>
         </div>
+        </a>
         <div class="pi-text">
           <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
           <div class="pt-price">${listing.price}<span>/month</span></div>
-          <h5><a href="listing.html?id=${listing.listingID}">${
-            listing.name
-        }</a></h5>
+          <h3>${listing.name}</h3>
           <p><span class="icon-location-pin"></span> "${listing.location}"</p>
           <p><span class="icon-phone"></span>"${listing.phone}"</p>
           <hr>
@@ -369,7 +369,7 @@ async function generateExploreListing() {
             <div class="pa-item">
               <div class="pa-info">
                 <img src="${listing.ownerImg}" alt="">
-                <h6><a href="profile.html?id=${listing.ownerID}">${
+                <h6><a href="/profile?id=${listing.ownerID}">${
             listing.owner
         }</a></h6>
               </div>
