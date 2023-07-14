@@ -171,6 +171,47 @@ router.patch("/users/reviewLiked", async (req, res) => {
     }
 });
 
+//Follow a user
+router.patch("/users/follow/:id", async (req, res) => {
+    let userToFollow = req.params.id;
+    let currentUser = req.session.userID;
+
+    try {
+        const user = await userDB.findOne({ username: currentUser });
+        const followedUser = await userDB.findOne({ username: userToFollow });
+        if (!user) {
+            return res.status(404).send({
+                message: `No user found with username: ${currentUser}`,
+            });
+        } else if (!followedUser) {
+            return res.status(404).send({
+                message: `No user found with username: ${userToFollow}`,
+            });
+        }
+
+        const index = user.following.findIndex(
+            (following) => following === userToFollow
+        );
+
+        if (index === -1) {
+            user.following.push(userToFollow);
+            followedUser.followers = followedUser.followers + 1;
+        } else {
+            user.following.splice(index, 1);
+            followedUser.followers = followedUser.followers - 1;
+        }
+
+        // Save changes
+        await user.save();
+
+        res.status(200).send({
+            message: "User follow status has been updated!",
+        });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+});
+
 //Returns all user Information
 router.get("/", async (req, res) => {
     try {

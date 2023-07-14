@@ -139,7 +139,9 @@ async function populateListingPage(id_page) {
 
     //Try catch in case the listing has no reviews
     try {
-        reviewHistory = await populateHistoryAsDiv(getListingReviews(id_page));
+        reviewHistory = await populateHistoryAsDiv(
+            await getListingReviews(id_page)
+        );
         populateListingReviews(reviewHistory);
     } catch (e) {
         console.log(e);
@@ -569,7 +571,7 @@ function findUserReview(reviewID) {
    DOM EVENT LISTENERS
    ============================================================== */
 
-$(document).ready(function () {
+$(document).ready(async function () {
     /* ==============================================================
      HELPER FUNCTIONS
      ============================================================== */
@@ -667,7 +669,7 @@ $(document).ready(function () {
         let id = url.searchParams.get("id");
         //add as a new review
         let newReview = {
-            reviewID: generateReviewID(id),
+            reviewID: await generateReviewID(id),
             userID: currentUser.username,
             listingID: id,
             reviewTitle: reviewTitle,
@@ -680,7 +682,7 @@ $(document).ready(function () {
             isDeleted: false,
         };
         //add the review to the listing
-        addListingReview(newReview);
+        await addListingReview(newReview);
         await updateUserReviewCount(newReview.userID);
         await updateListingReviewScore(newReview.listingID);
         // Hide the review form
@@ -769,7 +771,7 @@ $(document).ready(function () {
     /* ==============================================================
      HELPER FUNCTIONS FOR EDIT REVIEW FORM
      ============================================================== */
-    function submitEditReviewForm(event) {
+    async function submitEditReviewForm(event) {
         event.preventDefault();
         let editForm = $("#editReviewForm");
         let reviewID = editForm.find("#editReview").data("review-id");
@@ -786,13 +788,12 @@ $(document).ready(function () {
         let starRating = $("input[name='rateEdit']:checked").val();
 
         //Update the review
-        let reviewToEdit = getSpecificUserReview(listingID, reviewID);
+        let reviewToEdit = await getSpecificUserReview(listingID, reviewID);
         reviewToEdit.reviewTitle = reviewTitle;
         reviewToEdit.reviewContent = reviewContent;
         reviewToEdit.reviewScore = parseInt(starRating);
         reviewToEdit.reviewIMG = reviewImgs;
-        reviewToEdit.wasEdited = true;
-        editListingReview(reviewToEdit);
+        await editListingReview(reviewToEdit);
 
         // Hide the edit form
         $(".edit-review").addClass("hidden");
@@ -987,7 +988,7 @@ $(document).ready(function () {
     MISC HELPER FUNCTIONS
     ============================================================== */
 
-    function handleDeleteReviewModal(e) {
+    async function handleDeleteReviewModal(e) {
         e.preventDefault();
         $.confirmModal(
             "Delete this review?",
@@ -998,13 +999,13 @@ $(document).ready(function () {
                 modalVerticalCenter: true,
                 fadeAnimation: true,
             },
-            function (el) {
+            async function (el) {
                 let deleteBtn = $(el);
                 let userReview = deleteBtn.closest(".mark-helpful");
                 let reviewContainer = userReview.closest(".swiper-slide");
                 let reviewID = reviewContainer.data("review-id");
                 let listingID = reviewContainer.data("listing-id");
-                deleteListingReview(reviewID, listingID);
+                await deleteListingReview(reviewID, listingID);
                 showPopup("Review deleted successfully!").then(function () {
                     location.reload();
                 });
