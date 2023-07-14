@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userDB = require("../model/userDB");
 const reviewDB = require("../model/reviewDB");
+const listingOwnerDB = require("../model/listingOwnerDB");
 const upload = require("../modules/multerUpload");
 const cloudinary = require("../modules/cloudinaryConnect");
 const path = require("path");
@@ -178,17 +179,25 @@ router.patch("/users/follow/:id", async (req, res) => {
 
     try {
         const user = await userDB.findOne({ username: currentUser });
-        const followedUser = await userDB.findOne({ username: userToFollow });
+        let followedUser = await userDB.findOne({ username: userToFollow });
         if (!user) {
             return res.status(404).send({
                 message: `No user found with username: ${currentUser}`,
             });
-        } else if (!followedUser) {
-            return res.status(404).send({
-                message: `No user found with username: ${userToFollow}`,
-            });
+            //If initially cant't find in userDB, check listingOwnerDB
         }
-
+        if (!followedUser) {
+            followedUser = await listingOwnerDB.findOne({
+                username: userToFollow,
+            });
+            if (!followedUser) {
+                return res.status(404).send({
+                    message: `No user found with username: ${userToFollow}`,
+                });
+            }
+        }
+        console.log(user);
+        console.log(followedUser);
         const index = user.following.findIndex(
             (following) => following === userToFollow
         );
@@ -203,6 +212,7 @@ router.patch("/users/follow/:id", async (req, res) => {
 
         // Save changes
         await user.save();
+        await followedUser.save();
 
         res.status(200).send({
             message: "User follow status has been updated!",

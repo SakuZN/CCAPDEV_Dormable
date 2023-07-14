@@ -91,7 +91,7 @@ const updateAndPopulate = async () => {
 async function populateListingPage(id_page) {
     //Get the listing data
     let listing = await getSpecificListing(id_page);
-    let owner = getSpecificListingOwner(listing.ownerID);
+    let owner = await getSpecificListingOwner(listing.ownerID);
 
     //Get the listing page elements to populate
     let listingName = document.getElementById("listing-name");
@@ -315,16 +315,20 @@ async function populateHistoryAsDiv(reviewHistory) {
             "Owner has not responded to this review yet.";
 
         if (
-            checkIfCommented(review.reviewID, review.listingID, review.userID)
+            await checkIfCommented(
+                review.reviewID,
+                review.listingID,
+                review.userID
+            )
         ) {
             cRUReviewResponse.innerHTML = "";
             cRUReviewResponse.style.textAlign = "";
-            let commentResponse = getReviewResponse(
+            let commentResponse = await getReviewResponse(
                 review.reviewID,
                 review.listingID,
                 review.userID
             );
-            let owner = getSpecificListingOwner(commentResponse.ownerID);
+            let owner = await getSpecificListingOwner(commentResponse.ownerID);
             cRUReviewResponse.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
@@ -525,6 +529,15 @@ function initListingPopUp() {
             },
         });
     }
+}
+
+function initUserPopUp() {
+    $(".user-image").magnificPopup({
+        type: "image",
+        gallery: {
+            enabled: true,
+        },
+    });
 }
 
 async function userHasReviewed() {
@@ -903,7 +916,7 @@ $(document).ready(async function () {
 
         if (
             currentUser.username === listing.ownerID &&
-            !checkIfCommented(reviewID, listingID, userID)
+            !(await checkIfCommented(reviewID, listingID, userID))
         ) {
             cRUCommentForm.removeClass("hidden");
             cRUCommentFormBtn.removeClass("hidden");
@@ -916,7 +929,7 @@ $(document).ready(async function () {
         }
     }
 
-    function handleSubmitCommentForm(event) {
+    async function handleSubmitCommentForm(event) {
         event.preventDefault();
         let formSubmitBtn = $(this);
         let commentModal = formSubmitBtn.closest("#commentModal");
@@ -939,7 +952,7 @@ $(document).ready(async function () {
             commentDate: commentDate,
         };
         //Add the comment to the database
-        addNewOwnerResponse(newComment);
+        await addNewOwnerResponse(newComment);
 
         $("#commentModal").modal("hide");
         showPopup("Comment added successfully!").then(function () {
