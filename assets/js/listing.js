@@ -30,14 +30,6 @@ const queryListingObject = function (listing, queryListing) {
     };
 };
 
-const searchFilterObject = function (searchQuery) {
-    this.location = searchQuery.location;
-    this.searchType = searchQuery.searchType;
-    this.rating = searchQuery.rating;
-    this.minPrice = searchQuery.minPrice;
-    this.maxPrice = searchQuery.maxPrice;
-};
-
 /* ==============================================================
    OWL CAROUSEL FUNCTIONS
    ============================================================== */
@@ -284,21 +276,22 @@ async function generateQueryListing() {
             "col-lg-4",
             "col-md-6",
             "item",
-            "loaded-element"
+            "loaded-element",
+            "item-hover"
         );
         indivListing.innerHTML = `
       <div class="property-item">
+        <a href="/listing?id=${listing.listingID}">
         <div class="pi-pic set-bg" data-setbg="${
             listing.img[0]
-        }" style="background-image: url(${listing.img[0]})">
-    <a href="/listing?id=${
-        listing.listingID
-    }"><div class="label">${listing.reviewScore.toFixed(1)}</div></a>
-</div>
-<div class="pi-text">
-    <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
-    <div class="pt-price">${listing.price}<span>/month</span></div>
-    <h5>${listing.name}</h5>
+        }" style="background-image: url(${listing.img[0]})" >
+          <div class="label">${listing.reviewScore.toFixed(1)}</div>
+        </div>
+        </a>
+        <div class="pi-text">
+          <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
+          <div class="pt-price">${listing.price}<span>/month</span></div>
+          <h2>${listing.name}</h2>
           <p><span class="icon-location-pin"></span> "${listing.location}"</p>
           <p><span class="icon-phone"></span>"${listing.phone}"</p>
           <hr>
@@ -339,7 +332,8 @@ async function generateExploreListing() {
             "col-lg-4",
             "col-md-6",
             "item",
-            "loaded-element"
+            "loaded-element",
+            "item-hover"
         );
         indivListing.innerHTML = `
       <div class="property-item">
@@ -353,7 +347,7 @@ async function generateExploreListing() {
         <div class="pi-text">
           <a href="#" class="heart-icon"><span class="icon-heart"></span></a>
           <div class="pt-price">${listing.price}<span>/month</span></div>
-          <h3>${listing.name}</h3>
+          <h2>${listing.name}</h2>
           <p><span class="icon-location-pin"></span> "${listing.location}"</p>
           <p><span class="icon-phone"></span>"${listing.phone}"</p>
           <hr>
@@ -429,30 +423,16 @@ function loadMoreListings() {
 }
 
 async function filterListings() {
-    let listings = await getListingDatabase();
-    let filters = new searchFilterObject(
-        JSON.parse(sessionStorage.getItem("searchFilter"))
+    let urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.toString());
+    let response = await fetch(
+        "/api/listingDB/filtered-listings?" + urlParams.toString()
     );
-    console.log(sessionStorage.getItem("searchFilter"));
-    //Filter the listing based on the filters
-    let filteredListings = listings.filter(
-        (listing) =>
-            (filters.location
-                ? listing.location
-                      .toLowerCase()
-                      .includes(filters.location.toLowerCase())
-                : true) &&
-            (filters.searchType
-                ? listing.name
-                      .toLowerCase()
-                      .includes(filters.searchType.toLowerCase())
-                : true) &&
-            (filters.rating ? listing.reviewScore >= filters.rating : true) &&
-            (filters.minPrice ? listing.minPrice >= filters.minPrice : true) &&
-            (filters.maxPrice ? listing.maxPrice <= filters.maxPrice : true)
-    );
-    console.log(filteredListings);
-    return filteredListings;
+    let listings = await response.json();
+    if (listings.length === 0 || listings.length < 1) {
+        return [];
+    }
+    return listings;
 }
 
 function sortListing(sortType) {

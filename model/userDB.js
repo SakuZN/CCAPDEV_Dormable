@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
         liked: [
             {
                 reviewID: { type: Number, required: true },
-                listingID: { type: Number, required: true },
+                listingID: { type: String, required: true },
                 userID: { type: String, required: true },
             },
             // ... more liked reviews ...

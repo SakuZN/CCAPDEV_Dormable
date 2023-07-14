@@ -10,10 +10,6 @@ const path = require("path");
 //Mongoose connection to DormableDB
 const mongoDB = require("./modules/mongooseConnect");
 
-mongoDB().then(() => {
-    console.log("MongoDB Connected...");
-});
-
 //Session configuration
 app.use(session);
 // Use middleware to parse request bodies
@@ -46,7 +42,7 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 /* ==============================================================
    FETCH/WRITE REQUESTS TO DATABASE FOR EACH COLLECTION
    ============================================================== */
-app.use("/api/listingDB", listingDB_Router);
+app.use("/api/listingDB", listingDB_Router.router);
 app.use("/api/listingOwnerDB", listingOwnerDB_Router);
 app.use("/api/listingAdminDB", listingAdminDB_Router);
 app.use("/api/userDB", userDB_Router);
@@ -87,13 +83,6 @@ app.get("/search-result", (req, res) => {
     res.sendFile(path.join(__dirname, "web_pages", "search-result.html"));
 });
 
-//Listening to the server
-app.listen(PORT, () => {
-    console.log(
-        `Server is running on port ${PORT} at http://localhost:${PORT}`
-    );
-});
-
 /* ==============================================================
    MISC CONFIGURATION
    ============================================================== */
@@ -112,7 +101,22 @@ app.use(function (req, res, next) {
 });
 
 //remove .html from the url
-app.use(express.static(__dirname + "/web_pages", { extensions: ["html"] }));
+//app.use(express.static(__dirname + "/web_pages", { extensions: ["html"] }));
 
 console.log(`Current directory: ${process.cwd()}`);
 console.log(`__dirname: ${__dirname}`);
+
+/* ==============================================================
+    START SERVER
+   ==============================================================*/
+//Listening to the server
+app.listen(PORT, async () => {
+    await mongoDB(3);
+    await listingDB_Router.updateAllListingScores();
+
+    console.log(
+        `Server is running on port ${PORT} at http://localhost:${PORT}`
+    );
+
+    setInterval(listingDB_Router.updateAllListingScores, 1000 * 60 * 30);
+});

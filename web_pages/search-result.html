@@ -273,11 +273,9 @@
 <script src="/assets/js/login-register.js"></script>
 <script src="/assets/js/custom.js"></script>
 <script>
-    $(document).ready(function () {
-        if (sessionStorage.getItem("searchFilter") === null) {
-            window.location.href = "/index";
-        }
-        initQueryListing();
+    $(document).ready(async function () {
+
+        await initQueryListing();
 
         document.getElementById("sortListings").selectedIndex = 0;
 
