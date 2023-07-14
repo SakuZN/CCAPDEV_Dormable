@@ -26,7 +26,7 @@ class UserData {
 
     async initialize() {
         this.userRHData = await populateHistoryAsDiv(
-            getUserReviews(this.user.username),
+            await getUserReviews(this.user.username),
             this.user,
             this.isOwnProfile
         );
@@ -688,12 +688,12 @@ $(document).ready(function () {
     });
 
     //Edit button for user review
-    $(".editReviewBtn").on("click", function () {
+    $(".editReviewBtn").on("click", async function () {
         let editBtn = $(this);
         let userReview = editBtn.closest(".mark-helpful");
         let reviewID = userReview.data("review-id");
         let listingID = userReview.data("listing-id");
-        let thisReview = getSpecificUserReview(listingID, reviewID);
+        let thisReview = await getSpecificUserReview(listingID, reviewID);
         //uncover edit form
         let editForm = $(".edit-review");
         editForm.removeClass("hidden");
@@ -804,7 +804,7 @@ $(document).ready(function () {
     });
 
     //Submit
-    $("#editReviewForm").on("submit", function (e) {
+    $("#editReviewForm").on("submit", async function (e) {
         e.preventDefault();
         // Get listing and review id data directly from the form
         let reviewID = $("#editReview").data("review-id");
@@ -818,13 +818,13 @@ $(document).ready(function () {
         });
 
         // Update the review
-        let reviewToEdit = getSpecificUserReview(listingID, reviewID);
+        let reviewToEdit = await getSpecificUserReview(listingID, reviewID);
         reviewToEdit.reviewTitle = reviewTitle;
         reviewToEdit.reviewContent = reviewContent;
         reviewToEdit.reviewScore = parseInt(reviewScore);
         reviewToEdit.reviewIMG = reviewIMG;
         reviewToEdit.wasEdited = true;
-        editListingReview(reviewToEdit);
+        await editListingReview(reviewToEdit);
 
         // Hide the edit form
         $("#editForm").addClass("hidden");
@@ -847,12 +847,12 @@ $(document).ready(function () {
                 modalVerticalCenter: true,
                 fadeAnimation: true,
             },
-            function (el) {
+            async function (el) {
                 let deleteBtn = $(el);
                 let userReview = deleteBtn.closest(".mark-helpful");
                 let reviewID = userReview.data("review-id");
                 let listingID = userReview.data("listing-id");
-                deleteListingReview(reviewID, listingID);
+                await deleteListingReview(reviewID, listingID);
                 showPopup("Review deleted successfully!").then(function () {
                     location.reload();
                 });
@@ -887,11 +887,9 @@ $(document).ready(function () {
         if ($button.hasClass("liked")) {
             // Decrement the like count if already liked
             $likeCount.text(currentCount - 1);
-            reviewMarkedHelpful(reviewID, listingID, -1);
         } else {
             // Increment the like count if not liked
             $likeCount.text(currentCount + 1);
-            reviewMarkedHelpful(reviewID, listingID, 1);
         }
         await updateLikedReviews(userID, reviewID, listingID);
 

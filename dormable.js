@@ -33,6 +33,8 @@ const listingOwnerDB_Router = require("./routers/listingOwnerDB_Router");
 const listingAdminDB_Router = require("./routers/listingAdminDB_Router");
 const userDB_Router = require("./routers/userDB_Router");
 const userLoginInfoDB_Router = require("./routers/userLoginInfoDB_Router");
+const ownerResponseDB_Router = require("./routers/ownerResponseDB_Router");
+const reviewDB_Router = require("./routers/reviewDB_Router");
 
 //Middleware for static assets
 app.use("/vendor", express.static(path.join(__dirname, "vendor")));
@@ -47,6 +49,8 @@ app.use("/api/listingOwnerDB", listingOwnerDB_Router);
 app.use("/api/listingAdminDB", listingAdminDB_Router);
 app.use("/api/userDB", userDB_Router);
 app.use("/api/loginForm", userLoginInfoDB_Router);
+app.use("/api/reviewDB", reviewDB_Router);
+app.use("/api/ownerResponseDB", ownerResponseDB_Router);
 
 /* ==============================================================
    ROUTES TO INDIVIDUAL PAGES

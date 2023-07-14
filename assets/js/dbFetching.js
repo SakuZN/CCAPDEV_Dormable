@@ -114,32 +114,12 @@ async function isFollowingUser(userID) {
 
 // Follows the given user
 async function followUser(userID) {
-    let currentUser = await getCurrentUser();
-    let userDatabase = await getUserDatabase();
-    let toFollow = userDatabase.find((user) => user.username === userID);
-    let toFollowIndex = userDatabase.findIndex((x) => x.username === userID);
-    let userIndex = userDatabase.findIndex(
-        (x) => x.username === currentUser.username
-    );
-
-    let index = userDatabase[userIndex].following.findIndex(
-        (following) => following === toFollow.username
-    );
-
-    if (index !== -1) {
-        userDatabase[userIndex].following.splice(index, 1);
-        toFollow.followers--;
-    } else {
-        userDatabase[userIndex].following.push(toFollow.username);
-        toFollow.followers++;
-    }
-
-    userDatabase[toFollowIndex] = toFollow;
-
-    setUserDatabase(userDatabase);
-
-    if (isInLocalStorage()) setLocalStorage(userDatabase[userIndex]);
-    else setSessionStorage(userDatabase[userIndex]);
+    let response = await fetch("/api/userDB/users/follow/" + userID, {
+        method: "PATCH",
+    });
+    let message = await response.json();
+    if (!response.ok) console.error(message.message);
+    else console.log(message.message);
 }
 
 // Gets the specific user from the database
@@ -153,54 +133,49 @@ async function getSpecificUser(userID) {
    BASE CRUD OPERATIONS FOR LISTING REVIEW DATABASE
    ============================================================== */
 
-function getListingReviewDatabase() {
-    return JSON.parse(localStorage.getItem("reviewDatabase"));
-}
-
-function setListingReviewDatabase(reviewDatabase) {
-    localStorage.setItem("reviewDatabase", JSON.stringify(reviewDatabase));
+async function getListingReviewDatabase() {
+    const listingDB = await fetch("/api/reviewDB");
+    if (listingDB.ok) return await listingDB.json();
+    else console.error("Error fetching listingDB:", listingDB);
 }
 
 /* ==============================================================
    FUNCTION OPERATIONS FOR LISTING REVIEW DATABASE
    ============================================================== */
-function generateReviewID(listingID) {
-    let reviewDatabase = getListingReviewDatabase();
+async function generateReviewID(listingID) {
+    let reviewDatabase = await getListingReviewDatabase();
     let listingReviews = reviewDatabase.filter(
         (review) => review.listingID === listingID
     );
     return listingReviews.length + 1;
 }
 
-function addListingReview(review) {
-    let reviewDatabase = getListingReviewDatabase();
-    reviewDatabase.push(review);
-    setListingReviewDatabase(reviewDatabase);
+async function addListingReview(review) {
+    let response = await fetch("/api/reviewDB/reviewAdd", {
+        method: "POST",
+        body: JSON.stringify(review),
+        headers: { "Content-Type": "application/json" },
+    });
+    let message = await response.json();
+    if (!response.ok) console.error(message.message);
+    else console.log(message.message);
 }
 
-function deleteListingReview(reviewID, listingID) {
-    let reviewDatabase = getListingReviewDatabase();
-    let reviewToDelete = reviewDatabase.find(
-        (review) =>
-            review.listingID === listingID && review.reviewID === reviewID
-    );
+async function deleteListingReview(reviewID, listingID) {
+    let userData = {
+        reviewID: reviewID,
+        listingID: listingID,
+    };
 
-    if (reviewToDelete) {
-        reviewToDelete.isDeleted = true;
-        let userDatabase = getUserDatabase();
-        let userToUpdate = userDatabase.find(
-            (user) => user.username === reviewToDelete.userID
-        );
-        if (userToUpdate) {
-            userToUpdate.noOfReviews--;
-        }
-        setListingReviewDatabase(reviewDatabase);
-        setUserDatabase(userDatabase);
-        if (isInLocalStorage()) setLocalStorage(userToUpdate);
-        else setSessionStorage(userToUpdate);
-    } else {
-        console.log("Review not found.");
-    }
+    let response = await fetch("/api/reviewDB/reviewMarkDelete", {
+        method: "PATCH",
+        body: JSON.stringify(userData),
+        headers: { "Content-Type": "application/json" },
+    });
+
+    let message = await response.json();
+    if (!response.ok) console.error(message.message);
+    else console.log(message.message);
 }
 
 async function checkIfLikedReview(reviewID, listingID, userID) {
@@ -214,56 +189,35 @@ async function checkIfLikedReview(reviewID, listingID, userID) {
     );
 }
 
-function editListingReview(reviewToEdit) {
-    let reviewDatabase = getListingReviewDatabase();
-    let reviewIndex = reviewDatabase.findIndex(
-        (review) =>
-            review.listingID === reviewToEdit.listingID &&
-            review.reviewID === reviewToEdit.reviewID
-    );
-    if (reviewIndex !== -1) {
-        reviewDatabase[reviewIndex] = reviewToEdit;
-        setListingReviewDatabase(reviewDatabase);
-    }
+async function editListingReview(reviewToEdit) {
+    let response = await fetch("/api/reviewDB/reviewEdit", {
+        method: "PUT",
+        body: JSON.stringify(reviewToEdit),
+        headers: { "Content-Type": "application/json" },
+    });
+    let message = await response.json();
+    if (!response.ok) console.error(message.message);
+    else console.log(message.message);
 }
 
-function getUserReviews(userID) {
-    const reviews = getListingReviewDatabase();
-    return reviews.filter(
-        (review) => review.userID === userID && review.isDeleted === false
-    );
+//Gets all the review of a specific user
+async function getUserReviews(userID) {
+    let response = await fetch("/api/reviewDB/reviewUser/" + userID);
+    if (response.ok) return await response.json();
+    else console.error("Error fetching user reviews:", response);
 }
 
-function getSpecificUserReview(listingID, reviewID) {
-    const reviews = getListingReviewDatabase();
-    return reviews.find(
-        (review) =>
-            review.listingID === listingID && review.reviewID === reviewID
-    );
+//Gets a specific review, userID is not needed as it's not a primary identifier
+async function getSpecificUserReview(listingID, reviewID) {
+    let response = await fetch(`api/reviewDB/review/${reviewID}/${listingID}`);
+    if (response.ok) return await response.json();
+    else console.error("Error fetching specific user review:", response);
 }
 
-function getListingReviews(listingID) {
-    const reviews = getListingReviewDatabase();
-    return reviews.filter(
-        (review) => review.listingID === listingID && review.isDeleted === false
-    );
-}
-
-function reviewMarkedHelpful(reviewID, listingID, value) {
-    let reviewDatabase = getListingReviewDatabase();
-    let reviewToMark = reviewDatabase.find(
-        (review) =>
-            review.listingID === listingID && review.reviewID === reviewID
-    );
-    let reviewIndex = reviewDatabase.findIndex(
-        (review) =>
-            review.listingID === listingID && review.reviewID === reviewID
-    );
-    reviewToMark.reviewMarkedHelpful += value;
-    if (reviewIndex !== -1) {
-        reviewDatabase[reviewIndex] = reviewToMark;
-        setListingReviewDatabase(reviewDatabase);
-    }
+async function getListingReviews(listingID) {
+    let response = await fetch("/api/reviewDB/reviewListing/" + listingID);
+    if (response.ok) return await response.json();
+    else console.error("Error fetching listing reviews:", response);
 }
 
 /* ==============================================================
@@ -369,46 +323,6 @@ async function checkIfSameUserID(userID) {
     return false;
 }
 
-function checkIfUserExists(email) {
-    /*
-    return 1 if user exist and is type student
-    return 2 if user exist and is type owner
-    return 0 if user does not exist
-    */
-    const adminDatabase = JSON.parse(
-        localStorage.getItem("listingAdminDatabase")
-    );
-    const userLoginDatabase = JSON.parse(
-        localStorage.getItem("userLoginDatabase")
-    );
-
-    const user = userLoginDatabase.find((user) => user.email === email);
-    if (user) return 1;
-
-    const owner = adminDatabase.find((owner) => owner.email === email);
-    if (owner) return 2;
-
-    return 0;
-}
-
-function checkUserInfo(email, password) {
-    const userLoginDatabase = JSON.parse(
-        localStorage.getItem("userLoginDatabase")
-    );
-    const user = userLoginDatabase.find(
-        (user) => user.email === email && user.password === password
-    );
-    return !!user;
-}
-
-function checkExistingUserEmail(email) {
-    const userLoginDatabase = JSON.parse(
-        localStorage.getItem("userLoginDatabase")
-    );
-    const user = userLoginDatabase.find((user) => user.email === email);
-    return !!user;
-}
-
 async function checkExistingUsername(username) {
     const response = await fetch(`api/userDB/users/${username}`);
     const user = await response.json();
@@ -427,43 +341,6 @@ function addNewUser(user, userData) {
         JSON.stringify(userLoginDatabase)
     );
     setUserDatabase(userDatabase);
-}
-
-/* ==============================================================
-   LOGIN FUNCTIONS
-   ============================================================== */
-
-function getUserInfo(email, password) {
-    const userLoginDatabase = JSON.parse(
-        localStorage.getItem("userLoginDatabase")
-    );
-    const userInfoDatabase = getUserDatabase();
-    const user = userLoginDatabase.find(
-        (user) => user.email === email && user.password === password
-    );
-    return userInfoDatabase.find((x) => x.username === user.username);
-}
-
-function checkOwnerInfo(email, password) {
-    const adminDatabase = JSON.parse(
-        localStorage.getItem("listingAdminDatabase")
-    );
-    return adminDatabase.some(
-        (owner) => owner.email === email && owner.password === password
-    );
-}
-
-function getOwnerInfo(email, password) {
-    const adminDatabase = JSON.parse(
-        localStorage.getItem("listingAdminDatabase")
-    );
-    const ownerInfoDatabase = JSON.parse(
-        localStorage.getItem("listingOwnerDatabase")
-    );
-    const owner = adminDatabase.find(
-        (owner) => owner.email === email && owner.password === password
-    );
-    return ownerInfoDatabase.find((x) => x.username === owner.username);
 }
 
 /* ==============================================================
