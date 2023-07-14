@@ -258,10 +258,7 @@
 <script>
     $(document).ready(function () {
 
-
-        //$(updateListingReviewScore());
         initFeaturedListing();
-
         $('input[type="number"]').on('keydown', function (e) {
             // Prevent '.' and ','
             if (e.key === '.' || e.key === ',')
@@ -313,10 +310,10 @@
             };
 
             //Store in session storage
-            sessionStorage.setItem('searchFilter', JSON.stringify(searchFilter));
+            let params = new URLSearchParams(searchFilter).toString();
 
             //Redirect to search page
-            window.location.href = 'search-result.html';
+            window.location.href = `/search-result?${params}`;
 
         });
     });

@@ -8,10 +8,6 @@ async function getListingDatabase() {
     else console.error("Error fetching listingDB:", listingDB);
 }
 
-function setListingDatabase(listingDatabase) {
-    localStorage.setItem("listingDatabase", JSON.stringify(listingDatabase));
-}
-
 /* ==============================================================
    LISTING DATABASE FUNCTIONS USED BY VARIOUS SCRIPTS AND PAGES
    ============================================================== */
@@ -26,8 +22,6 @@ async function getSpecificListing(listingID) {
 // Function that will check if the listing ID is valid and exists in the database
 async function checkIfValidListingID(listingID) {
     const listings = await getListingDatabase();
-    console.log(listings);
-    console.log(listingID);
     return listings.some((listing) => listing.listingID === listingID);
 }
 
@@ -40,22 +34,14 @@ async function getOwnerSpecificListings(ownerID) {
 }
 
 // Function that will update the review scores of the listings in the database
-async function updateListingReviewScore() {
-    let listingDatabase = await getListingDatabase();
-    let reviewDatabase = getListingReviewDatabase();
-
-    listingDatabase.forEach((listing) => {
-        let reviews = reviewDatabase.filter(
-            (review) =>
-                review.listingID === listing.listingID &&
-                review.isDeleted === false
-        );
-        let totalScore = 0;
-        reviews.forEach((review) => (totalScore += review.reviewScore));
-        listing.reviewScore = totalScore / reviews.length;
-        listing.reviews = reviews.length;
+async function updateListingReviewScore(listingID) {
+    let response = await fetch("/api/listingDB/listing-score/" + listingID, {
+        method: "PATCH",
     });
-    setListingDatabase(listingDatabase);
+    let message = await response.json();
+    if (!response.ok)
+        console.error("Error updating listing review score:", message);
+    else console.log("Listing review score updated:", message);
 }
 
 /* ==============================================================
@@ -65,10 +51,6 @@ async function getUserDatabase() {
     let response = await fetch("/api/userDB");
     if (response.ok) return await response.json();
     else console.error("Error fetching userDB:", response);
-}
-
-function setUserDatabase(userDatabase) {
-    localStorage.setItem("userDatabase", JSON.stringify(userDatabase));
 }
 
 /* ==============================================================
@@ -96,42 +78,29 @@ async function updateUser(user, profilePic) {
 async function updateUserReviewCount(userID) {
     let response = await fetch(`api/userDB/users/review/${userID}`);
     let message = await response.json();
-    if (!response.ok) {
-        console.log(message.message);
-    } else {
-        console.log(message.message);
-    }
+    if (!response.ok) console.error(message.message);
+    else console.log(message.message);
 }
 
 //Updates the given user's liked review in the database
 async function updateLikedReviews(userID, reviewID, listingID) {
-    let currentUser = await getCurrentUser();
-    let userDatabase = getUserDatabase();
-    let userIndex = userDatabase.findIndex(
-        (x) => x.username === currentUser.username
-    );
-    let likedReview = {
+    let userData = {
         userID: userID,
         reviewID: reviewID,
         listingID: listingID,
     };
-    let index = userDatabase[userIndex].liked.findIndex(
-        (liked) =>
-            liked.userID === likedReview.userID &&
-            liked.reviewID === likedReview.reviewID &&
-            liked.listingID === likedReview.listingID
-    );
 
-    if (index !== -1) {
-        userDatabase[userIndex].liked.splice(index, 1);
-    } else {
-        userDatabase[userIndex].liked.push(likedReview);
-    }
+    let response = await fetch("/api/userDB/users/reviewLiked", {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+    });
 
-    setUserDatabase(userDatabase);
-
-    if (isInLocalStorage()) setLocalStorage(userDatabase[userIndex]);
-    else setSessionStorage(userDatabase[userIndex]);
+    let message = await response.json();
+    if (!response.ok) console.error(message.message);
+    else console.log(message.message);
 }
 
 // Checks if the current User is following the given user

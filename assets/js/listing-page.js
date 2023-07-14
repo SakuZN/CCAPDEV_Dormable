@@ -82,13 +82,10 @@ let id = url.searchParams.get("id");
     }
 })();
 const updateAndPopulate = async () => {
-    return await updateListingReviewScore()
-        .then(async () => {
-            await populateListingPage(id);
-        })
-        .catch((err) => {
-            window.location.href = "/404";
-        });
+    return await populateListingPage(id).catch((err) => {
+        console.log(err);
+        window.location.href = "/404";
+    });
 };
 
 async function populateListingPage(id_page) {
@@ -155,7 +152,7 @@ async function populateListingPage(id_page) {
 
     document.getElementById("sortReview").selectedIndex = 0;
 
-    if (userHasReviewed()) {
+    if (await userHasReviewed()) {
         writeReviewBtn.innerHTML = "Edit Review";
     }
 
@@ -685,6 +682,7 @@ $(document).ready(function () {
         //add the review to the listing
         addListingReview(newReview);
         await updateUserReviewCount(newReview.userID);
+        await updateListingReviewScore(newReview.listingID);
         // Hide the review form
         $("#userForm")[0].reset();
         $(".reviewForm").addClass("hidden");
@@ -1036,14 +1034,10 @@ $(document).ready(function () {
         if ($button.hasClass("liked")) {
             // Decrement the like count if already liked
             $likeCount.text(currentCount - 1);
-            reviewMarkedHelpful(reviewID, listingID, -1);
         } else {
             // Increment the like count if not liked
             $likeCount.text(currentCount + 1);
-            reviewMarkedHelpful(reviewID, listingID, 1);
         }
-        await updateLikedReviews(userID, reviewID, listingID);
-
         // Toggle the 'liked' class on button
         $button.toggleClass("liked");
 
@@ -1077,6 +1071,7 @@ $(document).ready(function () {
                 }
             );
         }
+        await updateLikedReviews(userID, reviewID, listingID);
         // Disable the button
         $(this).prop("disabled", true);
 
