@@ -383,9 +383,7 @@ async function generateExploreListing() {
 function loadMoreFeaturedListing() {
     listingLimit++;
     if (listingLimit > listingList.length || listingLimit > 5) {
-        showPopup(
-            "No more listings to show. Search for more in the search bar"
-        );
+        showPopup("No more listings to show");
         listingLimit--;
         return;
     }
@@ -502,13 +500,4 @@ function populateQueryListing() {
         }
         queryListing.appendChild(listingList[i].queryListing);
     }
-}
-
-function initUserPopUp() {
-    $(".user-image").magnificPopup({
-        type: "image",
-        gallery: {
-            enabled: true,
-        },
-    });
 }

@@ -2062,3 +2062,12 @@ p {
     border-radius: 5px;
 }
 
+#followBtn {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+#followBtn .flipped {
+    transform: rotateY(180deg);
+}
+

@@ -10,9 +10,6 @@ let userProfile;
 //Review Limit Variable
 let reviewLimit = 3;
 
-//Listing Database
-let listingDatabase = getListingDatabase();
-
 /* ==============================================================
    OBJECT FUNCTIONS
    ============================================================== */
@@ -94,7 +91,7 @@ function destroySwiper() {
                     }
                 );
             } else if (checkValidOwner) {
-                isCurrentUser = checkIfSameOwnerID(profileID);
+                isCurrentUser = await checkIfSameOwnerID(profileID);
                 await populateOwnerProfile(profileID, isCurrentUser).then(
                     () => {
                         $("#js-preloader").addClass("loaded");
@@ -106,7 +103,7 @@ function destroySwiper() {
 })();
 
 async function populateOwnerProfile(ownerID, currentUser) {
-    let ownerProfile = getSpecificListingOwner(ownerID);
+    let ownerProfile = await getSpecificListingOwner(ownerID);
     //Get the needed elements
     let profilePic = document.getElementById("userPic");
     let userName = document.getElementById("profileUserName");
@@ -164,6 +161,12 @@ async function populateOwnerProfile(ownerID, currentUser) {
     formDescription.value = userDescription;
     listingSection.classList.remove("hidden");
     profileTitle.innerHTML = "Owner Profile";
+
+    //Checks if user is already following the user
+    if (await isFollowingUser(ownerID)) {
+        followButton.innerHTML = "Following";
+        followButton.classList.add("followed");
+    }
 
     //Hides follow button if user is viewing their own profile
     if (currentUser) {
@@ -419,16 +422,20 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             "Owner has not responded to this review yet.";
 
         if (
-            checkIfCommented(review.reviewID, review.listingID, review.userID)
+            await checkIfCommented(
+                review.reviewID,
+                review.listingID,
+                review.userID
+            )
         ) {
             cRUReviewResponse.innerHTML = "";
             cRUReviewResponse.style.textAlign = "";
-            let commentResponse = getReviewResponse(
+            let commentResponse = await getReviewResponse(
                 review.reviewID,
                 review.listingID,
                 review.userID
             );
-            let owner = getSpecificListingOwner(commentResponse.ownerID);
+            let owner = await getSpecificListingOwner(commentResponse.ownerID);
             cRUReviewResponse.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
@@ -487,6 +494,7 @@ function populateUserReviewHistory(reviewHistory) {
             swiperContainer.append(reviewHistory[i].divRH);
         }
     initSwiper();
+    initReviewPopUp();
 }
 
 /* ==============================================================
@@ -562,6 +570,7 @@ function loadMoreReviews() {
     mySwiper.slideTo(swiperIndex);
     //Reset the sort dropdown if it is not on the default option
     document.getElementById("sortReview").selectedIndex = 0;
+    initReviewPopUp();
 }
 
 function findUserReview(reviewID, listingID) {
@@ -573,12 +582,32 @@ function findUserReview(reviewID, listingID) {
         )
             review = rhData;
     });
+    initReviewPopUp();
     return review;
 }
 
 /* ==============================================================
    MISC FUNCTIONS
    ============================================================== */
+function initReviewPopUp() {
+    if ($(".review-image").length) {
+        $(".review-image").magnificPopup({
+            type: "image",
+            gallery: {
+                enabled: false,
+            },
+        });
+    }
+}
+
+function initUserPopUp() {
+    $(".user-image").magnificPopup({
+        type: "image",
+        gallery: {
+            enabled: true,
+        },
+    });
+}
 
 function clearReviewHistory() {
     let reviewHistory = document.getElementById("reviewHistory");
@@ -945,7 +974,7 @@ $(document).ready(function () {
         let listingID = reviewContainer.data("listing-id");
         let userID = reviewContainer.data("user-id");
         let review = findUserReview(reviewID, listingID);
-        let listing = getSpecificListing(listingID);
+        let listing = await getSpecificListing(listingID);
         let cRUReviewHistory = $("#cRUReviewHistory");
         let cRUCommentResponse = $("#cRUComment");
         let cRUCommentForm = $("#cRUCommentForm");
@@ -960,7 +989,7 @@ $(document).ready(function () {
 
         if (
             currentUser.username === listing.ownerID &&
-            !checkIfCommented(reviewID, listingID, userID)
+            !(await checkIfCommented(reviewID, listingID, userID))
         ) {
             cRUCommentForm.removeClass("hidden");
             cRUCommentFormBtn.removeClass("hidden");
@@ -973,7 +1002,7 @@ $(document).ready(function () {
         }
     }
 
-    function handleSubmitCommentForm(event) {
+    async function handleSubmitCommentForm(event) {
         event.preventDefault();
         let formSubmitBtn = $(this);
         let commentModal = formSubmitBtn.closest("#commentModal");
@@ -996,7 +1025,7 @@ $(document).ready(function () {
             commentDate: commentDate,
         };
         //Add the comment to the database
-        addNewOwnerResponse(newComment);
+        await addNewOwnerResponse(newComment);
 
         $("#commentModal").modal("hide");
         showPopup("Comment added successfully!").then(function () {
@@ -1067,6 +1096,7 @@ $(document).ready(function () {
             followerCountText.text(followerCount + 1);
             await followUser(profileID);
         }
+        followBtn.toggleClass("flipped");
 
         // Disable the button
         $(this).prop("disabled", true);

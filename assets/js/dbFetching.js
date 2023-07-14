@@ -224,26 +224,14 @@ async function getListingReviews(listingID) {
    BASE CRUD OPERATIONS FOR LISTING OWNER DATABASE
    ============================================================== */
 
-function getListingOwnerDatabase() {
-    return JSON.parse(localStorage.getItem("listingOwnerDatabase"));
-}
-
-function setListingOwnerDatabase(listingOwnerDatabase) {
-    localStorage.setItem(
-        "listingOwnerDatabase",
-        JSON.stringify(listingOwnerDatabase)
-    );
-}
-
 /* ==============================================================
    FUNCTION OPERATIONS FOR LISTING OWNER DATABASE
    ============================================================== */
 
-function getSpecificListingOwner(ownerID) {
-    const listingOwners = getListingOwnerDatabase();
-    return listingOwners.find(
-        (listingOwner) => listingOwner.username === ownerID
-    );
+async function getSpecificListingOwner(ownerID) {
+    let response = await fetch("/api/listingOwnerDB/owner/" + ownerID);
+    if (response.ok) return await response.json();
+    else console.error("Error fetching specific listing owner:", response);
 }
 
 async function checkIfSameOwnerID(ownerID) {
@@ -263,8 +251,10 @@ async function checkIfOwnerExist(ownerID) {
    BASE CRUD OPERATIONS FOR OWNER RESPONSE DATABASE
    ============================================================== */
 
-function getOwnerResponseDatabase() {
-    return JSON.parse(localStorage.getItem("ownerResponseDatabase"));
+async function getOwnerResponseDatabase() {
+    let response = await fetch("/api/ownerResponseDB");
+    if (response.ok) return await response.json();
+    else console.error("Error fetching owner response database:", response);
 }
 
 function setOwnerResponseDatabase(ownerResponseDatabase) {
@@ -278,37 +268,37 @@ function setOwnerResponseDatabase(ownerResponseDatabase) {
    FUNCTION OPERATIONS FOR OWNER RESPONSE DATABASE
    ============================================================== */
 
-function getSpecificOwnerResponses(ownerID) {
-    const ownerResponses = getOwnerResponseDatabase();
+async function getSpecificOwnerResponses(ownerID) {
+    const ownerResponses = await getOwnerResponseDatabase();
     return ownerResponses.find(
         (ownerResponse) => ownerResponse.ownerID === ownerID
     );
 }
 
-function checkIfCommented(reviewID, listingID, userID) {
-    const ownerResponses = getOwnerResponseDatabase();
-    return ownerResponses.some(
-        (ownerResponse) =>
-            ownerResponse.reviewID === reviewID &&
-            ownerResponse.listingID === listingID &&
-            ownerResponse.userID === userID
+async function checkIfCommented(reviewID, listingID, userID) {
+    let response = await fetch(
+        `/api/ownerResponseDB/response/${reviewID}/${listingID}/${userID}`
     );
+    return !!(response.ok && (await response.json()));
 }
 
-function getReviewResponse(reviewID, listingID, userID) {
-    const ownerResponses = getOwnerResponseDatabase();
-    return ownerResponses.find(
-        (ownerResponse) =>
-            ownerResponse.reviewID === reviewID &&
-            ownerResponse.listingID === listingID &&
-            ownerResponse.userID === userID
+async function getReviewResponse(reviewID, listingID, userID) {
+    let response = await fetch(
+        `/api/ownerResponseDB/response/${reviewID}/${listingID}/${userID}`
     );
+    if (response.ok) return await response.json();
+    else console.error("Error fetching review response:", response);
 }
 
-function addNewOwnerResponse(ownerResponse) {
-    let ownerResponseDatabase = getOwnerResponseDatabase();
-    ownerResponseDatabase.push(ownerResponse);
-    setOwnerResponseDatabase(ownerResponseDatabase);
+async function addNewOwnerResponse(ownerResponse) {
+    let response = await fetch("/api/ownerResponseDB/responseAdd", {
+        method: "POST",
+        body: JSON.stringify(ownerResponse),
+        headers: { "Content-Type": "application/json" },
+    });
+    let message = await response.json();
+    if (!response.ok) console.error(message.message);
+    else console.log(message.message);
 }
 
 /* ==============================================================
@@ -329,58 +319,14 @@ async function checkExistingUsername(username) {
     return !!user;
 }
 
-function addNewUser(user, userData) {
-    let userLoginDatabase = JSON.parse(
-        localStorage.getItem("userLoginDatabase")
-    );
-    let userDatabase = getUserDatabase();
-    userLoginDatabase.push(userData);
-    userDatabase.push(user);
-    localStorage.setItem(
-        "userLoginDatabase",
-        JSON.stringify(userLoginDatabase)
-    );
-    setUserDatabase(userDatabase);
-}
-
 /* ==============================================================
    USER SESSION FUNCTIONS
    ============================================================== */
-
-function isInLocalStorage() {
-    let ls = localStorage.getItem("currentUser");
-    let ls_login = localStorage.getItem("isLoggedIn");
-    return !!(ls_login === "true" && ls);
-}
-
-function isInSessionStorage() {
-    let ss = sessionStorage.getItem("currentUser");
-    let ss_login = sessionStorage.getItem("isLoggedIn");
-    return !!(ss_login === "true" && ss);
-}
 
 async function getCurrentUser() {
     let response = await fetch("api/userDB/current-user");
     if (!response.ok) return false;
     return await response.json();
-}
-
-function setLocalStorage(user) {
-    localStorage.setItem("currentUser", JSON.stringify(user));
-    localStorage.setItem("isLoggedIn", "true");
-}
-
-function setSessionStorage(user) {
-    sessionStorage.setItem("currentUser", JSON.stringify(user));
-    sessionStorage.setItem("isLoggedIn", "true");
-}
-
-function setCurrentUser(user, remember) {
-    if (remember) {
-        setLocalStorage(user);
-    } else {
-        setSessionStorage(user);
-    }
 }
 
 async function logoutSession() {
