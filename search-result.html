@@ -9,17 +9,44 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <link href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
     <link href="/assets/images/test_image/icon.png" rel="icon" type="image/png"/>
     <title>Dormable!</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css"
+          integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="/assets/css/modal-animation.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
     <link href="/assets/css/fontawesome.css" rel="stylesheet"/>
     <link href="/assets/css/main-dormable.css" rel="stylesheet"/>
     <link href="/assets/css/animated.css" rel="stylesheet"/>
     <link href="/assets/css/owl.css" rel="stylesheet"/>
+
+    <!-- ThemeWagon Listing Result Template CSS -->
+    <link href="/assets/css/search-result.css" rel="stylesheet"/>
+    <link
+        href="/assets/css/simple-line-icons.css"
+        rel="stylesheet"
+        type="text/css"
+    />
+    <link href="/assets/css/fontawesome2.css" rel="stylesheet"/>
+
+    <!-- ThemeWagon Listing Result Template Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&amp;display=swap"
+        rel="stylesheet"
+    />
+    <link
+        href="https://fonts.googleapis.com/css?family=Lato:400,700,900&amp;display=swap"
+        rel="stylesheet"
+    />
+
     <!--
 
   --></head>
@@ -43,21 +70,18 @@
     class="header-area header-sticky wow slideInDown"
     data-wow-delay="0s"
     data-wow-duration="0.75s"
+    style="background-color: whitesmoke"
 >
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <nav class="main-nav">
+                <nav class="main-nav" style="color: black">
                     <!-- ***** Logo Start ***** -->
                     <a class="logo" href="/index"> </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="/index">Home</a></li>
-                        <li><a href="/search-result">Listing</a></li>
-                        <li>
-                            <a class="active" href="/request-listing">Contact Us</a>
-                        </li>
+                        <!-- Append this class to <li> tag for active/default -->
                     </ul>
                     <a class="menu-trigger">
                         <span>Menu</span>
@@ -75,69 +99,47 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="top-text header-text">
-                    <h6>Dorm not Listed?</h6>
-                    <h2>Feel free to contact us!</h2>
+                    <h2>We found these listings based on your query</h2>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="contact-page">
+<section class="property-section spad">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="inner-content">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div id="map">
-                                <img
-                                    src="/assets/images/listing_images/listing-request.gif"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg-6 align-self-center">
-                            <div class="row" style="margin: 0">
-                                <div class="contact-description">
-                                    <p>
-                                        Can't search your desired dorm here in our listing site?
-                                        No worries, you have come to the right place! Requesting
-                                        your own dorm listing is just one click away!
-                                    </p>
-                                    <p>
-                                        Feel free to create a listing down below through our
-                                        Google Forms.
-                                    </p>
-                                    <p>
-                                        Fill up the necessary information of your dorm and this
-                                        request will be reviewed and processed immediately upon
-                                        your submission.
-                                    </p>
-                                    <div
-                                        class="main-white-button"
-                                        style="
-                          display: flex;
-                          justify-content: center;
-                          margin: 50px;
-                        "
-                                    >
-                                        <a
-                                            href="https://forms.gle/ogEEyUm2KkUif7R7A"
-                                            target="_blank"
-                                        ><i class="fa fa-plus"></i> Google Forms Listing
-                                            Request</a
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="sortList text-center">
+            <select
+                aria-label=".form-select-sm example"
+                class="form-select form-select-sm"
+                id="sortListings"
+            >
+                <option disabled selected value="">Sort By</option>
+                <option value="rating-high">Rating - High</option>
+                <option value="rating-low">Rating - Low</option>
+                <option value="price-low">Price - Low to High</option>
+                <option value="price-high">Price - High to Low</option>
+            </select>
+        </div>
+        <hr/>
+        <div class="row" id="query-listings">
+            <!-- Add listings here -->
+        </div>
+        <hr style="margin-top: 15px"/>
+        <div class="col-lg-12" id="loadButton">
+            <div class="loadmore-btn">
+                <button
+                    class="btn btn-outline-primary"
+                    id="loadMore"
+                    onclick="loadMoreQueryListings()"
+                >
+                    Load More
+                </button>
             </div>
         </div>
     </div>
-</div>
-
+</section>
+<!-- Footer Section Begin -->
 <footer>
     <div class="container">
         <div class="row">
@@ -146,14 +148,18 @@
                     <div class="logo">
                         <img
                             alt="Plot Listing"
-                            src="/assets/images/banner_logo/white-logo.png"
+                            src="/assets/images/banner_logo/request-logo.png"
                         />
                     </div>
                     <p>
-                        Find Your Perfect Home Away from Home. Discover the Ideal
-                        Dormitory for Your Student Life Journey. Empowering Students to
-                        Thrive and Succeed.
+                        Can't find a specific listing? Click the button below to send a
+                        request form for a specific listing you are looking for!
                     </p>
+                    <div class="main-white-button">
+                        <a href="/request-listing"
+                        ><i class="fa fa-plus"></i> Request a Listing</a
+                        >
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -188,11 +194,11 @@
             <div class="col-lg-12">
                 <div class="sub-footer">
                     <p>
-                        Copyright © 2021 Plot Listing Co., Ltd. All Rights Reserved.
+                        Copyright © 2021 Theme Wagon, Ltd. All Rights Reserved.
                         <br/>
                         Design:
                         <a
-                            href="https://templatemo.com"
+                            href="https://themewagon.com/themes/free-bootstrap-4-html5-directory-listing-website-template-aler/"
                             rel="nofollow"
                             title="CSS Templates"
                         >TemplateMo</a
@@ -203,6 +209,7 @@
         </div>
     </div>
 </footer>
+<!-- Footer Section End-->
 
 <!-- Modal -->
 <div
@@ -243,19 +250,20 @@
 </div>
 
 <!-- Scripts -->
-<script
-    crossorigin="anonymous"
-    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-    referrerpolicy="no-referrer"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-></script>
-<script
-    crossorigin="anonymous"
-    integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
-    referrerpolicy="no-referrer"
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"
-></script>
-<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- JQuery -->
+<script crossorigin="anonymous"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<!-- Popper -->
+<script crossorigin="anonymous"
+        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+<!-- Bootstrap -->
+<script crossorigin="anonymous"
+        integrity="sha512-8qmis31OQi6hIRgvkht0s6mCOittjMa9GMqtK9hes5iEQBQE/Ca6yGE5FsW36vyipGoWQswBj/QBm2JR086Rkw=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 
 <!-- Vendor JS Files -->
 <script src="/assets/js/owl-carousel.js"></script>
@@ -268,10 +276,26 @@
 <script src="/assets/js/autostar-rating.js"></script>
 <script src="/assets/js/login-register.js"></script>
 <script src="/assets/js/custom.js"></script>
-
 <script>
-    $(document).ready(function () {
-        $("#js-preloader").addClass("loaded");
+    $(document).ready(async function () {
+
+        await initQueryListing();
+
+        document.getElementById("sortListings").selectedIndex = 0;
+
+        if (document.getElementById("query-listings").children.length < 1) {
+            document.getElementById("query-listings").innerHTML =
+                '<div class="col-lg-12 text-center">' +
+                ' <div class="alert alert-danger" role="alert">No listings found!</div></div>';
+        }
+
+        function handleSortListingChange() {
+            let sortType = $(this).val();
+            console.log(sortType);
+            sortListing(sortType);
+        }
+
+        $("#sortListings").on("change", handleSortListingChange);
     });
 </script>
 </body>

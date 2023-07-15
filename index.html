@@ -12,14 +12,19 @@
     <title>Dormable!</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css"
+          integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="/assets/css/modal-animation.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
     <link href="/assets/css/fontawesome.css" rel="stylesheet">
     <link href="/assets/css/main-dormable.css" rel="stylesheet">
     <link href="/assets/css/animated.css" rel="stylesheet">
     <link href="/assets/css/owl.css" rel="stylesheet">
+
 </head>
+
 
 <body>
 <!-- ***** Preloader Start ***** -->
@@ -237,7 +242,10 @@
         referrerpolicy="no-referrer"
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
 <!-- Bootstrap -->
-<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha512-8qmis31OQi6hIRgvkht0s6mCOittjMa9GMqtK9hes5iEQBQE/Ca6yGE5FsW36vyipGoWQswBj/QBm2JR086Rkw=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 <!-- Owl Carousel -->
 <script src="/assets/js/owl-carousel.js"></script>
 <!-- Misc external scripts -->
@@ -257,7 +265,6 @@
 <!-- Page Scripts -->
 <script>
     $(document).ready(function () {
-
         initFeaturedListing();
         $('input[type="number"]').on('keydown', function (e) {
             // Prevent '.' and ','

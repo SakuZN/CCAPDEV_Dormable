@@ -1821,8 +1821,7 @@ responsive
 }
 
 .hidden {
-    display: none;
-!important;
+    display: none !important;
 }
 
 .reviewForm .row {
