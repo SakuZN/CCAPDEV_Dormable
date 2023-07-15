@@ -8,6 +8,7 @@
     "author": "",
     "source": "index.html",
     "scripts": {
+        "prebuild": "npm install -g parcel-bundler",
         "dev": "nodemon dormable.js & parcel index.html --open",
         "build": "parcel build *.html",
         "start": "node dormable.js",
