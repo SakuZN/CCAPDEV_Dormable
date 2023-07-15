@@ -455,6 +455,7 @@ let listingOwners = [
             "to contemporary condominiums with complete amenities.",
         joinDate: getRandomDate(2020, 2023),
         listings: ["1-gt-manila"],
+        liked: [],
         noOfListings: 1,
         followers: getRandomNumber(0, 1000),
         country: "Philippines",
@@ -471,6 +472,7 @@ let listingOwners = [
             "Each Torre Lorenzo property is distinctive for its innovation and uncompromising quality, and we continue to build and design for the future with this tradition of excellence.",
         joinDate: getRandomDate(2020, 2023),
         listings: ["2-torre-lorenzo"],
+        liked: [],
         noOfListings: 1,
         followers: getRandomNumber(0, 1000),
         country: "Philippines",
@@ -489,6 +491,7 @@ let listingOwners = [
             "and has done logging and saw milling local forestry in Aurora and Davao provinces (2002-2011).",
         joinDate: getRandomDate(2020, 2023),
         listings: ["3-r-square"],
+        liked: [],
         noOfListings: 1,
         followers: getRandomNumber(0, 1000),
         country: "Philippines",
@@ -503,6 +506,7 @@ let listingOwners = [
             "We are Eton Properties, the real estate brand of the Lucio Tan Group, one of the biggest business conglomerates in the Philippines, with full-range projects of office, commercial, residential and hotel properties in key cities in Metro Manila, Laguna and Cebu. With an extensive land bank in strategic locations all over the country, we have diversified our business opportunities to include land lease.",
         joinDate: getRandomDate(2020, 2023),
         listings: ["4-archer-place"],
+        liked: [],
         noOfListings: 1,
         followers: getRandomNumber(0, 1000),
         country: "Philippines",
@@ -521,6 +525,7 @@ let listingOwners = [
             "SMDC has been providing the dream homes of Filipinos in Metro Manila and other key cities in the Philippines.",
         joinDate: getRandomDate(2020, 2023),
         listings: ["5-green-residences"],
+        liked: [],
         noOfListings: 1,
         followers: getRandomNumber(0, 1000),
         country: "Philippines",
@@ -535,6 +540,7 @@ let listingOwners = [
             "We continue to gain the respect and confidence of our investors for having a track record in the delivery of all projects thus, living up to our presidential award as the Leading Condominium Developer in the country. We shall continue to conceptualize and be a major contributor in the promotion of economic development and progress in creating a stable nation through equitable housing for the middle class... ",
         joinDate: getRandomDate(2020, 2023),
         listings: ["6-vito-cruz-towers"],
+        liked: [],
         noOfListings: 1,
         followers: getRandomNumber(0, 1000),
         country: "Philippines",
@@ -878,7 +884,7 @@ if (
 
 function debugButton() {
     //Print JSON Data that can be imported to mongoDB
-    let data = localStorage.getItem("reviewDatabase");
+    let data = localStorage.getItem("listingOwnerDatabase");
 
     if (data) {
         let json = JSON.stringify(JSON.parse(data), null, 2); // Convert to JSON string

@@ -13,6 +13,13 @@ const listingOwnerSchema = new mongoose.Schema(
         description: { type: String, required: true },
         joinDate: { type: Date, default: Date.now },
         listings: { type: [String], required: true },
+        liked: [
+            {
+                reviewID: { type: Number, required: true },
+                listingID: { type: String, required: true },
+                userID: { type: String, required: true },
+            },
+        ],
         noOfListings: { type: Number, required: true },
         followers: { type: Number, default: 0 },
         country: { type: String, required: true },

@@ -9,21 +9,23 @@ const path = require("path");
 const fs = require("fs");
 
 //Return current user's information based on the sessionID
-router.get("/current-user", (req, res) => {
-    if (!req.session.userID) {
-        return res.status(401).json({ message: "Not Logged In" });
-    }
+router.get("/current-user", async (req, res) => {
+    try {
+        let user = await userDB.findOne({ username: req.session.userID });
+        if (!user) {
+            user = await listingOwnerDB.findOne({
+                username: req.session.userID,
+            });
+        }
 
-    //Find the user's data in the userDB
-    userDB
-        .findOne({ username: req.session.userID })
-        .then((user) => {
-            // Send the user's data to the client
+        if (user) {
             res.json(user);
-        })
-        .catch((err) => {
-            return res.status(500).json({ message: err.message });
-        });
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 
 //Update a specific user's info
@@ -32,42 +34,44 @@ router.put("/update", upload.single("profilePic"), async (req, res) => {
     const profilePic = req.file;
 
     try {
+        //Upload the profile picture to cloudinary
+        let result;
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = (date.getMonth() + 1).toString().padStart(2, "0"); // months in JavaScript start from 0
+        let day = date.getDate().toString().padStart(2, "0");
+        let formattedDate = `${year}${month}${day}`;
+
         if (profilePic) {
-            const result = await cloudinary.uploader.upload(profilePic.path, {
-                public_id:
-                    userData.username +
-                    "_" +
-                    path.parse(profilePic.originalname).name,
-            });
-
-            // Check for old picture and delete it
-            if (userData.profilePic) {
-                const urlParts = new URL(userData.profilePic).pathname.split(
-                    "/"
-                );
-                const oldPicId = path.parse(urlParts[urlParts.length - 1]).name;
-                // Delete old pic from Cloudinary
-                await cloudinary.uploader.destroy(
-                    oldPicId,
-                    function (error, result) {
-                        if (error) {
-                            return res
-                                .status(500)
-                                .send({ message: error.message });
-                        }
-                    }
-                );
-            }
-
-            userData.profilePic = result.secure_url;
-
-            //Deletes the temporary file
-            fs.unlink(profilePic.path, (err) => {
-                if (err) {
-                    console.log("Error while deleting temporary file:", err);
-                }
+            const uniqueFilename = path.parse(profilePic.originalname).name;
+            result = await cloudinary.uploader.upload(profilePic.path, {
+                public_id: `${formattedDate}_${uniqueFilename}`,
+                folder: `users/${userData.username}`,
             });
         }
+
+        // Check for old picture and delete it
+        if (userData.profilePic) {
+            let oldPicID = userData.profilePic.split("/").pop().split(".")[0];
+            // Delete old pic from Cloudinary
+            await cloudinary.uploader.destroy(
+                oldPicID,
+                function (error, result) {
+                    if (error) {
+                        return res.status(500).send({ message: error.message });
+                    }
+                }
+            );
+        }
+
+        userData.profilePic = result.secure_url;
+
+        //Deletes the temporary file
+        fs.unlink(profilePic.path, (err) => {
+            if (err) {
+                console.log("Error while deleting temporary file:", err);
+            }
+        });
 
         const { username, ...rest } = userData;
 
@@ -100,26 +104,6 @@ router.get("/users/:username", (req, res) => {
         .catch((err) => {
             return res.status(500).json({ message: err.message });
         });
-});
-
-//Update reviewCount of user
-router.patch("/users/review/:username", async (req, res) => {
-    try {
-        const user = await userDB.findOne({ username: req.params.username });
-        if (!user) {
-            return res.status(404).send({
-                message: `No user found with username: ${req.params.username}`,
-            });
-        }
-
-        user.noOfReviews = user.noOfReviews + 1;
-
-        await user.save();
-
-        res.status(200).send({ message: "Review count updated successfully!" });
-    } catch (err) {
-        res.status(500).send({ message: err.message });
-    }
 });
 
 //Update liked reviews of user and the user of the liked review
@@ -184,7 +168,7 @@ router.patch("/users/follow/:id", async (req, res) => {
             return res.status(404).send({
                 message: `No user found with username: ${currentUser}`,
             });
-            //If initially cant't find in userDB, check listingOwnerDB
+            //If initially can't find in userDB, check listingOwnerDB
         }
         if (!followedUser) {
             followedUser = await listingOwnerDB.findOne({

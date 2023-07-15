@@ -163,9 +163,15 @@ async function populateOwnerProfile(ownerID, currentUser) {
     profileTitle.innerHTML = "Owner Profile";
 
     //Checks if user is already following the user
-    if (await isFollowingUser(ownerID)) {
-        followButton.innerHTML = "Following";
-        followButton.classList.add("followed");
+    try {
+        if (await isFollowingUser(ownerID)) {
+            followButton.innerHTML = "Following";
+            followButton.classList.add("followed");
+        }
+    } catch (err) {
+        //When it fails, it means current user is an owner
+        followButton.style.display = "none";
+        editButton.style.display = "none";
     }
 
     //Hides follow button if user is viewing their own profile
@@ -311,6 +317,7 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
 
         if (isCurrentUser) {
             buttonHTML =
+                '<button class="editReviewBtn btn btn-outline-primary btn-sm">Edit</button>' +
                 '<button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>';
         } else {
             buttonHTML = `<button class="button ${likedOrNot}">
@@ -362,7 +369,7 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                     review.reviewMarkedHelpful
                 }</span> people marked this review as helpful
                 ${buttonHTML}
-                <button class="commentBtn btn btn-outline-info" data-target="#commentModal" data-toggle="modal" type="button">
+                <button class="commentBtn btn btn-sm btn-outline-info" data-target="#commentModal" data-toggle="modal" type="button">
                     View Comment
                 </button>
             </div>
@@ -659,7 +666,7 @@ async function updateProfile() {
     currentUser.description = description;
 
     await updateUser(currentUser, profilePic);
-    window.location.href = "/profile?id=" + currentUser.username;
+    location.reload();
 }
 
 /* ==============================================================
@@ -667,26 +674,35 @@ async function updateProfile() {
    ============================================================== */
 
 $(document).ready(function () {
+    let filePicArray = [];
+    let clearedImages = false;
+
+    /* ==============================================================
+   HANDLES PROFILE RELATED EVENTS
+   ============================================================== */
     let readURL = function (input) {
         if (input.files && input.files[0]) {
             let reader = new FileReader();
 
             reader.onload = function (e) {
-                $(".profile-pic").attr("src", e.target.result);
+                $("#userPic").attr("src", e.target.result);
             };
 
             reader.readAsDataURL(input.files[0]);
         }
     };
-    $(".file-upload").on("change", function () {
+    $(".file-upload").on("click", function () {
+        $("#fileUpload").click();
+    });
+    $("#fileUpload").on("change", function () {
         readURL(this);
     });
 
-    $(".upload-button").on("click", function () {
-        $(".file-upload").click();
-    });
-
     $("#editBtn").on("click", function () {
+        if (!$(".edit-profile").hasClass("hidden")) {
+            $(".edit-profile").addClass("hidden");
+            return;
+        }
         $(".edit-profile").removeClass("hidden");
         $("html, body").animate(
             {
@@ -701,23 +717,11 @@ $(document).ready(function () {
         await updateProfile();
     });
 
-    $(".file-upload").on("click", function () {
-        $("#fileUpload").click();
-    });
+    /* ==============================================================
+   EDIT REVIEW RELATED EVENTS
+   ============================================================== */
 
-    $("#fileUpload").on("change", function () {
-        let file = this.files[0];
-        let reader = new FileReader();
-
-        reader.onload = function (e) {
-            $("#userPic").attr("src", e.target.result);
-        };
-
-        reader.readAsDataURL(file);
-    });
-
-    //Edit button for user review
-    $(".editReviewBtn").on("click", async function () {
+    $(document).on("click", ".editReviewBtn", async function () {
         let editBtn = $(this);
         let userReview = editBtn.closest(".mark-helpful");
         let reviewID = userReview.data("review-id");
@@ -726,6 +730,12 @@ $(document).ready(function () {
         //uncover edit form
         let editForm = $(".edit-review");
         editForm.removeClass("hidden");
+        $("html, body").animate(
+            {
+                scrollTop: editForm.offset().top,
+            },
+            800
+        );
         //Match the review data with the form
         editForm.find("#review-title").val(thisReview.reviewTitle);
         editForm.find("#review-content").val(thisReview.reviewContent);
@@ -755,7 +765,6 @@ $(document).ready(function () {
     });
 
     // User Review Edit Form
-    initUserPopUp();
     $("#reviewImage").on("change", function () {
         let files = $(this)[0].files;
         let imageList = $(".user-image-list");
@@ -797,6 +806,7 @@ $(document).ready(function () {
                 return;
             }
 
+            filePicArray.push(file);
             let reader = new FileReader();
 
             // Read the file as a data URL
@@ -830,6 +840,7 @@ $(document).ready(function () {
         // Clear the file input and image list
         $("#reviewImage").val("");
         $(".user-image-list").empty();
+        filePicArray = [];
     });
 
     //Submit
@@ -841,22 +852,26 @@ $(document).ready(function () {
         let reviewTitle = $("#review-title").val();
         let reviewContent = $("#review-content").val();
         let reviewScore = $('input[name="rate"]:checked').val();
-        let reviewIMG = [];
-        $(".user-image-list li").each(function () {
-            reviewIMG.push($(this).attr("href"));
-        });
 
         // Update the review
         let reviewToEdit = await getSpecificUserReview(listingID, reviewID);
         reviewToEdit.reviewTitle = reviewTitle;
         reviewToEdit.reviewContent = reviewContent;
         reviewToEdit.reviewScore = parseInt(reviewScore);
-        reviewToEdit.reviewIMG = reviewIMG;
         reviewToEdit.wasEdited = true;
-        await editListingReview(reviewToEdit);
+        let success = await editListingReview(
+            reviewToEdit,
+            filePicArray,
+            clearedImages
+        );
+
+        if (!success) {
+            await showPopup("Error editing review");
+            return;
+        }
 
         // Hide the edit form
-        $("#editForm").addClass("hidden");
+        $("#editReview").addClass("hidden");
 
         // Reload the page
         showPopup("Review edited successfully!").then(function () {
@@ -881,10 +896,14 @@ $(document).ready(function () {
                 let userReview = deleteBtn.closest(".mark-helpful");
                 let reviewID = userReview.data("review-id");
                 let listingID = userReview.data("listing-id");
-                await deleteListingReview(reviewID, listingID);
-                showPopup("Review deleted successfully!").then(function () {
-                    location.reload();
-                });
+                let success = await deleteListingReview(reviewID, listingID);
+                if (!success) {
+                    await showPopup("Error deleting review");
+                    return;
+                }
+                await updateListingReviewScore(listingID);
+                await showPopup("Review deleted successfully!");
+                location.reload();
             },
             function () {
                 // This function will be called when the user clicks the "No" button
@@ -920,8 +939,6 @@ $(document).ready(function () {
             // Increment the like count if not liked
             $likeCount.text(currentCount + 1);
         }
-        await updateLikedReviews(userID, reviewID, listingID);
-
         // Toggle the 'liked' class on button
         $button.toggleClass("liked");
 
@@ -955,6 +972,9 @@ $(document).ready(function () {
                 }
             );
         }
+
+        await updateLikedReviews(userID, reviewID, listingID);
+
         // Disable the button
         $(this).prop("disabled", true);
 

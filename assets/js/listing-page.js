@@ -120,7 +120,6 @@ async function populateListingPage(id_page) {
 
     //Replace the content of the listing page elements
     listingName.innerHTML = listing.name;
-    console.log(listing.img);
     populateListingImg(listing, listingSwiper);
     initImageSwiper();
     initListingPopUp();
@@ -585,6 +584,9 @@ function findUserReview(reviewID) {
    ============================================================== */
 
 $(document).ready(async function () {
+    let filePicArray = [];
+    let clearedImages = false;
+
     /* ==============================================================
      HELPER FUNCTIONS
      ============================================================== */
@@ -665,16 +667,11 @@ $(document).ready(async function () {
      HELPER FUNCTIONS FOR REVIEW FORM
      ============================================================== */
     async function handleReviewFormSubmit(event) {
-        let currentUser = await getCurrentUser();
         event.preventDefault();
+        let currentUser = await getCurrentUser();
         //Get the necessary data from the form
         let reviewTitle = $("#reviewTitle").val();
         let reviewContent = $("#reviewContent").val();
-        let reviewImgs = $(".user-image-list li")
-            .map(function () {
-                return $(this).attr("href");
-            })
-            .get();
         let starRating = $("input[name='rate']:checked").val();
         starRating = parseInt(starRating);
 
@@ -687,7 +684,6 @@ $(document).ready(async function () {
             listingID: id,
             reviewTitle: reviewTitle,
             reviewContent: reviewContent,
-            reviewIMG: reviewImgs,
             reviewScore: starRating,
             reviewDate: new Date().toISOString(),
             reviewMarkedHelpful: 0,
@@ -695,9 +691,12 @@ $(document).ready(async function () {
             isDeleted: false,
         };
         //add the review to the listing
-        await addListingReview(newReview);
-        await updateUserReviewCount(newReview.userID);
-        await updateListingReviewScore(newReview.listingID);
+        let success = await addListingReview(newReview, filePicArray);
+        if (!success) {
+            showPopup("Error submitting review");
+            return;
+        }
+        await updateListingReviewScore(id);
         // Hide the review form
         $("#userForm")[0].reset();
         $(".reviewForm").addClass("hidden");
@@ -748,6 +747,9 @@ $(document).ready(async function () {
                 return;
             }
 
+            //Push the file to the array
+            filePicArray.push(file);
+
             let reader = new FileReader();
 
             // Read the file as a data URL
@@ -779,6 +781,7 @@ $(document).ready(async function () {
         // Clear the file input and image list
         $("#reviewImage").val("");
         $(".user-image-list").empty();
+        filePicArray = [];
     }
 
     /* ==============================================================
@@ -792,12 +795,6 @@ $(document).ready(async function () {
         let userID = editForm.find("#editReview").data("user-id");
         let reviewTitle = editForm.find("#edit-title").val();
         let reviewContent = editForm.find("#edit-content").val();
-        let reviewImgs = editForm
-            .find(".edit-image-list li")
-            .map(function () {
-                return $(this).attr("href");
-            })
-            .get();
         let starRating = $("input[name='rateEdit']:checked").val();
 
         //Update the review
@@ -805,8 +802,17 @@ $(document).ready(async function () {
         reviewToEdit.reviewTitle = reviewTitle;
         reviewToEdit.reviewContent = reviewContent;
         reviewToEdit.reviewScore = parseInt(starRating);
-        reviewToEdit.reviewIMG = reviewImgs;
-        await editListingReview(reviewToEdit);
+        //Add a new parameter to the review
+        let success = await editListingReview(
+            reviewToEdit,
+            filePicArray,
+            clearedImages
+        );
+
+        if (!success) {
+            await showPopup("Error editing review");
+            return;
+        }
 
         // Hide the edit form
         $(".edit-review").addClass("hidden");
@@ -858,6 +864,9 @@ $(document).ready(async function () {
                 return;
             }
 
+            //Push the file to the array
+            filePicArray.push(file);
+
             let reader = new FileReader();
 
             // Read the file as a data URL
@@ -889,6 +898,8 @@ $(document).ready(async function () {
         // Clear the file input and image list
         $("#editReviewImage").val("");
         $(".edit-image-list").empty();
+        filePicArray = [];
+        clearedImages = true;
     }
 
     /* ==============================================================
@@ -952,9 +963,14 @@ $(document).ready(async function () {
             commentDate: commentDate,
         };
         //Add the comment to the database
-        await addNewOwnerResponse(newComment);
+        let success = await addNewOwnerResponse(newComment);
 
         $("#commentModal").modal("hide");
+        if (!success) {
+            await showPopup("Something went wrong! Please try again later.");
+            return;
+        }
+
         showPopup("Comment added successfully!").then(function () {
             location.reload();
         });
@@ -1018,10 +1034,14 @@ $(document).ready(async function () {
                 let reviewContainer = userReview.closest(".swiper-slide");
                 let reviewID = reviewContainer.data("review-id");
                 let listingID = reviewContainer.data("listing-id");
-                await deleteListingReview(reviewID, listingID);
-                showPopup("Review deleted successfully!").then(function () {
-                    location.reload();
-                });
+                let success = await deleteListingReview(reviewID, listingID);
+                if (!success) {
+                    await showPopup("Error deleting review");
+                    return;
+                }
+                await updateListingReviewScore(listingID);
+                await showPopup("Review deleted successfully!");
+                location.reload();
             },
             function () {
                 // This function will be called when the user clicks the "No" button
@@ -1115,7 +1135,7 @@ $(document).ready(async function () {
     $("#reviewBtn").on("click", handleReviewBtnClick);
 
     //Handles Review related events
-    $(".reviewForm").on("submit", handleReviewFormSubmit);
+    $("#userForm").on("submit", handleReviewFormSubmit);
     $("#reviewImage").on("change", handleReviewImageChange);
     $("#clearImages").on("click", handleReviewClearImagesClick);
 
@@ -1142,5 +1162,10 @@ $(document).ready(async function () {
         initSwiper();
         initReviewPopUp();
         $("#js-preloader").addClass("loaded");
+    });
+
+    // attach a click event listener to the button
+    $("#invokeModalBtn").on("click", async function () {
+        $(this).addClass("activeLoading");
     });
 });

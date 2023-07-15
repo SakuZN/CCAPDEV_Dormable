@@ -36,9 +36,8 @@ router.post("/login", async (req, res) => {
 
         req.session.userID = user.username;
         if (rememberMe) {
-            req.session.cookie.maxAge = new Date(
-                Date.now() + 30 * 24 * 60 * 60 * 1000
-            );
+            //3 weeks
+            req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 21;
         }
         req.session.save();
 
@@ -118,10 +117,17 @@ async function createNewUser(data, info, profilePic) {
     try {
         //Upload the profile picture to cloudinary
         let result;
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = (date.getMonth() + 1).toString().padStart(2, "0"); // months in JavaScript start from 0
+        let day = date.getDate().toString().padStart(2, "0");
+        let formattedDate = `${year}${month}${day}`;
+
         if (profilePic) {
             const uniqueFilename = path.parse(profilePic.originalname).name;
             result = await cloudinary.uploader.upload(profilePic.path, {
-                public_id: uniqueFilename,
+                public_id: `${formattedDate}_${uniqueFilename}`,
+                folder: `users/${info.username}`,
             });
         }
         //Hash the password

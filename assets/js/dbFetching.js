@@ -33,7 +33,7 @@ async function getOwnerSpecificListings(ownerID) {
     );
 }
 
-// Function that will update the review scores of the listings in the database
+// Function that will update the review scores and number of reviews of the listings in the database
 async function updateListingReviewScore(listingID) {
     let response = await fetch("/api/listingDB/listing-score/" + listingID, {
         method: "PATCH",
@@ -74,14 +74,6 @@ async function updateUser(user, profilePic) {
     }
 }
 
-//Updates the given user's review count in the database
-async function updateUserReviewCount(userID) {
-    let response = await fetch(`api/userDB/users/review/${userID}`);
-    let message = await response.json();
-    if (!response.ok) console.error(message.message);
-    else console.log(message.message);
-}
-
 //Updates the given user's liked review in the database
 async function updateLikedReviews(userID, reviewID, listingID) {
     let userData = {
@@ -99,8 +91,32 @@ async function updateLikedReviews(userID, reviewID, listingID) {
     });
 
     let message = await response.json();
-    if (!response.ok) console.error(message.message);
-    else console.log(message.message);
+
+    if (response.ok) {
+        console.log(message.message); // Handle success message
+    } else {
+        // Make a request to the second API
+        let newData = {
+            userID: userID,
+            reviewID: reviewID,
+            listingID: listingID,
+        };
+        response = await fetch("/api/listingOwnerDB/owner/review/reviewLiked", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newData),
+        });
+
+        message = await response.json();
+
+        if (response.ok) {
+            console.log(message.message); // Handle success message
+        } else {
+            console.error(message.message); // Handle error message
+        }
+    }
 }
 
 // Checks if the current User is following the given user
@@ -150,15 +166,20 @@ async function generateReviewID(listingID) {
     return listingReviews.length + 1;
 }
 
-async function addListingReview(review) {
+async function addListingReview(review, reviewImgs) {
+    let userReview = new FormData();
+
+    for (let file of reviewImgs) {
+        userReview.append("reviewImgs", file);
+    }
+
+    userReview.append("newReview", JSON.stringify(review));
     let response = await fetch("/api/reviewDB/reviewAdd", {
         method: "POST",
-        body: JSON.stringify(review),
-        headers: { "Content-Type": "application/json" },
+        body: userReview,
     });
-    let message = await response.json();
-    if (!response.ok) console.error(message.message);
-    else console.log(message.message);
+
+    return response.ok;
 }
 
 async function deleteListingReview(reviewID, listingID) {
@@ -166,16 +187,14 @@ async function deleteListingReview(reviewID, listingID) {
         reviewID: reviewID,
         listingID: listingID,
     };
-
+    console.log(userData);
     let response = await fetch("/api/reviewDB/reviewMarkDelete", {
         method: "PATCH",
         body: JSON.stringify(userData),
         headers: { "Content-Type": "application/json" },
     });
 
-    let message = await response.json();
-    if (!response.ok) console.error(message.message);
-    else console.log(message.message);
+    return response.ok;
 }
 
 async function checkIfLikedReview(reviewID, listingID, userID) {
@@ -189,15 +208,20 @@ async function checkIfLikedReview(reviewID, listingID, userID) {
     );
 }
 
-async function editListingReview(reviewToEdit) {
-    let response = await fetch("/api/reviewDB/reviewEdit", {
+async function editListingReview(reviewToEdit, reviewImgs, clearedImgs) {
+    let userReview = new FormData();
+
+    for (let file of reviewImgs) {
+        userReview.append("reviewImgs", file);
+    }
+
+    userReview.append("editedReview", JSON.stringify(reviewToEdit));
+    let response = await fetch("/api/reviewDB/reviewEdit/" + clearedImgs, {
         method: "PUT",
-        body: JSON.stringify(reviewToEdit),
-        headers: { "Content-Type": "application/json" },
+        body: userReview,
     });
-    let message = await response.json();
-    if (!response.ok) console.error(message.message);
-    else console.log(message.message);
+
+    return response.ok;
 }
 
 //Gets all the review of a specific user
@@ -296,9 +320,7 @@ async function addNewOwnerResponse(ownerResponse) {
         body: JSON.stringify(ownerResponse),
         headers: { "Content-Type": "application/json" },
     });
-    let message = await response.json();
-    if (!response.ok) console.error(message.message);
-    else console.log(message.message);
+    return response.ok;
 }
 
 /* ==============================================================
