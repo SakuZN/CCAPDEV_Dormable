@@ -10,7 +10,7 @@
     "scripts": {
         "prebuild": "npm install parcel-bundler",
         "dev": "nodemon dormable.js & parcel index.html --open",
-        "build": "parcel build *.html",
+        "build": "npx parcel build *.html",
         "start": "node dormable.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
