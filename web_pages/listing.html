@@ -61,6 +61,7 @@
             <span></span>
             <span></span>
         </div>
+        <div class="text-center">Loading...</div>
     </div>
 </div>
 <!-- ***** Preloader End ***** -->
@@ -356,94 +357,113 @@
                     </div>
                     <!-- Review Form -->
                     <div class="reviewForm hidden">
-                        <form id="userForm">
-                            <div class="row">
-                                <div class="col-75">
-                                    <img
-                                        alt="Profile Picture"
-                                        id="profilePic"
-                                        src="/assets/images/test_image/blank_pp.jpg"
-                                    />
-                                    <div class="userInfo">
-                                        <h2 id="userName">John Doe</h2>
-                                        <h3 id="userNumOfReview">0 Reviews</h3>
+                        <div class="listing-review">
+                            <div class="card bg-secondary shadow">
+                                <div class="card-header bg-white border-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <img alt="Profile Picture" id="profilePic"
+                                                 src="/assets/images/test_image/blank_pp.jpg"/>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <div class="userInfo">
+                                                <h2 id="userName">John Doe</h2>
+                                                <h3 id="userNumOfReview">0 Reviews</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <h3 class="mb-0">New Review</h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-25">
-                                    <label for="reviewTitle">Review Title</label>
+                                <div class="card-body">
+                                    <form id="userForm">
+                                        <h6 class="heading-small text-muted mb-4"> Review information </h6>
+                                        <div class="pl-lg-4">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group focused">
+                                                        <label class="form-control-label" for="reviewTitle">Review
+                                                            Title</label>
+                                                        <input class="form-control form-control-alternative"
+                                                               id="reviewTitle"
+                                                               name="reviewTitle"
+                                                               placeholder="Enter review title..."
+                                                               required
+                                                               type="text"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group focused">
+                                                        <label class="form-control-label" for="reviewContent">Review
+                                                            Content</label>
+                                                        <textarea class="form-control form-control-alternative"
+                                                                  id="reviewContent"
+                                                                  name="reviewContent"
+                                                                  placeholder="Write your review..."
+                                                                  required rows="4"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="my-4"/>
+                                        <!-- Rating And Media -->
+                                        <h6 class="heading-small text-muted mb-4"> Review Media </h6>
+                                        <div class="pl-lg-4">
+                                            <div class="row">
+                                                <div class="col-md-12" style="justify-content: center; display: flex">
+                                                    <div class="form-group focused">
+                                                        <div class="button-container">
+                                                            <label class="btn btn-sm btn-primary" for="reviewImage"
+                                                                   style="margin-bottom: 0">Browse</label>
+                                                            <input accept="image/*"
+                                                                   id="reviewImage"
+                                                                   multiple
+                                                                   name="reviewImage"
+                                                                   style="display: none"
+                                                                   type="file"/>
+                                                            <button class="btn btn-sm btn-danger" id="clearImages"
+                                                                    type="button"> Clear Images
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12"
+                                                     style="justify-content: center; display: flex">
+                                                    <div class="form-group focused">
+                                                        <ul class="user-image-list"
+                                                            style="display: flex; justify-content: center; margin: 20px;">
+                                                            <!-- Dynamic added images -->
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12" style="justify-content: center; display: flex">
+                                                    <div class="form-group focused">
+                                                        <label>How was your experience?</label>
+                                                        <div class="rate-review">
+                                                            <input id="star5" name="rate" type="radio" value="5"/>
+                                                            <label for="star5" title="text">5 stars</label>
+                                                            <input id="star4" name="rate" type="radio" value="4"/>
+                                                            <label for="star4" title="text">4 stars</label>
+                                                            <input id="star3" name="rate" type="radio" value="3"/>
+                                                            <label for="star3" title="text">3 stars</label>
+                                                            <input id="star2" name="rate" type="radio" value="2"/>
+                                                            <label for="star2" title="text">2 stars</label>
+                                                            <input id="star1" name="rate" type="radio" value="1"/>
+                                                            <label for="star1" title="text">1 star</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="justify-content: center; display: flex">
+                                            <input class="btn btn-sm btn-primary" id="submitReview" type="submit"
+                                                   value="Submit Review"/>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="col-75">
-                                    <input
-                                        id="reviewTitle"
-                                        name="reviewTitle"
-                                        placeholder="Enter review title..."
-                                        required
-                                        type="text"
-                                    />
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-25">
-                                    <label for="reviewContent">Review Content</label>
-                                </div>
-                                <div class="col-75">
-                      <textarea
-                          id="reviewContent"
-                          name="reviewContent"
-                          placeholder="Write your review..."
-                          required
-                          style="height: 200px"
-                      ></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-25">
-                                    <label for="reviewImage">Review Image</label>
-                                </div>
-                                <div class="col-75">
-                                    <input
-                                        accept="image/*"
-                                        id="reviewImage"
-                                        multiple
-                                        name="reviewImage"
-                                        type="file"
-                                    />
-                                    <button
-                                        class="btn btn-danger"
-                                        id="clearImages"
-                                        style="float: right"
-                                        type="button"
-                                    >
-                                        Clear Images
-                                    </button>
-                                </div>
-                                <ul class="user-image-list">
-                                    <!-- Dynamic added images -->
-                                </ul>
-                            </div>
-                            <div class="row" style="margin-bottom: 0">
-                                <h2>How was your experience?</h2>
-                            </div>
-                            <div class="row">
-                                <div class="rate-review">
-                                    <input id="star5" name="rate" type="radio" value="5"/>
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input id="star4" name="rate" type="radio" value="4"/>
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input id="star3" name="rate" type="radio" value="3"/>
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input id="star2" name="rate" type="radio" value="2"/>
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input id="star1" name="rate" type="radio" value="1"/>
-                                    <label for="star1" title="text">1 star</label>
-                                </div>
-                            </div>
-                            <div class="row" style="justify-content: center">
-                                <input type="submit" value="Submit"/>
-                            </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Edit Review -->
@@ -452,160 +472,94 @@
                             <div class="card bg-secondary shadow">
                                 <div class="card-header bg-white border-0">
                                     <div class="row align-items-center">
-                                        <div class="col-8">
+                                        <div class="col-12 d-flex justify-content-center">
                                             <h3 class="mb-0">Edit Review</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <form id="editReviewForm">
-                                        <h6 class="heading-small text-muted mb-4">
-                                            Review information
-                                        </h6>
+                                        <h6 class="heading-small text-muted mb-4"> Review information </h6>
                                         <div class="pl-lg-4">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-12">
                                                     <div class="form-group focused">
-                                                        <label
-                                                            class="form-control-label"
-                                                            for="edit-title"
-                                                        >Review Title</label
-                                                        >
-                                                        <input
-                                                            class="form-control form-control-alternative"
-                                                            id="edit-title"
-                                                            placeholder="ReviewTitle"
-                                                            type="text"
-                                                            value="Review Title"
-                                                        />
+                                                        <label class="form-control-label" for="edit-title">Review
+                                                            Title</label>
+                                                        <input class="form-control form-control-alternative"
+                                                               id="edit-title" placeholder="ReviewTitle" type="text"
+                                                               value="Review Title"/>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-12">
                                                     <div class="form-group focused">
-                                                        <label>Review Content</label>
-                                                        <textarea
-                                                            class="form-control form-control-alternative"
-                                                            id="edit-content"
-                                                            placeholder="A few words about you ..."
-                                                            rows="4"
-                                                        >
-Your Description</textarea
-                                                        >
+                                                        <label class="form-control-label" for="edit-content">Review
+                                                            Content</label>
+                                                        <textarea class="form-control form-control-alternative"
+                                                                  id="edit-content"
+                                                                  placeholder="A few words about you ..."
+                                                                  rows="4"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <hr class="my-4"/>
                                         <!-- Rating And Media -->
-                                        <h6 class="heading-small text-muted mb-4">
-                                            Review Content
-                                        </h6>
+                                        <h6 class="heading-small text-muted mb-4"> Review Content </h6>
                                         <div class="pl-lg-4">
                                             <div class="row">
-                                                <div
-                                                    class="col-md-12"
-                                                    style="justify-content: center; display: flex"
-                                                >
+                                                <div class="col-md-12" style="justify-content: center; display: flex">
                                                     <div class="form-group focused">
-                                                        <label
-                                                            class="btn btn-sm btn-primary"
-                                                            for="editReviewImage"
-                                                        >Browse</label
-                                                        >
-                                                        <input
-                                                            accept="image/*"
-                                                            id="editReviewImage"
-                                                            multiple
-                                                            name="reviewEditImage"
-                                                            style="display: none"
-                                                            type="file"
-                                                        />
-                                                        <button
-                                                            class="btn btn-danger"
-                                                            id="clearEditImages"
-                                                            type="button"
-                                                        >
-                                                            Clear Images
+                                                        <label class="btn btn-sm btn-primary" for="editReviewImage"
+                                                               style="margin-bottom: 0">
+                                                            Browse</label>
+                                                        <input accept="image/*" id="editReviewImage" multiple
+                                                               name="reviewEditImage" style="display: none"
+                                                               type="file"/>
+                                                        <button class="btn btn-sm btn-danger" id="clearEditImages"
+                                                                type="button"> Clear Images
                                                         </button>
-                                                        <ul
-                                                            class="edit-image-list"
-                                                            style="
-                                    display: flex;
-                                    justify-content: center;
-                                    margin: 20px;
-                                  "
-                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12"
+                                                     style="justify-content: center; display: flex">
+                                                    <div class="form-group focused">
+                                                        <ul class="edit-image-list" style="
+                                                        display: flex;
+                                                        justify-content: center;
+                                                        margin: 20px;
+                                                        ">
                                                             <!-- Dynamic added images -->
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="col-md-12"
-                                                    style="justify-content: center; display: flex"
-                                                >
+                                                <div class="col-md-12" style="justify-content: center; display: flex">
                                                     <div class="form-group focused">
                                                         <label>How was your experience?</label>
                                                         <div class="rate-review">
-                                                            <input
-                                                                id="star5Edit"
-                                                                name="rateEdit"
-                                                                type="radio"
-                                                                value="5"
-                                                            />
-                                                            <label for="star5Edit" title="5 star!"
-                                                            >5 stars</label
-                                                            >
-                                                            <input
-                                                                id="star4Edit"
-                                                                name="rateEdit"
-                                                                type="radio"
-                                                                value="4"
-                                                            />
-                                                            <label for="star4Edit" title="4 star!"
-                                                            >4 stars</label
-                                                            >
-                                                            <input
-                                                                id="star3Edit"
-                                                                name="rateEdit"
-                                                                type="radio"
-                                                                value="3"
-                                                            />
-                                                            <label for="star3Edit" title="3 star!"
-                                                            >3 stars</label
-                                                            >
-                                                            <input
-                                                                id="star2Edit"
-                                                                name="rateEdit"
-                                                                type="radio"
-                                                                value="2"
-                                                            />
-                                                            <label for="star2Edit" title="2 star!"
-                                                            >2 stars</label
-                                                            >
-                                                            <input
-                                                                id="star1Edit"
-                                                                name="rateEdit"
-                                                                type="radio"
-                                                                value="1"
-                                                            />
-                                                            <label for="star1Edit" title="1 star!"
-                                                            >1 star</label
-                                                            >
+                                                            <input id="star5Edit" name="rateEdit" type="radio"
+                                                                   value="5"/>
+                                                            <label for="star5Edit" title="5 star!">5 stars</label>
+                                                            <input id="star4Edit" name="rateEdit" type="radio"
+                                                                   value="4"/>
+                                                            <label for="star4Edit" title="4 star!">4 stars</label>
+                                                            <input id="star3Edit" name="rateEdit" type="radio"
+                                                                   value="3"/>
+                                                            <label for="star3Edit" title="3 star!">3 stars</label>
+                                                            <input id="star2Edit" name="rateEdit" type="radio"
+                                                                   value="2"/>
+                                                            <label for="star2Edit" title="2 star!">2 stars</label>
+                                                            <input id="star1Edit" name="rateEdit" type="radio"
+                                                                   value="1"/>
+                                                            <label for="star1Edit" title="1 star!">1 star</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
-                                            class="col-md-12"
-                                            style="justify-content: center; display: flex"
-                                        >
-                                            <input
-                                                class="btn btn-sm btn-primary"
-                                                id="editReview"
-                                                type="submit"
-                                                value="Save Edit"
-                                            />
+                                        <div class="col-md-12" style="justify-content: center; display: flex">
+                                            <input class="btn btn-sm btn-primary" id="editReview" type="submit"
+                                                   value="Save Edit"/>
                                         </div>
                                     </form>
                                 </div>
@@ -672,6 +626,7 @@ Your Description</textarea
         </div>
     </div>
 </section>
+
 <!-- Popup Modal -->
 <div
     aria-hidden="true"
@@ -709,6 +664,13 @@ Your Description</textarea
         </div>
     </div>
 </div>
+
+
+<!-- Button Trigger
+<button class="btn btn-primary" id="invokeModalBtn" type="button">
+    Invoke Loading Modal<span class="load loading"></span>
+</button>
+ -->
 
 <!-- Comment Modal -->
 <div

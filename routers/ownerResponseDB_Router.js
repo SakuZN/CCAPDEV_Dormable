@@ -8,6 +8,7 @@ router.post("/responseAdd", async (req, res) => {
         reviewID: req.body.reviewID,
         listingID: req.body.listingID,
         userID: req.body.userID,
+        ownerID: req.body.ownerID,
         response: req.body.response,
         commentDate: req.body.commentDate,
     });

@@ -61,7 +61,10 @@ router.get("/filtered-listings", async (req, res) => {
 //Update review score of a listing based on reviewDB listingID
 router.patch("/listing-score/:id", async (req, res) => {
     const listingID = req.params.id;
-    const reviews = await reviewDB.find({ listingID: listingID });
+    const reviews = await reviewDB.find({
+        listingID: listingID,
+        isDeleted: false,
+    });
 
     if (reviews.length === 0) {
         return res
@@ -78,7 +81,12 @@ router.patch("/listing-score/:id", async (req, res) => {
     try {
         await listingDB.findOneAndUpdate(
             { listingID: listingID },
-            { $set: { reviewScore: averageScore } }
+            {
+                $set: {
+                    reviewScore: averageScore,
+                    reviews: reviews.length,
+                },
+            }
         );
 
         res.status(200).json({ message: "Review score updated" });
@@ -93,7 +101,10 @@ async function updateAllListingScores() {
     const distinctListingIds = await reviewDB.distinct("listingID");
     const promises = distinctListingIds.map(async (listingID) => {
         //Find all reviews matching current listingID
-        const reviews = await reviewDB.find({ listingID: listingID });
+        const reviews = await reviewDB.find({
+            listingID: listingID,
+            isDeleted: false,
+        });
         if (reviews.length > 0) {
             //Calculate average review score
             let totalScore = 0;
@@ -106,7 +117,12 @@ async function updateAllListingScores() {
             try {
                 await listingDB.updateOne(
                     { listingID: listingID },
-                    { $set: { reviewScore: averageScore } }
+                    {
+                        $set: {
+                            reviewScore: averageScore,
+                            reviews: reviews.length,
+                        },
+                    }
                 );
             } catch (err) {
                 console.error(

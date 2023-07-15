@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema(
                 listingID: { type: String, required: true },
                 userID: { type: String, required: true },
             },
-            // ... more liked reviews ...
         ],
         following: [String],
     },

@@ -1812,10 +1812,10 @@ responsive
     position: relative;
 }
 
-.reviewForm {
+.reviewForm, .edit-review {
     width: auto;
     margin: 0 auto;
-    padding: 20px;
+    padding: 5px;
     background-color: #f1f1f1;
     border-radius: 5px;
 }
@@ -1835,7 +1835,6 @@ responsive
     height: 100px;
     border-radius: 50%;
     overflow: hidden;
-    margin-left: 35px;
 }
 
 .reviewForm .col-25 {
@@ -1877,14 +1876,12 @@ textarea {
     margin-top: 5px;
 }
 
-.reviewForm .userInfo h2 {
-    margin-left: 35px;
-    text-align: left;
+.reviewForm .userInfo {
+    text-align: center;
 }
 
 .reviewForm .userInfo h3 {
     font-size: 17px;
-    margin-left: 40px;
     color: #8a8e96;
     margin-top: 2px;
 }
@@ -2272,6 +2269,71 @@ Pre Loader
 
 .loaded-button {
     animation: fadeIn 0.3s;
+}
+
+.load {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit
+}
+
+.load::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    width: 30px;
+    height: 30px;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    animation: loading1 1s ease infinite;
+    z-index: 10
+}
+
+.load::before {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 3px dashed #fff;
+    width: 30px;
+    height: 30px;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    animation: loading1 2s linear infinite;
+    z-index: 5
+}
+
+@keyframes loading1 {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+button.active {
+    animation: fadeIn 1s;
+    animation-delay: 0.5s;
+    transform: scale(.85)
+}
+
+button.activeLoading .loading {
+    visibility: visible;
+    opacity: 1
+}
+
+button .loading {
+    opacity: 0;
+    visibility: hidden
 }
 
 

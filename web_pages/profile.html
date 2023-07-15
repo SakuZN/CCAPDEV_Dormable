@@ -96,8 +96,8 @@
 <div class="main-content">
     <!-- Page content -->
     <div class="container-fluid mt--7">
-        <div class="row">
-            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-12 mb-4">
                 <div class="card card-profile shadow">
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
@@ -175,8 +175,8 @@
                 </div>
             </div>
             <!-- Edit Profile -->
-            <div class="edit-profile hidden">
-                <div class="col-xl-8 order-xl-1">
+            <div class="edit-profile hidden loaded">
+                <div class="col-lg-12">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
@@ -379,7 +379,7 @@ Your Description</textarea
                         </h6>
                         <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-12">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="review-title"
                                         >Review Title</label
@@ -393,7 +393,7 @@ Your Description</textarea
                                         />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12">
                                     <div class="form-group focused">
                                         <label>Review Content</label>
                                         <textarea
@@ -401,10 +401,7 @@ Your Description</textarea
                                             id="review-content"
                                             placeholder="A few words about you ..."
                                             rows="4"
-                                        >
-Your Description
-                    </textarea
-                    >
+                                        ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -416,11 +413,10 @@ Your Description
                             <div class="row">
                                 <div
                                     class="col-md-12"
-                                    style="justify-content: center; display: flex"
-                                >
+                                    style="justify-content: center; display: flex">
                                     <div class="form-group focused">
                                         <label class="btn btn-sm btn-primary" for="reviewImage"
-                                        >Browse</label
+                                               style="margin-bottom: 0">Browse</label
                                         >
                                         <input
                                             accept="image/*"
@@ -431,28 +427,29 @@ Your Description
                                             type="file"
                                         />
                                         <button
-                                            class="btn btn-danger"
+                                            class="btn btn-sm btn-danger"
                                             id="clearImages"
                                             type="button"
                                         >
                                             Clear Images
                                         </button>
-                                        <ul
-                                            class="user-image-list"
-                                            style="
-                            display: flex;
-                            justify-content: center;
-                            margin: 20px;
-                          "
-                                        >
+                                    </div>
+                                </div>
+                                <div class="col-md-12"
+                                     style="justify-content: center; display: flex">
+                                    <div class="form-group focused">
+                                        <ul class="user-image-list" style="
+                                                        display: flex;
+                                                        justify-content: center;
+                                                        margin: 20px;
+                                                        ">
                                             <!-- Dynamic added images -->
                                         </ul>
                                     </div>
                                 </div>
                                 <div
                                     class="col-md-12"
-                                    style="justify-content: center; display: flex"
-                                >
+                                    style="justify-content: center; display: flex">
                                     <div class="form-group focused">
                                         <label>How was your experience?</label>
                                         <div class="rate-review">
