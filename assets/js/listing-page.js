@@ -185,6 +185,7 @@ async function populateHistoryAsDiv(reviewHistory) {
         let isCurrentUser = await checkIfSameUserID(review.userID);
 
         let reviewUser = await getSpecificUser(review.userID);
+        console.log(reviewUser);
         let userCustomName = reviewUser.customName;
         let scoreClass = "";
         let checkEdit = "";

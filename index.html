@@ -7,22 +7,20 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta content="" name="description">
     <meta content="" name="author">
-    <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="/assets/images/test_image/icon.png" rel="icon" type="image/png"/>
     <title>Dormable!</title>
 
     <!-- Bootstrap core CSS -->
-    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css"
-          integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g=="
-          referrerpolicy="no-referrer" rel="stylesheet"/>
-    <link href="/assets/css/modal-animation.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" rel="stylesheet">
 
-    <!-- Additional CSS Files -->
+    <!-- build:css /assets/css/index-combined.min.css -->
+    <link href="/assets/css/modal-animation.css" rel="stylesheet">
     <link href="/assets/css/fontawesome.css" rel="stylesheet">
     <link href="/assets/css/main-dormable.css" rel="stylesheet">
     <link href="/assets/css/animated.css" rel="stylesheet">
     <link href="/assets/css/owl.css" rel="stylesheet">
-
+    <!-- endbuild -->
 </head>
 
 
@@ -35,6 +33,7 @@
             <span></span>
             <span></span>
             <span></span>
+            <div class="text-center">Loading...</div>
         </div>
     </div>
 </div>
@@ -231,36 +230,32 @@
 </div>
 
 <!-- Scripts -->
-
-<!-- JQuery -->
+<!-- jQuery should be loaded first as other scripts like Bootstrap depend on it -->
 <script crossorigin="anonymous"
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
         referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<!-- Popper -->
-<script crossorigin="anonymous"
-        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
-        referrerpolicy="no-referrer"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
-<!-- Bootstrap -->
-<script crossorigin="anonymous"
-        integrity="sha512-8qmis31OQi6hIRgvkht0s6mCOittjMa9GMqtK9hes5iEQBQE/Ca6yGE5FsW36vyipGoWQswBj/QBm2JR086Rkw=="
-        referrerpolicy="no-referrer"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/js/bootstrap.min.js"></script>
-<!-- Owl Carousel -->
-<script src="/assets/js/owl-carousel.js"></script>
-<!-- Misc external scripts -->
-<script src="/assets/js/animation.js"></script>
-<script src="/assets/js/imagesloaded.js"></script>
 
-<!-- My Scripts -->
-<script src="/assets/js/populateData.js"></script>
-<script src="/assets/js/listing.js"></script>
+<!-- Load other vendor scripts normally -->
+<script crossorigin="anonymous"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- build:js /vendor/js/vendor.js -->
+<script src="/assets/js/owl-carousel.js"></script>
+<script src="/assets/js/animation.js"></script>
+<script src="/vendor/gsap/gsap.min.js"></script>
+<script src="/vendor/jquery/jquery.magnific-popup.js"></script>
+<script src="/vendor/swiper/swiper.min.js"></script>
+<script src="/vendor/jquery/jquery.confirmModal.min.js"></script>
+<!-- endbuild -->
+
+<!-- build:js /assets/js/main.min.js -->
 <script src="/assets/js/dbFetching.js"></script>
+<script src="/assets/js/listing.js"></script>
 <script src="/assets/js/autostar-rating.js"></script>
 <script src="/assets/js/login-register.js"></script>
-
-<!-- Custom -->
 <script src="/assets/js/custom.js"></script>
+<!-- endbuild -->
 
 <!-- Page Scripts -->
 <script>

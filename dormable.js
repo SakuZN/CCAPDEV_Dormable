@@ -37,8 +37,6 @@ const ownerResponseDB_Router = require("./routers/ownerResponseDB_Router");
 const reviewDB_Router = require("./routers/reviewDB_Router");
 
 //Middleware for static assets
-app.use("/vendor", express.static(path.join(__dirname, "vendor")));
-app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use(express.static(path.join(__dirname, "dist")));
 
 /* ==============================================================
@@ -56,35 +54,35 @@ app.use("/api/ownerResponseDB", ownerResponseDB_Router);
    ROUTES TO INDIVIDUAL PAGES
    ============================================================== */
 app.get("/index", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 app.get("/404", (req, res) => {
-    res.sendFile(path.join(__dirname, "404.html"));
+    res.sendFile(path.join(__dirname, "dist", "404.html"));
 });
 
 app.get("/explore-listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "explore-listing.html"));
+    res.sendFile(path.join(__dirname, "dist", "explore-listing.html"));
 });
 
 app.get("/listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "listing.html"));
+    res.sendFile(path.join(__dirname, "dist", "listing.html"));
 });
 
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "login.html"));
+    res.sendFile(path.join(__dirname, "dist", "login.html"));
 });
 
 app.get("/profile", (req, res) => {
-    res.sendFile(path.join(__dirname, "profile.html"));
+    res.sendFile(path.join(__dirname, "dist", "profile.html"));
 });
 
 app.get("/request-listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "request-listing.html"));
+    res.sendFile(path.join(__dirname, "dist", "request-listing.html"));
 });
 
 app.get("/search-result", (req, res) => {
-    res.sendFile(path.join(__dirname, "search-result.html"));
+    res.sendFile(path.join(__dirname, "dist", "search-result.html"));
 });
 
 /* ==============================================================
@@ -101,7 +99,7 @@ app.get("/index.html", (req, res) => {
 
 //Make 404 request refer to custom 404 page
 app.use(function (req, res, next) {
-    res.status(404).sendFile(path.join(__dirname, "404.html"));
+    res.status(404).sendFile(path.join(__dirname, "./dist/404.html"));
 });
 
 //remove .html from the url

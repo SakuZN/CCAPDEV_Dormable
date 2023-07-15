@@ -4,17 +4,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-    <meta
-        content="frame-src 'self' https://www.google.com"
-        http-equiv="Content-Security-Policy"
-    />
-    <meta
-        content="script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com"
-        http-equiv="Content-Security-Policy"
-    />
-    <meta
-        content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    name="viewport"
     />
     <meta content="Group 5" name="author"/>
     <meta content="#" name="description"/>
@@ -24,34 +15,22 @@
     <title>Dormable!</title>
 
     <!-- Bootstrap CSS -->
-    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css"
-          integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g=="
-          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" rel="stylesheet">
+
+    <!-- build:css /assets/css/listing-combined.min.css -->
     <link href="/assets/css/modal-animation.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900"
-        rel="stylesheet"
-    />
-    <!-- Simple line Icon -->
     <link href="/assets/css/simple-line-icons.css" rel="stylesheet"/>
-    <!-- Themify Icon -->
     <link href="/assets/css/themify-icons.css" rel="stylesheet"/>
-    <!-- Hover Effects -->
     <link href="/assets/css/set1.css" rel="stylesheet"/>
-    <!-- Swiper Slider -->
     <link href="/assets/css/swiper.min.css" rel="stylesheet"/>
-    <!-- Magnific Popup CSS -->
     <link href="/assets/css/magnific-popup.css" rel="stylesheet"/>
-
     <link href="/assets/css/profile-dormable.css" rel="stylesheet"/>
-    <!-- Main CSS -->
     <link href="/assets/css/listing-dormable.css" rel="stylesheet"/>
-
-    <!-- Additional CSS Files -->
     <link href="/assets/css/fontawesome.css" rel="stylesheet"/>
     <link href="/assets/css/animated.css" rel="stylesheet"/>
     <link href="/assets/css/owl.css" rel="stylesheet"/>
+    <!-- endbuild -->
 </head>
 
 <body>
@@ -63,8 +42,8 @@
             <span></span>
             <span></span>
             <span></span>
+            <div class="text-center">Loading...</div>
         </div>
-        <div class="text-center">Loading...</div>
     </div>
 </div>
 <!-- ***** Preloader End ***** -->
@@ -581,7 +560,7 @@
                         class="img-fluid"
                         id="listing-map"
                         loading="lazy"
-                        src=""
+                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                         width="100%"
                     >
                     </iframe>
@@ -797,45 +776,33 @@
         </div>
     </div>
 </footer>
-<!-- jQuery, Bootstrap JS. -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<!-- JQuery -->
+
+<!-- jQuery should be loaded first as other scripts like Bootstrap depend on it -->
 <script crossorigin="anonymous"
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
         referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<!-- Popper -->
-<script crossorigin="anonymous"
-        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
-        referrerpolicy="no-referrer"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
-<!-- Bootstrap -->
-<script crossorigin="anonymous"
-        integrity="sha512-8qmis31OQi6hIRgvkht0s6mCOittjMa9GMqtK9hes5iEQBQE/Ca6yGE5FsW36vyipGoWQswBj/QBm2JR086Rkw=="
-        referrerpolicy="no-referrer"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/js/bootstrap.min.js"></script>
-<!-- Magnific popup JS -->
-<script src="/vendor/jquery/jquery.magnific-popup.js"></script>
-<!-- Swiper Slider JS -->
-<script src="/vendor/swiper/swiper.min.js"></script>
 
-<!--Jquery modal JS-->
-<script src="/vendor/jquery/jquery.confirmModal.min.js"></script>
-<!-- GSAP JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+<!-- Load other vendor scripts normally -->
+<script crossorigin="anonymous"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Vendor JS -->
+<!-- build:js /vendor/js/vendor.js -->
 <script src="/assets/js/owl-carousel.js"></script>
 <script src="/assets/js/animation.js"></script>
-<script src="/assets/js/imagesloaded.js"></script>
+<script src="/vendor/gsap/gsap.min.js"></script>
+<script src="/vendor/jquery/jquery.magnific-popup.js"></script>
+<script src="/vendor/swiper/swiper.min.js"></script>
+<script src="/vendor/jquery/jquery.confirmModal.min.js"></script>
+<!-- endbuild -->
 
-<!-- My JS Files -->
+<!-- build:js /assets/js/listing.min.js -->
 <script src="/assets/js/dbFetching.js"></script>
-<script src="/assets/js/autostar-rating.js"></script>
 <script src="/assets/js/listing.js"></script>
+<script src="/assets/js/autostar-rating.js"></script>
 <script src="/assets/js/login-register.js"></script>
 <script src="/assets/js/custom.js"></script>
-
-<!-- JQuery Script for various functionalities -->
 <script src="/assets/js/listing-page.js"></script>
+<!-- endbuild -->
 </body>
 </html>
