@@ -25,7 +25,7 @@ async function connectDB(retries = 5) {
             );
 
             // Retry after 5 seconds (5000 milliseconds)
-            setTimeout(() => connectDB(retries - 1), 5000);
+            setTimeout(() => connectDB(retries - 1), 1000);
         }
     }
 }

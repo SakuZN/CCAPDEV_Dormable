@@ -6,8 +6,8 @@
     "license": "",
     "author": "",
     "scripts": {
+        "dev": "node dormable.js & parcel web_pages/index.html --open",
         "build": "parcel build web_pages/index.html",
-        "dev": "parcel web_pages/index.html --open",
         "start": "node dormable.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
