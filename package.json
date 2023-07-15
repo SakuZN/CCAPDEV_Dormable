@@ -8,9 +8,7 @@
     "author": "",
     "source": "index.html",
     "scripts": {
-        "prebuild": "npm install parcel-bundler ev-emitter",
-        "dev": "nodemon dormable.js & parcel index.html --open",
-        "build": "npx parcel build *.html",
+        "installAndBuild": "npm install && parcel build *.html",
         "start": "node dormable.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
