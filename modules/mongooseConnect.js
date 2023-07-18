@@ -13,8 +13,6 @@ async function connectDB(retries = 5) {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-
-        console.log("MongoDB successfully connected...");
     } catch (err) {
         if (retries === 0) {
             console.error("MongoDB connection error. All retries failed.", err);
@@ -28,6 +26,7 @@ async function connectDB(retries = 5) {
             setTimeout(() => connectDB(retries - 1), 1000);
         }
     }
+    console.log("MongoDB successfully connected...");
 }
 
 module.exports = connectDB;

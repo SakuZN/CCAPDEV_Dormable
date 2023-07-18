@@ -422,7 +422,6 @@ function loadMoreListings() {
 
 async function filterListings() {
     let urlParams = new URLSearchParams(window.location.search);
-    console.log(urlParams.toString());
     let response = await fetch(
         "/api/listingDB/filtered-listings?" + urlParams.toString()
     );
@@ -434,7 +433,6 @@ async function filterListings() {
 }
 
 function sortListing(sortType) {
-    console.log(listingList);
     switch (sortType) {
         case "rating-low":
             listingList.sort(
@@ -455,7 +453,6 @@ function sortListing(sortType) {
         default:
             break;
     }
-    console.log(listingList);
 
     clearQueryListing();
     populateQueryListing();

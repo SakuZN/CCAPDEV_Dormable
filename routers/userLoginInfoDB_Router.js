@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const userLoginInfoDB = require("../model/userLoginInfoDB");
 const userDatabase = require("../model/userDB");
 const listingAdminDB = require("../model/listingAdminDB");
@@ -8,55 +9,20 @@ const argon2 = require("argon2");
 const cloudinary = require("../modules/cloudinaryConnect");
 const path = require("path");
 
-const isValidPassword = (plaintextPassword, hashedPassword) => {
-    return argon2.verify(hashedPassword, plaintextPassword);
-};
-
 //Handle Login
-router.post("/login", async (req, res) => {
-    //Get the needed data
-    const { email, password, rememberMe } = req.body;
-    //Validate if email or password field is empty
-    if (!email) {
-        return res.status(400).json({ message: "Email is required" });
-    } else if (!password) {
-        return res.status(400).json({ message: "Password is required" });
+router.post("/login", passport.authenticate("local"), (req, res) => {
+    const user = req.user;
+    if (req.body.rememberMe) {
+        //3 weeks
+        req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 21;
     }
-
-    try {
-        let user = await authenticate(email, password, userLoginInfoDB);
-
-        if (!user) {
-            user = await authenticate(email, password, listingAdminDB);
-        }
-
-        if (!user) {
-            return res.status(400).json({ message: "Invalid credentials" });
-        }
-
-        req.session.userID = user.username;
-        if (rememberMe) {
-            //3 weeks
-            req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 21;
-        }
-        req.session.save();
-
-        //Once saved, send the user's data to the client
-        res.json(user);
-    } catch (Err) {
-        // Handle error
-        console.log(Err);
-        res.status(500).json({ message: "Internal server error!" });
-    }
+    req.session.save();
+    res.json(user);
 });
 
 //Handle logout
 router.get("/logout", (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ message: err.message });
-        }
-
+    req.logout(() => {
         res.clearCookie("userSession");
         res.json({ message: "Logged out successfully!" });
     });
@@ -86,23 +52,6 @@ router.post("/register", upload.single("profilePic"), async (req, res) => {
         });
     else return res.status(500).json({ message: "Internal server error!" });
 });
-
-//Helper function to authenticate user
-
-async function authenticate(email, password, Model) {
-    // Check if the email exists in the given Model
-    const user = await Model.findOne({ email: email });
-    if (!user) {
-        return false;
-    }
-    // Validate password
-    const validPassword = await isValidPassword(password, user.password);
-    if (!validPassword) {
-        return false;
-    }
-
-    return user;
-}
 
 async function existingUser(username, email, Model) {
     const [checkEmail, checkUsername] = await Promise.all([

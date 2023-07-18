@@ -39,7 +39,7 @@ router.patch("/reviewMarkDelete", async (req, res) => {
             return res.status(404).json({ message: "Cannot find review" });
         } else {
             let reviewUser = await userDB.findOne({
-                username: req.session.userID,
+                username: req.user.username,
             });
             if (reviewUser == null) {
                 return res.status(404).json({ message: "Cannot find user" });

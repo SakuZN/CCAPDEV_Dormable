@@ -28,8 +28,12 @@ async function login() {
         headers: { "Content-Type": "application/json" },
     });
 
-    //If response is not ok, show error message from response
-    if (!response.ok) {
+    if (response.status === 401) {
+        // This is the status code Passport uses to indicate a login failure
+        await showPopup("Incorrect email or password.");
+        return;
+    } else if (!response.ok) {
+        // Handle any other error status codes as you see fit
         let message = await response.json();
         await showPopup(message.message);
         return;
@@ -75,10 +79,12 @@ async function register() {
     userFormData.append("userInfo", JSON.stringify(newUserDataInfo));
 
     //POST request
-    let fetchResponse = await fetch("/api/loginForm/register", {
-        method: "POST",
-        body: userFormData,
-    });
+    let fetchResponse = await loadPopup(
+        fetch("/api/loginForm/register", {
+            method: "POST",
+            body: userFormData,
+        })
+    );
 
     if (!fetchResponse.ok) {
         let message = await fetchResponse.json();
@@ -157,31 +163,26 @@ async function updateMenu() {
     }
 }
 
-function showPopup(message) {
-    return new Promise((resolve) => {
-        let dialog = document.querySelector("#dialog");
-        dialog.querySelector(".modal-body p").textContent = message;
-
-        $("#dialog").on("hidden.bs.modal", function () {
-            resolve();
-        });
-        $("#dialog").modal("show");
-    });
-}
-
-updateMenu();
+(async () => {
+    try {
+        await updateMenu();
+        // Continue with other code after updateMenu() has completed
+    } catch (error) {
+        console.error(error);
+    }
+})();
 
 //Conditional statement to add event listeners to login and register forms in login.html
 if (window.location.href.includes("login")) {
     const loginForm = document.getElementById("loginForm");
     const registerForm = document.getElementById("signupForm");
-    loginForm.addEventListener("submit", function (e) {
+    loginForm.addEventListener("submit", async function (e) {
         e.preventDefault();
-        login();
+        await login();
     });
 
-    registerForm.addEventListener("submit", function (e) {
+    registerForm.addEventListener("submit", async function (e) {
         e.preventDefault();
-        register();
+        await register();
     });
 }

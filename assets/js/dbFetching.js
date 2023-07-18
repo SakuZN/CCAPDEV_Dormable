@@ -47,11 +47,6 @@ async function updateListingReviewScore(listingID) {
 /* ==============================================================
    BASE CRUD OPERATIONS FOR USER DATABASE
    ============================================================== */
-async function getUserDatabase() {
-    let response = await fetch("/api/userDB");
-    if (response.ok) return await response.json();
-    else console.error("Error fetching userDB:", response);
-}
 
 /* ==============================================================
    USER DATABASE FUNCTIONS USED BY VARIOUS SCRIPTS AND PAGES
@@ -62,10 +57,12 @@ async function updateUser(user, profilePic) {
     let userData = new FormData();
     userData.append("profilePic", profilePic);
     userData.append("userData", JSON.stringify(user));
-    let response = await fetch("/api/userDB/update", {
-        method: "PUT",
-        body: userData,
-    });
+    let response = await loadPopup(
+        fetch("/api/userDB/update", {
+            method: "PUT",
+            body: userData,
+        })
+    );
     let message = await response.json();
     if (!response.ok) {
         await showPopup(message.message);
@@ -174,10 +171,12 @@ async function addListingReview(review, reviewImgs) {
     }
 
     userReview.append("newReview", JSON.stringify(review));
-    let response = await fetch("/api/reviewDB/reviewAdd", {
-        method: "POST",
-        body: userReview,
-    });
+    let response = await loadPopup(
+        fetch("/api/reviewDB/reviewAdd", {
+            method: "POST",
+            body: userReview,
+        })
+    );
 
     return response.ok;
 }
@@ -187,7 +186,6 @@ async function deleteListingReview(reviewID, listingID) {
         reviewID: reviewID,
         listingID: listingID,
     };
-    console.log(userData);
     let response = await fetch("/api/reviewDB/reviewMarkDelete", {
         method: "PATCH",
         body: JSON.stringify(userData),
@@ -216,10 +214,12 @@ async function editListingReview(reviewToEdit, reviewImgs, clearedImgs) {
     }
 
     userReview.append("editedReview", JSON.stringify(reviewToEdit));
-    let response = await fetch("/api/reviewDB/reviewEdit/" + clearedImgs, {
-        method: "PUT",
-        body: userReview,
-    });
+    let response = loadPopup(
+        await fetch("/api/reviewDB/reviewEdit/" + clearedImgs, {
+            method: "PUT",
+            body: userReview,
+        })
+    );
 
     return response.ok;
 }
@@ -281,13 +281,6 @@ async function getOwnerResponseDatabase() {
     else console.error("Error fetching owner response database:", response);
 }
 
-function setOwnerResponseDatabase(ownerResponseDatabase) {
-    localStorage.setItem(
-        "ownerResponseDatabase",
-        JSON.stringify(ownerResponseDatabase)
-    );
-}
-
 /* ==============================================================
    FUNCTION OPERATIONS FOR OWNER RESPONSE DATABASE
    ============================================================== */
@@ -346,9 +339,16 @@ async function checkExistingUsername(username) {
    ============================================================== */
 
 async function getCurrentUser() {
-    let response = await fetch("api/userDB/current-user");
-    if (!response.ok) return false;
-    return await response.json();
+    let response = await fetch("/api/userDB/current-user");
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    let result = await response.json();
+    if (result === false) {
+        return false;
+    }
+    return result;
 }
 
 async function logoutSession() {
@@ -387,4 +387,34 @@ function reviewDate(date) {
     } else {
         return years + " years ago";
     }
+}
+
+function showPopup(message) {
+    return new Promise((resolve) => {
+        let dialog = document.querySelector("#dialog");
+        dialog.querySelector(".modal-body p").textContent = message;
+
+        $("#dialog").on("hidden.bs.modal", function () {
+            resolve();
+        });
+        $("#dialog").modal("show");
+    });
+}
+
+async function loadPopup(promise) {
+    // Show the modal
+    $("#loadModal").modal({
+        backdrop: "static",
+        keyboard: false,
+        show: true,
+    });
+
+    // Wait for the promise
+    const result = await promise;
+
+    // Hide the modal
+    $("#loadModal").modal("hide");
+
+    // Return the result to continue executing other code.
+    return result;
 }

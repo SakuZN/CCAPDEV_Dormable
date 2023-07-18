@@ -185,7 +185,6 @@ async function populateHistoryAsDiv(reviewHistory) {
         let isCurrentUser = await checkIfSameUserID(review.userID);
 
         let reviewUser = await getSpecificUser(review.userID);
-        console.log(reviewUser);
         let userCustomName = reviewUser.customName;
         let scoreClass = "";
         let checkEdit = "";
@@ -591,7 +590,8 @@ $(document).ready(async function () {
     /* ==============================================================
      HELPER FUNCTIONS
      ============================================================== */
-    async function handleReviewBtnClick() {
+    async function handleReviewBtnClick(event) {
+        event.preventDefault();
         let currentUser = await getCurrentUser();
         if (!currentUser) {
             await showPopup("Please login to leave a review");
@@ -778,7 +778,8 @@ $(document).ready(async function () {
         $("#reviewImage").val("");
     }
 
-    function handleReviewClearImagesClick() {
+    function handleReviewClearImagesClick(event) {
+        event.preventDefault();
         // Clear the file input and image list
         $("#reviewImage").val("");
         $(".user-image-list").empty();
@@ -1122,7 +1123,8 @@ $(document).ready(async function () {
         initUserPopUp();
     }
 
-    function handleSearchReviewChange() {
+    function handleSearchReviewChange(event) {
+        event.preventDefault();
         let keyword = $("#searchInput").val();
         searchReviewHistory(keyword);
         initUserPopUp();
@@ -1163,10 +1165,5 @@ $(document).ready(async function () {
         initSwiper();
         initReviewPopUp();
         $("#js-preloader").addClass("loaded");
-    });
-
-    // attach a click event listener to the button
-    $("#invokeModalBtn").on("click", async function () {
-        $(this).addClass("activeLoading");
     });
 });

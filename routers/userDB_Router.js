@@ -9,22 +9,11 @@ const path = require("path");
 const fs = require("fs");
 
 //Return current user's information based on the sessionID
-router.get("/current-user", async (req, res) => {
-    try {
-        let user = await userDB.findOne({ username: req.session.userID });
-        if (!user) {
-            user = await listingOwnerDB.findOne({
-                username: req.session.userID,
-            });
-        }
-
-        if (user) {
-            res.json(user);
-        } else {
-            res.status(404).json({ message: "User not found" });
-        }
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+router.get("/current-user", (req, res) => {
+    if (req.user) {
+        res.json(req.user);
+    } else {
+        res.json(false);
     }
 });
 
@@ -111,7 +100,7 @@ router.patch("/users/reviewLiked", async (req, res) => {
     const reviewUserID = req.body.userID;
     const reviewID = req.body.reviewID;
     const listingID = req.body.listingID;
-    const currentUser = req.session.userID;
+    const currentUser = req.user.username;
 
     // Find the currentUser and patch the liked review
     try {
@@ -159,7 +148,7 @@ router.patch("/users/reviewLiked", async (req, res) => {
 //Follow a user
 router.patch("/users/follow/:id", async (req, res) => {
     let userToFollow = req.params.id;
-    let currentUser = req.session.userID;
+    let currentUser = req.user.username;
 
     try {
         const user = await userDB.findOne({ username: currentUser });
@@ -180,8 +169,6 @@ router.patch("/users/follow/:id", async (req, res) => {
                 });
             }
         }
-        console.log(user);
-        console.log(followedUser);
         const index = user.following.findIndex(
             (following) => following === userToFollow
         );

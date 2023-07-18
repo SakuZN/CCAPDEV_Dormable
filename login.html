@@ -32,8 +32,8 @@
             <span></span>
             <span></span>
             <span></span>
-            <div class="text-center">Loading...</div>
         </div>
+        <div class="text-center">Loading...</div>
     </div>
 </div>
 <!-- ***** Preloader End ***** -->
@@ -164,12 +164,26 @@
                 />
                 <label for="remember">Remember me</label>
             </div>
-            <button type="submit">Login</button>
+            <button class="activeLoading" type="submit">Login</button>
         </form>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Loading Modal -->
+<div aria-labelledby="loadMeLabel" class="modal fade" id="loadModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="loader"></div>
+                <div class="loader-txt">
+                    <p>Fetching your data... <br><br><small>it might take a while #animo.sys</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Modal -->
 <div
     aria-hidden="true"
     aria-labelledby="exampleModalLabel"
@@ -243,6 +257,11 @@
                 window.location.href = "/index";
             }
         })();
+
+        // attach a click event listener to the button
+        $("#invokeModalBtn").on("click", async function () {
+            $(this).toggleClass("activeLoading");
+        });
 
         $("#js-preloader").addClass("loaded");
         var readURL = function (input) {

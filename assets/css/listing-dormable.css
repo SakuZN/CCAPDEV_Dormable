@@ -2270,69 +2270,33 @@ Pre Loader
     animation: fadeIn 0.3s;
 }
 
-.load {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: inherit
-}
+/** SPINNER CREATION **/
 
-.load::after {
-    content: '';
-    position: absolute;
+.loader {
+    position: relative;
+    text-align: center;
+    margin: 15px auto 35px auto;
+    z-index: 9999;
+    display: block;
+    width: 80px;
+    height: 80px;
+    border: 10px solid rgba(0, 0, 0, .3);
     border-radius: 50%;
-    border: 3px solid #fff;
-    width: 30px;
-    height: 30px;
-    border-left: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    animation: loading1 1s ease infinite;
-    z-index: 10
+    border-top-color: #000;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
 }
 
-.load::before {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    border: 3px dashed #fff;
-    width: 30px;
-    height: 30px;
-    border-left: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    animation: loading1 2s linear infinite;
-    z-index: 5
-}
-
-@keyframes loading1 {
-    0% {
-        transform: rotate(0deg)
-    }
-
-    100% {
-        transform: rotate(360deg)
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
     }
 }
 
-button.active {
-    animation: fadeIn 1s;
-    animation-delay: 0.5s;
-    transform: scale(.85)
-}
-
-button.activeLoading .loading {
-    visibility: visible;
-    opacity: 1
-}
-
-button .loading {
-    opacity: 0;
-    visibility: hidden
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 

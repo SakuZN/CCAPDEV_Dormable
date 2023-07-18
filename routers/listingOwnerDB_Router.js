@@ -19,7 +19,7 @@ router.patch("/owner/review/reviewLiked", async (req, res) => {
     const reviewUserID = req.body.userID;
     const reviewID = req.body.reviewID;
     const listingID = req.body.listingID;
-    const currentUser = req.session.userID;
+    const currentUser = req.user.username;
 
     // Find the currentUser and patch the liked review
     try {

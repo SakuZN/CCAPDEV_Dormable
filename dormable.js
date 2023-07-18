@@ -2,6 +2,8 @@
    IMPORTS AND CONFIGURATION
    ============================================================== */
 const express = require("express");
+const passport = require("passport");
+require("./modules/passportConfig")(passport);
 const session = require("./modules/userSession");
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +14,9 @@ const mongoDB = require("./modules/mongooseConnect");
 
 //Session configuration
 app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Use middleware to parse request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +42,8 @@ const ownerResponseDB_Router = require("./routers/ownerResponseDB_Router");
 const reviewDB_Router = require("./routers/reviewDB_Router");
 
 //Middleware for static assets
+//app.use("/vendor", express.static(path.join(__dirname, "vendor")));
+//app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use(express.static(path.join(__dirname, "dist")));
 
 /* ==============================================================

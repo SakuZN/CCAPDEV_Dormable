@@ -45,8 +45,8 @@
             <span></span>
             <span></span>
             <span></span>
-            <div class="text-center">Loading...</div>
         </div>
+        <div class="text-center">Loading...</div>
     </div>
 </div>
 <!-- ***** Preloader End ***** -->
@@ -206,7 +206,21 @@
 </footer>
 <!-- Footer Section End-->
 
-<!-- Modal -->
+<!-- Loading Modal -->
+<div aria-labelledby="loadMeLabel" class="modal fade" id="loadModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="loader"></div>
+                <div class="loader-txt">
+                    <p>Fetching your data... <br><br><small>it might take a while #animo.sys</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Modal -->
 <div
     aria-hidden="true"
     aria-labelledby="exampleModalLabel"
@@ -278,7 +292,6 @@
 
         function handleSortListingChange() {
             let sortType = $(this).val();
-            console.log(sortType);
             sortListing(sortType);
         }
 

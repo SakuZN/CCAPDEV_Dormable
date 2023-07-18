@@ -647,12 +647,10 @@ function parseDate(date) {
 async function updateProfile() {
     //Get the needed elements
     let inputProfilePic = document.getElementById("fileUpload");
-    console.log(inputProfilePic);
     let profilePic =
         inputProfilePic.files && inputProfilePic.files[0]
             ? inputProfilePic.files[0]
             : null;
-    console.log(profilePic);
     let customName = document.getElementById("input-customName").value;
     let course = document.getElementById("input-course").value;
     let college = document.getElementById("input-college").value;

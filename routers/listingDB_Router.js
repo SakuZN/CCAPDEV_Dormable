@@ -31,7 +31,6 @@ router.get("/listing/:id", async (req, res) => {
 //Return listings based on URL parameters
 router.get("/filtered-listings", async (req, res) => {
     let filters = req.query;
-    console.log(filters);
     let query = {};
 
     if (filters.location) {
