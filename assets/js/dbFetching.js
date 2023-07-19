@@ -79,13 +79,15 @@ async function updateLikedReviews(userID, reviewID, listingID) {
         listingID: listingID,
     };
 
-    let response = await fetch("/api/userDB/users/reviewLiked", {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-    });
+    let response = await loadPopup(
+        fetch("/api/userDB/users/reviewLiked", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+        })
+    );
 
     let message = await response.json();
 
@@ -186,11 +188,13 @@ async function deleteListingReview(reviewID, listingID) {
         reviewID: reviewID,
         listingID: listingID,
     };
-    let response = await fetch("/api/reviewDB/reviewMarkDelete", {
-        method: "PATCH",
-        body: JSON.stringify(userData),
-        headers: { "Content-Type": "application/json" },
-    });
+    let response = await loadPopup(
+        fetch("/api/reviewDB/reviewMarkDelete", {
+            method: "PATCH",
+            body: JSON.stringify(userData),
+            headers: { "Content-Type": "application/json" },
+        })
+    );
 
     return response.ok;
 }
@@ -214,8 +218,8 @@ async function editListingReview(reviewToEdit, reviewImgs, clearedImgs) {
     }
 
     userReview.append("editedReview", JSON.stringify(reviewToEdit));
-    let response = loadPopup(
-        await fetch("/api/reviewDB/reviewEdit/" + clearedImgs, {
+    let response = await loadPopup(
+        fetch("/api/reviewDB/reviewEdit/" + clearedImgs, {
             method: "PUT",
             body: userReview,
         })
@@ -308,11 +312,13 @@ async function getReviewResponse(reviewID, listingID, userID) {
 }
 
 async function addNewOwnerResponse(ownerResponse) {
-    let response = await fetch("/api/ownerResponseDB/responseAdd", {
-        method: "POST",
-        body: JSON.stringify(ownerResponse),
-        headers: { "Content-Type": "application/json" },
-    });
+    let response = await loadPopup(
+        fetch("/api/ownerResponseDB/responseAdd", {
+            method: "POST",
+            body: JSON.stringify(ownerResponse),
+            headers: { "Content-Type": "application/json" },
+        })
+    );
     return response.ok;
 }
 
