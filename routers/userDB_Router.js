@@ -203,4 +203,9 @@ router.get("/", async (req, res) => {
     }
 });
 
+const auth = function (req, res, next) {
+    if (req.isAuthenticated()) return next();
+    res.status(401).json({ message: "User is not logged in / authenticated!" });
+};
+
 module.exports = router;

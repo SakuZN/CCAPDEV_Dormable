@@ -806,9 +806,11 @@ function generateUserReviews() {
     return reviews;
 }
 
+/*
 /* ==============================================================
    POPULATES LOCAL STORAGE WITH DEFAULT DATA
    ============================================================== */
+/*
 
 if (
     localStorage.getItem("isLoggedIn") === null ||
@@ -898,6 +900,5 @@ function debugButton() {
         sessionStorage.clear();
         location.reload();
     });
-
-     */
 }
+     */

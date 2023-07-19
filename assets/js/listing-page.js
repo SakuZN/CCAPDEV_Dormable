@@ -476,8 +476,7 @@ function loadMoreReviews() {
         clearReviewHistory();
         populateUserReviewHistory(userProfile.userRHData);
          */
-        showPopup("No more reviews to load");
-        return;
+        showPopup("No more reviews to load").then();
     }
 
     let swiperIndex = mySwiper.activeIndex;

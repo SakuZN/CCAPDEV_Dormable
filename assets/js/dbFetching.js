@@ -418,9 +418,22 @@ async function loadPopup(promise) {
     // Wait for the promise
     const result = await promise;
 
+    // Create a promise that resolves when the modal is hidden
+    const hidden = new Promise((resolve) => {
+        $("#loadModal").on("hidden.bs.modal", function () {
+            // Remove event listener
+            $(this).off("hidden.bs.modal");
+
+            // Resolve the promise
+            resolve();
+        });
+    });
+
     // Hide the modal
     $("#loadModal").modal("hide");
 
-    // Return the result to continue executing other code.
+    // Wait for the modal to be hidden
+    await hidden;
+    
     return result;
 }

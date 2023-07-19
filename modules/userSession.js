@@ -24,6 +24,7 @@ const sessionConfig = session({
     saveUninitialized: false,
     rolling: true,
     store: store,
+    proxy: process.env.NODE_ENV === "production", // it is 'true' in production, otherwise 'false'
     cookie: {
         maxAge: null,
         sameSite: "lax", // or 'strict'
