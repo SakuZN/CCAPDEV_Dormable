@@ -5,10 +5,10 @@ MongoDB, Express, React, Node.js).
 
 ## MEDIA ACCURACY DISCLAIMER
 
-The data represented in this project, including reviews and evaluations of dormitories or buildings,
+<font size ="24">The data represented in this project, including reviews and evaluations of dormitories or buildings,
 are intended solely for educational purposes and do not accurately reflect the actual state, quality, or opinions of
 these establishments.
-The data has been fabricated or anonymized and should not be used as a factual reference.
+The data has been fabricated or anonymized and should not be used as a factual reference. </font>
 
 ## Project Local Setup
 
