@@ -18,15 +18,17 @@ async function login() {
     let pass = document.getElementById("loginPswd").value;
     let rememberMe = document.getElementById("remember").checked;
 
-    let response = await fetch("/api/loginForm/login", {
-        method: "POST",
-        body: JSON.stringify({
-            email: email,
-            password: pass,
-            rememberMe: rememberMe,
-        }),
-        headers: { "Content-Type": "application/json" },
-    });
+    let response = await loadPopup(
+        fetch("/api/loginForm/login", {
+            method: "POST",
+            body: JSON.stringify({
+                email: email,
+                password: pass,
+                rememberMe: rememberMe,
+            }),
+            headers: { "Content-Type": "application/json" },
+        })
+    );
 
     if (response.status === 401) {
         // This is the status code Passport uses to indicate a login failure

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 :root {
     --blue: #5e72e4;
     --indigo: #5603ad;
@@ -29,8 +31,6 @@
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
-    --font-family-sans-serif: Open Sans, sans-serif;
-    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
 *,
@@ -40,7 +40,7 @@
 }
 
 html {
-    font-family: sans-serif;
+    font-family: "Poppins", sans-serif ;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -1535,8 +1535,9 @@ a.text-white:focus {
 .card-profile-image img {
     position: absolute;
     left: 50%;
-    max-width: 120px;
-    max-height: 120px;
+    width: 120px;
+    height: 120px;
+    aspect-ratio: auto;
     transition: all .15s ease;
     transform: translate(-50%, -30%);
     border-radius: .375rem;
