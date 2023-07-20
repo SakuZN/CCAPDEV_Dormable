@@ -430,10 +430,13 @@ async function loadPopup(promise) {
     });
 
     // Hide the modal
-    $("#loadModal").modal("hide");
+    $("#loadModal").on("shown.bs.modal", function () {
+        $("#loadModal").modal("hide");
+    });
 
     // Wait for the modal to be hidden
     await hidden;
-    
+
+    // Return the result to continue executing other code.
     return result;
 }

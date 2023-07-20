@@ -697,10 +697,10 @@ $(document).ready(async function () {
             return;
         }
         await updateListingReviewScore(id);
-        // Hide the review form
-        $("#userForm")[0].reset();
-        $(".reviewForm").addClass("hidden");
         showPopup("Review Submitted!").then(function () {
+            // Hide the review form
+            $("#userForm")[0].reset();
+            $(".reviewForm").addClass("hidden");
             // Refresh the page
             location.reload();
         });
@@ -906,7 +906,8 @@ $(document).ready(async function () {
     /* ==============================================================
      HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
      ============================================================== */
-    async function populateReviewCommentForm() {
+    async function populateReviewCommentForm(event) {
+        event.preventDefault();
         let commentBtn = $(this);
         let reviewContainer = commentBtn.closest(".swiper-slide");
         let reviewID = reviewContainer.data("review-id");

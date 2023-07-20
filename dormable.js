@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
     if (
         req.get("x-forwarded-proto") !== "https" &&
         (app.get("env") === "production" ||
-            process.env.NODE_ENV === "production") === "production"
+            process.env.NODE_ENV === "production")
     ) {
         res.redirect(`https://${req.hostname}${req.url}`);
     } else {

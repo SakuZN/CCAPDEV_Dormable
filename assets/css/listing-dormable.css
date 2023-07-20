@@ -1889,6 +1889,7 @@ textarea {
 
 .rate-review {
     display: flex;
+    flex-direction: row-reverse;
     align-items: center; /* Center items vertically */
     justify-content: center; /* Center items horizontally */
     height: 46px;
@@ -1903,6 +1904,7 @@ textarea {
 
 .rate-review:not(:checked) > label {
     float: right;
+    order: 1;
     width: 1em;
     overflow: hidden;
     white-space: nowrap;
@@ -2299,6 +2301,13 @@ Pre Loader
     to {
         -webkit-transform: rotate(360deg);
     }
+}
+
+.modal-scroll {
+    position: relative;
+    padding: 20px;
+    height: 200px;
+    overflow-y: scroll;
 }
 
 

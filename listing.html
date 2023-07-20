@@ -419,15 +419,15 @@
                                                         <label>How was your experience?</label>
                                                         <div class="rate-review">
                                                             <input id="star5" name="rate" type="radio" value="5"/>
-                                                            <label for="star5" title="text">5 stars</label>
+                                                            <label for="star5" title="Excellent">5 stars</label>
                                                             <input id="star4" name="rate" type="radio" value="4"/>
-                                                            <label for="star4" title="text">4 stars</label>
+                                                            <label for="star4" title="Very Good">4 stars</label>
                                                             <input id="star3" name="rate" type="radio" value="3"/>
-                                                            <label for="star3" title="text">3 stars</label>
+                                                            <label for="star3" title="Good">3 stars</label>
                                                             <input id="star2" name="rate" type="radio" value="2"/>
-                                                            <label for="star2" title="text">2 stars</label>
+                                                            <label for="star2" title="Not Bad">2 stars</label>
                                                             <input id="star1" name="rate" type="radio" value="1"/>
-                                                            <label for="star1" title="text">1 star</label>
+                                                            <label for="star1" title="Poor">1 star</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -666,7 +666,7 @@
     tabindex="-1"
 >
     <div
-        class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+        class="modal-dialog modal-scroll modal-dialog-centered modal-dialog-scrollable modal-xl"
     >
         <div class="modal-content">
             <div class="modal-header">
@@ -680,14 +680,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="cRUReviewHistory">
-                <!-- Append data here -->
-            </div>
-            <div class="modal-body" id="cRUComment">
-                <!-- Append data here -->
-            </div>
-            <div class="modal-body hidden" id="cRUCommentForm">
-                <!-- Append data here -->
+            <div class="modal-body" id="commentBody">
+                <div class="" id="cRUReviewHistory">
+                    <!-- Append data here -->
+                </div>
+                <div class="" id="cRUComment">
+                    <!-- Append data here -->
+                </div>
+                <div class="hidden" id="cRUCommentForm">
+                    <!-- Append data here -->
+                </div>
             </div>
             <div class="modal-footer">
                 <button
