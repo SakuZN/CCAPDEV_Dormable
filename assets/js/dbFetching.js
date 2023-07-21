@@ -409,32 +409,33 @@ function showPopup(message) {
 
 async function loadPopup(promise) {
     // Show the modal
-    $("#loadModal").modal({
+    let loadModal = $("#loadModal");
+
+    loadModal.modal({
         backdrop: "static",
         keyboard: false,
         show: true,
     });
 
-    // Wait for the promise
-    const result = await promise;
-
     // Create a promise that resolves when the modal is hidden
     const hidden = new Promise((resolve) => {
-        $("#loadModal").on("hidden.bs.modal", function () {
-            // Remove event listener
-            $(this).off("hidden.bs.modal");
-
+        loadModal.on("hidden.bs.modal", function () {
             // Resolve the promise
             resolve();
         });
     });
 
-    // Hide the modal
-    $("#loadModal").on("shown.bs.modal", function () {
-        $("#loadModal").modal("hide");
+    // Wait for the promise
+    const result = await promise;
+
+    //When the promise finishes quicker than the transition, we need to wait for the modal to be shown before we can hide it.
+    loadModal.on("shown.bs.modal", function () {
+        loadModal.modal("hide");
     });
 
-    // Wait for the modal to be hidden
+    // Hide the modal
+    loadModal.modal("hide");
+
     await hidden;
 
     // Return the result to continue executing other code.

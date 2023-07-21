@@ -146,7 +146,9 @@ async function createNewReview(reviewData, reviewImgs) {
         //Wait for all the pictures to be uploaded
         result = await Promise.all(result);
         //Extract url from the result
-        let imgURLs = result.map((img) => img.url);
+        let imgURLs = result.map((img) =>
+            img.secure_url.replace("/upload/", "/upload/f_auto,q_auto/")
+        );
         // Delete temp files
         reviewImgs.forEach((reviewImg) => {
             fs.unlink(reviewImg.path, (err) => {
@@ -215,7 +217,9 @@ async function editReview(editedReview, reviewImages, imageCleared) {
         result = await Promise.all(result);
 
         //Extract url from the result
-        let imgURLs = result.map((img) => img.url);
+        let imgURLs = result.map((img) =>
+            img.secure_url.replace("/upload/", "/upload/f_auto,q_auto/")
+        );
 
         // Delete temp files
         reviewImages.forEach((reviewImg) => {
