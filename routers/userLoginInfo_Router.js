@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const userLoginInfoDB = require("../model/userLoginInfoDB");
-const userDatabase = require("../model/userDB");
-const listingAdminDB = require("../model/listingAdminDB");
+const userLoginInfoDB = require("../model/userLoginInfo");
+const userDatabase = require("../model/userInfos");
+const listingAdminDB = require("../model/listingAdmins");
 const upload = require("../modules/multerUpload");
 const argon2 = require("argon2");
 const cloudinary = require("../modules/cloudinaryConnect");
 const path = require("path");
-
+const fs = require("fs");
 //Handle Login
 router.post("/login", passport.authenticate("local"), (req, res) => {
     const user = req.user;
@@ -94,7 +94,12 @@ async function createNewUser(data, info, profilePic) {
             customName: data.customName,
             type: data.type,
             description: data.description,
-            profilePic: result ? result.url : undefined,
+            profilePic: result
+                ? result.secure_url.replace(
+                      "/upload/",
+                      "/upload/f_auto,q_auto/"
+                  )
+                : undefined,
             joinDate: data.joinDate,
             noOfReviews: data.noOfReviews,
             followers: data.followers,
@@ -107,6 +112,13 @@ async function createNewUser(data, info, profilePic) {
         await newUserData.save();
         //Save the new user
         await newUser.save();
+
+        //Deletes the temporary file
+        fs.unlink(profilePic.path, (err) => {
+            if (err) {
+                console.log("Error while deleting temporary file:", err);
+            }
+        });
 
         return true;
     } catch (err) {

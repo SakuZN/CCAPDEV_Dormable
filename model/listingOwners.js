@@ -1,21 +1,18 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const listingOwnerSchema = new mongoose.Schema(
     {
         username: { type: String, required: true, unique: true },
         customName: { type: String, required: true },
-        course: { type: String, required: false },
-        college: { type: String, required: false },
         type: { type: String, required: true },
-        description: { type: String, required: false },
         profilePic: {
             type: String,
             default:
                 "https://res.cloudinary.com/dsflhdid4/image/upload/v1689071540/blank_pp.webp",
         },
+        description: { type: String, required: true },
         joinDate: { type: Date, default: Date.now },
-        noOfReviews: { type: Number, default: 0 },
-        followers: { type: Number, default: 0 },
+        listings: { type: [String], required: true },
         liked: [
             {
                 reviewID: { type: Number, required: true },
@@ -23,9 +20,12 @@ const userSchema = new mongoose.Schema(
                 userID: { type: String, required: true },
             },
         ],
-        following: [String],
+        noOfListings: { type: Number, required: true },
+        followers: { type: Number, default: 0 },
+        country: { type: String, required: true },
+        website: { type: String, required: true },
     },
-    { collection: "userDatabase" }
+    { collection: "listingOwners" }
 );
 
-module.exports = mongoose.model("userDatabase", userSchema);
+module.exports = mongoose.model("listingOwners", listingOwnerSchema);

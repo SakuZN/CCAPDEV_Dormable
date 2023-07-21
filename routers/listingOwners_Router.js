@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const listingOwnerDB = require("../model/listingOwnerDB");
-const reviewDB = require("../model/reviewDB");
+const listingOwnerDB = require("../model/listingOwners");
+const reviewDB = require("../model/listingReviews");
 
 //Return response if listing owner exists
 router.get("/owner/:username", (req, res) => {

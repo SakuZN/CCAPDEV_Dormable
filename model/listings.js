@@ -19,7 +19,7 @@ const listingSchema = new mongoose.Schema(
         website: { type: String, required: false },
         ownerImg: { type: String, required: true },
     },
-    { collection: "listingDatabase" }
+    { collection: "listings" }
 );
 
-module.exports = mongoose.model("listingDatabase", listingSchema);
+module.exports = mongoose.model("listings", listingSchema);

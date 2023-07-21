@@ -14,7 +14,7 @@ const reviewSchema = new mongoose.Schema(
         wasEdited: { type: Boolean, required: false },
         isDeleted: { type: Boolean, required: false },
     },
-    { collection: "reviewDatabase" }
+    { collection: "listingReviews" }
 );
 
-module.exports = mongoose.model("reviewDatabase", reviewSchema);
+module.exports = mongoose.model("listingReviews", reviewSchema);

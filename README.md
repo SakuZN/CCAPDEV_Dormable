@@ -5,7 +5,7 @@ MongoDB, Express, React, Node.js).
 
 ## MEDIA ACCURACY DISCLAIMER
 
-<font size ="36">The data represented in this project, including reviews and evaluations of dormitories or buildings,
+<font size ="24">The data represented in this project, including reviews and evaluations of dormitories or buildings,
 are intended solely for educational purposes and do not accurately reflect the actual state, quality, or opinions of
 these establishments.
 The data has been fabricated or anonymized and should not be used as a factual reference. </font>
@@ -40,9 +40,13 @@ The data has been fabricated or anonymized and should not be used as a factual r
     ```
    The application will run on `localhost:3000`
 
+## Deployment
+
+Alternatively, you can access the deployed version of the application [here](https://dormable.fly.dev/).
+
 ## Usage
 
-This website is very simple and a lot of features are still missing.
+This website is very simple and some features are still missing.
 However, its fully functional and you can create an account, login, and logout.
 You can also create a profile and edit it. You can also view other people's profiles.
 Most importantly, read and write reviews of various dorms found within Taft or near DLSU.

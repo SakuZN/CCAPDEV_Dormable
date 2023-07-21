@@ -40,13 +40,13 @@ app.use(function (req, res, next) {
 });
 
 //Routers for each collection
-const listingDB_Router = require("./routers/listingDB_Router");
-const listingOwnerDB_Router = require("./routers/listingOwnerDB_Router");
-const listingAdminDB_Router = require("./routers/listingAdminDB_Router");
-const userDB_Router = require("./routers/userDB_Router");
-const userLoginInfoDB_Router = require("./routers/userLoginInfoDB_Router");
-const ownerResponseDB_Router = require("./routers/ownerResponseDB_Router");
-const reviewDB_Router = require("./routers/reviewDB_Router");
+const listingDB_Router = require("./routers/listings_Router");
+const listingOwnerDB_Router = require("./routers/listingOwners_Router");
+const listingAdminDB_Router = require("./routers/listingAdmins_Router");
+const userDB_Router = require("./routers/userInfos_Router");
+const userLoginInfoDB_Router = require("./routers/userLoginInfo_Router");
+const ownerResponseDB_Router = require("./routers/ownerResponse_Router");
+const reviewDB_Router = require("./routers/listingReviews_Router");
 
 //Middleware for static assets
 //app.use("/vendor", express.static(path.join(__dirname, "vendor")));

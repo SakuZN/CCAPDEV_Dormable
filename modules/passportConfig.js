@@ -1,9 +1,9 @@
 const LocalStrategy = require("passport-local").Strategy;
 const argon2 = require("argon2");
-const userLoginInfoDB = require("../model/userLoginInfoDB");
-const listingAdminDB = require("../model/listingAdminDB");
-const userDatabase = require("../model/userDB");
-const listingOwnerDB = require("../model/listingOwnerDB");
+const userLoginInfoDB = require("../model/userLoginInfo");
+const listingAdminDB = require("../model/listingAdmins");
+const userDatabase = require("../model/userInfos");
+const listingOwnerDB = require("../model/listingOwners");
 
 module.exports = function (passport) {
     passport.use(

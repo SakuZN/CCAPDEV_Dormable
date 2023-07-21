@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ownerResponseDB = require("../model/ownerResponseDB");
+const ownerResponseDB = require("../model/ownerResponse");
 
 //Post method to add owner response to database
 router.post("/responseAdd", async (req, res) => {

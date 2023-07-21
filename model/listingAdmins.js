@@ -7,7 +7,7 @@ const listingAdminSchema = new mongoose.Schema(
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
     },
-    { collection: "listingAdminDatabase" }
+    { collection: "listingAdmins" }
 );
 
-module.exports = mongoose.model("listingAdminDatabase", listingAdminSchema);
+module.exports = mongoose.model("listingAdmins", listingAdminSchema);

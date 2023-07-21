@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const listingDB = require("../model/listingDB");
-const reviewDB = require("../model/reviewDB");
+const listingDB = require("../model/listings");
+const reviewDB = require("../model/listingReviews");
 
 //Returns all listings
 router.get("/", async (req, res) => {
