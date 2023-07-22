@@ -84,6 +84,19 @@ router.get("/reviewListing/:listingID", async (req, res) => {
     }
 });
 
+//Get a new reviewID from a specific listing
+router.get("/generateNewReviewID/:listingID", async (req, res) => {
+    try {
+        const reviewDatabase = await reviewDB.find({
+            listingID: req.params.listingID,
+        });
+        let newReviewID = reviewDatabase.length + 1;
+        res.json(newReviewID);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 //Get a specific review given reviewID and listingID
 router.get("/review/:reviewID/:listingID", async (req, res) => {
     try {
@@ -265,6 +278,13 @@ async function editReview(editedReview, reviewImages, imageCleared) {
         return true;
     } catch (err) {
         console.log(err);
+        // Delete temp files regardless of error
+        reviewImages.forEach((reviewImg) => {
+            fs.unlink(reviewImg.path, (err) => {
+                if (err) console.error("Error deleting file:", err);
+                else console.log("File deleted:", reviewImg.path);
+            });
+        });
         return false;
     }
 }

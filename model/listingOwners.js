@@ -11,7 +11,7 @@ const listingOwnerSchema = new mongoose.Schema(
                 "https://res.cloudinary.com/dsflhdid4/image/upload/v1689071540/blank_pp.webp",
         },
         description: { type: String, required: true },
-        joinDate: { type: Date, default: Date.now },
+        joinDate: { type: Date, required: true, default: Date.now },
         listings: { type: [String], required: true },
         liked: [
             {

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// TODO: Implement this schema
 const ownerResponseSchema = new mongoose.Schema(
     {
         reviewID: { type: Number, required: true },
@@ -9,7 +10,7 @@ const ownerResponseSchema = new mongoose.Schema(
         response: { type: String, required: true },
         commentDate: { type: Date, required: true, default: Date.now },
     },
-    { collection: "ownerResponse" }
+    { collection: "reviewComments" }
 );
 
-module.exports = mongoose.model("ownerResponse", ownerResponseSchema);
+module.exports = mongoose.model("reviewComments", ownerResponseSchema);

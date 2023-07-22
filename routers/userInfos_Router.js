@@ -77,6 +77,11 @@ router.put("/update", upload.single("profilePic"), async (req, res) => {
         //Send a message that the user has been updated
         res.status(200).send({ message: "Profile updated successfully!" });
     } catch (err) {
+        fs.unlink(profilePic.path, (err) => {
+            if (err) {
+                console.log("Error while deleting temporary file:", err);
+            }
+        });
         res.status(500).send({ message: err.message });
     }
 });
@@ -208,4 +213,21 @@ const auth = function (req, res, next) {
     res.status(401).json({ message: "User is not logged in / authenticated!" });
 };
 
-module.exports = router;
+async function periodicUserInfoUpdate() {
+    try {
+        const users = await userDB.find();
+        for (let i = 0; i < users.length; i++) {
+            let user = users[i];
+            let userReviews = await reviewDB.find({ userID: user.username });
+            user.noOfReviews = userReviews.length;
+            await user.save();
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports = {
+    router: router,
+    periodicUserInfoUpdate: periodicUserInfoUpdate,
+};

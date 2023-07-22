@@ -158,11 +158,17 @@ async function getListingReviewDatabase() {
    FUNCTION OPERATIONS FOR LISTING REVIEW DATABASE
    ============================================================== */
 async function generateReviewID(listingID) {
-    let reviewDatabase = await getListingReviewDatabase();
-    let listingReviews = reviewDatabase.filter(
-        (review) => review.listingID === listingID
+    let response = await fetch(
+        "/api/reviewDB/generateNewReviewID/" + listingID
     );
-    return listingReviews.length + 1;
+
+    if (!response.ok) {
+        const message = await response.json();
+        console.error(message.message);
+        return null; // or throw an Error(message.message) if you prefer
+    }
+
+    return await response.json();
 }
 
 async function addListingReview(review, reviewImgs) {
@@ -440,4 +446,45 @@ async function loadPopup(promise) {
 
     // Return the result to continue executing other code.
     return result;
+}
+
+//A variation or overloaded function of loadPopup which accepts multiple promises
+//The promises are an array of functions that can be invoked manually to prevent them from being invoked immediately
+async function loadPopupPromises(promises) {
+    // Show the modal
+    let loadModal = $("#loadModal");
+
+    loadModal.modal({
+        backdrop: "static",
+        keyboard: false,
+        show: true,
+    });
+
+    // Create a promise that resolves when the modal is hidden
+    const hidden = new Promise((resolve) => {
+        loadModal.on("hidden.bs.modal", function () {
+            // Resolve the promise
+            resolve();
+        });
+    });
+
+    // Process an array of promises sequentially
+    const results = [];
+    for (const promise of promises) {
+        const result = await promise();
+        results.push(result);
+    }
+
+    //When the promise finishes quicker than the transition, we need to wait for the modal to be shown before we can hide it.
+    loadModal.on("shown.bs.modal", function () {
+        loadModal.modal("hide");
+    });
+
+    // Hide the modal
+    loadModal.modal("hide");
+
+    await hidden;
+
+    // Return the results to continue executing other code.
+    return results;
 }

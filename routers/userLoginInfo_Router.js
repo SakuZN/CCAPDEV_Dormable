@@ -124,6 +124,12 @@ async function createNewUser(data, info, profilePic) {
     } catch (err) {
         console.log(err);
     }
+    //Deletes the temporary file regardless of the outcome
+    fs.unlink(profilePic.path, (err) => {
+        if (err) {
+            console.log("Error while deleting temporary file:", err);
+        }
+    });
     return false;
 }
 

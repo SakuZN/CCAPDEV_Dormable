@@ -59,7 +59,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use("/api/listingDB", listingDB_Router.router);
 app.use("/api/listingOwnerDB", listingOwnerDB_Router);
 app.use("/api/listingAdminDB", listingAdminDB_Router);
-app.use("/api/userDB", userDB_Router);
+app.use("/api/userDB", userDB_Router.router);
 app.use("/api/loginForm", userLoginInfoDB_Router);
 app.use("/api/reviewDB", reviewDB_Router);
 app.use("/api/ownerResponseDB", ownerResponseDB_Router);
@@ -133,4 +133,5 @@ app.listen(PORT, async () => {
     );
 
     setInterval(listingDB_Router.updateAllListingScores, 1000 * 60 * 30);
+    setInterval(userDB_Router.periodicUserInfoUpdate, 1000 * 60 * 60 * 24);
 });
