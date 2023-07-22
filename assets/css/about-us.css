@@ -102,6 +102,15 @@
   width: 100%;
 }
 
+.contact .info-boxnew {
+  color: #444;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+  padding: 5px 0 30px 0;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
 .contact .info-box i {
   font-size: 32px;
   color: #428bca;
@@ -115,6 +124,15 @@
   color: #666;
   font-weight: 700;
   margin: 10px 0;
+}
+
+.contact .info-box h5 {
+  font-size: 12px;
+  color: #666;
+  font-weight: 700;
+  margin: 10px 0;
+  text-align: left;
+  padding-left: 15px;
 }
 
 .contact .info-box p {
