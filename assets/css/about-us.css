@@ -12,6 +12,7 @@
   background: #343a40;
   position: relative;
   overflow: hidden;
+  border-radius: 20%;
 }
 
 .team .member .member-info {
