@@ -120,6 +120,13 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   padding: 10px 0 10px 0;
 }
 
+#contactnew_two{
+  padding: 2px 0 2px 0;
+}
+
+#contactnew_two h3{
+  color: rgb(189, 36, 36);
+}
 
 .contact .info-box new {
   padding: 5px 0 30px 0;
@@ -139,6 +146,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   font-weight: 700;
   margin: 10px 0;
 }
+
 
 .contact .info-box h5 {
   font-size: 12px;
