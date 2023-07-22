@@ -115,8 +115,6 @@ async function populateListingPage(id_page) {
     let noReviews = document.createElement("div");
     let reviewPagination = document.getElementById("review-pagination");
     let writeReviewBtn = document.getElementById("reviewBtn");
-    let commentForm = document.getElementById("cRUCommentForm");
-    let commentFormSubmit = document.getElementById("commentFormSubmit");
 
     //Replace the content of the listing page elements
     listingName.innerHTML = listing.name;
@@ -238,7 +236,7 @@ async function divListingReview(review, reviewUser, isCurrentUser) {
                 )}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
             </div>
-            <p class="customer-text">${review.reviewContent}</p>
+            <p class="customer-text  comment-border">${review.reviewContent}</p>
             <ul>
                 ${populateReviewImg(review.reviewIMG)}
             </ul>
@@ -274,7 +272,7 @@ async function divCRUReviewhistory(review, reviewUser) {
 
     cRUReviewHistory.innerHTML = `
           <div class="customer-review_wrap">
-            <div class="customer-img" style="display: inherit">
+            <div class="customer-img">
               <img alt="#" class="img-fluid" id="cRU" src="${
                   reviewUser.profilePic
               }">
@@ -294,7 +292,9 @@ async function divCRUReviewhistory(review, reviewUser) {
                   <ul id="cRUStarRating" class="star-rating">
                     ${star_rating(review.reviewScore, 0, "listing")}
                   </ul>
-                  <p id="cRUDate">Reviewed ${reviewDate(review.reviewDate)}</p>
+                  <p id="cRUDate">Reviewed ${reviewDate(
+                      review.reviewDate
+                  )}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
               </div>
               <p class="customer-text comment-border" id="cRUContent">${
@@ -822,6 +822,9 @@ $(document).ready(async function () {
         addNewReviewToPage(dataToAdd);
 
         handleResetReview();
+        //Remove excess images
+        filePicArray = [];
+        clearedImages = false;
     }
 
     function handleReviewImageChange() {
@@ -918,9 +921,11 @@ $(document).ready(async function () {
 
         //Update the review
         let reviewToEdit = await getSpecificUserReview(listingID, reviewID);
+        let currentUser = await getCurrentUser();
         reviewToEdit.reviewTitle = reviewTitle;
         reviewToEdit.reviewContent = reviewContent;
         reviewToEdit.reviewScore = parseInt(starRating);
+
         //Add a new parameter to the review
         let success = await editListingReview(
             reviewToEdit,
@@ -933,13 +938,37 @@ $(document).ready(async function () {
             return;
         }
 
-        // Hide the edit form
-        $(".edit-review").addClass("hidden");
+        await updateListingReviewScore(listingID);
 
-        // Reload the page
-        showPopup("Review edited successfully!").then(function () {
-            location.reload();
+        //Showpopup and return to review section
+        showPopup("Review edited successfully!").then(async function () {
+            //Loader to update the listing without refreshing the page
+            const asyncOperations = [
+                async () => await updateThisListingRating(),
+                async () =>
+                    newRHData(
+                        await getSpecificUserReview(listingID, reviewID),
+                        currentUser,
+                        true
+                    ),
+            ];
+            const results = await loadPopupPromises(asyncOperations);
+
+            let dataToAdd = results[1];
+            handleAfterEditSubmit(event, dataToAdd);
         });
+    }
+
+    function handleAfterEditSubmit(event, dataToAdd) {
+        event.preventDefault();
+
+        //Change reviewBtn text to Edit Review
+        $("#reviewBtn").text("EDIT REVIEW");
+        addNewReviewToPage(dataToAdd);
+        handleCancelEdit(event);
+        //Remove excess images
+        filePicArray = [];
+        clearedImages = false;
     }
 
     function handleCancelEdit(event) {
@@ -1098,7 +1127,14 @@ $(document).ready(async function () {
         //Add the comment to the database
         let success = await addNewOwnerResponse(newComment);
 
-        $("#commentModal").modal("hide");
+        const hidden = new Promise((resolve) => {
+            commentModal.on("hidden.bs.modal", function () {
+                // Resolve the promise
+                resolve();
+            });
+        });
+        commentModal.modal("hide");
+        await hidden;
         if (!success) {
             await showPopup("Something went wrong! Please try again later.");
             return;
@@ -1109,7 +1145,7 @@ $(document).ready(async function () {
         });
     }
 
-    function populateCommentForm(owner) {
+    function populateCommentForm(user) {
         //create new comment form
         let commentFormDiv = $("<div></div>")
             .addClass("booking-checkbox_wrap")
@@ -1117,9 +1153,9 @@ $(document).ready(async function () {
         let innerDiv = `
       <div class="customer-review_wrap">
             <div class="customer-img">
-              <img alt="#" class="img-fluid" src="${owner.profilePic}">
-              <p>${owner.customName}</p>
-              <p style="font-size: 13px; color: gray">@${owner.username}</p>
+              <img alt="#" class="img-fluid" src="${user.profilePic}">
+              <p>${user.customName}</p>
+              <p style="font-size: 13px; color: gray">@${user.username}</p>
             </div>
             <div class="customer-content-wrap">
               <form id="commentForm">

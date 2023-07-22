@@ -348,7 +348,7 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                 <div class="${scoreClass}">${review.reviewScore}.0</div>
                 <h6>${review.reviewTitle}<a href="/listing?id=${
             review.listingID
-        }" target="_blank" style="text-decoration: none"><p style="font-weight: bolder;">[${listingName}]</p>
+        }" target="_blank" style="border: none"><p style="font-weight: bolder;">[${listingName}]</p>
                 </a>
                 </h6>
                 <ul class="star-rating">
