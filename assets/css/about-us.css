@@ -115,13 +115,13 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   width: 100%;
 }
 
-.contact .info-boxnew {
-  color: #444;
-  text-align: center;
-  box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+#contactnew{
+  padding: 10px 0 10px 0;
+}
+
+
+.contact .info-box new {
   padding: 5px 0 30px 0;
-  margin-bottom: 30px;
-  width: 100%;
 }
 
 .contact .info-box i {
