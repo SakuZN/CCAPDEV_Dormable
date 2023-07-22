@@ -341,14 +341,16 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                     <span style="display: flex; justify-content: center; margin-top: 5px">${
                         reviewUser.noOfReviews
                     } reviews</span>
-                    <a href="/listing?id=${
-                        review.listingID
-                    }" target="_blank"><p style="font-weight: bold">[${listingName}]</p></a>
             </div>
             <div class="customer-content-wrap">
             <div class="customer-content">
                 <div class="customer-review">
-                <h6>${review.reviewTitle}</h6>
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
+                <h6>${review.reviewTitle}<a href="/listing?id=${
+            review.listingID
+        }" target="_blank" style="text-decoration: none"><p style="font-weight: bolder;">[${listingName}]</p>
+                </a>
+                </h6>
                 <ul class="star-rating">
                     ${star_rating(review.reviewScore, 0, "listing")}
                 </ul>
@@ -356,9 +358,8 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                     review.reviewDate
                 )}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
-                <div class="${scoreClass}">${review.reviewScore}.0</div>
             </div>
-            <p class="customer-text">${review.reviewContent}</p>
+            <p class="customer-text comment-border">${review.reviewContent}</p>
             <ul>
                 ${populateUserReviewImg(review.reviewIMG)}
             </ul>
@@ -398,13 +399,13 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             <div class="customer-content-wrap">
               <div class="customer-content">
                 <div class="customer-review">
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
                   <h6 id="cRUTitle">${review.reviewTitle}</h6>
                   <ul id="cRUStarRating" class="star-rating">
                     ${star_rating(review.reviewScore, 0, "listing")}
                   </ul>
                   <p id="cRUDate">Reviewed ${reviewDate(review.reviewDate)}</p>
                 </div>
-                <div class="${scoreClass}">${review.reviewScore}.0</div>
               </div>
               <p class="customer-text comment-border" id="cRUContent">${
                   review.reviewContent

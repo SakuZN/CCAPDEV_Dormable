@@ -220,15 +220,15 @@ async function divListingReview(review, reviewUser, isCurrentUser) {
                     <p style="font-size: 13px; color: gray">@${
                         reviewUser.username
                     }</p>
+                    <p style="font-size: 13px; color: gray">${
+                        reviewUser.noOfReviews
+                    } reviews</p>
                 </a>
-                <span style="display: flex; justify-content: center; margin-top: 5px">${
-                    reviewUser.noOfReviews
-                } reviews</span>
             </div>
-            <hr>
             <div class="customer-content-wrap">
             <div class="customer-content">
                 <div class="customer-review">
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
                 <h6>${review.reviewTitle}</h6>
                 <ul class="star-rating">
                     ${star_rating(review.reviewScore, 0, "listing")}
@@ -237,7 +237,6 @@ async function divListingReview(review, reviewUser, isCurrentUser) {
                     review.reviewDate
                 )}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
-                <div class="${scoreClass}">${review.reviewScore}.0</div>
             </div>
             <p class="customer-text">${review.reviewContent}</p>
             <ul>
@@ -268,10 +267,14 @@ async function divCRUReviewhistory(review, reviewUser) {
     let userCustomName = reviewUser.customName;
     let scoreClass = "";
     let checkEdit = "";
+    if (review.wasEdited) checkEdit = "(Review Edited)";
+    if (review.reviewScore >= 4) scoreClass = "customer-rating";
+    else if (review.reviewScore === 3) scoreClass = "customer-rating yellow";
+    else scoreClass = "customer-rating red";
 
     cRUReviewHistory.innerHTML = `
           <div class="customer-review_wrap">
-            <div class="customer-img">
+            <div class="customer-img" style="display: inherit">
               <img alt="#" class="img-fluid" id="cRU" src="${
                   reviewUser.profilePic
               }">
@@ -279,20 +282,20 @@ async function divCRUReviewhistory(review, reviewUser) {
               <p id="cRUName" style="font-size: 13px; color: gray">@${
                   reviewUser.username
               }</p>
-              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">${
+              <p id="cRUReviews" style="font-size: 13px; color: gray">${
                   reviewUser.noOfReviews
-              } reviews</span>
+              } reviews</p>
             </div>
             <div class="customer-content-wrap">
               <div class="customer-content">
                 <div class="customer-review">
+                <div class="${scoreClass}">${review.reviewScore}.0</div>
                   <h6 id="cRUTitle">${review.reviewTitle}</h6>
                   <ul id="cRUStarRating" class="star-rating">
                     ${star_rating(review.reviewScore, 0, "listing")}
                   </ul>
                   <p id="cRUDate">Reviewed ${reviewDate(review.reviewDate)}</p>
                 </div>
-                <div class="${scoreClass}">${review.reviewScore}.0</div>
               </div>
               <p class="customer-text comment-border" id="cRUContent">${
                   review.reviewContent
@@ -605,6 +608,16 @@ function addNewReviewToPage(dataToAdd) {
     populateListingReviews(reviewHistory);
 }
 
+//Function to delete the review without refreshing the page
+function deleteReviewFromPage(reviewID) {
+    reviewHistory = reviewHistory.filter((rh) => {
+        return rh.RHData.reviewID !== reviewID;
+    });
+    destroySwiper();
+    clearReviewHistory();
+    populateListingReviews(reviewHistory);
+}
+
 //Function to update the listing's average rating without refreshing the page
 async function updateThisListingRating() {
     let url = new URL(window.location.href);
@@ -805,7 +818,7 @@ $(document).ready(async function () {
         event.preventDefault();
 
         //Change reviewBtn text to Edit Review
-        $(".reviewBtn").text("Edit Review");
+        $("#reviewBtn").text("EDIT REVIEW");
         addNewReviewToPage(dataToAdd);
 
         handleResetReview();
@@ -1159,15 +1172,44 @@ $(document).ready(async function () {
                     await showPopup("Error deleting review");
                     return;
                 }
-                await updateListingReviewScore(listingID);
+
                 await showPopup("Review deleted successfully!");
-                handleResetReview();
-                location.reload();
+                await handleAfterDeleteReview(reviewID, listingID);
             },
             function () {
                 // This function will be called when the user clicks the "No" button
                 console.log("Cancel clicked");
             }
+        );
+    }
+
+    async function handleAfterDeleteReview(reviewID, listingID) {
+        //Update the review count in the page and in the collection
+        const asyncOperations = [
+            async () => await updateListingReviewScore(listingID),
+            async () => await updateThisListingRating(),
+        ];
+        const results = await loadPopupPromises(asyncOperations);
+
+        //Delete the review from the page
+        deleteReviewFromPage(reviewID);
+
+        //Reset all the forms
+        $("#userForm")[0].reset();
+        $(".reviewForm").addClass("hidden");
+
+        $("#editReviewForm")[0].reset();
+        $(".edit-review").addClass("hidden");
+
+        //Change reviewBtn text to "Write Review"
+        $("#reviewBtn").text("WRITE A REVIEW");
+
+        //Finally, scroll to the review section
+        $("html, body").animate(
+            {
+                scrollTop: $("#numreviewBottom").offset().top,
+            },
+            1200
         );
     }
 

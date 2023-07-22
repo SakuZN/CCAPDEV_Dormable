@@ -1232,6 +1232,7 @@ footer .main-white-button a {
         text-align: center;
         float: none;
         margin: 0 0 15px;
+        display: block;
     }
 }
 
@@ -1247,6 +1248,9 @@ footer .main-white-button a {
     text-align: center;
     font-size: 18px;
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .customer-img span {
@@ -1256,7 +1260,7 @@ footer .main-white-button a {
 }
 
 .customer-content-wrap {
-    margin: 0 0 0 275px;
+    margin: 0 0 0 150px;
 }
 
 @media (max-width: 992px) {
@@ -1325,7 +1329,7 @@ footer .main-white-button a {
 }
 
 .customer-review {
-    display: inline-block;
+    display: block;
 }
 
 @media (max-width: 576px) {

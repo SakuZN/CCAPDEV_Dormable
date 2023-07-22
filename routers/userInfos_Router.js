@@ -218,7 +218,10 @@ async function periodicUserInfoUpdate() {
         const users = await userDB.find();
         for (let i = 0; i < users.length; i++) {
             let user = users[i];
-            let userReviews = await reviewDB.find({ userID: user.username });
+            let userReviews = await reviewDB.find({
+                userID: user.username,
+                isDeleted: false,
+            });
             user.noOfReviews = userReviews.length;
             await user.save();
         }

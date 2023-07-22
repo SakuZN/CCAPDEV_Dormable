@@ -40,7 +40,7 @@
 }
 
 html {
-    font-family: "Poppins", sans-serif ;
+    font-family: "Poppins", sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -2017,10 +2017,6 @@ p {
 .red-btn:hover {
     background-color: #f5365c;
     border-color: #f5365c;
-}
-
-.customer-img {
-    float: left;
 }
 
 @media (max-width: 992px) {
