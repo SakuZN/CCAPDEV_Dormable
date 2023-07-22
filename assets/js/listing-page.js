@@ -669,6 +669,16 @@ $(document).ready(async function () {
         if (!currentUser) {
             await showPopup("Please login to leave a review");
         } else if (await userHasReviewed()) {
+            //If the review form is already open, scroll to it
+            if (!$(".edit-review").hasClass("hidden")) {
+                $("html, body").animate(
+                    {
+                        scrollTop: $(".edit-review").offset().top,
+                    },
+                    1200
+                );
+                return;
+            }
             $(".edit-review").removeClass("hidden");
 
             $("html, body").animate(
@@ -683,6 +693,16 @@ $(document).ready(async function () {
             // Gets the data from the reviewHistory array then populates the edit form
             populateEditReviewForm();
         } else {
+            //If the review form is already open, scroll to it
+            if (!$(".reviewForm").hasClass("hidden")) {
+                $("html, body").animate(
+                    {
+                        scrollTop: $(".reviewForm").offset().top,
+                    },
+                    1200
+                );
+                return;
+            }
             $(".reviewForm").removeClass("hidden");
 
             $("html, body").animate(

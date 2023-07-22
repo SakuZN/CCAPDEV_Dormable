@@ -1311,9 +1311,11 @@ footer .main-white-button a {
 }
 
 .customer-text {
-    color: #737882;
+    color: #584c4c;
     margin: 15px 0 0;
     line-height: 1.6;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .customer-content h6 {

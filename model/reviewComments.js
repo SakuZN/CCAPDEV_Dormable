@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// TODO: Implement this schema
+// TODO: Optional Feature to add when we have time
 const ownerResponseSchema = new mongoose.Schema(
     {
         reviewID: { type: Number, required: true },
