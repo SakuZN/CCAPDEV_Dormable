@@ -5,14 +5,14 @@ MongoDB, Express, React, Node.js).
 
 ## MEDIA ACCURACY DISCLAIMER
 
-<font size ="24">The data represented in this project, including reviews and evaluations of dormitories or buildings,
+<font size ="8">The data represented in this project, including reviews and evaluations of dormitories or buildings,
 are intended solely for educational purposes and do not accurately reflect the actual state, quality, or opinions of
 these establishments.
 The data has been fabricated or anonymized and should not be used as a factual reference. </font>
 
 ## Project Local Setup
 
-1. Clone the repo:
+1. Clone the repo (or download the zip file):
     ```
     git clone git@github.com:SakuZN/CCAPDEV_Dormable.git
     cd project
@@ -23,12 +23,12 @@ The data has been fabricated or anonymized and should not be used as a factual r
 
 3. Make sure you are in the root directory of the project. Create a `.env` file and
    go to [this link](https://pastebin.com/chjvhT8S) and paste the contents of the file into your `.env` file.
-   The password for the paste bin is "<nameOfOurCourse>_<nameOfOurProject>_<groupNumber>" (all lowercase and no special
+   The password for the paste bin is "nameOfOurCourse_nameOfOurProject_groupNumber" (all lowercase and no special
    characters).
 
-4. Run the following script to easily setup the project:
+4. Run the following scripts to easily set up the project:
     ```
-    npm run gulp-start
+   npm run localSetup
     ```
 
 5. The console should output successful connection and the link

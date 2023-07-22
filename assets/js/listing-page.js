@@ -115,6 +115,8 @@ async function populateListingPage(id_page) {
     let noReviews = document.createElement("div");
     let reviewPagination = document.getElementById("review-pagination");
     let writeReviewBtn = document.getElementById("reviewBtn");
+    let listingCount = document.getElementById("listing-count");
+    let followerCount = document.getElementById("follower-count");
 
     //Replace the content of the listing page elements
     listingName.innerHTML = listing.name;
@@ -160,6 +162,8 @@ async function populateListingPage(id_page) {
     listingPhone.innerHTML = listing.phone;
     listingWebsite.innerHTML = `<p>${listing.website}</p>`;
     listingWebsite.href = listing.website;
+    listingCount.innerHTML = owner.noOfListings.toString();
+    followerCount.innerHTML = owner.followers.toString();
     ownerCustomName.innerHTML = owner.customName;
     ownerUserName.innerHTML = "@" + owner.username;
     listingOwner.src = listing.ownerImg;
@@ -461,6 +465,13 @@ function sortReviewHistory(sortType) {
                 return a.RHData.reviewScore - b.RHData.reviewScore;
             });
             break;
+        case "most-helpful":
+            reviewHistory.sort((a, b) => {
+                return (
+                    b.RHData.reviewMarkedHelpful - a.RHData.reviewMarkedHelpful
+                );
+            });
+            break;
         default:
             return;
     }
@@ -498,7 +509,8 @@ function loadMoreReviews() {
         clearReviewHistory();
         populateUserReviewHistory(userProfile.userRHData);
          */
-        showPopup("No more reviews to load").then();
+        showPopup("No more reviews to load");
+        return;
     }
 
     let swiperIndex = mySwiper.activeIndex;

@@ -120,8 +120,8 @@ async function populateOwnerProfile(ownerID, currentUser) {
     let formCourse = document.getElementById("input-course");
     let formCollege = document.getElementById("input-college");
     let formDescription = document.getElementById("input-description");
-    let reviewHistory = document.getElementById("reviewHistory");
-    let reviewPagination = document.getElementById("review-pagination");
+    //let reviewHistory = document.getElementById("reviewHistory");
+    //let reviewPagination = document.getElementById("review-pagination");
     let listingSection = document.getElementById("ownerListings");
     let noOfListings = document.getElementById("followersDescription");
     let profileTitle = document.getElementById("profileTitle");
@@ -547,6 +547,14 @@ function sortReviewHistory(sortType) {
             userProfile.userRHData.sort((a, b) => {
                 return (
                     a.reviewHistory.reviewScore - b.reviewHistory.reviewScore
+                );
+            });
+            break;
+        case "most-helpful":
+            userProfile.userRHData.sort((a, b) => {
+                return (
+                    b.reviewHistory.reviewMarkedHelpful -
+                    a.reviewHistory.reviewMarkedHelpful
                 );
             });
             break;

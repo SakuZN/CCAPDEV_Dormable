@@ -53,7 +53,10 @@ router.put("/update", upload.single("profilePic"), async (req, res) => {
             );
         }
 
-        userData.profilePic = result.secure_url;
+        userData.profilePic = result.secure_url.replace(
+            "/upload/",
+            "/upload/f_auto,q_auto/"
+        );
 
         //Deletes the temporary file
         fs.unlink(profilePic.path, (err) => {
