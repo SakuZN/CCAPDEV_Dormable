@@ -71,39 +71,39 @@ app.use("/api/ownerResponseDB", ownerResponseDB_Router);
    ROUTES TO INDIVIDUAL PAGES
    ============================================================== */
 app.get("/index", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "index.html"));
 });
 
 app.get("/404", (req, res) => {
-    res.sendFile(path.join(__dirname, "404.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "404.html"));
 });
 
 app.get("/explore-listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "explore-listing.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "explore-listing.html"));
 });
 
 app.get("/listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "listing.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "listing.html"));
 });
 
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "login.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "login.html"));
 });
 
 app.get("/profile", (req, res) => {
-    res.sendFile(path.join(__dirname, "profile.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "profile.html"));
 });
 
 app.get("/request-listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "request-listing.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "request-listing.html"));
 });
 
 app.get("/search-result", (req, res) => {
-    res.sendFile(path.join(__dirname, "search-result.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "search-result.html"));
 });
 
 app.get("/about-us", (req, res) => {
-    res.sendFile(path.join(__dirname, "about-us.html"));
+    res.sendFile(path.join(__dirname, "web_pages", "about-us.html"));
 });
 
 /* ==============================================================
@@ -120,7 +120,7 @@ app.get("/index.html", (req, res) => {
 
 //Make 404 request refer to custom 404 page
 app.use(function (req, res, next) {
-    res.status(404).sendFile(path.join(__dirname, "./404.html"));
+    res.status(404).sendFile(path.join(__dirname, "./web_pages/404.html"));
 });
 
 //remove .html from the url

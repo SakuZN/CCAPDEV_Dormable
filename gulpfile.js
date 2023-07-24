@@ -62,7 +62,7 @@ gulp.task("html", function () {
         .pipe(gulpIf("*.css", cleanCSS()))
         .pipe(gulpIf("*.css", replace("../images/", "/images/")))
         .pipe(gulpIf("*.css", replace("../fonts/", "/fonts/")))
-        .pipe(replace("/assets/images/", "/images/"))
+        .pipe(replace("../assets/images/", "/images/"))
         .pipe(gulp.dest("dist"));
 });
 

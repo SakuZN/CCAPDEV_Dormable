@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="DormableDB">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.49">
+    <root id="1">
+      <ServerVersion>6.0.8</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="DormableDB"/>
+    <schema id="3" parent="1" name="admin"/>
+    <schema id="4" parent="1" name="local"/>
+    <table id="5" parent="2" name="listingAdmins"/>
+    <table id="6" parent="2" name="listingOwners"/>
+    <table id="7" parent="2" name="listingReviews"/>
+    <table id="8" parent="2" name="listings"/>
+    <table id="9" parent="2" name="ownerResponse"/>
+    <table id="10" parent="2" name="userInfos"/>
+    <table id="11" parent="2" name="userLoginInfo"/>
+    <table id="12" parent="2" name="userSessions"/>
+    <column id="13" parent="5" name="_id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="14" parent="5" name="email">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="15" parent="5" name="password">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="16" parent="5" name="username">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="17" parent="6" name="_id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="18" parent="6" name="__v">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="19" parent="6" name="country">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="20" parent="6" name="customName">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="21" parent="6" name="description">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="22" parent="6" name="followers">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="23" parent="6" name="joinDate">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="24" parent="6" name="liked">
+      <DasType>list|4999545s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="25" parent="6" name="liked._id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="26" parent="6" name="liked.listingID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="27" parent="6" name="liked.reviewID">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="28" parent="6" name="liked.userID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="29" parent="6" name="listings">
+      <DasType>Array|2003s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="30" parent="6" name="noOfListings">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="31" parent="6" name="profilePic">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="32" parent="6" name="type">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="33" parent="6" name="username">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="34" parent="6" name="website">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="35" parent="7" name="_id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="36" parent="7" name="__v">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="37" parent="7" name="isDeleted">
+      <DasType>Boolean|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="38" parent="7" name="listingID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="39" parent="7" name="reviewContent">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="40" parent="7" name="reviewIMG">
+      <DasType>Array|2003s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="41" parent="7" name="reviewTitle">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="42" parent="7" name="userID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="43" parent="7" name="wasEdited">
+      <DasType>Boolean|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="44" parent="7" name="reviewDate">
+      <DasType>String|12s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="45" parent="7" name="reviewMarkedHelpful">
+      <DasType>Int32|4s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="46" parent="7" name="reviewID">
+      <DasType>Int32|4s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="47" parent="7" name="reviewScore">
+      <DasType>Int32|4s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="48" parent="8" name="_id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="49" parent="8" name="__v">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="50" parent="8" name="description">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="51" parent="8" name="img">
+      <DasType>Array|2003s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="52" parent="8" name="listingID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="53" parent="8" name="location">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="54" parent="8" name="owner">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="55" parent="8" name="ownerImg">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="56" parent="8" name="phone">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="57" parent="8" name="reviewScore">
+      <DasType>Double|8s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="58" parent="8" name="reviews">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="59" parent="8" name="website">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="60" parent="8" name="mapUrl">
+      <DasType>String|12s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="61" parent="8" name="ownerID">
+      <DasType>String|12s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="62" parent="8" name="price">
+      <DasType>String|12s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="63" parent="8" name="maxPrice">
+      <DasType>Int32|4s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="64" parent="8" name="minPrice">
+      <DasType>Int32|4s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="65" parent="8" name="name">
+      <DasType>String|12s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="66" parent="9" name="_id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="67" parent="9" name="__v">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="68" parent="9" name="commentDate">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="69" parent="9" name="listingID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="70" parent="9" name="ownerID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="71" parent="9" name="response">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="72" parent="9" name="reviewID">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="73" parent="9" name="userID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="74" parent="10" name="_id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="75" parent="10" name="__v">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="76" parent="10" name="college">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="77" parent="10" name="course">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="78" parent="10" name="description">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="79" parent="10" name="followers">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="80" parent="10" name="following">
+      <DasType>list|4999545s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="81" parent="10" name="joinDate">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="82" parent="10" name="liked">
+      <DasType>list|4999545s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="83" parent="10" name="liked._id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="84" parent="10" name="liked.listingID">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="85" parent="10" name="liked.reviewID">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="86" parent="10" name="liked.userID">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="87" parent="10" name="noOfReviews">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="88" parent="10" name="profilePic">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="89" parent="10" name="type">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="90" parent="10" name="username">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="91" parent="10" name="customName">
+      <DasType>String|12s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="92" parent="11" name="_id">
+      <DasType>ObjectId|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="93" parent="11" name="__v">
+      <DasType>Int32|4s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="94" parent="11" name="email">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="95" parent="11" name="password">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="96" parent="11" name="username">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="97" parent="12" name="_id">
+      <DasType>String|12s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="98" parent="12" name="expires">
+      <DasType>ISODate|91s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="99" parent="12" name="session">
+      <DasType>Object|4999544s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="100" parent="12" name="session.cookie">
+      <DasType>Object|4999544s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="101" parent="12" name="session.cookie.domain">
+      <DasType>String|12s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="102" parent="12" name="session.cookie.expires">
+      <DasType>String|12s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="103" parent="12" name="session.cookie.httpOnly">
+      <DasType>Boolean|12s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="104" parent="12" name="session.cookie.originalMaxAge">
+      <DasType>String|12s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="105" parent="12" name="session.cookie.path">
+      <DasType>String|12s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="106" parent="12" name="session.cookie.sameSite">
+      <DasType>String|12s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="107" parent="12" name="session.cookie.secure">
+      <DasType>Boolean|12s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="108" parent="12" name="session.passport">
+      <DasType>Object|4999544s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="109" parent="12" name="session.passport.user">
+      <DasType>String|12s</DasType>
+      <Position>11</Position>
+    </column>
+  </database-model>
+</dataSource>
