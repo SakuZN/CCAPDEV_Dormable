@@ -56,7 +56,7 @@ gulp.task("fonts", function () {
 // Move HTML files to dist
 gulp.task("html", function () {
     return gulp
-        .src("./*.html")
+        .src("./web_pages/*.html")
         .pipe(useref())
         .pipe(gulpIf("*.js", uglify()))
         .pipe(gulpIf("*.css", cleanCSS()))

@@ -13,6 +13,7 @@
     "scripts": {
         "installAndBuild": "npm install && gulp build",
         "start": "node dormable.js",
+        "devstart": "node dormable_dev.js",
         "gulp-start": "gulp build && node dormable.js",
         "localSetup": "npm install && gulp build && node dormable.js",
         "build": "gulp build",
