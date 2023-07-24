@@ -77,6 +77,7 @@ async function initFeaturedListing() {
     } catch (error) {
         console.log(error);
         // handle error appropriately, alert user, revert UI changes, etc.
+        window.location.href = "/404";
     }
 }
 
@@ -89,7 +90,7 @@ async function initOwnerListing(ownerID) {
         $("#js-preloader").addClass("loaded"); // stop loading animation
     } catch (error) {
         console.log(error);
-        // handle error appropriately, alert user, revert UI changes, etc.
+        window.location.href = "/404";
     }
 }
 
@@ -101,7 +102,7 @@ async function initQueryListing() {
         $("#js-preloader").addClass("loaded"); // stop loading animation
     } catch (error) {
         console.log(error);
-        // handle error appropriately, alert user, revert UI changes, etc.
+        window.location.href = "/404";
     }
 }
 
@@ -114,7 +115,7 @@ async function initAllListing() {
         $("#js-preloader").addClass("loaded"); // stop loading animation
     } catch (error) {
         console.log(error);
-        // handle error appropriately, alert user, revert UI changes, etc.
+        window.location.href = "/404";
     }
 }
 
@@ -132,6 +133,7 @@ async function generateFeaturedListing() {
         featuredListing = await getListingDatabase();
     } catch (err) {
         console.log(err);
+        window.location.href = "/404";
     }
 
     //Sort Listing by review score and number of reviews
@@ -382,7 +384,7 @@ async function generateExploreListing() {
    ============================================================== */
 function loadMoreFeaturedListing() {
     listingLimit++;
-    if (listingLimit > listingList.length || listingLimit > 5) {
+    if (listingLimit > listingList.length || listingLimit > 3) {
         showPopup("No more listings to show");
         listingLimit--;
         return;
@@ -401,7 +403,7 @@ function loadMoreFeaturedListing() {
 
 function loadMoreQueryListings() {
     listingLimit++;
-    if (listingLimit > listingList.length || listingLimit > 5) {
+    if (listingLimit > listingList.length) {
         showPopup("No more listings to show.");
         listingLimit--;
         return;
@@ -411,7 +413,7 @@ function loadMoreQueryListings() {
 
 function loadMoreListings() {
     listingLimit++;
-    if (listingLimit > listingList.length || listingLimit > 5) {
+    if (listingLimit > listingList.length) {
         showPopup("No more listings to show.");
         listingLimit--;
         return;

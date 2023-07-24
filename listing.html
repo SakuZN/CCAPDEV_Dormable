@@ -292,36 +292,39 @@
                     <h5 id="numreviewBottom" style="font-size: 24px">
                         No of Reviews
                     </h5>
-                    <div class="sortList">
-                        <select
-                            aria-label=".form-select-sm example"
-                            class="form-select form-select-sm"
-                            id="sortReview"
-                        >
-                            <option disabled selected value="">Sort By</option>
-                            <option value="date-newest">Date - Newest</option>
-                            <option value="date-oldest">Date - Oldest</option>
-                            <option value="rating-high">Rating - High</option>
-                            <option value="rating-low">Rating - Low</option>
-                            <option value="most-helpful">Most Helpful</option>
-                        </select>
+                    <div>
+                        <div class="sortList d-flex justify-content-between">
+                            <select
+                                aria-label=".form-select-sm example"
+                                class="form-select form-select-sm"
+                                id="sortReview"
+                            >
+                                <option disabled selected value="">Sort By</option>
+                                <option value="date-newest">Date - Newest</option>
+                                <option value="date-oldest">Date - Oldest</option>
+                                <option value="rating-high">Rating - High</option>
+                                <option value="rating-low">Rating - Low</option>
+                                <option value="most-helpful">Most Helpful</option>
+                            </select>
+                        </div>
+                        <!--
+                        <div class="sortList">
+                            <select
+                                aria-label=".form-select-sm example"
+                                class="form-select form-select-sm"
+                                id="filterByStars"
+                            >
+                                <option disabled selected value="">Ratings</option>
+                                <option style="color: orange" value="any">Any</option>
+                                <option style="color: orange" value="5">(5) ★★★★★</option>
+                                <option style="color: orange" value="4">(4) ★★★★</option>
+                                <option style="color: orange" value="3">(3) ★★★</option>
+                                <option style="color: orange" value="2">(2) ★★</option>
+                                <option style="color: orange" value="1">(1) ★</option>
+                            </select>
+                        </div>
+                        -->
                     </div>
-                    <!--
-                    <div class="sortList">
-                        <select
-                            aria-label=".form-select-sm example"
-                            class="form-select form-select-sm"
-                            id="filterByStars"
-                        >
-                            <option disabled selected value="">Ratings</option>
-                            <option class="fa fa-star" style="color: orange" value="5">(5) ★★★★★</option>
-                            <option class="fa fa-star" style="color: orange" value="4">(4) ★★★★</option>
-                            <option class="fa fa-star" style="color: orange" value="3">(3) ★★★</option>
-                            <option class="fa fa-star" style="color: orange" value="2">(2) ★★</option>
-                            <option class="fa fa-star" style="color: orange" value="1">(1) ★</option>
-                        </select>
-                    </div>
-                    -->
                     <div class="text-center">
                         <div class="form-group">
                             <label for="searchInput">Search In Review</label>

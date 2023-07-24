@@ -1352,6 +1352,8 @@ $(document).ready(async function () {
         initUserPopUp();
     }
 
+    function handleFilterReviewChange() {}
+
     function handleSearchReviewChange(event) {
         event.preventDefault();
         let keyword = $("#searchInput").val();
