@@ -14,7 +14,7 @@ const path = require("path");
 const mongoDB = require("./modules/mongooseConnect");
 
 //Session configuration
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
@@ -24,9 +24,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Redirect http to https
+/*
 if (app.get("env") === "production" || process.env.NODE_ENV === "production") {
     app.set("trust proxy", 1); // trust first proxy, crucial
 }
+
+ */
 app.use(function (req, res, next) {
     if (
         req.get("x-forwarded-proto") !== "https" &&
@@ -49,9 +52,9 @@ const ownerResponseDB_Router = require("./routers/ownerResponse_Router");
 const reviewDB_Router = require("./routers/listingReviews_Router");
 
 //Middleware for static assets
-//app.use("/vendor", express.static(path.join(__dirname, "vendor")));
-//app.use("/assets", express.static(path.join(__dirname, "assets")));
-app.use(express.static(path.join(__dirname, "dist")));
+app.use("/vendor", express.static(path.join(__dirname, "vendor")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
+//app.use(express.static(path.join(__dirname, "dist")));
 
 /* ==============================================================
    FETCH/WRITE REQUESTS TO DATABASE FOR EACH COLLECTION
@@ -68,39 +71,39 @@ app.use("/api/ownerResponseDB", ownerResponseDB_Router);
    ROUTES TO INDIVIDUAL PAGES
    ============================================================== */
 app.get("/index", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.get("/404", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "404.html"));
+    res.sendFile(path.join(__dirname, "404.html"));
 });
 
 app.get("/explore-listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "explore-listing.html"));
+    res.sendFile(path.join(__dirname, "explore-listing.html"));
 });
 
 app.get("/listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "listing.html"));
+    res.sendFile(path.join(__dirname, "listing.html"));
 });
 
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "login.html"));
+    res.sendFile(path.join(__dirname, "login.html"));
 });
 
 app.get("/profile", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "profile.html"));
+    res.sendFile(path.join(__dirname, "profile.html"));
 });
 
 app.get("/request-listing", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "request-listing.html"));
+    res.sendFile(path.join(__dirname, "request-listing.html"));
 });
 
 app.get("/search-result", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "search-result.html"));
+    res.sendFile(path.join(__dirname, "search-result.html"));
 });
 
 app.get("/about-us", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "about-us.html"));
+    res.sendFile(path.join(__dirname, "about-us.html"));
 });
 
 /* ==============================================================
@@ -117,7 +120,7 @@ app.get("/index.html", (req, res) => {
 
 //Make 404 request refer to custom 404 page
 app.use(function (req, res, next) {
-    res.status(404).sendFile(path.join(__dirname, "./dist/404.html"));
+    res.status(404).sendFile(path.join(__dirname, "./404.html"));
 });
 
 //remove .html from the url
@@ -137,5 +140,5 @@ app.listen(PORT, async () => {
     );
 
     setInterval(listingDB_Router.updateAllListingScores, 1000 * 60 * 30);
-    setInterval(userDB_Router.periodicUserInfoUpdate, 1000 * 60 * 60 * 24);
+    setInterval(userDB_Router.periodicUserInfoUpdate, 1000 * 60 * 30);
 });

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta content="Dormable is a web app designed to help students find their perfect dorm room." name="description">
@@ -35,15 +33,25 @@
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" rel="stylesheet">
 
-    <!-- build:css /assets/css/index-combined.min.css -->
+    <!-- build:css /assets/css/combined.min.css -->
     <link href="/assets/css/modal-animation.css" rel="stylesheet">
     <link href="/assets/css/fontawesome.css" rel="stylesheet">
     <link href="/assets/css/main-dormable.css" rel="stylesheet">
     <link href="/assets/css/animated.css" rel="stylesheet">
     <link href="/assets/css/owl.css" rel="stylesheet">
+    <link href="/assets/css/about-us.css" rel="stylesheet">
     <!-- endbuild -->
-</head>
 
+    <!-- build:css /assets/css/explore-listing.min.css -->
+    <link href="/assets/css/search-result.css" rel="stylesheet"/>
+    <link href="/assets/css/simple-line-icons.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/fontawesome2.css" rel="stylesheet"/>
+    <!-- endbuild -->
+
+    <!-- js -->
+
+
+</head>
 
 <body>
 <!-- ***** Preloader Start ***** -->
@@ -86,92 +94,173 @@
         </div>
     </div>
 </header>
-<!-- ***** Header Area End ***** -->
-
-<div class="main-banner">
+<!-- ======= Team Section ======= -->
+<section class="team" id="team">
     <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+            <h2>Team</h2>
+            <p>Meet the team behind Dormable!</p>
+        </div>
+
         <div class="row">
-            <div class="col-lg-12">
-                <div class="top-text header-text">
-                    <h6>Looking for a place to stay?</h6>
-                    <h2>Simplify Your Student Housing Search!</h2>
+
+            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="member">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/noche.png">
+                    <div class="member-info">
+                        <div class="member-info-content">
+                            <h4>Zach Noche</h4>
+                            <span>Team Leader</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Insert Form Here -->
-            <div class="container mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <form id="search-form">
-                            <div class="form-group">
-                                <label for="location-select">Location</label>
-                                <select class="form-control" id="location-select">
-                                    <option value="">Any</option>
-                                    <option>Manila</option>
-                                    <option>Taft Ave</option>
-                                    <option>Pablo Ocampo</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="search-input">Search</label>
-                                <input class="form-control" id="search-input" placeholder="Search Name" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label for="rating-select">Rating</label>
-                                <select class="form-control" id="rating-select">
-                                    <option selected value="">Any</option>
-                                    <option class="fa fa-star" style="color: orange" value="5">(5) ★★★★★</option>
-                                    <option class="fa fa-star" style="color: orange" value="4">(4) ★★★★</option>
-                                    <option class="fa fa-star" style="color: orange" value="3">(3) ★★★</option>
-                                    <option class="fa fa-star" style="color: orange" value="2">(2) ★★</option>
-                                    <option class="fa fa-star" style="color: orange" value="1">(1) ★</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Price Range</label>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <input class="form-control" id="min-price" min="0" placeholder="Min"
-                                               type="number">
-                                    </div>
-                                    <div class="col">
-                                        <input class="form-control" id="max-price" min="0" placeholder="Max"
-                                               type="number">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group text-center">
-                                <button class="btn btn-primary" id="search-btn" type="submit">Search Now</button>
-                            </div>
 
-                        </form>
+            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="member">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/victoria.png">
+                    <div class="member-info">
+                        <div class="member-info-content">
+                            <h4>Alfred Victoria</h4>
+                            <span>Associate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="member">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/latosa.png">
+                    <div class="member-info">
+                        <div class="member-info-content">
+                            <h4>JR Latosa</h4>
+                            <span>Associate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="member">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/cada.png">
+                    <div class="member-info">
+                        <div class="member-info-content">
+                            <h4>Louis Cada</h4>
+                            <span>Associate</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<!-- End Team Section -->
 
-<div class="recent-listing">
+<!-- ======= Contact Us Section ======= -->
+<section class="contact">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading">
-                    <h2>Popular Listing</h2>
-                    <h6>Check Them Out!</h6>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="owl-carousel owl-listing" id="featured-listings">
-                    <!--Generate Listing Cards-->
-                </div>
 
-                <div class="section-heading" style="margin-bottom: -20px; margin-top: 10px">
-                    <button class="btn btn-outline-info btn-sm" onclick="loadMoreFeaturedListing()">Load More</button>
-                </div>
+        <div class="section-title">
+            <h2>About Us</h2>
+        </div>
+
+
+        <div class="info-box card">
+
+            <h4>Welcome to Dormable, the ultimate student housing platform designed
+                specifically for college students seeking the perfect place to call
+                home during their academic journey. Our mission is to connect students
+                with comfortable, affordable, and convenient condos and dorms located
+                near college campuses, making the search for a suitable residence an
+                effortless and enjoyable experience.
+            </h4>
+        </div>
+
+
+    </div>
+</section><!-- End Contact Us Section -->
+
+<section class="contact">
+    <div class="container">
+
+        <div class="section-title">
+            <h2>References (WIP)</h2>
+        </div>
+
+        <div class="info-box card contactnew_two" onclick="toggleDevDependencies()">
+            <h3>devDependencies</h3>
+        </div>
+
+        <div id="devDependenciesContent" style="display: none;">
+            <div class="info-box contactnew">
+                <h3>gulp-uglify</h3>
+                <h5>version: 3.0.2</h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/gulp-uglify/-/gulp-uglify-3.0.2.tgz</a></h5>
+            </div>
+
+            <div class="info-box contactnew">
+                <h3>nodemon</h3>
+                <h5>version: 3.0.1</h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
+            </div>
+
+            <div class="info-box contactnew">
+                <h3>prettier</h3>
+                <h5>version: 2.8.8</h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/prettier/-/prettier-2.8.8.tgz</a></h5>
             </div>
         </div>
+
+        <div class="info-box card contactnew_two" onclick="toggleDependencies()">
+            <h3>dependencies</h3>
+        </div>
+
+        <div id="dependenciesContent" style="display: none;">
+            <div class="info-box contactnew">
+                <h3>app-root-path</h3>
+                <h5>
+                    version: 3.1.0
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/app-root-path/-/app-root-path-3.1.0.tgz</a></h5>
+            </div>
+
+            <div class="info-box contactnew">
+                <h3>argon2</h3>
+                <h5>
+                    version: 0.30.3
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/argon2/-/argon2-0.30.3.tgz</a></h5>
+            </div>
+
+            <div class="info-box contactnew">
+                <h3>bcrypt</h3>
+                <h5>
+                    version: 5.1.0
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/bcrypt/-/bcrypt-5.1.0.tgz</a></h5>
+            </div>
+
+            <div class="info-box contactnew">
+                <h3>nodemon</h3>
+                <h5>
+                    version: 3.0.1
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
+            </div>
+
+            <div class="info-box contactnew">
+                <h3>nodemon</h3>
+                <h5>
+                    version: 3.0.1
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
+            </div>
+        </div>
+
+
     </div>
-</div>
+</section><!-- End Contact Us Section -->
 
 <footer>
     <div class="container">
@@ -219,6 +308,8 @@
         </div>
     </div>
 </footer>
+<br>
+
 
 <!-- Popup for Media Disclaimer -->
 <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="mediaDisclaimer" role="dialog"
@@ -318,66 +409,29 @@
 <!-- Page Scripts -->
 <script>
     $(document).ready(function () {
-        initFeaturedListing();
-        $('input[type="number"]').on('keydown', function (e) {
-            // Prevent '.' and ','
-            if (e.key === '.' || e.key === ',')
-                e.preventDefault();
-            // Prevent '0' as first digit
-            else if (this.value.length === 0 && e.key === '0')
-                e.preventDefault();
-            // Prevent non-numeric characters
-            else if (e.key.length === 1 && !e.key.match(/[0-9]/))
-                e.preventDefault();
-
-        });
-
-        $('#search-form').on('submit', function (e) {
-            e.preventDefault();
-            let searchForm = $('#search-form');
-
-            //Get all the values from the form
-            let location = searchForm.find('#location-select').val();
-            let searchType = searchForm.find('#search-input').val();
-            let rating = searchForm.find('#rating-select').val();
-            let minPrice = searchForm.find('#min-price').val();
-            let maxPrice = searchForm.find('#max-price').val();
-
-            if (minPrice > maxPrice && maxPrice.length > 0 && minPrice.length > 0) {
-                showPopup('Minimum price cannot be greater than maximum price!')
-                return;
-            } else if (maxPrice < minPrice && minPrice.length > 0 && maxPrice.length > 0) {
-                showPopup('Maximum price cannot be less than minimum price!')
-                return;
-            }
-
-            //check if the value of minPrice and maxPrice starts with 0 and length is greater than 1
-            if (minPrice.length > 1 && minPrice.startsWith('0')) {
-                showPopup('Minimum price cannot start with 0!')
-                return;
-            } else if (maxPrice.length > 1 && maxPrice.startsWith('0')) {
-                showPopup('Maximum price cannot start with 0!')
-                return;
-            }
-
-            //Create a new object to store the values
-            let searchFilter = {
-                location: location,
-                searchType: searchType,
-                rating: rating,
-                minPrice: minPrice,
-                maxPrice: maxPrice
-            };
-
-            //Store in session storage
-            let params = new URLSearchParams(searchFilter).toString();
-
-            //Redirect to search page
-            window.location.href = `/search-result?${params}`;
-
-        });
+        $("#js-preloader").addClass("loaded"); // stop loading animation
     });
-</script>
-</body>
 
+    function toggleDevDependencies() {
+        var content = document.getElementById("devDependenciesContent");
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    }
+
+    function toggleDependencies() {
+        var content = document.getElementById("dependenciesContent");
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    }
+</script>
+
+</body>
 </html>
+
+
