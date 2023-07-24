@@ -116,16 +116,16 @@ h1, h2, h3, h4, h5, h6, .font-primary {
     width: 100%;
 }
 
-#contactnew {
+.contactnew {
     padding: 10px 0 10px 0;
 }
 
-#contactnew_two {
+.contactnew_two {
     padding: 2px 0 2px 0;
 }
 
-#contactnew_two h3 {
-    color: rgb(189, 36, 36);
+.contactnew_two h3 {
+    color: rgb(189, 36, 36) !important;
 }
 
 .contact .info-box .new {
