@@ -49,41 +49,43 @@
     <!-- endbuild -->
 
     <!-- js -->
-    
 
 
 </head>
 
 <body>
 <!-- ***** Preloader Start ***** -->
-
-<!-- ***** Preloader End **** -->
+<div class="js-preloader" id="js-preloader">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="text-center">Loading...</div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
 
 <!-- ***** Header Area Start ***** -->
-<header
-    class="header-area header-sticky wow slideInDown"
-    data-wow-delay="0s"
-    data-wow-duration="0.75s"
-    style="background-color: whitesmoke"
->
+<header class="header-area header-sticky wow slideInDown" data-wow-delay="0s" data-wow-duration="0.75s">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <nav class="main-nav" style="color: black">
+                <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a class="logo" href="/index"> </a>
+                    <a class="logo" href="/index">
+                    </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="/index">Home</a></li>
-                        <li><a href="/category">Category</a></li>
-                        <li><a href="/category-listing">Listing</a></li>
-                        <li>
-                            <a class="active" href="/request-listing">Contact Us</a>
-                        </li>
                         <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="/category-listing">Explore Listings</a></li>
+                        <li><a href="/login">Log In | Sign Up</a></li>
                     </ul>
-                    <a class="menu-trigger">
+                    <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
                     <!-- ***** Menu End ***** -->
@@ -92,22 +94,20 @@
         </div>
     </div>
 </header>
-<!-- ***** Header Area End ***** -->
-
 <!-- ======= Team Section ======= -->
-<section id="team" class="team">
+<section class="team" id="team">
     <div class="container">
 
         <div class="section-title" data-aos="fade-up">
             <h2>Team</h2>
-            <p>Our team is always here to help</p>
+            <p>Meet the team behind Dormable!</p>
         </div>
 
         <div class="row">
 
             <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
                 <div class="member">
-                    <img src="assets/images/about-us/noche.png" class="img-fluid" alt="">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/noche.png">
                     <div class="member-info">
                         <div class="member-info-content">
                             <h4>Zach Noche</h4>
@@ -119,7 +119,7 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
                 <div class="member">
-                    <img src="assets/images/about-us/victoria.png" class="img-fluid" alt="">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/victoria.png">
                     <div class="member-info">
                         <div class="member-info-content">
                             <h4>Alfred Victoria</h4>
@@ -131,7 +131,7 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
                 <div class="member">
-                    <img src="assets/images/about-us/latosa.png" class="img-fluid" alt="">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/latosa.png">
                     <div class="member-info">
                         <div class="member-info-content">
                             <h4>JR Latosa</h4>
@@ -143,7 +143,7 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
                 <div class="member">
-                    <img src="assets/images/about-us/cada.png" class="img-fluid" alt="">
+                    <img alt="" class="img-fluid" src="assets/images/about-us/cada.png">
                     <div class="member-info">
                         <div class="member-info-content">
                             <h4>Louis Cada</h4>
@@ -158,7 +158,7 @@
 <!-- End Team Section -->
 
 <!-- ======= Contact Us Section ======= -->
-<section id="contact" class="contact">
+<section class="contact" id="contact">
     <div class="container">
 
         <div class="section-title">
@@ -166,97 +166,97 @@
         </div>
 
 
-                <div class="info-box">
+        <div class="info-box card">
 
-                    <h3>Welcome to Dormable, the ultimate student housing platform designed
-                        specifically for college students seeking the perfect place to call
-                        home during their academic journey. Our mission is to connect students
-                        with comfortable, affordable, and convenient condos and dorms located
-                        near college campuses, making the search for a suitable residence an
-                        effortless and enjoyable experience.
-                    </h3>
-                </div>
+            <h4>Welcome to Dormable, the ultimate student housing platform designed
+                specifically for college students seeking the perfect place to call
+                home during their academic journey. Our mission is to connect students
+                with comfortable, affordable, and convenient condos and dorms located
+                near college campuses, making the search for a suitable residence an
+                effortless and enjoyable experience.
+            </h4>
+        </div>
 
 
     </div>
 </section><!-- End Contact Us Section -->
 
-<section id="contact" class="contact">
+<section class="contact" id="contact">
     <div class="container">
 
         <div class="section-title">
-            <h2>References</h2>
+            <h2>References (WIP)</h2>
         </div>
 
-                <div class="info-box" id="contactnew_two" onclick="toggleDevDependencies()">
-                    <h3>devDependencies</h3>
-                </div>
-                
-                <div id="devDependenciesContent" style="display: none;">
-                    <div class="info-box" id="contactnew">
-                        <h3>gulp-uglify</h3>
-                        <h5>version: 3.0.2</h5>
-                        <h5>resolved: <a href="url">https://registry.npmjs.org/gulp-uglify/-/gulp-uglify-3.0.2.tgz</a></h5>
-                    </div>
-                
-                    <div class="info-box" id="contactnew">
-                        <h3>nodemon</h3>
-                        <h5>version: 3.0.1</h5>
-                        <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
-                    </div>
-                
-                    <div class="info-box" id="contactnew">
-                        <h3>prettier</h3>
-                        <h5>version: 2.8.8</h5>
-                        <h5>resolved: <a href="url">https://registry.npmjs.org/prettier/-/prettier-2.8.8.tgz</a></h5>
-                    </div>
-                </div>
-                
-                <div class="info-box" id="contactnew_two" onclick="toggleDependencies()">
-                    <h3>dependencies</h3>
-                </div>
+        <div class="info-box card" id="contactnew_two" onclick="toggleDevDependencies()">
+            <h3>devDependencies</h3>
+        </div>
 
-                <div id="dependenciesContent" style="display: none;">
-                <div class="info-box" id="contactnew">
-                    <h3>app-root-path</h3>
-                    <h5>
-                        version: 3.1.0
-                    </h5>
-                    <h5>resolved: <a href="url">https://registry.npmjs.org/app-root-path/-/app-root-path-3.1.0.tgz</a></h5>
-                </div>
+        <div id="devDependenciesContent" style="display: none;">
+            <div class="info-box" id="contactnew">
+                <h3>gulp-uglify</h3>
+                <h5>version: 3.0.2</h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/gulp-uglify/-/gulp-uglify-3.0.2.tgz</a></h5>
+            </div>
 
-                <div class="info-box" id="contactnew" >
-                    <h3>argon2</h3>
-                    <h5>
-                        version: 0.30.3
-                    </h5>
-                    <h5>resolved: <a href="url">https://registry.npmjs.org/argon2/-/argon2-0.30.3.tgz</a></h5>
-                </div>
+            <div class="info-box" id="contactnew">
+                <h3>nodemon</h3>
+                <h5>version: 3.0.1</h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
+            </div>
 
-                <div class="info-box" id="contactnew" >
-                    <h3>bcrypt</h3>
-                    <h5>
-                        version: 5.1.0
-                    </h5>
-                    <h5>resolved: <a href="url">https://registry.npmjs.org/bcrypt/-/bcrypt-5.1.0.tgz</a></h5>
-                </div>
+            <div class="info-box" id="contactnew">
+                <h3>prettier</h3>
+                <h5>version: 2.8.8</h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/prettier/-/prettier-2.8.8.tgz</a></h5>
+            </div>
+        </div>
 
-                <div class="info-box" id="contactnew" >
-                    <h3>nodemon</h3>
-                    <h5>
-                        version: 3.0.1
-                    </h5>
-                    <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
-                </div>
+        <div class="info-box card" id="contactnew_two" onclick="toggleDependencies()">
+            <h3>dependencies</h3>
+        </div>
 
-                <div class="info-box" id="contactnew" >
-                    <h3>nodemon</h3>
-                    <h5>
-                        version: 3.0.1
-                    </h5>
-                    <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
-                </div>
-                </div>
+        <div id="dependenciesContent" style="display: none;">
+            <div class="info-box" id="contactnew">
+                <h3>app-root-path</h3>
+                <h5>
+                    version: 3.1.0
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/app-root-path/-/app-root-path-3.1.0.tgz</a></h5>
+            </div>
+
+            <div class="info-box" id="contactnew">
+                <h3>argon2</h3>
+                <h5>
+                    version: 0.30.3
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/argon2/-/argon2-0.30.3.tgz</a></h5>
+            </div>
+
+            <div class="info-box" id="contactnew">
+                <h3>bcrypt</h3>
+                <h5>
+                    version: 5.1.0
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/bcrypt/-/bcrypt-5.1.0.tgz</a></h5>
+            </div>
+
+            <div class="info-box" id="contactnew">
+                <h3>nodemon</h3>
+                <h5>
+                    version: 3.0.1
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
+            </div>
+
+            <div class="info-box" id="contactnew">
+                <h3>nodemon</h3>
+                <h5>
+                    version: 3.0.1
+                </h5>
+                <h5>resolved: <a href="url">https://registry.npmjs.org/nodemon/-/nodemon-3.0.1.tgz</a></h5>
+            </div>
+        </div>
 
 
     </div>
@@ -285,7 +285,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <ul>
-                                <li><a href="#">About Us</a></li>
+                                <li><a href="/about-us">About Us</a></li>
                                 <li><a href="https://github.com/SakuZN/CCAPDEV_Dormable">Github</a></li>
                                 <li><a data-toggle="modal" href="#mediaDisclaimer">Disclaimer</a></li>
                             </ul>
@@ -310,24 +310,125 @@
 </footer>
 <br>
 
-<script>
-function toggleDevDependencies() {
-    var content = document.getElementById("devDependenciesContent");
-    if (content.style.display === "none") {
-        content.style.display = "block";
-    } else {
-        content.style.display = "none";
-    }
-}
 
-function toggleDependencies() {
-    var content = document.getElementById("dependenciesContent");
-    if (content.style.display === "none") {
-        content.style.display = "block";
-    } else {
-        content.style.display = "none";
+<!-- Popup for Media Disclaimer -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="mediaDisclaimer" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: 600px">
+            <div class="modal-header">
+                <h4 class="modal-title" id="ModalTitleDisclaimer">MEDIA ACCURACY DISCLAIMER</h4>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: justify">
+                <p style="font-size: 18px">
+                    The images and videos used in this website are not owned by the developers of this website. The
+                    images and videos used are owned by their respective owners. The images and videos used in this
+                    website are used solely for educational purposes only.
+                </p>
+                <p style="font-size: 18px">
+                    The data represented in this project, including reviews and evaluations of dormitories or buildings,
+                    are intended solely for educational purposes and do not accurately reflect the actual state,
+                    quality,
+                    or opinions of these establishments. The data has been fabricated or anonymized and should not be
+                    used
+                    as a factual reference.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-danger" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div aria-labelledby="loadMeLabel" class="modal fade" id="loadModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="loader"></div>
+                <div class="loader-txt">
+                    <p>Fetching your data... <br><br><small>it might take a while #animo.sys</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="dialog" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">Info!</h4>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <p style="font-size: 34px"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-danger" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script crossorigin="anonymous"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+
+<!-- build:js /vendor/js/vendor.js -->
+<script src="/assets/js/owl-carousel.js"></script>
+<script src="/assets/js/animation.js"></script>
+<script src="/vendor/gsap/gsap.min.js"></script>
+<script src="/vendor/jquery/jquery.magnific-popup.js"></script>
+<script src="/vendor/swiper/swiper.min.js"></script>
+<script src="/vendor/jquery/jquery.confirmModal.min.js"></script>
+<!-- endbuild -->
+
+<!-- build:js /assets/js/main.min.js -->
+<script src="/assets/js/dbFetching.js"></script>
+<script src="/assets/js/listing.js"></script>
+<script src="/assets/js/autostar-rating.js"></script>
+<script src="/assets/js/login-register.js"></script>
+<script src="/assets/js/custom.js"></script>
+<!-- endbuild -->
+
+<!-- Page Scripts -->
+<script>
+    $(document).ready(function () {
+        $("#js-preloader").addClass("loaded"); // stop loading animation
+    });
+
+    function toggleDevDependencies() {
+        var content = document.getElementById("devDependenciesContent");
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
     }
-}
+
+    function toggleDependencies() {
+        var content = document.getElementById("dependenciesContent");
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    }
 </script>
 
 </body>
