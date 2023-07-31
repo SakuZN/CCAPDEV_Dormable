@@ -23,9 +23,7 @@ class UserData {
 
     async initialize() {
         this.userRHData = await populateHistoryAsDiv(
-            await getUserReviews(this.user.username),
-            this.user,
-            this.isOwnProfile
+            await getUserReviews(this.user.username)
         );
     }
 }
@@ -35,12 +33,18 @@ const reviewHistoryData = function (
     reviewHistory,
     divRH,
     divcRU,
-    divcRUResponse
+    divcRUResponse,
+    isCurrentUser
 ) {
-    this.reviewHistory = reviewHistory;
+    this.RHData = reviewHistory;
     this.divRH = divRH;
     this.divcRU = divcRU;
     this.divcRUResponse = divcRUResponse;
+    this.isCurrentUser = isCurrentUser;
+
+    this.modifyData = function (updateData) {
+        Object.assign(this, updateData);
+    };
 };
 
 /* ==============================================================
@@ -284,51 +288,49 @@ async function populateStudentProfile(userID, currentUser) {
    POPULATION FUNCTIONS
    ============================================================== */
 
-//Turns review history into divs and returns an array of review history objects
-async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
-    let userReviewHistory = [];
+//Function to modulary create and return a div container for a review
+async function divListingReview(review, reviewUser, isCurrentUser) {
+    let swiperDiv = document.createElement("div");
+    swiperDiv.classList.add("swiper-slide", "loaded-element");
+    swiperDiv.setAttribute("data-review-id", review.reviewID);
+    swiperDiv.setAttribute("data-listing-id", review.listingID);
+    swiperDiv.setAttribute("data-user-id", review.userID);
 
-    for (const review of reviewHistory) {
-        let swiperDiv = document.createElement("div");
-        swiperDiv.classList.add("swiper-slide");
-        swiperDiv.setAttribute("data-review-id", review.reviewID);
-        swiperDiv.setAttribute("data-listing-id", review.listingID);
-        swiperDiv.setAttribute("data-user-id", review.userID);
-        let listing = await getSpecificListing(review.listingID);
-        let listingName = listing.name;
-        let userCustomName = reviewUser.customName;
+    let userCustomName = reviewUser.customName;
+    let listing = await getSpecificListing(review.listingID);
+    let listingName = listing.name;
 
-        let scoreClass = "";
-        let checkEdit = "";
-        if (review.wasEdited) checkEdit = "(Review Edited)";
-        if (review.reviewScore >= 4) scoreClass = "customer-rating";
-        else if (review.reviewScore === 3)
-            scoreClass = "customer-rating yellow";
-        else scoreClass = "customer-rating red";
+    let scoreClass = "";
+    let checkEdit = "";
 
-        let buttonHTML;
-        let likedOrNot = (await checkIfLikedReview(
-            review.reviewID,
-            review.listingID,
-            review.userID
-        ))
-            ? "liked"
-            : "";
+    let buttonHTML;
+    let likedOrNot = (await checkIfLikedReview(
+        review.reviewID,
+        review.listingID,
+        review.userID
+    ))
+        ? "liked"
+        : "";
 
-        if (isCurrentUser) {
-            buttonHTML =
-                '<button class="editReviewBtn btn btn-outline-primary btn-sm">Edit</button>' +
-                '<button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>';
-        } else {
-            buttonHTML = `<button class="button ${likedOrNot}">
+    if (isCurrentUser) {
+        buttonHTML =
+            '<button class="editReviewBtn btn btn-outline-primary btn-sm">Edit</button>' +
+            '<button class="confirmModal btn btn-outline-danger btn-sm">Delete</button>';
+    } else {
+        buttonHTML = `<button class="button ${likedOrNot}">
                      <div class="hand">
                         <div class="thumb"></div>
                      </div>
                      <span>Like<span>d</span></span>
                   </button>`;
-        }
+    }
 
-        swiperDiv.innerHTML = `
+    if (review.wasEdited) checkEdit = "(Review Edited)";
+    if (review.reviewScore >= 4) scoreClass = "customer-rating";
+    else if (review.reviewScore === 3) scoreClass = "customer-rating yellow";
+    else scoreClass = "customer-rating red";
+
+    swiperDiv.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
             <img src="${
@@ -347,8 +349,8 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                 <div class="customer-review">
                 <div class="${scoreClass}">${review.reviewScore}.0</div>
                 <h6>${review.reviewTitle}<a href="/listing?id=${
-            review.listingID
-        }" target="_blank" style="border: none"><p style="font-weight: bolder;">[${listingName}]</p>
+        review.listingID
+    }" target="_blank" style="border: none"><p style="font-weight: bolder;">[${listingName}]</p>
                 </a>
                 </h6>
                 <ul class="star-rating">
@@ -377,12 +379,25 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
             </div>
         </div>
         <hr>`;
-        //Div container for comment history
-        let cRUReviewHistory = document.createElement("div");
-        cRUReviewHistory.classList.add("booking-checkbox_wrap");
-        cRUReviewHistory.classList.add("mt-4");
+    return swiperDiv;
+}
 
-        cRUReviewHistory.innerHTML = `
+//Function to populate the review comment history as a div container
+async function divCRUReviewhistory(review, reviewUser) {
+    //Div container for comment history
+    let cRUReviewHistory = document.createElement("div");
+    cRUReviewHistory.classList.add("booking-checkbox_wrap");
+    cRUReviewHistory.classList.add("mt-4");
+
+    let userCustomName = reviewUser.customName;
+    let scoreClass = "";
+    let checkEdit = "";
+    if (review.wasEdited) checkEdit = "(Review Edited)";
+    if (review.reviewScore >= 4) scoreClass = "customer-rating";
+    else if (review.reviewScore === 3) scoreClass = "customer-rating yellow";
+    else scoreClass = "customer-rating red";
+
+    cRUReviewHistory.innerHTML = `
           <div class="customer-review_wrap">
             <div class="customer-img">
               <img alt="#" class="img-fluid" id="cRU" src="${
@@ -392,9 +407,9 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
               <p id="cRUName" style="font-size: 13px; color: gray">@${
                   reviewUser.username
               }</p>
-              <span style="display: flex; justify-content: center; margin-top: 5px" id="cRUReviews">${
+              <p id="cRUReviews" style="font-size: 13px; color: gray">${
                   reviewUser.noOfReviews
-              } reviews</span>
+              } reviews</p>
             </div>
             <div class="customer-content-wrap">
               <div class="customer-content">
@@ -404,7 +419,9 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
                   <ul id="cRUStarRating" class="star-rating">
                     ${star_rating(review.reviewScore, 0, "listing")}
                   </ul>
-                  <p id="cRUDate">Reviewed ${reviewDate(review.reviewDate)}</p>
+                  <p id="cRUDate">Reviewed ${reviewDate(
+                      review.reviewDate
+                  )}<i style="font-style: italic"> ${checkEdit}</i></p>
                 </div>
               </div>
               <p class="customer-text comment-border" id="cRUContent">${
@@ -421,30 +438,29 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
           <hr>
     `;
 
-        //Div container for review comment response, if it exist
-        let cRUReviewResponse = document.createElement("div");
-        cRUReviewResponse.classList.add("booking-checkbox_wrap");
-        cRUReviewResponse.classList.add("mt-4");
-        cRUReviewResponse.style.textAlign = "center";
-        cRUReviewResponse.innerHTML =
-            "Owner has not responded to this review yet.";
+    return cRUReviewHistory;
+}
 
-        if (
-            await checkIfCommented(
-                review.reviewID,
-                review.listingID,
-                review.userID
-            )
-        ) {
-            cRUReviewResponse.innerHTML = "";
-            cRUReviewResponse.style.textAlign = "";
-            let commentResponse = await getReviewResponse(
-                review.reviewID,
-                review.listingID,
-                review.userID
-            );
-            let owner = await getSpecificListingOwner(commentResponse.ownerID);
-            cRUReviewResponse.innerHTML = `
+async function divCRUReviewResponse(review, reviewUser) {
+    //Div container for review comment response, if it exist
+    let cRUReviewResponse = document.createElement("div");
+    cRUReviewResponse.classList.add("booking-checkbox_wrap");
+    cRUReviewResponse.classList.add("mt-4");
+    cRUReviewResponse.style.textAlign = "center";
+    cRUReviewResponse.innerHTML = "Owner has not responded to this review yet.";
+
+    if (
+        await checkIfCommented(review.reviewID, review.listingID, review.userID)
+    ) {
+        cRUReviewResponse.innerHTML = "";
+        cRUReviewResponse.style.textAlign = "";
+        let commentResponse = await getReviewResponse(
+            review.reviewID,
+            review.listingID,
+            review.userID
+        );
+        let owner = await getSpecificListingOwner(commentResponse.ownerID);
+        cRUReviewResponse.innerHTML = `
         <div class="customer-review_wrap">
             <div class="customer-img">
               <img alt="#" class="img-fluid" src="${owner.profilePic}">
@@ -466,15 +482,32 @@ async function populateHistoryAsDiv(reviewHistory, reviewUser, isCurrentUser) {
           </div>
           <hr>
       `;
-        }
+    }
 
-        let rhData = new reviewHistoryData(
-            review,
-            swiperDiv,
-            cRUReviewHistory,
-            cRUReviewResponse,
-            isCurrentUser
-        );
+    return cRUReviewResponse;
+}
+
+async function newRHData(review, reviewUser, isCurrentUser) {
+    let swiperDiv = await divListingReview(review, reviewUser, isCurrentUser);
+    let cRUReviewHistory = await divCRUReviewhistory(review, reviewUser);
+    let cRUReviewResponse = await divCRUReviewResponse(review, reviewUser);
+
+    return new reviewHistoryData(
+        review,
+        swiperDiv,
+        cRUReviewHistory,
+        cRUReviewResponse,
+        isCurrentUser
+    );
+}
+
+//Turns review history into divs and returns an array of review history objects
+async function populateHistoryAsDiv(reviewHistory) {
+    let userReviewHistory = [];
+    for (const review of reviewHistory) {
+        let reviewUser = await getSpecificUser(review.userID);
+        let isCurrentUser = await checkIfSameUserID(review.userID);
+        let rhData = await newRHData(review, reviewUser, isCurrentUser);
         userReviewHistory.push(rhData);
     }
     return userReviewHistory;
@@ -593,13 +626,33 @@ function findUserReview(reviewID, listingID) {
     let review = null;
     userProfile.userRHData.forEach((rhData) => {
         if (
-            rhData.reviewHistory.reviewID === reviewID &&
-            rhData.reviewHistory.listingID === listingID
+            rhData.RHData.reviewID === reviewID &&
+            rhData.RHData.listingID === listingID
         )
             review = rhData;
     });
     initReviewPopUp();
     return review;
+}
+
+//Function to add the new review without refreshing the page
+function addNewReviewToPage(dataToAdd) {
+    userProfile.userRHData.unshift(dataToAdd);
+    destroySwiper();
+    clearReviewHistory();
+    populateUserReviewHistory(userProfile.userRHData);
+}
+
+//Function to delete the review without refreshing the page
+function deleteReviewFromPage(reviewID, listingID) {
+    userProfile.userRHData = userProfile.userRHData.filter((rh) => {
+        return (
+            rh.RHData.reviewID !== reviewID && rh.RHData.listingID !== listingID
+        );
+    });
+    destroySwiper();
+    clearReviewHistory();
+    populateUserReviewHistory(userProfile.userRHData);
 }
 
 /* ==============================================================
@@ -665,7 +718,7 @@ async function updateProfile() {
     let college = document.getElementById("input-college").value;
     let description = document.getElementById("input-description").value;
 
-    //update user data and save to local storage
+    //update user data and save to db
     let currentUser = await getCurrentUser();
     currentUser.customName = customName;
     currentUser.course = course;
@@ -848,6 +901,7 @@ $(document).ready(function () {
         $("#reviewImage").val("");
         $(".user-image-list").empty();
         filePicArray = [];
+        clearedImages = true;
     });
 
     //Submit
@@ -862,6 +916,7 @@ $(document).ready(function () {
 
         // Update the review
         let reviewToEdit = await getSpecificUserReview(listingID, reviewID);
+        let currentUser = await getCurrentUser();
         reviewToEdit.reviewTitle = reviewTitle;
         reviewToEdit.reviewContent = reviewContent;
         reviewToEdit.reviewScore = parseInt(reviewScore);
@@ -877,17 +932,52 @@ $(document).ready(function () {
             return;
         }
 
-        // Hide the edit form
-        $("#editReview").addClass("hidden");
+        await updateListingReviewScore(listingID);
 
-        // Reload the page
-        showPopup("Review edited successfully!").then(function () {
-            location.reload();
+        //Showpopup and return to review section
+        showPopup("Review edited successfully!").then(async function () {
+            //Loader to update the listing without refreshing the page
+            const asyncOperations = [
+                async () =>
+                    newRHData(
+                        await getSpecificUserReview(listingID, reviewID),
+                        currentUser,
+                        true
+                    ),
+            ];
+            const results = await loadPopupPromises(asyncOperations);
+
+            let dataToAdd = results[0];
+            handleAfterEditSubmit(e, dataToAdd, reviewID, listingID);
         });
     });
 
+    function handleAfterEditSubmit(event, dataToAdd, reviewID, listingID) {
+        event.preventDefault();
+
+        deleteReviewFromPage(reviewID, listingID);
+        addNewReviewToPage(dataToAdd);
+        handleEditReset(event);
+        //Remove excess images
+        filePicArray = [];
+        clearedImages = false;
+    }
+
+    function handleEditReset(event) {
+        event.preventDefault();
+
+        $("#editReviewForm")[0].reset();
+        $(".edit-review").addClass("hidden");
+        $("html, body").animate(
+            {
+                scrollTop: $("#numreviewBottom").offset().top,
+            },
+            1200
+        );
+    }
+
     //Delete Review
-    $(".confirmModal").click(function (e) {
+    async function handleDeleteReviewModal(e) {
         e.preventDefault();
         $.confirmModal(
             "Delete this review?",
@@ -908,16 +998,37 @@ $(document).ready(function () {
                     await showPopup("Error deleting review");
                     return;
                 }
-                await updateListingReviewScore(listingID);
                 await showPopup("Review deleted successfully!");
-                location.reload();
+                await handleAfterDeleteReview(reviewID, listingID);
             },
             function () {
                 // This function will be called when the user clicks the "No" button
                 console.log("Cancel clicked");
             }
         );
-    });
+    }
+
+    async function handleAfterDeleteReview(reviewID, listingID) {
+        //Update the review count in the page and in the collection
+        const asyncOperations = [
+            async () => await updateListingReviewScore(listingID),
+        ];
+        const results = await loadPopupPromises(asyncOperations);
+
+        //Delete the review from the page
+        deleteReviewFromPage(reviewID, listingID);
+
+        $("#editReviewForm")[0].reset();
+        $(".edit-review").addClass("hidden");
+
+        //Finally, scroll to the review section
+        $("html, body").animate(
+            {
+                scrollTop: $("#numreviewBottom").offset().top,
+            },
+            1200
+        );
+    }
 
     /* ==============================================================
      HELPER FUNCTIONS FOLLOWING AND LIKING
@@ -995,6 +1106,7 @@ $(document).ready(function () {
      HELPER FUNCTIONS FOR VIEW COMMENT MODAL POPUP
      ============================================================== */
     async function populateReviewCommentForm() {
+        console.log(userProfile);
         let commentBtn = $(this);
         let reviewContainer = commentBtn.closest(".swiper-slide");
         let reviewID = reviewContainer.data("review-id");
@@ -1145,6 +1257,12 @@ $(document).ready(function () {
         let sortType = $(this).val();
         sortReviewHistory(sortType);
     });
+
+    //Cancel Button for edit review
+    $("#cancelEdit").on("click", handleEditReset);
+
     // Bind the like to the handler via proper event delegation.
     $(document).on("click", ".button", handleLikeBtnClick);
+    // Bind the delete button to the handler via proper event delegation.
+    $(document).on("click", ".confirmModal", handleDeleteReviewModal);
 });

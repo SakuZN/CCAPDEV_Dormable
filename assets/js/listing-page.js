@@ -946,7 +946,6 @@ $(document).ready(async function () {
         let editForm = $("#editReviewForm");
         let reviewID = editForm.find("#editReview").data("review-id");
         let listingID = editForm.find("#editReview").data("listing-id");
-        let userID = editForm.find("#editReview").data("user-id");
         let reviewTitle = editForm.find("#edit-title").val();
         let reviewContent = editForm.find("#edit-content").val();
         let starRating = $("input[name='rateEdit']:checked").val();
@@ -987,23 +986,24 @@ $(document).ready(async function () {
             const results = await loadPopupPromises(asyncOperations);
 
             let dataToAdd = results[1];
-            handleAfterEditSubmit(event, dataToAdd);
+            handleAfterEditSubmit(event, dataToAdd, reviewID);
         });
     }
 
-    function handleAfterEditSubmit(event, dataToAdd) {
+    function handleAfterEditSubmit(event, dataToAdd, reviewID) {
         event.preventDefault();
 
         //Change reviewBtn text to Edit Review
         $("#reviewBtn").text("EDIT REVIEW");
+        deleteReviewFromPage(reviewID);
         addNewReviewToPage(dataToAdd);
-        handleCancelEdit(event);
+        handleEditReset(event);
         //Remove excess images
         filePicArray = [];
         clearedImages = false;
     }
 
-    function handleCancelEdit(event) {
+    function handleEditReset(event) {
         event.preventDefault();
 
         $("#editReviewForm")[0].reset();
@@ -1240,9 +1240,6 @@ $(document).ready(async function () {
                     await showPopup("Error deleting review");
                     return;
                 }
-
-                await showPopup("Review deleted successfully!");
-                await handleAfterDeleteReview(reviewID, listingID);
             },
             function () {
                 // This function will be called when the user clicks the "No" button
@@ -1378,7 +1375,7 @@ $(document).ready(async function () {
     $("#editReviewForm").on("submit", submitEditReviewForm);
     $("#editReviewImage").on("change", handleEditReviewImageChange);
     $("#clearEditImages").on("click", handleEditClearImagesClick);
-    $("#cancelEdit").on("click", handleCancelEdit);
+    $("#cancelEdit").on("click", handleEditReset);
 
     //Handles comment related events
     $(document).on("click", ".commentBtn", populateReviewCommentForm);
