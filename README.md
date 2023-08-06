@@ -1,7 +1,7 @@
 # Dormable!
 
-Dormable is a web application that allows students to find their ideal roommate. It is built using the MERN stack (
-MongoDB, Express, React, Node.js).
+Dormable is a web application that allows students to find their ideal roommate. It is built using the MEN stack (
+MongoDB, Express, Node.js).
 
 ## MEDIA ACCURACY DISCLAIMER
 
